@@ -334,3 +334,19 @@ TSWLatexianTemp*
 
 ### Archvios VSCODE
 .vscode/
+
+# Adecuaciones para qgis
+# Ignorar datos espaciales pesados (fuentes INEGI crudas > 100 MB)
+MapasQgis/datos_crudos/
+*.shp
+*.shx
+*.dbf
+*.prj
+*.tif
+
+# Capas GIS grandes — manejadas por Git LFS (ver .gitattributes)
+
+# Ignorar archivos temporales de QGIS
+*.qgs~
+# Ignorar archivos comprimidos
+*.zip
