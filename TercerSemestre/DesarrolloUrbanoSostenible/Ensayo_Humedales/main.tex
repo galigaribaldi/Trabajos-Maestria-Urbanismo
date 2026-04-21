@@ -1,0 +1,113 @@
+% !TeX program = pdflatex
+% !TeX encoding = UTF-8
+% =============================================================================
+%  main.tex — Ensayo: Humedales Urbanos y Movilidad
+%  Materia: Desarrollo Sostenible del Medio Ambiente
+%  Hernán Galileo Cabrera Garibaldi, UNAM 2026
+% =============================================================================
+
+\documentclass[12pt,a4paper]{article}
+
+% =============================================================================
+%  1. IDIOMA Y CODIFICACIÓN
+%  babel debe ir primero
+% =============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+\usepackage{csquotes}          % Requerido por citas con babel
+
+% =============================================================================
+%  2. LAYOUT BASE
+% =============================================================================
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm}
+
+% =============================================================================
+%  3. GRÁFICOS
+% =============================================================================
+\usepackage{graphicx}
+
+% =============================================================================
+%  4. MATEMÁTICAS
+%  amsmath debe ir antes de hyperref
+% =============================================================================
+\usepackage{amsmath}
+
+% =============================================================================
+%  5. BIBLIOGRAFÍA
+%  natbib debe ir antes de hyperref
+% =============================================================================
+\usepackage{natbib}
+
+% =============================================================================
+%  6. PAQUETES ADICIONALES Y COMANDOS PERSONALIZADOS
+%  Carga tablas, figuras, tipografía, colores y todos los \newcommand
+%  NOTA: xcolor y unamAzul quedan definidos aquí, antes de hyperref
+% =============================================================================
+\input{Latex/Comands}
+
+% =============================================================================
+%  7. HIPERVÍNCULOS Y PDF  —  VA AL FINAL del preámbulo
+%  unamAzul ya está definido en Comands.tex
+% =============================================================================
+\usepackage[
+    colorlinks = true,
+    linkcolor  = unamAzul,
+    citecolor  = unamAzul,
+    urlcolor   = unamAzul,
+    unicode    = true,
+    breaklinks = true
+]{hyperref}
+\hypersetup{
+    pdftitle   = {Humedales Urbanos y Movilidad: De la Degradacion a la Infraestructura Sustentable},
+    pdfauthor  = {Hernan Galileo Cabrera Garibaldi},
+    pdfsubject = {Ensayo — Desarrollo Sostenible del Medio Ambiente, Maestria en Urbanismo UNAM},
+    pdfcreator = {pdfLaTeX + natbib/bibtex}
+}
+
+% =============================================================================
+%  INICIO DEL DOCUMENTO
+% =============================================================================
+\begin{document}
+\onehalfspacing
+
+% ---------------------------------------------------------------------------
+%  PORTADA
+% ---------------------------------------------------------------------------
+\input{Latex/Portada}
+
+% ---------------------------------------------------------------------------
+%  RESUMEN
+% ---------------------------------------------------------------------------
+\begin{abstract}
+Este ensayo analiza la intersección entre la infraestructura urbana y los ecosistemas
+vitales, enfocándose en los humedales de Xochimilco y el Bosque de Aragón en la
+\cdmx. Se evalúa la sustentabilidad a largo plazo de estos espacios bajo la presión
+del desarrollo de la movilidad urbana, particularmente en el corredor del Anillo
+Periférico. La argumentación transita desde el \termino{marco conceptual} de los
+humedales urbanos, los impactos del crecimiento urbano, la dicotomía
+degradación--remediación, hasta su conexión directa con una propuesta de movilidad
+sostenible como eje articulador de la tesis de maestría del autor.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% ---------------------------------------------------------------------------
+%  CUERPO DEL ENSAYO
+% ---------------------------------------------------------------------------
+\input{1-Marco-Conceptual/Marco_Conceptual}
+\input{2-Cambios-Crecimiento-Urbano/Cambios_Crecimiento_Urbano}
+\input{3-Sostenibilidad-Largo-plazo/Sostenibilidad_largo_plazo}
+\input{4-Conexion-Tesis/Conexion_tesis}
+\input{5-Conclusiones/Conclusiones}
+
+% ---------------------------------------------------------------------------
+%  BIBLIOGRAFÍA
+% ---------------------------------------------------------------------------
+\newpage
+\bibliographystyle{apalike}
+\bibliography{referencias}
+
+\end{document}
