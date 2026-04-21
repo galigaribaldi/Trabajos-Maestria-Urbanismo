@@ -5,26 +5,62 @@
 
 \section{Conexión con la Tesis: Hacia una Movilidad Sustentable en el Anillo Periférico}
 
-\subsection{El Anillo Periférico como frontera ecológica}
-% Análisis de cómo esta vialidad interactúa con los flujos naturales:
-%   - El Periférico Sur-Oriente como barrera entre Xochimilco y la ciudad.
-%   - Interrupción de corredores bióticos y flujos hídricos superficiales.
-%   - Efectos de borde: fragmentación de hábitat, efecto isla, ruido y
-%     contaminación lumínica sobre las zonas de anidación.
-% Mapeo conceptual de los puntos críticos de intersección
-% vialidad--humedal a lo largo del corredor.
+La presente investigación transita de la caracterización ecológica hacia un análisis matemático 
+y teórico de la infraestructura de transporte. El objetivo es evaluar cómo la implementación de un 
+corredor de movilidad masiva en el Anillo Periférico interactúa con los sistemas hídricos de la 
+Ciudad de México, utilizando indicadores de centralidad y cobertura para proponer un modelo de desarrollo 
+urbano resiliente.
 
-\subsection{Replanteando el Corredor de Transporte Público}
-% Propuestas de mitigación para integrar la movilidad masiva con la
-% conservación de los humedales:
-%   - \termino{Infraestructura verde}: camellones arbolados, taludes
-%     permeables y jardines de lluvia.
-%   - Sistemas de Drenaje Urbano Sostenible (SUDS): pavimento permeable
-%     y pozos de infiltración a lo largo del corredor BRT.
-%   - Captación y almacenamiento pluvial para recarga de acuíferos.
-%   - Pasos de fauna subterráneos cada 500\,m para conectividad
-%     entre parches de humedal.
-%   - Estaciones del corredor como \termino{nodos verdes}: techos
-%     vegetados, paneles solares y compostaje.
-% Demostrar que un proyecto de movilidad masiva puede integrarse
-% a la conservación si se diseña bajo principios de resiliencia urbana.
+
+\subsection{El Anillo Periférico como frontera ecológica}
+
+La sustentabilidad a largo plazo de la zona metropolitana depende de la preservación de su biodiversidad, 
+la cual actúa como un regulador térmico y sumidero de carbono crítico \cite{sedema2022programa}. 
+Sin embargo, la infraestructura vial actual, específicamente el Anillo Periférico, funciona como una frontera 
+donde la presión urbana choca con el Suelo de Conservación. Bajo el enfoque del \textit{Modelo VFT}, se analiza 
+esta vialidad no solo como un eje de flujo, sino como una estructura de contención que debe equilibrar la 
+Fuerza Capilar ($FC$) del transporte con la integridad de los ecosistemas circundantes \cite{garibaldi2023vft}.
+
+El análisis topográfico realizado mediante la digitalización de la red completa (Metro, Metrobús, Tren Ligero, RTP, 
+Corredor Concesionado, Mexibús, Mexicable y Trolebús) permite identificar puntos de alta tensión intermodal. 
+Dos de estos nodos estratégicos se localizan en la periferia inmediata de los humedales estudiados:
+
+\begin{itemize}
+    \item \textbf{Nodo Cuemanco:} Ubicado en la intersección de Anillo Periférico Canal de Garay - Bilbao - Cuemanco - Av. Tláhuac. 
+    Este punto presenta una alta convergencia de rutas desarticuladas de RTP y Corredores Concesionados que operan fuera de un sistema de 
+    CETRAM formal \cite{garibaldi2023vft}. Su cercanía al humedal de Cuemanco es crítica, situándose a una distancia menor a los 200 metros de radio, 
+    lo que lo convierte en el punto de mayor riesgo de impacto directo por dispersión de transeúntes.
+    
+    \item \textbf{Nodo Aragón:} Localizado en el tramo de Anillo Periférico Canal de Garay - Constitución de 1917. Aunque se encuentra a una distancia 
+    aproximada de 400 metros del humedal artificial de Aragón, su influencia dentro del radio menor a 1 km lo posiciona como un nodo de transferencia 
+    fundamental para el oriente de la Ciudad \cite{garibaldi2023vft}.
+\end{itemize}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/FuerzaCapilarTotalNodosGoegraficosDispersos.png}
+    \caption{Fuerza Capilar Total Mapeada a través de Nodos Geográficos: Distribución de la carga nodal en la ZMVM \cite{garibaldi2023vft}.}
+    \label{fig:fuerza_capilar_nodos}
+\end{figure}
+
+Estos Hubs se encuentran situados en el oriente de la Ciudad de México, en una zona de alta complejidad política y administrativa que colinda con 
+las alcaldías de Tláhuac, Xochimilco e Iztacalco, y establece conexión directa con los municipios de Nezahualcóyotl, Chimalhuacán y Texcoco en el Estado de México.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/MacroHubsFuerzaCapilarAnilloPerifericoGrafica.png}
+    \caption{Macro-Hubs de Fuerza Capilar Sobre el Anillo Perfiérico (Matemática): Relación de conexiones en nodos desarticulados sobre el Anillo Periférico.}
+    \label{fig:macrohubs_stats}
+\end{figure}
+
+Desde una perspectiva teórica, la implementación de un \textbf{Corredor Circular} sobre el periférico no debe entenderse simplemente como una obra de transporte, 
+sino como una \textit{barrera artificial estructural}. Al consolidar la transferencia intermodal en puntos específicos y matemáticamente optimizados, 
+se evita la dispersión descontrolada de usuarios hacia las zonas de conservación. Este límite físico y operativo refuerza las declaratorias legales de Áreas 
+Naturales Protegidas, convirtiendo a la movilidad masiva en una herramienta de protección del patrimonio natural frente a la urbanización fragmentada \cite{garibaldi2023vft}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/MapaFuerzaCapilarAnilloPerfericoLimpio.png}
+    \caption{Mapa de Fuerza Capilar en la sección del Anillo Periferico: Identificación de nodos críticos en la intersección con humedales urbanos.}
+    \label{fig:mapa_capilar_periferico}
+\end{figure}
