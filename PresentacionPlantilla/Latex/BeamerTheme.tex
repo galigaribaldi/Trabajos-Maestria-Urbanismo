@@ -1,0 +1,225 @@
+% =============================================================================
+%  BeamerTheme.tex — Tema personalizado para presentaciones académicas
+%  Maestría en Urbanismo, UNAM – FES Acatlán
+%
+%  NOTA: Incluido desde main.tex con \input{Latex/BeamerTheme}
+%        en el preámbulo, después de \documentclass{beamer}.
+% =============================================================================
+
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PALETA DE COLORES — Modifica aquí para cambiar el tema visual completo
+% ═════════════════════════════════════════════════════════════════════════════
+\usepackage{xcolor}
+\definecolor{ColorPrincipal}{RGB}{0,   56, 147}   % Azul UNAM
+\definecolor{ColorAcento}   {RGB}{244, 180,   0}  % Oro UNAM
+\definecolor{ColorFondo}    {RGB}{248, 250, 255}  % Blanco azulado suave
+\definecolor{ColorTexto}    {RGB}{20,  20,  20}   % Casi negro
+\definecolor{ColorAlerta}   {RGB}{183, 28,  28}   % Rojo de énfasis
+% ═════════════════════════════════════════════════════════════════════════════
+
+
+% =============================================================================
+%  1. IDIOMA, CODIFICACIÓN Y TIPOGRAFÍA
+% =============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+\usepackage{csquotes}
+\usepackage{microtype}
+\usepackage{lmodern}       % Fuente Latin Modern — mejor calidad que CM
+
+
+% =============================================================================
+%  2. TEMA BASE Y PERSONALIZACIÓN DE COLORES
+% =============================================================================
+\usetheme{Madrid}
+
+% Sobreescribir paleta de Madrid con ColorPrincipal
+\setbeamercolor{palette primary}   {bg=ColorPrincipal, fg=white}
+\setbeamercolor{palette secondary} {bg=ColorPrincipal!85!black, fg=white}
+\setbeamercolor{palette tertiary}  {bg=ColorPrincipal!70!black, fg=white}
+\setbeamercolor{palette quaternary}{bg=ColorPrincipal, fg=white}
+\setbeamercolor{structure}         {fg=ColorPrincipal}
+
+% Título y frame titles
+\setbeamercolor{title}      {fg=white, bg=ColorPrincipal}
+\setbeamercolor{frametitle} {fg=white, bg=ColorPrincipal}
+
+% Bloque estándar
+\setbeamercolor{block title}{fg=white, bg=ColorPrincipal}
+\setbeamercolor{block body} {fg=ColorTexto, bg=ColorFondo}
+
+% Bloque de alerta
+\setbeamercolor{block title alerted}{fg=white, bg=ColorAlerta}
+\setbeamercolor{block body alerted} {fg=ColorTexto, bg=ColorFondo}
+
+% Bloque de ejemplo
+\setbeamercolor{block title example}{fg=white, bg=ColorPrincipal!60!black}
+\setbeamercolor{block body example} {fg=ColorTexto, bg=ColorFondo}
+
+% Acento en texto de énfasis
+\setbeamercolor{alerted text}{fg=ColorAcento!80!black}
+
+% Itemize bullets
+\setbeamercolor{item}{fg=ColorPrincipal}
+\setbeamercolor{subitem}{fg=ColorAcento!80!black}
+
+
+% =============================================================================
+%  3. PERSONALIZACIÓN DE FOOTLINE (pie de diapositiva)
+%     Madrid genera: [Autor | Título] [Sección] [N/Total]
+%     Aquí se redefine para mostrar: [Autor] | [Materia] | [N/Total]
+% =============================================================================
+\makeatletter
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.45\paperwidth, ht=2.5ex, dp=1.5ex, leftskip=0.4cm]{palette primary}%
+      \usebeamerfont{author in head/foot}\insertshortauthor
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.40\paperwidth, ht=2.5ex, dp=1.5ex, center]{palette secondary}%
+      \usebeamerfont{title in head/foot}\MateriaCorta
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.15\paperwidth, ht=2.5ex, dp=1.5ex, rightskip=0.4cm, right]{palette primary}%
+      \usebeamerfont{date in head/foot}%
+      \insertframenumber{} / \inserttotalframenumber
+    \end{beamercolorbox}%
+  }%
+  \vskip0pt%
+}
+\makeatother
+
+
+% =============================================================================
+%  4. HEADLINE — franja de secciones (estilo Madrid simplificado)
+% =============================================================================
+\setbeamertemplate{headline}{%
+  \leavevmode%
+  \begin{beamercolorbox}[wd=\paperwidth, ht=1.5ex, dp=0.5ex]{palette tertiary}%
+    \hspace{0.4cm}{\tiny \insertsectionhead}%
+  \end{beamercolorbox}%
+}
+
+
+% =============================================================================
+%  5. FRAMETITLE CON LÍNEA DORADA
+% =============================================================================
+\setbeamertemplate{frametitle}{%
+  \vspace{0.1cm}%
+  {\bfseries\insertframetitle}\\[-0.05cm]%
+  {\color{ColorAcento}\rule{\textwidth}{1.5pt}}%
+}
+
+
+% =============================================================================
+%  6. PÁGINA DE TÍTULO PERSONALIZADA
+% =============================================================================
+\setbeamertemplate{title page}{%
+  \begin{center}
+    \vspace{0.2cm}
+    % ── Escudos + texto institucional ────────────────────────────────────────
+    \noindent%
+    \begin{minipage}[c]{0.13\textwidth}
+      \centering
+      \includegraphics[height=1.3cm]{UNAM_crest_blue.pdf}
+    \end{minipage}%
+    \begin{minipage}[c]{0.72\textwidth}
+      \centering
+      {\tiny\textbf{UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO}}\\[0.05cm]
+      {\tiny\textbf{\ProgramaCorto}}\\[0.05cm]
+      {\tiny\textbf{\Facultad}}
+    \end{minipage}%
+    \begin{minipage}[c]{0.13\textwidth}
+      \centering
+      \includegraphics[height=1.3cm]{escudo-fes-azul.png}
+    \end{minipage}
+
+    \vspace{0.15cm}
+    {\color{ColorAcento}\rule{0.85\textwidth}{1.5pt}}
+    \vspace{0.3cm}
+
+    {\large\bfseries\color{ColorPrincipal}\inserttitle}\\[0.3cm]
+    {\small\color{ColorPrincipal}\insertsubtitle}
+
+    \vspace{0.5cm}
+    {\color{ColorAcento}\rule{0.5\textwidth}{0.8pt}}
+    \vspace{0.3cm}
+
+    {\small\textbf{\insertauthor}}\\[0.15cm]
+    {\scriptsize PROFESOR ASIGNADO: \ProfesorAsignado}\\[0.1cm]
+    {\scriptsize SEMESTRE: \Semestre}
+
+    \vfill
+    {\scriptsize\insertdate}
+  \end{center}
+}
+
+
+% =============================================================================
+%  7. DIAPOSITIVA DE SECCIÓN
+%     Solo aparece a partir de la SEGUNDA sección.
+%     La primera sección arranca directo (el TOC ya fue la transición).
+% =============================================================================
+\newcounter{secciones}
+\setcounter{secciones}{0}
+
+\AtBeginSection[]{%
+  \addtocounter{secciones}{1}%
+  \ifnum\value{secciones}>1
+    \begin{frame}[plain, noframenumbering]
+      \begin{center}
+        \vfill
+        {\color{ColorAcento}\rule{0.6\textwidth}{1.5pt}}\\[0.4cm]
+        {\Large\bfseries\color{ColorPrincipal}\insertsectionhead}\\[0.4cm]
+        {\color{ColorAcento}\rule{0.6\textwidth}{1.5pt}}
+        \vfill
+      \end{center}
+    \end{frame}
+  \fi
+}
+
+
+% =============================================================================
+%  8. PAQUETES PARA CONTENIDO DE DIAPOSITIVAS
+% =============================================================================
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{natbib}
+\usepackage{lipsum}     % Texto de relleno — eliminar en la presentación final
+
+% Ruta de búsqueda de imágenes:
+%   img/        → carpeta local de la presentación
+%   ../Img/     → carpeta compartida en la raíz del proyecto (escudos, logos)
+%   Niveles adicionales para presentaciones anidadas en subcarpetas
+\graphicspath{{img/}{../Img/}{../../Img/}{../../../Img/}}
+
+% TikZ — diagramas de flujo y figuras vectoriales
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes.geometric, arrows.meta, calc}
+
+
+% =============================================================================
+%  9. COMANDOS DE UTILIDAD
+% =============================================================================
+
+% Fuente debajo de figura
+\newcommand{\fuentefigura}[1]{%
+  \par{\tiny\textit{Fuente: #1}}%
+}
+
+% Título azul visible dentro del frame — alternativa al frametitle del tema.
+% USO: útil en frames [plain] o cuando se quiere el título en el área de contenido.
+%   \tituloframe{Mi título de diapositiva}
+\newcommand{\tituloframe}[1]{%
+  {\large\bfseries\color{ColorPrincipal}#1}\\[-0.05cm]%
+  {\color{ColorAcento}\rule{\textwidth}{1.5pt}}\\[0.3cm]%
+}
+
+% Término definido por primera vez
+\newcommand{\termino}[1]{\textit{#1}}
+
+% Abreviaturas
+\newcommand{\cdmx}{Ciudad de México}
+\newcommand{\zmvm}{Zona Metropolitana del Valle de México}
