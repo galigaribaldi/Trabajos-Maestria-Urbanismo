@@ -23,6 +23,11 @@
 %  2. FIGURAS
 %  caption DEBE cargarse antes de hyperref
 % =============================================================================
+\usepackage{graphicx}
+% Ruta de búsqueda de imágenes:
+%   img/          → carpeta local del ensayo
+%   ../../../Img/ → carpeta compartida en raíz del proyecto (escudos UNAM/FES)
+\graphicspath{{img/}{../../../Img/}}
 \usepackage{caption}           % Control fino de pies de figura y tabla
 \usepackage{subcaption}        % Subfiguras (a), (b), (c)...
 \usepackage{float}             % Opción [H] para fijar figuras en su lugar
