@@ -1,0 +1,69 @@
+% !TeX program = pdflatex
+% !TeX encoding = UTF-8
+% =============================================================================
+%  PLANTILLA — Presentación Beamer con Tema UNAM
+%  Maestría en Urbanismo, UNAM – FES Acatlán
+%  Versión 1.0 — Abril 2026
+%
+%  USO:
+%    1. Edita el bloque "PERSONALIZACIÓN" con los datos de tu presentación.
+%    2. Edita los colores en Latex/BeamerTheme.tex (sección PALETA DE COLORES).
+%    3. Completa las secciones en /secciones/ con tu contenido.
+%    4. Compila con: pdflatex → bibtex → pdflatex → pdflatex
+% =============================================================================
+
+\documentclass[aspectratio=169, 12pt]{beamer}
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PERSONALIZACIÓN — Edita solo esta sección para cada nueva presentación
+% ═════════════════════════════════════════════════════════════════════════════
+\newcommand{\TituloPresent}{Densificación Urbana y Movilidad Sostenible}
+\newcommand{\SubtituloPresent}{Modelos de Desarrollo Compacto en la Zona Metropolitana}
+\newcommand{\Autor}{Nombre Apellido Paterno Apellido Materno}
+\newcommand{\MateriaCorta}{Materia — Semestre 2026-2}   % Aparece en el pie
+\newcommand{\ProfesorAsignado}{Nombre del Profesor}
+\newcommand{\Semestre}{2026-2}
+\newcommand{\ProgramaCorto}{Maestría y Doctorado en Urbanismo}
+\newcommand{\Facultad}{FES Acatlán}
+\newcommand{\FechaPresent}{Naucalpan, Abril 2026}
+% ═════════════════════════════════════════════════════════════════════════════
+
+% Metadatos de Beamer (usa las variables de arriba)
+\title{\TituloPresent}
+\subtitle{\SubtituloPresent}
+\author{\Autor}
+\date{\FechaPresent}
+
+% =============================================================================
+%  TEMA Y PAQUETES — cargados desde Latex/BeamerTheme.tex
+% =============================================================================
+\input{Latex/BeamerTheme}
+
+% =============================================================================
+%  DOCUMENTO
+% =============================================================================
+\begin{document}
+
+% ── Portada ──────────────────────────────────────────────────────────────────
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ── Índice ───────────────────────────────────────────────────────────────────
+\begin{frame}{Contenido}
+  \tableofcontents
+\end{frame}
+
+% ── Secciones ────────────────────────────────────────────────────────────────
+\input{secciones/s01_intro}
+\input{secciones/s02_desarrollo}
+\input{secciones/s03_conclusiones}
+
+% ── Bibliografía ─────────────────────────────────────────────────────────────
+\section*{Referencias}
+\begin{frame}[allowframebreaks]{Referencias}
+  \bibliographystyle{apalike}
+  \bibliography{referencias}
+\end{frame}
+
+\end{document}
