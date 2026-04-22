@@ -330,3 +330,6 @@ TSWLatexianTemp*
 
 ### Archvios Claude
 .claude/*
+
+### Archvios VSCODE
+.vscode/
