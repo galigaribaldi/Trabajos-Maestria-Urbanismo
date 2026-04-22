@@ -1,0 +1,157 @@
+% =============================================================================
+%  Comands.tex — Paquetes adicionales y comandos personalizados
+%  Plantilla: Artículo Académico sin Portada
+%
+%  NOTA: Cargado desde main.tex con \input{Latex/Comands}
+%        Debe cargarse ANTES de \usepackage{hyperref}
+% =============================================================================
+
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PALETA DE COLORES — Modifica aquí para cambiar el tema visual completo
+% ═════════════════════════════════════════════════════════════════════════════
+\usepackage[table]{xcolor}
+\definecolor{ColorPrincipal}{RGB}{0,   56, 147}   % Azul UNAM
+\definecolor{ColorAcento}   {RGB}{244, 180,   0}  % Oro UNAM
+\definecolor{ColorFondoTabla}{RGB}{240, 240, 240}  % Gris claro para tablas
+\definecolor{ColorAlerta}   {RGB}{183,  28,  28}  % Rojo para notas de revisión
+% ═════════════════════════════════════════════════════════════════════════════
+
+
+% =============================================================================
+%  1. SUBRAYADO (necesario para palabras clave)
+% =============================================================================
+\usepackage[normalem]{ulem}   % \uline{} — normalem preserva \emph en cursiva
+
+
+% =============================================================================
+%  2. TABLAS
+% =============================================================================
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+
+% =============================================================================
+%  3. FIGURAS
+%  caption DEBE cargarse antes de hyperref
+% =============================================================================
+\usepackage{graphicx}
+% Ruta de búsqueda de imágenes:
+%   img/          → carpeta local del artículo
+%   ../../../Img/ → carpeta compartida en raíz del proyecto (escudos UNAM/FES)
+\graphicspath{{img/}{../../../Img/}}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{wrapfig}
+
+
+% =============================================================================
+%  4. TIPOGRAFÍA Y ESPACIADO
+% =============================================================================
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage[parfill]{parskip}
+
+
+% =============================================================================
+%  5. ENCABEZADOS Y PIES DE PÁGINA
+% =============================================================================
+\usepackage{fancyhdr}
+\setlength{\headheight}{25pt}
+\addtolength{\topmargin}{-10pt}
+
+% Estilo normal (todas las páginas)
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\color{ColorPrincipal}\textbf{\Materia}}
+\fancyhead[R]{\footnotesize\Autor}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{{\color{ColorPrincipal}\rule{\linewidth}{0.6pt}}}
+
+% Pie de página: materia y fecha a la izquierda, número a la derecha
+\fancyfoot[L]{\footnotesize\color{ColorPrincipal}\MateriaCorta\ —\ \FechaEntrega}
+\fancyfoot[R]{\footnotesize\thepage}
+\renewcommand{\footrulewidth}{0pt}
+
+% Estilo primera página (mismo encabezado, mismo pie)
+\fancypagestyle{primerapagina}{%
+  \fancyhf{}
+  \fancyhead[L]{\footnotesize\color{ColorPrincipal}\textbf{\Materia}}
+  \fancyhead[R]{\footnotesize\Autor}
+  \renewcommand{\headrulewidth}{0.6pt}
+  \renewcommand{\headrule}{{\color{ColorPrincipal}\rule{\linewidth}{0.6pt}}}
+  \fancyfoot[L]{\footnotesize\color{ColorPrincipal}\MateriaCorta\ —\ \FechaEntrega}
+  \fancyfoot[R]{\footnotesize\thepage}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+
+% =============================================================================
+%  6. BLOQUE DE TÍTULO SIN PORTADA
+%     Comando que reemplaza la portada: título + línea + palabras clave.
+%     Llamar con \cabeceroarticulo al inicio del documento.
+% =============================================================================
+\newcommand{\cabeceroarticulo}{%
+  \thispagestyle{primerapagina}%
+  \vspace*{0.4cm}%
+  \noindent{\Large\bfseries \TituloArticulo}\\[0.15cm]%
+  {\color{ColorPrincipal}\rule{\textwidth}{2pt}}\\[0.3cm]%
+  \noindent\textbf{Palabras Clave:}\ \PalabrasClave%
+  \vspace{0.7cm}\par%
+}
+
+
+% =============================================================================
+%  7. CONFIGURACIÓN DE FIGURAS
+% =============================================================================
+\renewcommand*{\thesubfigure}{(\alph{subfigure})}
+
+\captionsetup{
+  font            = small,
+  labelfont       = bf,
+  labelsep        = period,
+  justification   = raggedright,
+  singlelinecheck = false
+}
+
+
+% =============================================================================
+%  8. COMANDOS DE PRESENTACIÓN
+% =============================================================================
+
+% Fuente debajo de figura
+% Uso: \fuentefigura{Elaboración propia con base en \citep{autor2024}.}
+\newcommand{\fuentefigura}[1]{%
+  \par\vspace{2pt}{\small\textit{Fuente: #1}}%
+}
+
+% Nota al margen de revisión (comentar antes de entrega)
+% Uso: \pendiente{Completar con datos de campo}
+\newcommand{\pendiente}[1]{%
+  \marginpar{\footnotesize\color{ColorAlerta}\textbf{[Pendiente:} #1\textbf{]}}%
+}
+
+% Término definido por primera vez
+\newcommand{\termino}[1]{\textit{#1}}
+
+% Bloque de cita destacada
+% Uso: \citaclave{Texto de la definición clave.}
+\newcommand{\citaclave}[1]{%
+  \begin{quote}
+    \color{ColorPrincipal}\itshape #1
+  \end{quote}%
+}
+
+
+% =============================================================================
+%  9. ABREVIATURAS — agrega las tuyas aquí
+% =============================================================================
+\newcommand{\cdmx}{Ciudad de México}
+\newcommand{\zmvm}{Zona Metropolitana del Valle de México}
+\newcommand{\unam}{Universidad Nacional Autónoma de México}
+\newcommand{\gis}{\textsc{gis}}
