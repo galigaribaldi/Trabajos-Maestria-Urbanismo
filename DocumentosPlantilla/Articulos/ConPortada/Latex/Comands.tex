@@ -1,0 +1,122 @@
+% =============================================================================
+%  Comands.tex — Paquetes adicionales y comandos personalizados
+%  Plantilla: Artículo Académico con Portada Minimalista
+%
+%  NOTA: Cargado desde main.tex con \input{Latex/Comands}
+%        Debe cargarse ANTES de \usepackage{hyperref}
+% =============================================================================
+
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PALETA DE COLORES — Modifica aquí para cambiar el tema visual completo
+% ═════════════════════════════════════════════════════════════════════════════
+\usepackage[table]{xcolor}
+\definecolor{ColorPrincipal}{RGB}{0,   56, 147}   % Azul UNAM
+\definecolor{ColorAcento}   {RGB}{244, 180,   0}  % Oro UNAM
+\definecolor{ColorTexto}    {RGB}{30,  30,  30}   % Casi negro para cuerpo
+\definecolor{ColorFondoTabla}{RGB}{240, 240, 240}  % Gris claro para tablas
+\definecolor{ColorAlerta}   {RGB}{183,  28,  28}  % Rojo para notas de revisión
+% ═════════════════════════════════════════════════════════════════════════════
+
+
+% =============================================================================
+%  1. TABLAS
+% =============================================================================
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+
+% =============================================================================
+%  2. FIGURAS
+%  caption DEBE cargarse antes de hyperref
+% =============================================================================
+\usepackage{graphicx}
+% Ruta de búsqueda de imágenes:
+%   img/          → carpeta local del artículo
+%   ../../../Img/ → carpeta compartida en raíz del proyecto (escudos UNAM/FES)
+\graphicspath{{img/}{../../../Img/}}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{wrapfig}
+
+
+% =============================================================================
+%  3. TIPOGRAFÍA Y ESPACIADO
+% =============================================================================
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage[parfill]{parskip}
+
+
+% =============================================================================
+%  4. ENCABEZADOS Y PIES DE PÁGINA
+% =============================================================================
+\usepackage{fancyhdr}
+\setlength{\headheight}{25pt}
+\addtolength{\topmargin}{-10pt}
+
+% Estilo normal (páginas 2 en adelante)
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\color{ColorPrincipal}\textbf{\MateriaCorta}}
+\fancyhead[R]{\footnotesize\Autor}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{{\color{ColorPrincipal}\rule{\linewidth}{0.6pt}}}
+\fancyfoot[L]{\footnotesize\color{ColorPrincipal}\MateriaCorta\ —\ \FechaEntrega}
+\fancyfoot[R]{\footnotesize\thepage}
+\renewcommand{\footrulewidth}{0pt}
+
+% Portada: sin encabezado ni pie (se aplica en Portada.tex con \thispagestyle{empty})
+
+
+% =============================================================================
+%  5. CONFIGURACIÓN DE FIGURAS
+% =============================================================================
+\renewcommand*{\thesubfigure}{(\alph{subfigure})}
+
+\captionsetup{
+  font            = small,
+  labelfont       = bf,
+  labelsep        = period,
+  justification   = raggedright,
+  singlelinecheck = false
+}
+
+
+% =============================================================================
+%  6. COMANDOS DE PRESENTACIÓN
+% =============================================================================
+
+% Fuente debajo de figura
+\newcommand{\fuentefigura}[1]{%
+  \par\vspace{2pt}{\small\textit{Fuente: #1}}%
+}
+
+% Nota al margen de revisión (comentar antes de entrega)
+\newcommand{\pendiente}[1]{%
+  \marginpar{\footnotesize\color{ColorAlerta}\textbf{[Pendiente:} #1\textbf{]}}%
+}
+
+% Término definido por primera vez
+\newcommand{\termino}[1]{\textit{#1}}
+
+% Cita o definición destacada
+\newcommand{\citaclave}[1]{%
+  \begin{quote}
+    \color{ColorPrincipal}\itshape #1
+  \end{quote}%
+}
+
+
+% =============================================================================
+%  7. ABREVIATURAS — agrega las tuyas aquí
+% =============================================================================
+\newcommand{\cdmx}{Ciudad de México}
+\newcommand{\zmvm}{Zona Metropolitana del Valle de México}
+\newcommand{\unam}{Universidad Nacional Autónoma de México}
+\newcommand{\gis}{\textsc{gis}}

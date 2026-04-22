@@ -1,0 +1,102 @@
+% !TeX program = pdflatex
+% !TeX encoding = UTF-8
+% =============================================================================
+%  PLANTILLA — Artículo Académico sin Portada
+%  Maestría en Urbanismo, UNAM – FES Acatlán
+%  Versión 1.0 — Abril 2026
+%
+%  USO:
+%    1. Edita el bloque "PERSONALIZACIÓN" con los datos del entregable.
+%    2. Cada palabra clave va dentro de \uline{} separadas por comas.
+%    3. Completa las secciones en /secciones/ con tu contenido.
+%    4. Agrega tus referencias en referencias.bib.
+%    5. Compila con: pdflatex → bibtex → pdflatex → pdflatex
+% =============================================================================
+
+\documentclass[12pt,a4paper]{article}
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PERSONALIZACIÓN — Edita solo esta sección para cada nuevo entregable
+% ═════════════════════════════════════════════════════════════════════════════
+\newcommand{\TituloArticulo}{Título del Artículo Académico}
+\newcommand{\Autor}{Hernán Galileo Cabrera Garibaldi}
+\newcommand{\Materia}{Nombre de la Materia}
+\newcommand{\MateriaCorta}{Materia — Semestre 2026-2}   % Aparece en el pie
+\newcommand{\FechaEntrega}{Abril 2026}
+
+% Palabras clave: encierra cada término en \uline{} separado por comas
+\newcommand{\PalabrasClave}{%
+  \uline{palabra clave 1},\ %
+  \uline{palabra clave 2},\ %
+  \uline{palabra clave 3}%
+}
+% ═════════════════════════════════════════════════════════════════════════════
+
+% =============================================================================
+%  1. IDIOMA Y CODIFICACIÓN
+% =============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+\usepackage{csquotes}
+
+% =============================================================================
+%  2. LAYOUT BASE
+% =============================================================================
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm}
+
+% =============================================================================
+%  3. PAQUETES ESENCIALES
+% =============================================================================
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{natbib}
+\usepackage{lipsum}   % Texto de relleno — eliminar en el documento final
+
+% =============================================================================
+%  4. PAQUETES ADICIONALES, COLORES Y COMANDOS PERSONALIZADOS
+%     Ajusta paleta de colores y comandos en Latex/Comands.tex
+% =============================================================================
+\input{Latex/Comands}
+
+% =============================================================================
+%  5. HIPERVÍNCULOS — siempre al final del preámbulo
+% =============================================================================
+\usepackage[
+    colorlinks = true,
+    linkcolor  = ColorPrincipal,
+    citecolor  = ColorPrincipal,
+    urlcolor   = ColorPrincipal,
+    unicode    = true,
+    breaklinks = true
+]{hyperref}
+\hypersetup{
+    pdftitle   = {\TituloArticulo},
+    pdfauthor  = {\Autor},
+    pdfsubject = {Artículo — \Materia, Maestría en Urbanismo UNAM},
+    pdfcreator = {pdfLaTeX + natbib/bibtex}
+}
+
+% =============================================================================
+%  DOCUMENTO
+% =============================================================================
+\begin{document}
+\onehalfspacing
+
+% ── Bloque de título (reemplaza la portada) ───────────────────────────────────
+\cabeceroarticulo
+
+% ── Secciones ─────────────────────────────────────────────────────────────────
+\input{secciones/1-Introduccion}
+\clearpage
+\input{secciones/2-Desarrollo}
+\clearpage
+\input{secciones/3-Conclusiones}
+
+% ── Bibliografía ──────────────────────────────────────────────────────────────
+\newpage
+\bibliographystyle{apalike}
+\bibliography{referencias}
+
+\end{document}

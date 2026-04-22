@@ -1,0 +1,113 @@
+% !TeX program = pdflatex
+% !TeX encoding = UTF-8
+% =============================================================================
+%  PLANTILLA — Ensayo Académico sin Portada
+%  Maestría en Urbanismo, UNAM – FES Acatlán
+%  Versión 1.0 — Abril 2026
+%
+%  USO:
+%    1. Edita el bloque "PERSONALIZACIÓN" con los datos del entregable.
+%    2. Completa las secciones en /secciones/ con tu contenido.
+%    3. Agrega tus referencias en referencias.bib.
+%    4. Compila con: pdflatex → bibtex → pdflatex → pdflatex
+%
+%  DIFERENCIAS vs. ConPortada:
+%    · Sin portada independiente — el encabezado del documento actúa como portada
+%    · Incluye TOC, índice de figuras y resumen (abstract)
+%    · Estructura de capítulos completa
+% =============================================================================
+
+\documentclass[12pt,a4paper]{article}
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PERSONALIZACIÓN — Edita solo esta sección para cada nuevo entregable
+% ═════════════════════════════════════════════════════════════════════════════
+\newcommand{\TituloEnsayo}{Título del Ensayo Académico}
+\newcommand{\SubtituloEnsayo}{Subtítulo o descripción ampliada del tema}
+\newcommand{\Autor}{Hernán Galileo Cabrera Garibaldi}
+\newcommand{\Materia}{Nombre de la Materia}
+\newcommand{\MateriaCorta}{Materia — Semestre 2026-2}   % Aparece en encabezado y pie
+\newcommand{\ProfesorAsignado}{Nombre del Profesor Asignado}
+\newcommand{\Semestre}{2026-2}
+\newcommand{\FechaEntrega}{Abril 2026}
+% ═════════════════════════════════════════════════════════════════════════════
+
+% =============================================================================
+%  1. IDIOMA Y CODIFICACIÓN
+% =============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+\usepackage{csquotes}
+
+% =============================================================================
+%  2. LAYOUT BASE
+% =============================================================================
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm}
+
+% =============================================================================
+%  3. PAQUETES ESENCIALES
+% =============================================================================
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{natbib}
+\usepackage{lipsum}   % Texto de relleno — eliminar en el documento final
+
+% =============================================================================
+%  4. PAQUETES ADICIONALES, COLORES Y COMANDOS PERSONALIZADOS
+% =============================================================================
+\input{Latex/Comands}
+
+% =============================================================================
+%  5. HIPERVÍNCULOS — siempre al final del preámbulo
+% =============================================================================
+\usepackage[
+    colorlinks = true,
+    linkcolor  = ColorPrincipal,
+    citecolor  = ColorPrincipal,
+    urlcolor   = ColorPrincipal,
+    unicode    = true,
+    breaklinks = true
+]{hyperref}
+\hypersetup{
+    pdftitle   = {\TituloEnsayo},
+    pdfauthor  = {\Autor},
+    pdfsubject = {Ensayo — \Materia, Maestría en Urbanismo UNAM},
+    pdfcreator = {pdfLaTeX + natbib/bibtex}
+}
+
+% =============================================================================
+%  DOCUMENTO
+% =============================================================================
+\begin{document}
+\onehalfspacing
+
+% ── Bloque de título sin portada ──────────────────────────────────────────────
+\cabeceroensayo
+
+% ── Resumen ───────────────────────────────────────────────────────────────────
+\begin{abstract}
+  \lipsum[1]   % Reemplaza con tu resumen
+\end{abstract}
+
+% ── Índices ───────────────────────────────────────────────────────────────────
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+
+% ── Cuerpo del ensayo ─────────────────────────────────────────────────────────
+\input{secciones/1-Introduccion}
+\clearpage
+\input{secciones/2-Desarrollo}
+\clearpage
+\input{secciones/3-Conclusiones}
+
+% ── Bibliografía ──────────────────────────────────────────────────────────────
+\newpage
+\bibliographystyle{apalike}
+\bibliography{referencias}
+
+\end{document}
