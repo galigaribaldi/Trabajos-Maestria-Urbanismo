@@ -1,0 +1,72 @@
+% =============================================================================
+%  s01_intro.tex — Sección 1: Introducción / Planteamiento del problema
+%  Sustituye \lipsum con tu contenido real.
+% =============================================================================
+
+\section{Introducción}
+
+% ── Frame: Solo texto — mensaje clave, cita o puente entre secciones ─────────
+%    USO: para declaraciones fuertes, preguntas retóricas o transiciones.
+%    Copia y adapta. No lleva título de frame ni elementos gráficos.
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture, overlay]
+    % Banda lateral de color
+    \fill[ColorPrincipal]
+      (current page.north west) rectangle
+      ([xshift=0.35cm] current page.south west);
+    % Línea dorada en el borde de la banda
+    \fill[ColorAcento]
+      ([xshift=0.32cm] current page.north west) rectangle
+      ([xshift=0.35cm] current page.south west);
+  \end{tikzpicture}
+  \hspace{0.8cm}%
+  \begin{minipage}{0.88\textwidth}
+    \vspace{2.2cm}
+    {\color{ColorAcento}\rule{0.5\textwidth}{1.2pt}}\\[0.5cm]
+    {\large\bfseries\color{ColorPrincipal}
+      ¿Qué es un Humedal?}\\[0.6cm]
+    {\normalsize\color{black}
+      De acuerdo con la Convención de Ramsar de 1971, los humedales se definen técnicamente 
+      como ecosistemas diversos que actúan como una zona de transición entre los sistemas acuáticos y terrestres, 
+      abarcando ambientes tales como turberas, pantanos, llanuras de inundación, lagos y ríos \cite{vergara2024humedales}.
+    }\\[0.5cm]
+    {\color{ColorAcento}\rule{0.3\textwidth}{0.8pt}}
+    \vfill
+  \end{minipage}
+\end{frame}
+
+% ── Frame: Contexto ───────────────────────────────────────────────────────────
+% NOTA \pause: revela bullets uno a uno durante la presentación en vivo,
+%   pero genera páginas PDF duplicadas. Descomenta solo si presentas en proyector.
+\begin{frame}{Contexto y Problemática}
+  Para efectos de este estudio, se establece una diferenciación clave basada en el origen y la gestión de estos sistemas en la capital:
+  \begin{itemize}
+    \item \textbf{Humedales Naturales (Remanentes lacustres):} Representan los vestigios del antiguo sistema de lagos de la Cuenca de México.
+    El caso de \textbf{Xochimilco} destaca como un humedal permanente constituido por una red de canales y lagunas\textit{Sitio Ramsar 1363} \cite{paot2006xochimilco}.
+    \item \textbf{Humedales Artificiales y Construidos (Ingeniería Ecológica):} Son sistemas diseñados para emular procesos naturales con fines 
+    de remediación. Un ejemplo emblemático es el humedal del \textbf{Bosque de San Juan de Aragón}.
+  \end{itemize}
+\end{frame}
+
+% ── Frame: Objetivos ─────────────────────────────────────────────────────────
+\begin{frame}{Importancia tridimensional en el ámbito urbano}
+  \vspace{0.4cm}
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}
+      \centering
+      {\color{ColorPrincipal}\Large\textbf{Dimensión Social}}\\[0.1cm]
+      {\small Ofrecen beneficios directos a la salud pública y el bienestar ciudadano}
+      {\small (recreación, investigación y educación ambiental)}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      {\color{ColorPrincipal}\Large\textbf{Dimensión Política}}\\[0.1cm]
+      {\small Tensión entre la protección jurídica y la presión del desarrollo urbano}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      {\color{ColorPrincipal}\Large\textbf{Dimensión Ambiental}}\\[0.1cm]
+      {\small Los humedales urbanos actúan como reguladores críticos del entorno biofísico}
+    \end{column}
+  \end{columns}
+\end{frame}
