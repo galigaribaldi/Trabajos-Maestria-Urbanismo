@@ -117,12 +117,25 @@
 % =============================================================================
 \setbeamertemplate{title page}{%
   \begin{center}
-    \vspace{0.3cm}
-    {\tiny\textbf{UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO}}\\[0.05cm]
-    {\tiny\textbf{\ProgramaCorto}}\\[0.05cm]
-    {\tiny\textbf{\Facultad}}
-    \vspace{0.1cm}
+    \vspace{0.2cm}
+    % ── Escudos + texto institucional ────────────────────────────────────────
+    \noindent%
+    \begin{minipage}[c]{0.13\textwidth}
+      \centering
+      \includegraphics[height=1.3cm]{UNAM_crest_blue.pdf}
+    \end{minipage}%
+    \begin{minipage}[c]{0.72\textwidth}
+      \centering
+      {\tiny\textbf{UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO}}\\[0.05cm]
+      {\tiny\textbf{\ProgramaCorto}}\\[0.05cm]
+      {\tiny\textbf{\Facultad}}
+    \end{minipage}%
+    \begin{minipage}[c]{0.13\textwidth}
+      \centering
+      \includegraphics[height=1.3cm]{escudo-fes-azul.png}
+    \end{minipage}
 
+    \vspace{0.15cm}
     {\color{ColorAcento}\rule{0.85\textwidth}{1.5pt}}
     \vspace{0.3cm}
 
@@ -176,6 +189,11 @@
 \usepackage{natbib}
 \usepackage{lipsum}     % Texto de relleno — eliminar en la presentación final
 
+% Ruta de búsqueda de imágenes:
+%   img/        → carpeta local de la presentación
+%   ../../../Img/ → carpeta compartida en raíz del proyecto (escudos, logos)
+\graphicspath{{img/}{../Img/}{../../Img/}{../../../Img/}}
+
 % TikZ — diagramas de flujo y figuras vectoriales
 \usepackage{tikz}
 \usetikzlibrary{positioning, shapes.geometric, arrows.meta, calc}
@@ -188,6 +206,14 @@
 % Fuente debajo de figura
 \newcommand{\fuentefigura}[1]{%
   \par{\tiny\textit{Fuente: #1}}%
+}
+
+% Título azul visible dentro del frame — alternativa al frametitle del tema.
+% USO: útil en frames [plain] o cuando se quiere el título en el área de contenido.
+%   \tituloframe{Mi título de diapositiva}
+\newcommand{\tituloframe}[1]{%
+  {\large\bfseries\color{ColorPrincipal}#1}\\[-0.05cm]%
+  {\color{ColorAcento}\rule{\textwidth}{1.5pt}}\\[0.3cm]%
 }
 
 % Término definido por primera vez
