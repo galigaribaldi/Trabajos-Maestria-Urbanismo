@@ -5,153 +5,122 @@
 
 \section{Marco Conceptual y Análisis}
 
-% ── Frame: Tres modelos ───────────────────────────────────────────────────────
+
+% --- Diapositiva 2.1 y 2.2: Crisis de Expansión y Motorización ---
+\begin{frame}{La Crisis de la Expansión y Motorización en México}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Expansión vs. Población}
+                De acuerdo con datos de SEDESOL, las ciudades mexicanas han crecido físicamente a tasas desproporcionadas \cite{SEDESOL2012}:
+                \begin{itemize}
+                    \item \textbf{Superficie:} Incremento de \textbf{6 veces}.
+                    \item \textbf{Población:} Incremento de solo \textbf{1.9 veces}.
+                \end{itemize}
+                \textbf{\small Este modelo disperso genera ineficiencia energética y segregación \cite{ITDP_Espacio}.}
+            \end{block}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{alertblock}{Fenómeno de Motorización}
+                Según el IMCO, el parque vehicular crece a una tasa anual del \textbf{5.3\%}, lo que representa un ritmo \textbf{3.5 veces más rápido} 
+                que el crecimiento poblacional (1.5\%) \cite{IMCO2019Doc}. \\
+                \textbf{\small El transporte es actualmente el sector de mayor consumo energético nacional \cite{ITDP_Espacio}.}
+              \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% --- Diapositiva: Modelos de Densificación (Solicitada) ---
 \begin{frame}{Modelos de Densificación Evaluados}
   \begin{columns}[T]
     \begin{column}{0.32\textwidth}
       \begin{block}{Modelo 1: TOD}
-        \textit{Transit-Oriented\\Development}\\[0.2cm]
-        Copenhague, Estocolmo\\[0.1cm]
-        {\small Principio: compacidad alrededor de nodos de transporte masivo.}
+        \textbf{\textit{Transit-Oriented\\Development}\\[0.2cm]}
+        ¿Dónde se implementó? Copenhague, Estocolmo\\[0.1cm]
+        {\small Principio: compacidad alrededor de nodos de transporte masivo \cite{ITDP_Espacio}.}
       \end{block}
     \end{column}
     \begin{column}{0.32\textwidth}
       \begin{block}{Modelo 2: Barrio}
-        \textit{Rehabilitación\\incremental}\\[0.2cm]
-        Medellín, Bogotá\\[0.1cm]
+        \textbf{\textit{Rehabilitación\\incremental}\\[0.2cm]}
+        ¿Dónde se implementó? Medellín, Bogotá\\[0.1cm]
         {\small Principio: participación comunitaria y urbanismo social.}
       \end{block}
     \end{column}
     \begin{column}{0.32\textwidth}
       \begin{block}{Modelo 3: Corredor}
-        \textit{Corredor\\urbano mixto}\\[0.2cm]
-        Ciudad de México\\[0.1cm]
+        \textbf{\textit{Corredor\\urbano mixto}\\[0.2cm]}
+        ¿Dónde se implementó? Ciudad de México\\[0.1cm]
         {\small Principio: mixticidad de usos sobre ejes de movilidad masiva.}
       \end{block}
     \end{column}
   \end{columns}
 \end{frame}
 
-% ── Frame: Tabla comparativa ─────────────────────────────────────────────────
-\begin{frame}{Comparativa de Modelos}
-  \begin{table}
-    \centering
-    \small
-    \begin{tabularx}{\textwidth}{@{} l X X X @{}}
-      \toprule
-      \textbf{Criterio}   & \textbf{TOD} & \textbf{Barrio} & \textbf{Corredor} \\
-      \midrule
-      Equidad             & Media        & Alta            & Media--Alta \\
-      Eficiencia energét. & Alta         & Media           & Alta \\
-      Viabilidad inst.    & Media        & Alta            & Media \\
-      Escala de impacto   & Metropolit.  & Local           & Zonal \\
-      \bottomrule
-    \end{tabularx}
-    \fuentefigura{Elaboración propia con base en \citet{lore2024densidad}.}
-  \end{table}
-\end{frame}
+% ── Frame: Reporte 00 - Logs de Ejecución ────────────────────────────────────
+\begin{frame}[fragile]{Reporte 00: Ejecución Algorítmica y Consolidación}
+  \begin{block}{Logs de Construcción del Grafo (VFT\_Model)}
+    \fontsize{7pt}{8pt}\selectfont
+    \begin{verbatim}
+      2026-04-18 20:46:41 | INFO | Fase 1 y 2: Extrayendo nodos y trazos base...
+      2026-04-18 20:46:43 | INFO | Fase 2 completada: 65220 aristas creadas.
+      2026-04-18 20:46:43 | INFO | Grafo Base: 11115 Nodos y 32344 Segmentos.
+      2026-04-18 20:46:43 | WARN | Eliminadas 1562 aristas phantom (> 5 km).
+      2026-04-18 20:46:43 | INFO | Fase 3: Integrando sistemas (Tolerancia: 85.0m)...
+      2026-04-18 20:47:09 | INFO | Se crearon 20482 aristas de Transbordo Peatonal.
+      2026-04-18 20:47:09 | INFO | Impedancia aplicada exitosamente a 25197 segmentos.
+      2026-04-18 20:47:09 | INFO | Grafo final: 11115 nodos, 45679 aristas.
+    \end{verbatim}
+  \end{block}
 
-% ── Frame: Cita destacada ────────────────────────────────────────────────────
-\begin{frame}{Argumento Central}
-  \vfill
-  \begin{center}
-    \color{ColorPrincipal}
-    \Large\itshape
-    ``La ciudad compacta no es una utopía formal,\\
-    sino una decisión política sobre cómo se distribuyen\\
-    los recursos del suelo urbano.''
-  \end{center}
-  \vfill
-  \flushright{\small\citet{lore2024densidad}}
-\end{frame}
-
-% ── Frame con figura (plantilla) ─────────────────────────────────────────────
-\begin{frame}{Resultados del Análisis Espacial}
   \begin{columns}[T]
-    \begin{column}{0.55\textwidth}
-      % Descomenta cuando tengas la imagen:
-      % \includegraphics[width=\textwidth]{img/nombre_figura.png}
-      % \fuentefigura{Elaboración propia, 2026.}
-
-      \begin{alertblock}{Placeholder de figura}
-        Inserta aquí tu imagen con:\\
-        \texttt{\textbackslash includegraphics\{img/figura.png\}}
-      \end{alertblock}
+    \begin{column}{0.48\textwidth}
+      \begin{exampleblock}{Eficiencia de Reducción}
+        Se logró una reducción del \textbf{~90\%} de la inflación topológica, consolidando una red operativa de \textbf{11,115 nodos} \cite{Garibaldi2024VFT}.
+      \end{exampleblock}
     \end{column}
-    \begin{column}{0.42\textwidth}
+    \begin{column}{0.48\textwidth}
       \begin{itemize}
-        \item Hallazgo principal 1 \citep{lore2024zmvm}
-        % \pause  ← descomenta solo para presentación en vivo (genera páginas extra en PDF)
-        \item Hallazgo principal 2
-        % \pause
-        \item Implicación para la política pública
+        \item \textbf{Aristas de Transporte:} 25,197 segmentos procesados con impedancia real.
+        \item \textbf{Conectividad:} Integración exitosa de transbordos intermodales.
       \end{itemize}
     \end{column}
   \end{columns}
 \end{frame}
 
-% ── Frame: Dos imágenes con texto explicativo ─────────────────────────────────
-%    USO: comparativas visuales, antes/después, dos mapas, dos planos.
-%    Ajusta height para que ambas imágenes queden alineadas verticalmente.
-%    INSTRUCCIÓN: cuando tengas tus imágenes, comenta el alertblock y descomenta \includegraphics.
-\begin{frame}{Comparativa Visual — Dos Imágenes}
+% ── Frame: Reporte 00 - Snapping Lógico y Resultados ─────────────────────────
+\begin{frame}{Resultados del Análisis Espacial: Snapping Lógico}
   \begin{columns}[T]
-    \begin{column}{0.48\textwidth}
+    \begin{column}{0.55\textwidth}
       \centering
-      % \includegraphics[width=\textwidth, height=3.8cm, keepaspectratio]{img/figura1.png}
-      \begin{alertblock}{Placeholder imagen 1}
-        \texttt{img/figura1.png}
-      \end{alertblock}
-      {\small Texto explicativo de la imagen izquierda. Describe el contexto, hallazgo o período temporal.}\\[0.05cm]
-      \fuentefigura{Elaboración propia, 2026.}
+      \includegraphics[width=\textwidth, height=5.5cm, keepaspectratio]{img/grafica_infraestructura.png}
+      \fuentefigura{Elaboración propia basada en datos de Apimetro y Modelo VFT \cite{Garibaldi2024VFT}.}
     \end{column}
-    \begin{column}{0.48\textwidth}
-      \centering
-      % \includegraphics[width=\textwidth, height=3.8cm, keepaspectratio]{img/figura2.png}
-      \begin{alertblock}{Placeholder imagen 2}
-        \texttt{img/figura2.png}
-      \end{alertblock}
-      {\small Texto explicativo de la imagen derecha. Describe el contexto, hallazgo o período temporal.}\\[0.05cm]
-      \fuentefigura{Fuente secundaria, 2026.}
+
+    \begin{column}{0.42\textwidth}
+      \begin{itemize}
+        \item \textbf{Fundamentación Metodológica:} El uso de \textit{Apimetro} alinea la investigación con las 
+              tendencias de Ciencia de Datos en Urbanismo \cite{ramirez2025analisis}.
+        \item \textbf{Resolución de Inflación:} El uso de \texttt{KDTree} responde a la crítica de grafos ruidosos 
+                para asegurar cálculos de accesibilidad veraces \cite{Garibaldi2024VFT}.
+      \end{itemize}
     \end{column}
   \end{columns}
 \end{frame}
 
-% ── Frame: Tres imágenes con texto explicativo ────────────────────────────────
-%    USO: secuencias temporales, etapas de un proceso, comparativa de tres casos.
-%    Con tres columnas el texto usa \scriptsize para no saturar la diapositiva.
-%    INSTRUCCIÓN: cuando tengas tus imágenes, comenta el alertblock y descomenta \includegraphics.
-\begin{frame}{Análisis Comparativo — Tres Imágenes}
-  \begin{columns}[T]
-    \begin{column}{0.32\textwidth}
-      \centering
-      % \includegraphics[width=\textwidth, height=3.5cm, keepaspectratio]{img/figura1.png}
-      \begin{alertblock}{\scriptsize Placeholder 1}
-        \scriptsize\texttt{img/figura1.png}
-      \end{alertblock}
-      {\scriptsize Texto explicativo de la imagen 1. Describe el caso, período o variable representada.}\\[0.05cm]
-      \fuentefigura{Fuente 1, 2026.}
-    \end{column}
-    \begin{column}{0.32\textwidth}
-      \centering
-      % \includegraphics[width=\textwidth, height=3.5cm, keepaspectratio]{img/figura2.png}
-      \begin{alertblock}{\scriptsize Placeholder 2}
-        \scriptsize\texttt{img/figura2.png}
-      \end{alertblock}
-      {\scriptsize Texto explicativo de la imagen 2. Describe el caso, período o variable representada.}\\[0.05cm]
-      \fuentefigura{Fuente 2, 2026.}
-    \end{column}
-    \begin{column}{0.32\textwidth}
-      \centering
-      % \includegraphics[width=\textwidth, height=3.5cm, keepaspectratio]{img/figura3.png}
-      \begin{alertblock}{\scriptsize Placeholder 3}
-        \scriptsize\texttt{img/figura3.png}
-      \end{alertblock}
-      {\scriptsize Texto explicativo de la imagen 3. Describe el caso, período o variable representada.}\\[0.05cm]
-      \fuentefigura{Fuente 3, 2026.}
-    \end{column}
-  \end{columns}
+% --------- Frame de Alineación --------
+\begin{frame}{Lineamientos de Política Pública}
+  \begin{enumerate}
+        \item \textbf{Fundamentación Metodológica:} Al utilizar el proyecto de código abierto Apimetro, la investigación 
+        se alinea con las tendencias actuales de Ciencia de Datos aplicada al Urbanismo \cite{ramirez2025analisis}.
+        \item \textbf{Resolución de la Inflación Topológica:} El uso del \texttt{scipy.spatial.KDTree} no es solo una elección técnica, 
+        sino una respuesta a la crítica de los grafos teóricos ruidosos \cite{ramirez2025analisis}.
+        \item \textbf{Impacto en la Política Pública:} Al asegurar la continuidad operativa, el Modelo VFT permite pasar de una 
+        planeación teórica a una basada en conectividad operativa real, lo cual es un requisito indispensable para alcanzar las 
+        metas de accesibilidad y eficiencia que dicta \cite{SEDATU2023}.
+  \end{enumerate}
 \end{frame}
+
+
 
 % ── Frame: Solo texto — mensaje clave, cita o puente entre secciones ─────────
 %    USO: para declaraciones fuertes, preguntas retóricas o transiciones.
@@ -180,49 +149,4 @@
     {\color{ColorAcento}\rule{0.3\textwidth}{0.8pt}}
     \vfill
   \end{minipage}
-\end{frame}
-
-% ── Frame: Diagrama de flujo ──────────────────────────────────────────────────
-%    USO: metodología, proceso de análisis, etapas de proyecto.
-%    Modifica los nodos, colores y flechas según tu contenido.
-%    Requiere \usepackage{tikz} + \usetikzlibrary{positioning,shapes.geometric,arrows.meta,calc}
-%    (ya incluidos en Latex/BeamerTheme.tex)
-\begin{frame}{Metodología — Diagrama de Flujo}
-  \begin{center}
-  \begin{tikzpicture}[
-    % Estilos de nodos
-    caja/.style   = {rectangle, rounded corners=5pt,
-                     draw=ColorPrincipal, line width=0.8pt,
-                     fill=ColorFondo, text width=2.6cm,
-                     align=center, minimum height=0.75cm, font=\small},
-    inicio/.style = {caja, fill=ColorPrincipal, text=white, font=\small\bfseries},
-    result/.style = {caja, fill=ColorAcento,    text=black,  font=\small\bfseries},
-    decision/.style = {diamond, draw=ColorPrincipal, line width=0.8pt,
-                       fill=ColorFondo, aspect=2.5,
-                       text width=2.2cm, align=center, font=\scriptsize},
-    % Estilo de flechas
-    flecha/.style = {-Stealth, thick, color=ColorPrincipal},
-    lateral/.style= {-Stealth, thick, color=ColorAcento, dashed},
-    % Separación entre nodos
-    node distance = 0.55cm and 2.2cm
-  ]
-    % Columna principal (flujo vertical)
-    \node[inicio]   (diag)  {Diagnóstico};
-    \node[caja, below=of diag]    (anal)  {Análisis};
-    \node[decision, below=of anal](dec)   {¿Viable?};
-    \node[caja, below=of dec]     (prop)  {Propuesta};
-    \node[result, below=of prop]  (res)   {Resultado};
-
-    % Flechas principales
-    \draw[flecha] (diag) -- (anal);
-    \draw[flecha] (anal) -- (dec);
-    \draw[flecha] (dec)  -- node[right, font=\scriptsize]{Sí} (prop);
-    \draw[flecha] (prop) -- (res);
-
-    % Rama de ajuste (decisión → No → vuelve a diagnóstico)
-    \node[caja, right=of dec] (ajuste) {Ajuste\\de enfoque};
-    \draw[lateral] (dec)    -- node[above, font=\scriptsize]{No} (ajuste);
-    \draw[lateral] (ajuste) |- (diag);
-  \end{tikzpicture}
-  \end{center}
 \end{frame}
