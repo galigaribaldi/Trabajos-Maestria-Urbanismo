@@ -10,144 +10,138 @@
 </head>
 <body>
 
-  <nav class="navbar is-unam" role="navigation" aria-label="main navigation">
+  <!-- Navbar -->
+  <nav class="navbar saas-nav" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <span class="navbar-item">UNAM · FES Acatlán · Maestría en Urbanismo</span>
+        <a class="brand-logo" href="#">
+          <span class="brand-abbr">MU</span>
+          <span class="brand-name">Maestría en Urbanismo</span>
+        </a>
       </div>
       <div class="navbar-end">
-        <a class="navbar-item" href="https://github.com/galigaribaldi/Trabajos-Maestria-Urbanismo"
-           target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://github.com/galigaribaldi/Trabajos-Maestria-Urbanismo"
+           class="gh-link" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </div>
   </nav>
 
-  <section class="hero is-unam is-medium">
+  <!-- Hero -->
+  <section class="saas-hero">
     <div class="hero-body">
       <div class="container">
-        <h1 class="title">Trabajos de Maestría en Urbanismo</h1>
-        <p class="subtitle">
-          Hernán Galileo Cabrera Garibaldi &nbsp;·&nbsp;
-          Programa de Maestría y Doctorado en Urbanismo &nbsp;·&nbsp;
-          FES Acatlán, UNAM
-        </p>
+        <p class="saas-kicker">FES Acatlán · UNAM · 2026-2</p>
+        <h1 class="saas-hero-title">Trabajos de<br>Maestría en Urbanismo</h1>
+        <p class="saas-hero-sub">Hernán Galileo Cabrera Garibaldi</p>
+        <div class="saas-pills">
+          <span class="saas-pill">Documentos en LaTeX</span>
+          <span class="saas-pill">Plantillas reutilizables</span>
+          <span class="saas-pill">PDFs descargables</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <main class="section">
+  <!-- Contenido -->
+  <main class="saas-main">
     <div class="container">
 
-      <p class="unam-materia-label mb-5">
-        Índice de entregables académicos organizados por semestre y materia.
-        Los documentos se generan con LaTeX y están disponibles para descarga en la sección de
-        <a href="https://github.com/galigaribaldi/Trabajos-Maestria-Urbanismo/releases"
-           target="_blank" rel="noopener">Releases del repositorio</a>.
-      </p>
-
-      <!-- TERCER SEMESTRE -->
-      <section class="mb-6">
-        <h2 class="title is-5 unam-section-title">Tercer Semestre &mdash; 2026-2</h2>
-
-        <!-- Materia: Desarrollo Urbano Sostenible -->
-        <p class="unam-materia-label mb-4">Desarrollo Urbano Sostenible</p>
+      <!-- Tercer Semestre -->
+      <div class="saas-semester">
+        <div class="saas-semester-header">
+          <h2 class="saas-semester-title">Tercer Semestre</h2>
+          <span class="saas-sem-badge">2026-2</span>
+        </div>
+        <div class="saas-divider"></div>
+        <p class="saas-subject-label">Desarrollo Urbano Sostenible</p>
 
         <div class="columns is-multiline">
 
           <!-- Ensayo Humedales -->
-          <div class="column is-one-third-desktop is-half-tablet">
-            <div class="unam-card card">
-              <div class="card-content">
-                <span class="tag is-ensayo mb-3">Ensayo</span>
-                <p class="title is-6">Humedales Urbanos y Movilidad Sostenible en la ZMVM</p>
-                <p class="subtitle is-6">Una lectura desde la infraestructura verde</p>
-                <dl class="card-meta-grid mb-2">
-                  <dt>Materia</dt>  <dd>Desarrollo Sostenible del Medio Ambiente</dd>
-                  <dt>Profesora</dt><dd>Mtra. María de los Ángeles Estela Puente</dd>
-                  <dt>Semestre</dt> <dd>2026-2</dd>
-                </dl>
-                <p class="card-desc">
-                  Análisis de los humedales urbanos en la ZMVM como infraestructura verde
-                  multifuncional, su degradación histórica y su potencial estratégico
-                  para la movilidad sustentable.
-                </p>
-              </div>
-              <footer class="card-footer">
-                <a href="entregables/ensayo-humedales.html"
-                   class="card-footer-item is-primary-action">Ver detalles</a>
+          <div class="column is-4-desktop is-6-tablet">
+            <div class="saas-card">
+              <span class="saas-type-badge saas-type-ensayo">Ensayo</span>
+              <h3 class="saas-card-title">Humedales Urbanos y Movilidad Sostenible en la ZMVM</h3>
+              <p class="saas-card-subtitle">Una lectura desde la infraestructura verde</p>
+              <dl class="saas-card-meta">
+                <dt>Materia</dt>  <dd>Desarrollo Sostenible del Medio Ambiente</dd>
+                <dt>Profesora</dt><dd>Mtra. M.Á. Estela Puente</dd>
+                <dt>Semestre</dt> <dd>2026-2</dd>
+              </dl>
+              <p class="saas-card-desc">
+                Análisis de los humedales urbanos en la ZMVM como infraestructura verde
+                multifuncional, su degradación histórica y su potencial estratégico
+                para la movilidad sustentable.
+              </p>
+              <div class="saas-card-actions">
+                <a href="entregables/ensayo-humedales.html" class="btn-primary">Ver detalles</a>
                 <a href="https://github.com/galigaribaldi/Trabajos-Maestria-Urbanismo/releases/tag/v2026-2-dsma-ens-humedales"
-                   class="card-footer-item is-disabled" title="Release pendiente">↓ PDF</a>
-              </footer>
+                   class="btn-ghost" title="Release pendiente">↓ PDF</a>
+              </div>
             </div>
           </div>
 
           <!-- Presentación Humedales -->
-          <div class="column is-one-third-desktop is-half-tablet">
-            <div class="unam-card card">
-              <div class="card-content">
-                <span class="tag is-presentacion mb-3">Presentación</span>
-                <p class="title is-6">Humedales Urbanos y Movilidad</p>
-                <p class="subtitle is-6">De la Degradación a la Infraestructura Sustentable</p>
-                <dl class="card-meta-grid mb-2">
-                  <dt>Materia</dt>  <dd>Desarrollo Urbano Sostenible</dd>
-                  <dt>Profesora</dt><dd>Mtra. María de los Ángeles Estela Puente</dd>
-                  <dt>Semestre</dt> <dd>2026-2</dd>
-                </dl>
-                <p class="card-desc">
-                  Presentación que sintetiza el tránsito conceptual de los humedales
-                  como espacios residuales hacia su reconceptualización como
-                  infraestructura de movilidad sustentable.
-                </p>
-              </div>
-              <footer class="card-footer">
-                <a href="entregables/pres-humedales.html"
-                   class="card-footer-item is-primary-action">Ver detalles</a>
+          <div class="column is-4-desktop is-6-tablet">
+            <div class="saas-card">
+              <span class="saas-type-badge saas-type-pres">Presentación</span>
+              <h3 class="saas-card-title">Humedales Urbanos y Movilidad</h3>
+              <p class="saas-card-subtitle">De la Degradación a la Infraestructura Sustentable</p>
+              <dl class="saas-card-meta">
+                <dt>Materia</dt>  <dd>Desarrollo Urbano Sostenible</dd>
+                <dt>Profesora</dt><dd>Mtra. M.Á. Estela Puente</dd>
+                <dt>Semestre</dt> <dd>2026-2</dd>
+              </dl>
+              <p class="saas-card-desc">
+                Presentación que sintetiza el tránsito conceptual de los humedales
+                como espacios residuales hacia su reconceptualización como
+                infraestructura de movilidad sustentable.
+              </p>
+              <div class="saas-card-actions">
+                <a href="entregables/pres-humedales.html" class="btn-primary">Ver detalles</a>
                 <a href="https://github.com/galigaribaldi/Trabajos-Maestria-Urbanismo/releases/tag/v2026-2-urbs-pres-humedales"
-                   class="card-footer-item is-disabled" title="Release pendiente">↓ PDF</a>
-              </footer>
+                   class="btn-ghost" title="Release pendiente">↓ PDF</a>
+              </div>
             </div>
           </div>
 
           <!-- Presentación Movilidad -->
-          <div class="column is-one-third-desktop is-half-tablet">
-            <div class="unam-card card">
-              <div class="card-content">
-                <span class="tag is-presentacion mb-3">Presentación</span>
-                <p class="title is-6">Movilidad Sustentable</p>
-                <p class="subtitle is-6">Entre la Teoría y la Realidad Mexicana</p>
-                <dl class="card-meta-grid mb-2">
-                  <dt>Materia</dt>  <dd>Desarrollo Sustentable en el Urbanismo</dd>
-                  <dt>Profesora</dt><dd>Mtra. María de los Ángeles Estela Puente</dd>
-                  <dt>Semestre</dt> <dd>2026-2</dd>
-                </dl>
-                <p class="card-desc">
-                  Análisis multidimensional de la movilidad sustentable en México:
-                  marco constitucional, cobertura de 8 sistemas de transporte en la CDMX
-                  y Modelo VFT de eficiencia e impedancia.
-                </p>
-              </div>
-              <footer class="card-footer">
-                <a href="entregables/pres-movilidad.html"
-                   class="card-footer-item is-primary-action">Ver detalles</a>
+          <div class="column is-4-desktop is-6-tablet">
+            <div class="saas-card">
+              <span class="saas-type-badge saas-type-pres">Presentación</span>
+              <h3 class="saas-card-title">Movilidad Sustentable</h3>
+              <p class="saas-card-subtitle">Entre la Teoría y la Realidad Mexicana</p>
+              <dl class="saas-card-meta">
+                <dt>Materia</dt>  <dd>Desarrollo Sustentable en el Urbanismo</dd>
+                <dt>Profesora</dt><dd>Mtra. M.Á. Estela Puente</dd>
+                <dt>Semestre</dt> <dd>2026-2</dd>
+              </dl>
+              <p class="saas-card-desc">
+                Análisis multidimensional de la movilidad sustentable en México:
+                marco constitucional, cobertura de 8 sistemas de transporte en la CDMX
+                y Modelo VFT de eficiencia e impedancia.
+              </p>
+              <div class="saas-card-actions">
+                <a href="entregables/pres-movilidad.html" class="btn-primary">Ver detalles</a>
                 <a href="https://github.com/galigaribaldi/Trabajos-Maestria-Urbanismo/releases/tag/v2026-2-dsu-pres-movilidad"
-                   class="card-footer-item is-disabled" title="Release pendiente">↓ PDF</a>
-              </footer>
+                   class="btn-ghost" title="Release pendiente">↓ PDF</a>
+              </div>
             </div>
           </div>
 
         </div><!-- /columns -->
-      </section>
+      </div><!-- /semester -->
 
     </div>
   </main>
 
-  <footer class="unam-footer">
+  <footer class="saas-footer">
     <div class="container">
       Repositorio en
       <a href="https://github.com/galigaribaldi/Trabajos-Maestria-Urbanismo"
          target="_blank" rel="noopener">GitHub</a>
       &nbsp;·&nbsp;
-      Los documentos se generan con
+      Documentos generados con
       <a href="https://www.latex-project.org/" target="_blank" rel="noopener">LaTeX</a>
       &nbsp;·&nbsp;
       Maestría en Urbanismo, UNAM, 2026.

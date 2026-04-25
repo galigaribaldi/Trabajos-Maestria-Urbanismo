@@ -10,33 +10,39 @@
 </head>
 <body>
 
-  <nav class="navbar is-unam" role="navigation" aria-label="main navigation">
+  <!-- Navbar -->
+  <nav class="navbar saas-nav" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <span class="navbar-item">UNAM · FES Acatlán · Maestría en Urbanismo</span>
+        <a class="brand-logo" href="../index.html">
+          <span class="brand-abbr">MU</span>
+          <span class="brand-name">Maestría en Urbanismo</span>
+        </a>
       </div>
       <div class="navbar-end">
-        <a class="navbar-item" href="https://github.com/galigaribaldi/Trabajos-Maestria-Urbanismo"
-           target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://github.com/galigaribaldi/Trabajos-Maestria-Urbanismo"
+           class="gh-link" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </div>
   </nav>
 
+  <!-- Hero detalle -->
   <div class="detalle-hero">
     <div class="container">
-      <span class="tag is-presentacion mb-3" style="display:inline-block;">Presentación</span>
-      <h1 class="title">Movilidad Sustentable</h1>
-      <p class="subtitle">Entre la Teoría y la Realidad Mexicana</p>
+      <span class="saas-type-badge saas-type-pres" style="margin-bottom:0.85rem;display:inline-flex;">Presentación</span>
+      <h1>Movilidad Sustentable</h1>
+      <p class="subtitle-hero">Entre la Teoría y la Realidad Mexicana</p>
     </div>
   </div>
 
-  <main class="section">
+  <main class="saas-main">
     <div class="container">
 
-      <nav class="breadcrumb unam-breadcrumb" aria-label="Ruta de navegación">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb saas-breadcrumb" aria-label="Ruta de navegación">
         <ul>
           <li><a href="../index.html">Inicio</a></li>
-          <li><a href="../index.html#tercer-semestre">Tercer Semestre</a></li>
+          <li><a href="../index.html">Tercer Semestre</a></li>
           <li class="is-active"><a href="#" aria-current="page">Presentación: Movilidad Sustentable</a></li>
         </ul>
       </nav>
@@ -44,25 +50,29 @@
       <div class="columns">
 
         <!-- Ficha lateral -->
-        <div class="column is-narrow" style="width:240px;">
-          <div class="unam-ficha">
-            <p class="ficha-label">Metadatos</p>
-            <dl>
-              <dt>Tipo</dt>       <dd>Presentación (Beamer)</dd>
-              <dt>Materia</dt>    <dd>Desarrollo Sustentable en el Urbanismo</dd>
-              <dt>Profesora</dt>  <dd>Mtra. María de los Ángeles Estela Puente</dd>
-              <dt>Programa</dt>   <dd>Maestría en Urbanismo</dd>
-              <dt>Institución</dt><dd>FES Acatlán, UNAM</dd>
-              <dt>Semestre</dt>   <dd>2026-2</dd>
-              <dt>Idioma</dt>     <dd>Español</dd>
-              <dt>Herramienta</dt><dd>LaTeX Beamer · Tema Madrid UNAM</dd>
-            </dl>
-            <div class="ficha-descarga">
-              <p class="ficha-label">Descarga</p>
-              <a href="https://github.com/galigaribaldi/Trabajos-Maestria-Urbanismo/releases/tag/v2026-2-dsu-pres-movilidad"
-                 class="button is-fullwidth is-small is-light" style="cursor:not-allowed;pointer-events:none;"
-                 title="Release en preparación">↓ PDF (próximamente)</a>
-              <span class="release-tag">v2026-2-dsu-pres-movilidad</span>
+        <div class="column is-narrow" style="width:260px;">
+          <div class="saas-ficha">
+            <div class="saas-ficha-head">
+              <p>Metadatos</p>
+            </div>
+            <div class="saas-ficha-body">
+              <dl>
+                <dt>Tipo</dt>       <dd>Presentación (Beamer)</dd>
+                <dt>Materia</dt>    <dd>Desarrollo Sustentable en el Urbanismo</dd>
+                <dt>Profesora</dt>  <dd>Mtra. M.Á. Estela Puente</dd>
+                <dt>Programa</dt>   <dd>Maestría en Urbanismo</dd>
+                <dt>Institución</dt><dd>FES Acatlán, UNAM</dd>
+                <dt>Semestre</dt>   <dd>2026-2</dd>
+                <dt>Idioma</dt>     <dd>Español</dd>
+                <dt>Herramienta</dt><dd>LaTeX Beamer · Tema Madrid UNAM</dd>
+              </dl>
+
+              <div class="saas-ficha-section">
+                <p class="saas-ficha-section-label">Descarga</p>
+                <a href="https://github.com/galigaribaldi/Trabajos-Maestria-Urbanismo/releases/tag/v2026-2-dsu-pres-movilidad"
+                   class="btn-download" title="Release en preparación">↓ PDF (próximamente)</a>
+                <span class="release-tag">v2026-2-dsu-pres-movilidad</span>
+              </div>
             </div>
           </div>
         </div>
@@ -121,7 +131,7 @@
     </div>
   </main>
 
-  <footer class="unam-footer">
+  <footer class="saas-footer">
     <div class="container">
       <a href="../index.html">← Volver al índice</a>
       &nbsp;·&nbsp;
