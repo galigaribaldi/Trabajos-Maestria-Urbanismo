@@ -8,11 +8,17 @@
 
 
 % ═════════════════════════════════════════════════════════════════════════════
-%  PALETA DE COLORES — Modifica aquí para cambiar el tema visual completo
+%  PALETA DE COLORES
+%  El tema se carga desde Latex/color-config.tex → Latex/Colores/<tema>.tex
+%  Temas disponibles: Institucional | Teal | VerdeOlivo | Purpura | Rojo
+%
+%  Cambiar el color de esta presentación:
+%    • Permanente: edita \providecommand en Latex/color-config.tex
+%    • Una compilación: make Presentacion DIR=<ruta> COLOR=Teal
 % ═════════════════════════════════════════════════════════════════════════════
 \usepackage{xcolor}
-\definecolor{ColorPrincipal}{RGB}{0,   56, 147}   % Azul UNAM
-\definecolor{ColorAcento}   {RGB}{244, 180,   0}  % Oro UNAM
+\input{Latex/color-config}            % define \ColorTema (default: Institucional)
+\input{Latex/Colores/\ColorTema}      % carga ColorPrincipal y ColorAcento
 \definecolor{ColorFondo}    {RGB}{248, 250, 255}  % Blanco azulado suave
 \definecolor{ColorTexto}    {RGB}{20,  20,  20}   % Casi negro
 \definecolor{ColorAlerta}   {RGB}{183, 28,  28}   % Rojo de énfasis
