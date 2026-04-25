@@ -1,0 +1,377 @@
+/* =============================================================================
+   style.css — Trabajos de Maestría en Urbanismo
+   UNAM · FES Acatlán · Hernán Galileo Cabrera Garibaldi
+   ============================================================================= */
+
+:root {
+  --azul:        #003893;
+  --azul-oscuro: #002266;
+  --azul-claro:  #e8eef8;
+  --oro:         #F4B400;
+  --oro-claro:   #fff8e0;
+  --texto:       #141414;
+  --gris:        #6b7280;
+  --gris-claro:  #f1f3f7;
+  --fondo:       #f8faff;
+  --blanco:      #ffffff;
+  --borde:       #dde4f0;
+  --radio:       6px;
+  --sombra:      0 4px 14px rgba(0, 56, 147, 0.10);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.65;
+  font-size: 16px;
+}
+
+a { color: var(--azul); }
+a:hover { color: var(--azul-oscuro); }
+
+/* ── Barra de navegación ── */
+.navbar {
+  background: var(--azul-oscuro);
+  padding: 0.5rem 0;
+  font-family: sans-serif;
+  font-size: 0.82rem;
+}
+
+.navbar-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(255,255,255,0.7);
+}
+
+.navbar a { color: rgba(255,255,255,0.7); text-decoration: none; }
+.navbar a:hover { color: white; }
+
+/* ── Header ── */
+header {
+  background: var(--azul);
+  color: white;
+  padding: 2rem 0 1.6rem;
+  border-bottom: 4px solid var(--oro);
+}
+
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.header-inner h1 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  letter-spacing: -0.01em;
+}
+
+.header-inner .subtitulo-header {
+  color: rgba(255,255,255,0.75);
+  font-style: italic;
+  margin-top: 0.25rem;
+  font-size: 0.97rem;
+}
+
+/* ── Breadcrumb ── */
+.breadcrumb {
+  font-family: sans-serif;
+  font-size: 0.82rem;
+  color: var(--gris);
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--borde);
+  margin-bottom: 2rem;
+}
+
+.breadcrumb a { color: var(--azul); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb span { margin: 0 0.4rem; }
+
+/* ── Contenedor principal ── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.main-content { padding: 2rem 0 3rem; }
+
+/* ── Intro ── */
+.intro {
+  color: var(--gris);
+  font-size: 0.93rem;
+  margin-bottom: 2.5rem;
+  max-width: 640px;
+  font-family: sans-serif;
+}
+
+/* ── Sección de semestre ── */
+.semestre-seccion { margin-bottom: 3rem; }
+
+.semestre-titulo {
+  font-size: 1.25rem;
+  color: var(--azul);
+  padding-bottom: 0.45rem;
+  border-bottom: 2px solid var(--oro);
+  margin-bottom: 1.8rem;
+}
+
+/* ── Grupo por materia ── */
+.materia-grupo { margin-bottom: 2.2rem; }
+
+.materia-label {
+  font-family: sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--gris);
+  margin-bottom: 1rem;
+}
+
+/* ── Grid de tarjetas ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1.2rem;
+}
+
+/* ── Tarjeta ── */
+.card {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 1.2rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  transition: box-shadow 0.18s, border-color 0.18s;
+}
+
+.card:hover {
+  box-shadow: var(--sombra);
+  border-color: #b8c8e8;
+}
+
+/* ── Badge de tipo ── */
+.badge {
+  display: inline-block;
+  font-family: sans-serif;
+  font-size: 0.70rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.55rem;
+  border-radius: 3px;
+  width: fit-content;
+}
+
+.badge-ensayo        { background: var(--azul-claro);  color: var(--azul); }
+.badge-presentacion  { background: var(--oro-claro);   color: #7a5c00; }
+.badge-articulo      { background: var(--gris-claro);  color: #444; }
+.badge-mapa          { background: #edf7ee;             color: #2a6e30; }
+.badge-coloquio      { background: #f5eeff;             color: #6b2fa0; }
+
+/* ── Título y subtítulo de tarjeta ── */
+.card-titulo {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--azul-oscuro);
+  line-height: 1.3;
+}
+
+.card-subtitulo {
+  font-size: 0.84rem;
+  color: var(--gris);
+  font-style: italic;
+}
+
+/* ── Metadatos ── */
+.card-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.18rem 0.55rem;
+  font-size: 0.80rem;
+  font-family: sans-serif;
+}
+
+.card-meta dt { color: var(--gris); white-space: nowrap; }
+.card-meta dd { color: var(--texto); }
+
+/* ── Descripción breve ── */
+.card-desc {
+  font-size: 0.85rem;
+  color: #3a3a3a;
+  flex: 1;
+  line-height: 1.5;
+}
+
+/* ── Acciones ── */
+.card-acciones {
+  display: flex;
+  gap: 0.55rem;
+  margin-top: 0.3rem;
+}
+
+.btn {
+  font-family: sans-serif;
+  font-size: 0.80rem;
+  font-weight: 600;
+  padding: 0.38rem 0.85rem;
+  border-radius: 4px;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.15s, color 0.15s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--azul);
+  color: white;
+  flex: 1;
+}
+.btn-primary:hover { background: var(--azul-oscuro); color: white; }
+
+.btn-outline {
+  background: transparent;
+  color: var(--azul);
+  border: 1.5px solid var(--azul);
+}
+.btn-outline:hover { background: var(--azul-claro); }
+
+.btn-disabled {
+  background: var(--gris-claro);
+  color: var(--gris);
+  cursor: not-allowed;
+  pointer-events: none;
+  border: 1.5px solid var(--borde);
+}
+
+/* ── Página de detalle ── */
+.detalle-hero {
+  background: var(--azul);
+  color: white;
+  padding: 2rem 0 1.6rem;
+  border-bottom: 4px solid var(--oro);
+}
+
+.detalle-hero .badge { margin-bottom: 0.7rem; }
+
+.detalle-hero h1 {
+  font-size: 1.6rem;
+  line-height: 1.25;
+  margin-bottom: 0.35rem;
+}
+
+.detalle-hero .subtitulo {
+  font-style: italic;
+  color: rgba(255,255,255,0.78);
+  font-size: 0.97rem;
+}
+
+.detalle-cuerpo {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 640px) {
+  .detalle-cuerpo { grid-template-columns: 1fr; }
+}
+
+/* ── Ficha de metadatos (detalle) ── */
+.ficha {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 1.2rem;
+  font-family: sans-serif;
+  font-size: 0.85rem;
+  height: fit-content;
+}
+
+.ficha-titulo {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--gris);
+  margin-bottom: 0.8rem;
+}
+
+.ficha dl { display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 0.7rem; }
+.ficha dt { color: var(--gris); }
+.ficha dd { color: var(--texto); font-weight: 500; }
+
+.ficha-descarga {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--borde);
+}
+
+.ficha-descarga .btn { width: 100%; display: block; text-align: center; padding: 0.55rem; }
+
+/* ── Cuerpo del detalle ── */
+.detalle-texto h2 {
+  font-size: 1.05rem;
+  color: var(--azul);
+  margin-bottom: 0.7rem;
+  margin-top: 1.5rem;
+}
+
+.detalle-texto h2:first-child { margin-top: 0; }
+
+.detalle-texto p {
+  margin-bottom: 0.9rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #2a2a2a;
+}
+
+.detalle-texto ul {
+  margin: 0.4rem 0 0.9rem 1.3rem;
+  font-size: 0.93rem;
+  line-height: 1.7;
+  color: #2a2a2a;
+}
+
+/* ── Etiqueta de release ── */
+.release-tag {
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  background: var(--gris-claro);
+  color: var(--gris);
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--borde);
+  padding: 1.5rem 0;
+  margin-top: 3rem;
+  font-family: sans-serif;
+  font-size: 0.82rem;
+  color: var(--gris);
+  text-align: center;
+}
+
+footer a { color: var(--azul); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .header-inner h1 { font-size: 1.4rem; }
+  .cards-grid { grid-template-columns: 1fr; }
+}
