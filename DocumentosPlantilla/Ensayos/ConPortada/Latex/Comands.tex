@@ -8,13 +8,17 @@
 
 
 % ═════════════════════════════════════════════════════════════════════════════
-%  PALETA DE COLORES — Modifica aquí para cambiar el tema visual completo
-%  Todos los colores del documento (encabezados, vínculos, bloques)
-%  se derivan de estas dos definiciones.
+%  PALETA DE COLORES
+%  El tema se carga desde Latex/color-config.tex → Latex/Colores/<tema>.tex
+%  Temas disponibles: Institucional | Teal | VerdeOlivo | Purpura | Rojo
+%
+%  Cambiar el color de este documento:
+%    • Permanente: edita \providecommand en Latex/color-config.tex
+%    • Una compilación: make Document DIR=<ruta> COLOR=Teal
 % ═════════════════════════════════════════════════════════════════════════════
 \usepackage[table]{xcolor}    % [table] activa \rowcolor y \columncolor
-\definecolor{ColorPrincipal}{RGB}{0,   56, 147}   % Azul UNAM  — cambia para otro tema
-\definecolor{ColorAcento}   {RGB}{244, 180,   0}   % Oro UNAM   — cambia para otro tema
+\input{Latex/color-config}            % define \ColorTema (default: Institucional)
+\input{Latex/Colores/\ColorTema}      % carga ColorPrincipal y ColorAcento
 \definecolor{ColorFondoTabla}{RGB}{240, 240, 240}  % Gris claro para tablas
 \definecolor{ColorAlerta}   {RGB}{183,  28,  28}   % Rojo para notas de revisión
 % ═════════════════════════════════════════════════════════════════════════════

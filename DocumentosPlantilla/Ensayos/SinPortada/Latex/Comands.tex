@@ -11,8 +11,8 @@
 %  PALETA DE COLORES — Modifica aquí para cambiar el tema visual completo
 % ═════════════════════════════════════════════════════════════════════════════
 \usepackage[table]{xcolor}
-\definecolor{ColorPrincipal}{RGB}{0,   56, 147}   % Azul UNAM
-\definecolor{ColorAcento}   {RGB}{244, 180,   0}  % Oro UNAM
+\input{Latex/color-config}            % define \ColorTema (default: Institucional)
+\input{Latex/Colores/\ColorTema}      % carga ColorPrincipal y ColorAcento
 \definecolor{ColorTexto}    {RGB}{30,  30,  30}   % Casi negro para cuerpo
 \definecolor{ColorFondoTabla}{RGB}{240, 240, 240}  % Gris claro para tablas
 \definecolor{ColorAlerta}   {RGB}{183,  28,  28}  % Rojo para notas de revisión
