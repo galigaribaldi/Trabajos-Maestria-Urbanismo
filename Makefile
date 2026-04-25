@@ -27,6 +27,10 @@ MOTOR  := pdflatex
 BIBTEX := bibtex
 FLAGS  := -interaction=nonstopmode -halt-on-error
 
+# Color del tema — override con COLOR=Teal, COLOR=VerdeOlivo, COLOR=Purpura, COLOR=Rojo
+# Default: Institucional (Azul UNAM + Oro UNAM)
+COLOR  ?= Institucional
+
 # Plantillas base — documentos
 PLANTILLA_ENSAYO_CON_PORTADA  := DocumentosPlantilla/Ensayos/ConPortada
 PLANTILLA_ENSAYO_SIN_PORTADA  := DocumentosPlantilla/Ensayos/SinPortada
@@ -47,7 +51,10 @@ DIR ?=
 .PHONY: all Document Presentacion \
         EnsayosConPortada EnsayosSinPortada \
         ArticulosConPortada ArticulosSinPortada \
-        nuevo-ensayo nueva-presentacion \
+        nuevo-ensayo \
+        nueva-presentacion \
+        nueva-presentacion-teal nueva-presentacion-olivo \
+        nueva-presentacion-purpura nueva-presentacion-rojo \
         desarrollo pres-humedales sociologia \
         limpiar limpiar-dir _compile _scaffold
 
@@ -98,18 +105,19 @@ endif
 _compile:
 	@if [ ! -f "$(DIR)/main.tex" ]; then \
 	    echo "[ERROR] No existe $(DIR)/main.tex"; \
-	    echo "        Usa 'make nuevo-ensayo DIR=$(DIR)' o 'make nueva-presentacion DIR=$(DIR)' primero."; \
+	    echo "        Usa el comando de scaffolding correspondiente primero."; \
 	    exit 1; \
 	fi
+	@echo "--- [$(TIPO)] Color: $(COLOR) ---"
 	@echo "--- [$(TIPO)] Pasada 1/3: pdflatex ---"
-	cd $(DIR) && $(MOTOR) $(FLAGS) main.tex
+	cd $(DIR) && $(MOTOR) $(FLAGS) -jobname=main "\def\ColorTema{$(COLOR)}\input{main}"
 	@echo "--- [$(TIPO)] Pasada BibTeX ---"
 	cd $(DIR) && $(BIBTEX) main || true
 	@echo "--- [$(TIPO)] Pasada 2/3: pdflatex ---"
-	cd $(DIR) && $(MOTOR) $(FLAGS) main.tex
+	cd $(DIR) && $(MOTOR) $(FLAGS) -jobname=main "\def\ColorTema{$(COLOR)}\input{main}"
 	@echo "--- [$(TIPO)] Pasada 3/3: pdflatex ---"
-	cd $(DIR) && $(MOTOR) $(FLAGS) main.tex
-	@echo ">>> PDF generado: $(DIR)/main.pdf"
+	cd $(DIR) && $(MOTOR) $(FLAGS) -jobname=main "\def\ColorTema{$(COLOR)}\input{main}"
+	@echo ">>> PDF generado: $(DIR)/main.pdf [tema: $(COLOR)]"
 
 # =============================================================================
 # SCAFFOLDING — copia la plantilla en DIR (no sobreescribe si ya existe main.tex)
@@ -150,7 +158,31 @@ nueva-presentacion:
 ifndef DIR
 	$(error Debes indicar la carpeta destino: make nueva-presentacion DIR=<ruta>)
 endif
-	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_BEAMER) DIR=$(DIR) TIPO=Presentacion
+	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_BEAMER) DIR=$(DIR) TIPO=Presentacion COLOR=$(COLOR)
+
+nueva-presentacion-teal:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-presentacion-teal DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_BEAMER) DIR=$(DIR) TIPO=Presentacion COLOR=Teal
+
+nueva-presentacion-olivo:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-presentacion-olivo DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_BEAMER) DIR=$(DIR) TIPO=Presentacion COLOR=VerdeOlivo
+
+nueva-presentacion-purpura:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-presentacion-purpura DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_BEAMER) DIR=$(DIR) TIPO=Presentacion COLOR=Purpura
+
+nueva-presentacion-rojo:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-presentacion-rojo DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_BEAMER) DIR=$(DIR) TIPO=Presentacion COLOR=Rojo
 
 _scaffold:
 	@if [ -f "$(DIR)/main.tex" ]; then \
@@ -158,16 +190,18 @@ _scaffold:
 	    echo "        Borra el directorio o elige otro nombre si quieres empezar de cero."; \
 	    exit 1; \
 	fi
-	@echo ">>> Creando $(TIPO) en: $(DIR)"
+	@echo ">>> Creando $(TIPO) en: $(DIR) [tema: $(COLOR)]"
 	mkdir -p "$(DIR)"
 	cp -r $(PLANTILLA)/. "$(DIR)/"
+	@printf '%% color-config.tex — Temas: Institucional | Teal | VerdeOlivo | Purpura | Rojo\n\\providecommand{\\ColorTema}{$(COLOR)}\n' \
+	    > "$(DIR)/Latex/color-config.tex"
 	@echo ">>> Plantilla copiada. Próximos pasos:"
 	@echo "    1. Edita el bloque PERSONALIZACIÓN en $(DIR)/main.tex"
 	@if [ "$(TIPO)" = "Presentacion" ]; then \
-	    echo "    2. Edita los colores en $(DIR)/Latex/BeamerTheme.tex"; \
+	    echo "    2. Tema de color activo: $(COLOR) (cambia en $(DIR)/Latex/color-config.tex)"; \
 	    echo "    3. Escribe tus slides en $(DIR)/secciones/"; \
 	else \
-	    echo "    2. Edita los colores en $(DIR)/Latex/Comands.tex"; \
+	    echo "    2. Tema de color activo: $(COLOR) (cambia en $(DIR)/Latex/color-config.tex)"; \
 	    echo "    3. Escribe tu contenido en $(DIR)/secciones/"; \
 	fi
 	@echo "    4. Compila con: make $(if $(filter Presentacion,$(TIPO)),Presentacion,Document) DIR=$(DIR)"

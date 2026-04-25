@@ -8,11 +8,17 @@
 
 
 % ═════════════════════════════════════════════════════════════════════════════
-%  PALETA DE COLORES — Modifica aquí para cambiar el tema visual completo
+%  PALETA DE COLORES
+%  El tema se carga desde Latex/color-config.tex → Latex/Colores/<tema>.tex
+%  Temas disponibles: Institucional | Teal | VerdeOlivo | Purpura | Rojo
+%
+%  Cambiar el color de esta presentación:
+%    • Permanente: edita \providecommand en Latex/color-config.tex
+%    • Una compilación: make Presentacion DIR=<ruta> COLOR=Teal
 % ═════════════════════════════════════════════════════════════════════════════
 \usepackage{xcolor}
-\definecolor{ColorPrincipal}{RGB}{0,   56, 147}   % Azul UNAM
-\definecolor{ColorAcento}   {RGB}{244, 180,   0}  % Oro UNAM
+\input{Latex/color-config}            % define \ColorTema (default: Institucional)
+\input{Latex/Colores/\ColorTema}      % carga ColorPrincipal y ColorAcento
 \definecolor{ColorFondo}    {RGB}{248, 250, 255}  % Blanco azulado suave
 \definecolor{ColorTexto}    {RGB}{20,  20,  20}   % Casi negro
 \definecolor{ColorAlerta}   {RGB}{183, 28,  28}   % Rojo de énfasis
@@ -92,24 +98,63 @@
 
 
 % =============================================================================
-%  4. HEADLINE — franja de secciones (estilo Madrid simplificado)
+%  4. HEADLINE — eliminado: la sección se muestra dentro del frametitle
 % =============================================================================
-\setbeamertemplate{headline}{%
-  \leavevmode%
-  \begin{beamercolorbox}[wd=\paperwidth, ht=1.5ex, dp=0.5ex]{palette tertiary}%
-    \hspace{0.4cm}{\tiny \insertsectionhead}%
+\setbeamertemplate{headline}{}
+
+
+% =============================================================================
+%  5. FRAMETITLE — DOS VARIANTES
+%     La sección activa se muestra como etiqueta pequeña dentro del cuadro azul,
+%     encima del título principal. Elimina el efecto de "doble barra" anterior.
+%
+%     Default (\begin{frame}{título}): cuadro azul unificado.
+%     Con línea dorada: escribe \framelinea justo antes de \begin{frame}.
+% =============================================================================
+\usepackage{etoolbox}
+
+% Variante 1 (default): cuadro azul, centrado con sep
+\defbeamertemplate{frametitle}{simple}{%
+  \begin{beamercolorbox}[wd=\paperwidth, sep=0.20cm, left, leftskip=0.20cm]{frametitle}%
+    {\tiny\color{white!60!ColorPrincipal}\insertsectionhead}\\[-0.05cm]%
+    \bfseries\insertframetitle\strut%
   \end{beamercolorbox}%
 }
 
-
-% =============================================================================
-%  5. FRAMETITLE CON LÍNEA DORADA
-% =============================================================================
-\setbeamertemplate{frametitle}{%
-  \vspace{0.1cm}%
-  {\bfseries\insertframetitle}\\[-0.05cm]%
-  {\color{ColorAcento}\rule{\textwidth}{1.5pt}}%
+% Variante 2: cuadro azul + línea dorada debajo
+\defbeamertemplate{frametitle}{conlinea}{%
+  \begin{beamercolorbox}[wd=\paperwidth, sep=0.20cm, dp=0cm, left, leftskip=0.20cm]{frametitle}%
+    {\tiny\color{white!60!ColorPrincipal}\insertsectionhead}\\[-0.05cm]%
+    \bfseries\insertframetitle\strut%
+  \end{beamercolorbox}%
+  \vspace{-0.06cm}%
+  {\color{ColorAcento}\rule{\paperwidth}{2.5pt}}%
 }
+
+% Activar variante simple como default
+\setbeamertemplate{frametitle}[simple]
+
+% Flag interno
+\newif\ifusarlineadorada
+\usarlineadoradafalse
+
+% Al abrir cada frame: aplica la variante correcta y reinicia el flag
+\AtBeginEnvironment{frame}{%
+  \ifusarlineadorada
+    \setbeamertemplate{frametitle}[conlinea]%
+    \global\usarlineadoradafalse
+  \else
+    \setbeamertemplate{frametitle}[simple]%
+  \fi
+}
+
+% \framelinea — úsalo justo antes de \begin{frame} para activar la línea dorada
+%   Ejemplo:
+%     \framelinea
+%     \begin{frame}{Mi Título Destacado}
+%       ...
+%     \end{frame}
+\newcommand{\framelinea}{\global\usarlineadoradatrue}
 
 
 % =============================================================================
@@ -206,7 +251,7 @@
 
 % Fuente debajo de figura
 \newcommand{\fuentefigura}[1]{%
-  \par{\tiny\textit{Fuente: #1}}%
+  \vspace{0.1em}\noindent{\tiny\textit{Fuente: #1}\par}%
 }
 
 % Título azul visible dentro del frame — alternativa al frametitle del tema.

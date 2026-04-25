@@ -57,7 +57,9 @@ Trabajos-Maestria-Urbanismo/
 
 ## Inicio rápido — Crear un documento nuevo
 
-Todos los comandos se ejecutan desde la raíz del repositorio con `DIR=` apuntando a donde quieres crear el documento:
+Todos los comandos se ejecutan desde la raíz del repositorio con `DIR=` apuntando a donde quieres crear el documento.
+
+### Documentos (ensayos y artículos)
 
 ```bash
 # Ensayo con portada institucional (escudos UNAM/FES, TOC, índice de figuras)
@@ -72,8 +74,18 @@ make ArticulosConPortada DIR=TercerSemestre/MiMateria/NombreArticulo
 # Artículo sin portada con palabras clave (sin TOC ni índices)
 make ArticulosSinPortada DIR=TercerSemestre/MiMateria/NombreArticulo
 
-# Presentación Beamer UNAM
-make nueva-presentacion DIR=TercerSemestre/MiMateria/NombrePresentacion
+# Cualquier documento con un color específico (opcional)
+make EnsayosConPortada DIR=TercerSemestre/MiMateria/NombreEnsayo COLOR=Teal
+```
+
+### Presentaciones — variantes de color
+
+```bash
+make nueva-presentacion          DIR=TercerSemestre/MiMateria/NombrePres   # Azul UNAM (default)
+make nueva-presentacion-teal     DIR=TercerSemestre/MiMateria/NombrePres   # Verde azulado
+make nueva-presentacion-olivo    DIR=TercerSemestre/MiMateria/NombrePres   # Verde olivo
+make nueva-presentacion-purpura  DIR=TercerSemestre/MiMateria/NombrePres   # Púrpura
+make nueva-presentacion-rojo     DIR=TercerSemestre/MiMateria/NombrePres   # Rojo
 ```
 
 ---
@@ -81,11 +93,17 @@ make nueva-presentacion DIR=TercerSemestre/MiMateria/NombrePresentacion
 ## Compilar documentos existentes
 
 ```bash
-# Compilar un ensayo o artículo
+# Compilar un ensayo o artículo (color por defecto del documento)
 make Document DIR=TercerSemestre/MiMateria/MiDocumento
+
+# Compilar con un color distinto sin modificar el archivo
+make Document DIR=TercerSemestre/MiMateria/MiDocumento COLOR=Purpura
 
 # Compilar una presentación
 make Presentacion DIR=TercerSemestre/MiMateria/MiPresentacion
+
+# Compilar una presentación en otro color
+make Presentacion DIR=TercerSemestre/MiMateria/MiPresentacion COLOR=Teal
 
 # Alias para trabajos conocidos
 make desarrollo          # Ensayo_Humedales (Desarrollo Urbano Sostenible)
@@ -126,9 +144,34 @@ Cada plantilla tiene el mismo patrón de uso:
 
 ---
 
+## Temas de color
+
+Todos los documentos y presentaciones soportan 5 temas de color. El tema se puede cambiar de dos maneras:
+
+**Permanente** — edita `Latex/color-config.tex` dentro del documento:
+```latex
+\providecommand{\ColorTema}{Purpura}   % opciones: Institucional | Teal | VerdeOlivo | Purpura | Rojo
+```
+
+**Por compilación** — sin tocar el archivo:
+```bash
+make Document     DIR=<ruta> COLOR=VerdeOlivo
+make Presentacion DIR=<ruta> COLOR=Rojo
+```
+
+| Tema | ColorPrincipal | ColorAcento | Uso sugerido |
+|---|---|---|---|
+| `Institucional` | Azul UNAM `RGB 0,56,147` | Oro UNAM `RGB 244,180,0` | Todos los entregables (default) |
+| `Teal` | Verde azulado `RGB 0,105,92` | Ámbar `RGB 255,171,0` | Medio ambiente, geografía |
+| `VerdeOlivo` | Verde olivo `RGB 56,87,35` | Ocre `RGB 188,143,60` | Historia urbana, patrimonio |
+| `Purpura` | Púrpura `RGB 106,27,154` | Dorado `RGB 255,196,0` | Economía, política pública |
+| `Rojo` | Rojo `RGB 183,28,28` | Dorado `RGB 255,196,0` | Derecho urbano, normatividad |
+
+---
+
 ## Plantilla de Presentaciones
 
-Basada en Beamer con tema Madrid y paleta UNAM (azul `RGB 0,56,147` y oro `RGB 244,180,0`).
+Basada en Beamer con tema Madrid. El frametitle muestra la sección activa como etiqueta pequeña dentro de la barra de color, y el acento dorado separa visualmente los elementos.
 
 Incluye portada con escudos institucionales, transiciones automáticas de sección, pie de página personalizado y los siguientes tipos de diapositiva listos para usar:
 
