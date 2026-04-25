@@ -327,6 +327,7 @@ TSWLatexianTemp*
 
 ## PDF
 *.pdf
+!docs/assets/*.pdf
 
 ### Archvios Claude
 .claude/*
