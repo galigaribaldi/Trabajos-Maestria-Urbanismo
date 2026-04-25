@@ -16,7 +16,17 @@
 # ─── ALIASES DE MATERIAS CONOCIDAS ───────────────────────────────────────────
 #   make desarrollo            → compila Ensayo_Humedales
 #   make pres-humedales        → compila Presentacion_Humedales
+#   make pres-movilidad        → compila Movilidad_Sustentable_Presentacion
 #   make sociologia            → compila SociologiaUrbana (si existe)
+#
+# ─── RELEASES (requiere gh CLI autenticado) ──────────────────────────────────
+#   make release DIR=<ruta> TAG=<tag> TITULO="..." [TIPO=Document|Presentacion]
+#                              → compila + publica GitHub Release con el PDF
+#
+#   Aliases prefabricados (3er semestre 2026-2):
+#   make release-ens-humedales   → v2026-2-dsma-ens-humedales
+#   make release-pres-humedales  → v2026-2-urbs-pres-humedales
+#   make release-pres-movilidad  → v2026-2-dsu-pres-movilidad
 #
 # ─── UTILIDADES ──────────────────────────────────────────────────────────────
 #   make limpiar               → borra auxiliares LaTeX en todo el proyecto
@@ -43,6 +53,7 @@ PLANTILLA_BEAMER := PresentacionPlantilla
 # Rutas conocidas
 DIR_DUS_HUMEDALES      := TercerSemestre/DesarrolloUrbanoSostenible/Ensayo_Humedales
 DIR_DUS_PRES_HUMEDALES := TercerSemestre/DesarrolloUrbanoSostenible/Presentacion_Humedales
+DIR_DSU_MOVILIDAD      := TercerSemestre/DesarrolloUrbanoSostenible/Movilidad_Sustentable_Presentacion
 DIR_SOCIOLOGIA         := TercerSemestre/SociologiaUrbana
 
 # Variable de ruta arbitraria (override con DIR=...)
@@ -55,8 +66,9 @@ DIR ?=
         nueva-presentacion \
         nueva-presentacion-teal nueva-presentacion-olivo \
         nueva-presentacion-purpura nueva-presentacion-rojo \
-        desarrollo pres-humedales sociologia \
-        limpiar limpiar-dir _compile _scaffold
+        desarrollo pres-humedales pres-movilidad sociologia \
+        release release-ens-humedales release-pres-humedales release-pres-movilidad \
+        limpiar limpiar-dir _compile _scaffold _release
 
 # =============================================================================
 # ALIASES — materias conocidas
@@ -75,6 +87,12 @@ pres-humedales:
 	@echo " Compilando: Presentación Humedales"
 	@echo "========================================================"
 	$(MAKE) Presentacion DIR=$(DIR_DUS_PRES_HUMEDALES)
+
+pres-movilidad:
+	@echo "========================================================"
+	@echo " Compilando: Movilidad Sustentable — Presentación"
+	@echo "========================================================"
+	$(MAKE) Presentacion DIR=$(DIR_DSU_MOVILIDAD)
 
 sociologia:
 	@echo "========================================================"
@@ -205,6 +223,71 @@ _scaffold:
 	    echo "    3. Escribe tu contenido en $(DIR)/secciones/"; \
 	fi
 	@echo "    4. Compila con: make $(if $(filter Presentacion,$(TIPO)),Presentacion,Document) DIR=$(DIR)"
+
+# =============================================================================
+# RELEASES — compila el PDF y publica en GitHub Releases
+#
+# Uso genérico:
+#   make release DIR=<ruta> TAG=<tag> TITULO="Título completo" \
+#                [TIPO=Document|Presentacion] [COLOR=Institucional]
+#
+# El PDF se sube con el nombre del tag (p. ej. v2026-2-dsma-ens-humedales.pdf)
+# para que sea identificable en la página de releases.
+# =============================================================================
+
+TIPO   ?= Document
+TITULO ?=
+
+release:
+ifndef TAG
+	$(error Debes indicar el tag: make release TAG=v... DIR=... TITULO="...")
+endif
+ifndef DIR
+	$(error Debes indicar la carpeta: make release TAG=... DIR=<ruta> TITULO="...")
+endif
+	@if [ -z "$(TITULO)" ]; then echo "[ERROR] Debes indicar TITULO=\"...\""; exit 1; fi
+	@$(MAKE) _compile DIR=$(DIR) TIPO=$(TIPO)
+	@echo ">>> Preparando release $(TAG)..."
+	cp "$(DIR)/main.pdf" "$(DIR)/$(TAG).pdf"
+	gh release create "$(TAG)" "$(DIR)/$(TAG).pdf" \
+	    --title "$(TITULO)" \
+	    --notes "Compilado con LaTeX · Tema de color: $(COLOR) · Maestría en Urbanismo UNAM · FES Acatlán"
+	rm "$(DIR)/$(TAG).pdf"
+	@echo ">>> Release $(TAG) publicado en GitHub."
+
+# ── Aliases prefabricados — Tercer Semestre 2026-2 ──────────────────────────
+# Cada alias compila y publica directamente sin propagar el título por Make
+# (los títulos con espacios no viajan bien entre sub-makes).
+
+release-ens-humedales:
+	@$(MAKE) _compile DIR=$(DIR_DUS_HUMEDALES) TIPO=Document
+	cp "$(DIR_DUS_HUMEDALES)/main.pdf" "$(DIR_DUS_HUMEDALES)/v2026-2-dsma-ens-humedales.pdf"
+	gh release create "v2026-2-dsma-ens-humedales" \
+	    "$(DIR_DUS_HUMEDALES)/v2026-2-dsma-ens-humedales.pdf" \
+	    --title "Humedales Urbanos y Movilidad Sostenible en la ZMVM" \
+	    --notes "Compilado con LaTeX · Tema de color: $(COLOR) · Maestría en Urbanismo UNAM · FES Acatlán"
+	rm "$(DIR_DUS_HUMEDALES)/v2026-2-dsma-ens-humedales.pdf"
+	@echo ">>> Release v2026-2-dsma-ens-humedales publicado en GitHub."
+
+release-pres-humedales:
+	@$(MAKE) _compile DIR=$(DIR_DUS_PRES_HUMEDALES) TIPO=Presentacion
+	cp "$(DIR_DUS_PRES_HUMEDALES)/main.pdf" "$(DIR_DUS_PRES_HUMEDALES)/v2026-2-urbs-pres-humedales.pdf"
+	gh release create "v2026-2-urbs-pres-humedales" \
+	    "$(DIR_DUS_PRES_HUMEDALES)/v2026-2-urbs-pres-humedales.pdf" \
+	    --title "Humedales Urbanos y Movilidad — De la Degradación a la Infraestructura Sustentable" \
+	    --notes "Compilado con LaTeX · Tema de color: $(COLOR) · Maestría en Urbanismo UNAM · FES Acatlán"
+	rm "$(DIR_DUS_PRES_HUMEDALES)/v2026-2-urbs-pres-humedales.pdf"
+	@echo ">>> Release v2026-2-urbs-pres-humedales publicado en GitHub."
+
+release-pres-movilidad:
+	@$(MAKE) _compile DIR=$(DIR_DSU_MOVILIDAD) TIPO=Presentacion
+	cp "$(DIR_DSU_MOVILIDAD)/main.pdf" "$(DIR_DSU_MOVILIDAD)/v2026-2-dsu-pres-movilidad.pdf"
+	gh release create "v2026-2-dsu-pres-movilidad" \
+	    "$(DIR_DSU_MOVILIDAD)/v2026-2-dsu-pres-movilidad.pdf" \
+	    --title "Movilidad Sustentable — Entre la Teoria y la Realidad Mexicana" \
+	    --notes "Compilado con LaTeX · Tema de color: $(COLOR) · Maestría en Urbanismo UNAM · FES Acatlán"
+	rm "$(DIR_DSU_MOVILIDAD)/v2026-2-dsu-pres-movilidad.pdf"
+	@echo ">>> Release v2026-2-dsu-pres-movilidad publicado en GitHub."
 
 # =============================================================================
 # LIMPIEZA

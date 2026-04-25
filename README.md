@@ -16,6 +16,7 @@ Repositorio de documentos académicos del programa de Maestría en Urbanismo. Co
 
 - **TeX Live** (o MiKTeX) con `pdflatex` y `bibtex`
 - **Make** (`make --version`)
+- **gh CLI** — solo para publicar releases (`gh auth login` antes del primer uso)
 - Editor recomendado: VS Code con extensión LaTeX Workshop, o cualquier editor con soporte `.tex`
 
 ---
@@ -106,11 +107,90 @@ make Presentacion DIR=TercerSemestre/MiMateria/MiPresentacion
 make Presentacion DIR=TercerSemestre/MiMateria/MiPresentacion COLOR=Teal
 
 # Alias para trabajos conocidos
-make desarrollo          # Ensayo_Humedales (Desarrollo Urbano Sostenible)
+make desarrollo          # Ensayo_Humedales
 make pres-humedales      # Presentacion_Humedales
+make pres-movilidad      # Movilidad_Sustentable_Presentacion
 ```
 
 La compilación sigue el ciclo completo: `pdflatex → bibtex → pdflatex → pdflatex`. El PDF resultante queda en `<DIR>/main.pdf`.
+
+---
+
+## GitHub Releases — publicar PDFs
+
+Los PDFs finales se distribuyen como **GitHub Releases**. Cada release lleva un tag que identifica unívocamente el semestre, la materia, el tipo de documento y el tema.
+
+### Estructura del tag
+
+```
+v{AÑO}-{S}-{MAT}-{TIPO}-{TEMA}[-r{N}]
+```
+
+| Segmento | Descripción | Ejemplos |
+|----------|-------------|---------|
+| `{AÑO}` | Año del semestre | `2026` |
+| `{S}` | Semestre dentro del año | `1`, `2` |
+| `{MAT}` | Abreviatura de materia (ver tabla) | `dsma`, `urbs`, `dsu` |
+| `{TIPO}` | Tipo de documento | `ens`, `pres`, `art`, `mapa`, `col` |
+| `{TEMA}` | Slug del tema en kebab-case | `humedales`, `movilidad` |
+| `[-r{N}]` | Revisión post-entrega (opcional) | `-r2`, `-r3` |
+
+#### Abreviaturas de materias
+
+| Código | Materia |
+|--------|---------|
+| `dsma` | Desarrollo Sostenible del Medio Ambiente |
+| `urbs` | Desarrollo Urbano Sostenible |
+| `dsu`  | Desarrollo Sustentable en el Urbanismo |
+
+#### Tipos de documento
+
+| Código | Tipo |
+|--------|------|
+| `ens`  | Ensayo |
+| `pres` | Presentación |
+| `art`  | Artículo |
+| `mapa` | Mapa / Cartografía |
+| `col`  | Coloquio |
+
+> **Regla de revisiones:** el tag sin sufijo es la entrega original. Si hay una corrección posterior, se crea un nuevo release con `-r2`, `-r3`, etc. **Nunca** se reutiliza ni sobreescribe un tag existente.
+
+---
+
+### Publicar un release
+
+#### Aliases prefabricados (3er semestre 2026-2)
+
+Compilan el PDF y lo publican en un solo comando. Requieren `gh auth login` activo.
+
+```bash
+make release-ens-humedales    # → v2026-2-dsma-ens-humedales
+make release-pres-humedales   # → v2026-2-urbs-pres-humedales
+make release-pres-movilidad   # → v2026-2-dsu-pres-movilidad
+```
+
+Para publicar con un color distinto al default:
+
+```bash
+make release-pres-movilidad COLOR=Teal
+```
+
+#### Release genérico (documentos futuros)
+
+```bash
+make release \
+    DIR=TercerSemestre/MiMateria/MiDocumento \
+    TAG=v2026-2-dsu-ens-tema \
+    TITULO="Título completo del documento" \
+    TIPO=Document          # Document | Presentacion
+```
+
+#### Flujo interno del release
+
+1. Compila el PDF completo (`pdflatex → bibtex → pdflatex × 2`)
+2. Copia `main.pdf` como `<TAG>.pdf` dentro de la carpeta del documento
+3. Ejecuta `gh release create <TAG> <TAG>.pdf --title "..." --notes "..."`
+4. Elimina el PDF temporal (el `main.pdf` original permanece)
 
 ---
 
@@ -212,7 +292,8 @@ Las plantillas los referencian automáticamente vía `\graphicspath` — no es n
 
 ### Tercer Semestre — Desarrollo Urbano Sostenible
 
-| Trabajo | Ruta | Estado |
-|---|---|---|
-| Ensayo: Humedales Urbanos | `TercerSemestre/DesarrolloUrbanoSostenible/Ensayo_Humedales` | Terminado |
-| Presentación: Humedales | `TercerSemestre/DesarrolloUrbanoSostenible/Presentacion_Humedales` | En proceso |
+| Trabajo | Ruta | Tag de release | Estado |
+|---------|------|----------------|--------|
+| Ensayo: Humedales Urbanos y Movilidad | `TercerSemestre/DesarrolloUrbanoSostenible/Ensayo_Humedales` | `v2026-2-dsma-ens-humedales` | Terminado |
+| Presentación: Humedales Urbanos y Movilidad | `TercerSemestre/DesarrolloUrbanoSostenible/Presentacion_Humedales` | `v2026-2-urbs-pres-humedales` | Terminada |
+| Presentación: Movilidad Sustentable | `TercerSemestre/DesarrolloUrbanoSostenible/Movilidad_Sustentable_Presentacion` | `v2026-2-dsu-pres-movilidad` | Terminada |
