@@ -4,28 +4,48 @@ Hernán Galileo Cabrera Garibaldi · FES Acatlán, UNAM · 2026-2
 
 ---
 
-## Tercer Semestre — 2026-2
+## Convención de tags
 
-### Desarrollo Urbano Sostenible
+```
+v{AÑO}-{S}-{MAT}-{TIPO}-{TEMA}[-r{N}]
+```
 
-| Tipo | Título | Subtítulo | Materia | Release | PDF |
-|------|--------|-----------|---------|---------|-----|
-| Ensayo | Humedales Urbanos y Movilidad Sostenible en la ZMVM | Una lectura desde la infraestructura verde | Desarrollo Sostenible del Medio Ambiente | `v2026-2-dsma-ensayo-humedales` | Próximamente |
-| Presentación | Humedales Urbanos y Movilidad | De la Degradación a la Infraestructura Sustentable | Desarrollo Urbano Sostenible | `v2026-2-dus-pres-humedales` | Próximamente |
-| Presentación | Movilidad Sustentable | Entre la Teoría y la Realidad Mexicana | Desarrollo Sustentable en el Urbanismo | `v2026-2-dsu-pres-movilidad` | Próximamente |
+| Segmento | Descripción | Ejemplos |
+|----------|-------------|---------|
+| `{AÑO}` | Año del semestre | `2026` |
+| `{S}` | Semestre dentro del año | `1`, `2` |
+| `{MAT}` | Abreviatura de materia | `dsma`, `urbs`, `dsu` |
+| `{TIPO}` | Tipo de documento | `ens`, `pres`, `art`, `mapa`, `col` |
+| `{TEMA}` | Slug del tema en kebab-case | `humedales`, `movilidad` |
+| `[-r{N}]` | Revisión (solo si hay corrección post-entrega) | `-r2`, `-r3` |
+
+### Abreviaturas de materias
+
+| Código | Materia completa |
+|--------|-----------------|
+| `dsma` | Desarrollo Sostenible del Medio Ambiente |
+| `urbs` | Desarrollo Urbano Sostenible |
+| `dsu`  | Desarrollo Sustentable en el Urbanismo |
+
+### Tipos de documento
+
+| Código | Tipo |
+|--------|------|
+| `ens`  | Ensayo |
+| `pres` | Presentación |
+| `art`  | Artículo |
+| `mapa` | Mapa / Cartografía |
+| `col`  | Coloquio |
 
 ---
 
-## Convención de releases
+## Tercer Semestre — 2026-2
 
-```
-v{semestre}-{materia-abrev}-{tipo}-{tema}
-```
-
-Ejemplos:
-- `v2026-2-dsma-ensayo-humedales` — semestre 2026-2, Desarrollo Sostenible del Medio Ambiente, ensayo sobre humedales
-- `v2026-2-dus-pres-humedales` — semestre 2026-2, Desarrollo Urbano Sostenible, presentación humedales
-- `v2026-2-dsu-pres-movilidad` — semestre 2026-2, Desarrollo Sustentable en el Urbanismo, presentación movilidad
+| Tipo | Título | Materia | Tag | Estado |
+|------|--------|---------|-----|--------|
+| Ensayo | Humedales Urbanos y Movilidad Sostenible en la ZMVM | Desarrollo Sostenible del Medio Ambiente | `v2026-2-dsma-ens-humedales` | Pendiente |
+| Presentación | Humedales Urbanos y Movilidad | Desarrollo Urbano Sostenible | `v2026-2-urbs-pres-humedales` | Pendiente |
+| Presentación | Movilidad Sustentable | Desarrollo Sustentable en el Urbanismo | `v2026-2-dsu-pres-movilidad` | Pendiente |
 
 ---
 
