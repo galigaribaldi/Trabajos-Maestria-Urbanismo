@@ -1,0 +1,88 @@
+% =============================================================================
+%  s03_conclusiones.tex — Sección 3: Conclusiones y recomendaciones
+% =============================================================================
+\section{Conclusiones}
+
+% ── Frame: Solo texto — mensaje clave, cita o puente entre secciones ─────────
+%    USO: para declaraciones fuertes, preguntas retóricas o transiciones.
+%    Copia y adapta. No lleva título de frame ni elementos gráficos.
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[ColorPrincipal]
+      (current page.north west) rectangle
+      ([xshift=0.35cm] current page.south west);
+    \fill[ColorAcento]
+      ([xshift=0.32cm] current page.north west) rectangle
+      ([xshift=0.35cm] current page.south west);
+  \end{tikzpicture}
+  \hspace{0.8cm}%
+  \begin{minipage}{0.88\textwidth}
+    \vspace{2.2cm}
+    {\color{ColorAcento}\rule{0.5\textwidth}{1.2pt}}\\[0.5cm]
+    {\large\bfseries\color{ColorPrincipal}
+      ¿Es posible la Movilidad Sustentable en la CDMX y su ZMVM?\\
+      ¿Por qué no hay concordancia entre la teoría y la realidad?}\\[0.6cm]
+    {\normalsize\color{black}
+      La \cdmx  y la \zmvm  no está perdida, pero la movilidad ha sido reducida a
+      propuestas de manual y se ha segregado a los sectores populares a ciudadanos de
+      segunda o tercera clase \cite{rendon2009ciudadanos}. No se requiere soluciones vistosas
+       o políticas, si no socialmente incluyentes y con una contextualización del entorno adecuada.
+      }\\[0.5cm]
+    {\color{ColorAcento}\rule{0.3\textwidth}{0.8pt}}
+    \vfill
+  \end{minipage}
+\end{frame}
+
+
+% ── Frame: Síntesis de Hallazgos (I) ──────────────────────────────────────────
+\begin{frame}{Síntesis de Hallazgos: Eficiencia y Equidad Lograda}
+  \begin{columns}[T]
+    \begin{column}{0.90\textwidth}
+      \begin{block}{Lo que funciona}
+        \begin{itemize}
+          \item \textbf{Superioridad del Transporte Masivo:} La ingeniería vial demuestra que el transporte masivo mueve hasta 
+              \textbf{43,000 pers/hr} frente a las 2,000 del auto, validando los principios de Transportar y Densificar \cite{ITDP_Espacio}.
+          \item \textbf{Tecnología como Justicia Social:} El Cablebús ha reducido tiempos de traslado en un \textbf{45\%} 
+                en periferias, demostrando que la innovación tecnológica puede mitigar la segregación socioespacial \cite{SEDATU2023}.
+          \item \textbf{Sustento Normativo Sólido:} La ENAMOV 2023-2042 y el Artículo 4° brindan el blindaje legal necesario para transitar 
+                de una planeación de tráfico a una de \textbf{derecho a la movilidad} \cite{SEDATU2023,ITDP_Espacio}.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: Síntesis de Hallazgos (II) ─────────────────────────────────────────
+\begin{frame}{Síntesis de Hallazgos: Retos y Barreras Estructurales}
+  \begin{columns}[T]
+    \begin{column}{0.98\textwidth}
+      \begin{alertblock}{Los retos pendientes}
+        \begin{itemize}
+          \item \textbf{Descontrol de la Motorización:} El parque vehicular crece al \textbf{5.3\% anual} 
+                (3.5 veces más que la población), lo que anula las ganancias en eficiencia vial si no se 
+                reduce el uso del auto \cite{SEDATU2023}.
+          \item \textbf{Agotamiento del Modelo Radial:} La centralización operativa genera altos 
+                \textbf{Coeficientes de Fricción ($C_f$)}, saturando hubs como Pantitlán y dejando al 
+                  4to contorno con coberturas marginales ($<12\%$) \cite{Garibaldi2024_R02}.
+          \item \textbf{Costo de la Ineficiencia:} Las externalidades negativas (congestión y siniestros) 
+                consumen el \textbf{4\% del PIB}, impulsadas por un uso ineficiente del espacio vial 
+                (68.1\% de ocupación individual) \cite{ramirez2025analisis}.
+        \end{itemize}
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: Cierre ────────────────────────────────────────────────────────────
+\begin{frame}[plain]
+  \begin{center}
+    \vfill
+    {\color{ColorAcento}\rule{0.6\textwidth}{1.5pt}}\\[0.5cm]
+    {\Large\bfseries\color{ColorPrincipal} Gracias}\\[0.3cm]
+    {\normalsize \Autor}\\[0.1cm]
+    {\small \MateriaCorta}\\[0.1cm]
+    {\small \Semestre}\\[0.5cm]
+    {\color{ColorAcento}\rule{0.6\textwidth}{1.5pt}}
+    \vfill
+  \end{center}
+\end{frame}

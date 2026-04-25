@@ -1,63 +1,76 @@
 
-% ── Frame: Dos imágenes con texto explicativo ─────────────────────────────────
-%    USO: comparativas visuales, antes/después, dos mapas, dos planos.
-%    Ajusta height para que ambas imágenes queden alineadas verticalmente.
-%    INSTRUCCIÓN: cuando tengas tus imágenes, comenta el alertblock y descomenta \includegraphics.
-\begin{frame}{Comparativa Visual — Dos Imágenes}
-  \begin{columns}[T]
-    \begin{column}{0.48\textwidth}
-      \centering
-      % \includegraphics[width=\textwidth, height=3.8cm, keepaspectratio]{img/figura1.png}
-      \begin{alertblock}{Placeholder imagen 1}
-        \texttt{img/figura1.png}
-      \end{alertblock}
-      {\small Texto explicativo de la imagen izquierda. Describe el contexto, hallazgo o período temporal.}\\[0.05cm]
-      \fuentefigura{Elaboración propia, 2026.}
-    \end{column}
-    \begin{column}{0.48\textwidth}
-      \centering
-      % \includegraphics[width=\textwidth, height=3.8cm, keepaspectratio]{img/figura2.png}
-      \begin{alertblock}{Placeholder imagen 2}
-        \texttt{img/figura2.png}
-      \end{alertblock}
-      {\small Texto explicativo de la imagen derecha. Describe el contexto, hallazgo o período temporal.}\\[0.05cm]
-      \fuentefigura{Fuente secundaria, 2026.}
-    \end{column}
-  \end{columns}
+
+% --- SECCIÓN 3: EL MOTOR DE ANÁLISIS ---
+\section{El Motor de Análisis: Eficiencia e Impedancia}
+
+% Diapositiva 1: Enfoque Conceptual (Sin mencionar VFT)
+\begin{frame}{Motor de Análisis: Eficiencia Vial y Accesibilidad}
+    \begin{block}{Cambio de Paradigma}
+        Transición del enfoque de \textbf{flujo vehicular} (capacidad de carga) al enfoque de 
+        \textbf{accesibilidad} (interacción de personas) \cite{ITDP_Espacio}.
+    \end{block}
+    
+    \begin{itemize}
+        \item \textbf{Gestión de Movilidad:} Priorización de la eficiencia del sistema sobre la 
+              velocidad del objeto \cite{ITDP_Espacio}.
+        \item \textbf{Impedancia Sistémica:} Factores físicos y operativos que restringen el 
+              derecho humano a la movilidad.
+        \item \textbf{Objetivo:} Evaluar la capacidad real de la infraestructura ante la demanda actual.
+    \end{itemize}
 \end{frame}
 
-% ── Frame: Tres imágenes con texto explicativo ────────────────────────────────
-%    USO: secuencias temporales, etapas de un proceso, comparativa de tres casos.
-%    Con tres columnas el texto usa \scriptsize para no saturar la diapositiva.
-%    INSTRUCCIÓN: cuando tengas tus imágenes, comenta el alertblock y descomenta \includegraphics.
-\begin{frame}{Análisis Comparativo — Tres Imágenes}
-  \begin{columns}[T]
-    \begin{column}{0.32\textwidth}
-      \centering
-      % \includegraphics[width=\textwidth, height=3.5cm, keepaspectratio]{img/figura1.png}
-      \begin{alertblock}{\scriptsize Placeholder 1}
-        \scriptsize\texttt{img/figura1.png}
-      \end{alertblock}
-      {\scriptsize Texto explicativo de la imagen 1. Describe el caso, período o variable representada.}\\[0.05cm]
-      \fuentefigura{Fuente 1, 2026.}
-    \end{column}
-    \begin{column}{0.32\textwidth}
-      \centering
-      % \includegraphics[width=\textwidth, height=3.5cm, keepaspectratio]{img/figura2.png}
-      \begin{alertblock}{\scriptsize Placeholder 2}
-        \scriptsize\texttt{img/figura2.png}
-      \end{alertblock}
-      {\scriptsize Texto explicativo de la imagen 2. Describe el caso, período o variable representada.}\\[0.05cm]
-      \fuentefigura{Fuente 2, 2026.}
-    \end{column}
-    \begin{column}{0.32\textwidth}
-      \centering
-      % \includegraphics[width=\textwidth, height=3.5cm, keepaspectratio]{img/figura3.png}
-      \begin{alertblock}{\scriptsize Placeholder 3}
-        \scriptsize\texttt{img/figura3.png}
-      \end{alertblock}
-      {\scriptsize Texto explicativo de la imagen 3. Describe el caso, período o variable representada.}\\[0.05cm]
-      \fuentefigura{Fuente 3, 2026.}
-    \end{column}
-  \end{columns}
+% Diapositiva 2: Comparativa de Eficiencia Vial
+\begin{frame}{Fundamentación: Comparativa de Capacidad Vial}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, height=4cm, keepaspectratio]{img/eficiencia_vial.png}
+            \fuentefigura{Adaptado de ITDP México \cite{ITDP_Espacio}.}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Capacidad por Modo (pers/hr)}
+                \begin{itemize}
+                    \item \textbf{Auto:} 2,000 (Ocupación: 1.2 pers/veh) \cite{IMCO2019Doc}.
+                    \item \textbf{Bicicleta:} 14,000.
+                    \item \textbf{Bus/Masivo:} 19,000 a 43,000.
+                \end{itemize}
+            \end{exampleblock}
+            \small El 68.1\% de los viajes en auto en la ZMVM transportan un solo pasajero \cite{IMCO2019Doc}.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Diapositiva 3: Impacto Económico y Externalidades
+\begin{frame}{Fundamentación: Costos de la Ineficiencia Vial}
+    \begin{alertblock}{Impacto Macroeconómico}
+        Las externalidades (congestión, siniestros y contaminación) cuestan el \textbf{4\% del PIB} nacional
+         \cite{IMCO2019Doc, ITDP_Espacio}.
+    \end{alertblock}
+
+    \begin{itemize}
+        \item \textbf{Productividad:} Pérdida masiva de horas-persona en traslados periféricos.
+        \item \textbf{Salud Pública:} Costos por enfermedades respiratorias derivadas de emisiones 
+              vehiculares \cite{ITDP_Espacio}.
+        \item \textbf{Segregación:} El costo del transporte consume hasta el 19\% del ingreso en el 4to contorno.
+    \end{itemize}
+\end{frame}
+
+% Diapositiva 4: Tesis - Reporte 01: Ecuación VFT
+\begin{frame}{Reporte 01 (Tesis): La Ecuación VFT e Impedancia}
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, height=6.5cm, keepaspectratio]{img/vft_impedancia_mapa.png}
+            \fuentefigura{Elaboración propia: Coeficiente de Fricción ($C_f$) \cite{Garibaldi2024VFT}.}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{equation}
+                T_t = \left( \frac{D}{V} \right) \times C_f
+            \end{equation}
+            \begin{itemize}
+                \item \textbf{Variable $C_f$:} Explica la degradación de la velocidad por fricción operativa \cite{Garibaldi2024VFT}.
+                \item \textbf{Hallazgo:} El confinamiento masivo es la única vía para reducir la impedancia sistémica.
+            \end{itemize}
+        \end{column}
+    \end{columns}
 \end{frame}
