@@ -1,0 +1,200 @@
+/* =============================================================================
+   unam.css — Overrides UNAM sobre Bulma CSS
+   Colores: Azul UNAM #003893 · Oro UNAM #F4B400
+   ============================================================================= */
+
+:root {
+  --unam-azul:       #003893;
+  --unam-azul-dark:  #002266;
+  --unam-azul-light: #e8eef8;
+  --unam-oro:        #F4B400;
+  --unam-oro-light:  #fff8e0;
+  --unam-borde:      #dde4f0;
+}
+
+/* ── Navbar ── */
+.navbar.is-unam {
+  background-color: var(--unam-azul-dark);
+  border-bottom: 3px solid var(--unam-oro);
+}
+.navbar.is-unam .navbar-item,
+.navbar.is-unam .navbar-item:hover,
+.navbar.is-unam .navbar-link {
+  color: rgba(255, 255, 255, 0.80);
+  background: transparent;
+}
+.navbar.is-unam .navbar-item:hover { color: #fff; }
+
+/* ── Hero ── */
+.hero.is-unam {
+  background-color: var(--unam-azul);
+  border-bottom: 4px solid var(--unam-oro);
+}
+.hero.is-unam .title  { color: #fff; }
+.hero.is-unam .subtitle { color: rgba(255,255,255,0.75); }
+
+/* ── Títulos de sección ── */
+.unam-section-title {
+  color: var(--unam-azul) !important;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--unam-oro);
+  margin-bottom: 1.5rem !important;
+}
+
+/* ── Etiqueta de materia ── */
+.unam-materia-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+/* ── Tags por tipo ── */
+.tag.is-ensayo       { background-color: var(--unam-azul-light); color: var(--unam-azul); font-weight: 600; }
+.tag.is-presentacion { background-color: var(--unam-oro-light);  color: #7a5c00;          font-weight: 600; }
+.tag.is-articulo     { background-color: #f1f3f7; color: #555; font-weight: 600; }
+.tag.is-mapa         { background-color: #edf7ee; color: #2a6e30; font-weight: 600; }
+
+/* ── Cards ── */
+.unam-card {
+  border: 1px solid var(--unam-borde);
+  border-radius: 6px;
+  transition: box-shadow 0.18s, border-color 0.18s;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.unam-card:hover {
+  box-shadow: 0 4px 14px rgba(0, 56, 147, 0.12);
+  border-color: #b8c8e8;
+}
+.unam-card .card-content { flex: 1; }
+.unam-card .card-content .title  { color: var(--unam-azul-dark); font-size: 1rem; }
+.unam-card .card-content .subtitle { font-size: 0.85rem; }
+.unam-card .card-desc { font-size: 0.88rem; color: #444; margin-top: 0.5rem; }
+
+/* ── Footer de tarjeta ── */
+.unam-card .card-footer { border-top: 1px solid var(--unam-borde); }
+.unam-card .card-footer-item { font-size: 0.83rem; font-weight: 600; }
+.unam-card .card-footer-item.is-primary-action {
+  background-color: var(--unam-azul);
+  color: #fff;
+}
+.unam-card .card-footer-item.is-primary-action:hover {
+  background-color: var(--unam-azul-dark);
+}
+.unam-card .card-footer-item.is-disabled {
+  color: #9ca3af;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* ── Botón primario ── */
+.button.is-unam {
+  background-color: var(--unam-azul);
+  color: white;
+  border: none;
+}
+.button.is-unam:hover { background-color: var(--unam-azul-dark); color: white; }
+
+.button.is-unam-outline {
+  background: transparent;
+  color: var(--unam-azul);
+  border: 1.5px solid var(--unam-azul);
+}
+.button.is-unam-outline:hover { background-color: var(--unam-azul-light); }
+
+/* ── Página de detalle — ficha lateral ── */
+.unam-ficha {
+  background: #fff;
+  border: 1px solid var(--unam-borde);
+  border-radius: 6px;
+  padding: 1.2rem;
+  position: sticky;
+  top: 1rem;
+}
+.unam-ficha .ficha-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #9ca3af;
+  margin-bottom: 0.6rem;
+}
+.unam-ficha dl { display: grid; grid-template-columns: auto 1fr; gap: 0.3rem 0.6rem; font-size: 0.83rem; }
+.unam-ficha dt { color: #9ca3af; }
+.unam-ficha dd { color: #222; font-weight: 500; }
+
+.unam-ficha .ficha-descarga {
+  margin-top: 1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--unam-borde);
+}
+
+.release-tag {
+  font-family: 'Courier New', monospace;
+  font-size: 0.76rem;
+  color: #9ca3af;
+  background: #f5f5f5;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  display: inline-block;
+  margin-top: 0.4rem;
+}
+
+/* ── Hero de detalle ── */
+.detalle-hero {
+  background-color: var(--unam-azul);
+  border-bottom: 4px solid var(--unam-oro);
+  padding: 2rem 1.5rem 1.6rem;
+}
+.detalle-hero .title   { color: #fff; }
+.detalle-hero .subtitle { color: rgba(255,255,255,0.75); font-style: italic; }
+
+/* ── Breadcrumb ── */
+.breadcrumb.unam-breadcrumb {
+  font-size: 0.83rem;
+  margin-bottom: 2rem;
+}
+.breadcrumb.unam-breadcrumb a { color: var(--unam-azul); }
+
+/* ── Contenido del detalle ── */
+.detalle-texto h2 {
+  font-size: 1rem;
+  color: var(--unam-azul);
+  font-weight: 700;
+  margin: 1.4rem 0 0.5rem;
+}
+.detalle-texto h2:first-child { margin-top: 0; }
+.detalle-texto p, .detalle-texto li {
+  font-size: 0.94rem;
+  line-height: 1.7;
+  color: #2a2a2a;
+  margin-bottom: 0.6rem;
+}
+.detalle-texto ul { margin-left: 1.2rem; }
+
+/* ── Footer ── */
+footer.unam-footer {
+  border-top: 1px solid var(--unam-borde);
+  background: #fff;
+  padding: 1.4rem;
+  font-size: 0.83rem;
+  color: #9ca3af;
+  text-align: center;
+}
+footer.unam-footer a { color: var(--unam-azul); text-decoration: none; }
+footer.unam-footer a:hover { text-decoration: underline; }
+
+/* ── Meta en tarjeta ── */
+.card-meta-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2rem 0.55rem;
+  font-size: 0.80rem;
+  margin: 0.6rem 0;
+}
+.card-meta-grid dt { color: #9ca3af; font-style: normal; }
+.card-meta-grid dd { color: #333; }
