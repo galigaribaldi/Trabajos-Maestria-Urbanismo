@@ -58,6 +58,15 @@
 \usepackage{microtype}
 \usepackage[parfill]{parskip}
 
+% Títulos de sección con color
+\usepackage{titlesec}
+\titleformat{\section}
+  {\large\bfseries\color{ColorPrincipal}}{\thesection.}{0.5em}{}
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{ColorPrincipal!80!black}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}
+  {\normalsize\itshape\color{ColorPrincipal!60!black}}{\thesubsubsection}{0.5em}{}
+
 
 % =============================================================================
 %  4. ENCABEZADOS Y PIES DE PÁGINA
