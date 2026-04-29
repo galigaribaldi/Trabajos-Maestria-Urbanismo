@@ -1,0 +1,62 @@
+% =============================================================================
+%  Portada.tex — Portada institucional UNAM
+%  Usa variables definidas en el bloque PERSONALIZACIÓN de main.tex
+% =============================================================================
+
+\begin{titlepage}
+\thispagestyle{empty}
+\setcounter{page}{0}
+\centering
+
+% ── Encabezado con escudos institucionales ────────────────────────────────────
+{\color{ColorPrincipal}\noindent\rule{\textwidth}{1.5pt}}\\[0.3cm]
+\noindent%
+\begin{minipage}[c]{0.14\textwidth}
+  \centering
+  \includegraphics[height=2cm]{UNAM_crest_black.pdf}
+\end{minipage}%
+\begin{minipage}[c]{0.70\textwidth}
+  \centering
+  {\small\textbf{UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO}}\\[0.1cm]
+  {\small\textbf{\Programa}}\\[0.1cm]
+  {\small\textbf{\Facultad}}
+\end{minipage}%
+\begin{minipage}[c]{0.14\textwidth}
+  \centering
+  \includegraphics[height=2cm]{escudo-fes-negro.jpg}
+\end{minipage}\\[0.3cm]
+{\color{ColorPrincipal}\noindent\rule{\textwidth}{1pt}}
+
+\vspace{1.8cm}
+
+% ── Título del ensayo ─────────────────────────────────────────────────────────
+{\Large\bfseries \TituloEnsayo}\\[0.6cm]
+{\large\itshape \SubtituloEnsayo}
+
+\vspace{2.2cm}
+
+% ── Tipo de trabajo ───────────────────────────────────────────────────────────
+{\normalsize\textbf{ENSAYO}}\\[0.2cm]
+{\normalsize QUE SE PRESENTA PARA LA MATERIA DE:}\\[0.2cm]
+{\normalsize\textbf{\MakeUppercase{\Materia}}}
+
+\vspace{2.0cm}
+
+% ── Datos del estudiante ──────────────────────────────────────────────────────
+{\normalsize PRESENTA:}\\[0.3cm]
+{\large\textbf{\Autor}}\\[0.8cm]
+
+{\normalsize PROFESOR ASIGNADO:}\\[0.2cm]
+{\normalsize\textbf{\ProfesorAsignado}}\\[0.6cm]
+
+{\normalsize SEMESTRE:}\\[0.2cm]
+{\normalsize\textbf{\Semestre}}
+
+\vfill
+
+% ── Pie de página ─────────────────────────────────────────────────────────────
+{\color{ColorPrincipal!40}\noindent\rule{0.7\textwidth}{0.4pt}}\\[0.3cm]
+{\footnotesize Unidad de Posgrado, \Facultad}\\[0.1cm]
+{\footnotesize \Ciudad \hfill \FechaEntrega}
+
+\end{titlepage}
