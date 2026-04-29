@@ -1,0 +1,66 @@
+% =============================================================================
+%  s01_intro.tex — Sección 1: Introducción / Planteamiento del problema
+%  Sustituye \lipsum con tu contenido real.
+% =============================================================================
+
+\section{Introducción}
+
+
+% ── Frame: Solo texto — mensaje clave, cita o puente entre secciones ─────────
+%    USO: para declaraciones fuertes, preguntas retóricas o transiciones.
+%    Copia y adapta. No lleva título de frame ni elementos gráficos.
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture, overlay]
+    % Banda lateral de color
+    \fill[ColorPrincipal]
+      (current page.north west) rectangle
+      ([xshift=0.35cm] current page.south west);
+    % Línea dorada en el borde de la banda
+    \fill[ColorAcento]
+      ([xshift=0.32cm] current page.north west) rectangle
+      ([xshift=0.35cm] current page.south west);
+  \end{tikzpicture}
+  \hspace{0.8cm}%
+  \begin{minipage}{0.88\textwidth}
+    \vspace{2.2cm}
+    {\color{ColorAcento}\rule{0.5\textwidth}{1.2pt}}\\[0.5cm]
+    {\large\bfseries\color{ColorPrincipal}
+      Pregunta de Investigación}\\[0.6cm]
+    {\normalsize\color{black}
+
+    ¿En qué medida la optimización topológica de la red de transporte de la Ciudad de
+    México y la Zona Metropolitana del Valle de México, evaluada mediante el motor analítico
+    VFTModel \citep{garibaldi2023vft}, demuestra que la implementación de corredores anillares 
+    reduce la vulnerabilidad funcional y mejora la eficiencia global del sistema en comparación
+    con el modelo radial vigente?}\\[0.5cm]
+    {\color{ColorAcento}\rule{0.3\textwidth}{0.8pt}}
+    \vfill
+  \end{minipage}
+\end{frame}
+
+% ── Frame: Objetivos ─────────────────────────────────────────────────────────
+\begin{frame}{Objetivos de la Presentación}
+  \begin{block}{Objetivo General del Taller}
+    En que medida los temas vistos durante el semestre 2026-2, benefician y nutren la investigación
+    sobre transportes anillares bajo 3 ejes: \textbf{Social, Económico y Social} en el entorno de una
+    Megalópolis como lo es la Ciudad de México y su área Metropolitana.
+  \end{block}
+  \vspace{0.4cm}
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}
+      \centering
+      {\color{ColorPrincipal}\Large\textbf{Social}}\\[0.1cm]
+      {\small Contexto Social}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      {\color{ColorPrincipal}\Large\textbf{Económico}}\\[0.1cm]
+      {\small Contexto Económico}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      {\color{ColorPrincipal}\Large\textbf{Geográfico}}\\[0.1cm]
+      {\small Contexto Geográfico}
+    \end{column}
+  \end{columns}
+\end{frame}
