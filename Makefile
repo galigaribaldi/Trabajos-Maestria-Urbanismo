@@ -7,11 +7,15 @@
 #   make Presentacion DIR=<ruta>   → compila presentación Beamer en <ruta>
 #
 # ─── SCAFFOLDING — crea documento nuevo desde plantilla ──────────────────────
-#   make EnsayosConPortada    DIR=<ruta>  → ensayo con portada institucional
-#   make EnsayosSinPortada    DIR=<ruta>  → ensayo sin portada (con TOC e índices)
-#   make ArticulosConPortada  DIR=<ruta>  → artículo con portada minimalista
-#   make ArticulosSinPortada  DIR=<ruta>  → artículo sin portada (con palabras clave)
-#   make nueva-presentacion   DIR=<ruta>  → presentación Beamer UNAM
+#   make EnsayosConPortada    DIR=<ruta> [COLOR=Teal]  → ensayo con portada institucional
+#   make EnsayosSinPortada    DIR=<ruta> [COLOR=Teal]  → ensayo sin portada (con TOC e índices)
+#   make ArticulosConPortada  DIR=<ruta> [COLOR=Teal]  → artículo con portada minimalista
+#   make ArticulosSinPortada  DIR=<ruta> [COLOR=Teal]  → artículo sin portada (con palabras clave)
+#   make nuevo-ensayo-teal    DIR=<ruta>  → ensayo con tema Teal
+#   make nuevo-ensayo-olivo   DIR=<ruta>  → ensayo con tema VerdeOlivo
+#   make nuevo-ensayo-purpura DIR=<ruta>  → ensayo con tema Purpura
+#   make nuevo-ensayo-rojo    DIR=<ruta>  → ensayo con tema Rojo
+#   make nueva-presentacion   DIR=<ruta> [COLOR=Teal]  → presentación Beamer UNAM
 #
 # ─── ALIASES DE MATERIAS CONOCIDAS ───────────────────────────────────────────
 #   make desarrollo            → compila Ensayo_Humedales
@@ -63,6 +67,8 @@ DIR ?=
         EnsayosConPortada EnsayosSinPortada \
         ArticulosConPortada ArticulosSinPortada \
         nuevo-ensayo \
+        nuevo-ensayo-teal nuevo-ensayo-olivo \
+        nuevo-ensayo-purpura nuevo-ensayo-rojo \
         nueva-presentacion \
         nueva-presentacion-teal nueva-presentacion-olivo \
         nueva-presentacion-purpura nueva-presentacion-rojo \
@@ -145,32 +151,56 @@ EnsayosConPortada:
 ifndef DIR
 	$(error Debes indicar la carpeta destino: make EnsayosConPortada DIR=<ruta>)
 endif
-	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_ENSAYO_CON_PORTADA) DIR=$(DIR) TIPO=Ensayo
+	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_ENSAYO_CON_PORTADA) DIR=$(DIR) TIPO=Ensayo COLOR=$(COLOR)
 
 EnsayosSinPortada:
 ifndef DIR
 	$(error Debes indicar la carpeta destino: make EnsayosSinPortada DIR=<ruta>)
 endif
-	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_ENSAYO_SIN_PORTADA) DIR=$(DIR) TIPO=Ensayo
+	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_ENSAYO_SIN_PORTADA) DIR=$(DIR) TIPO=Ensayo COLOR=$(COLOR)
 
 ArticulosConPortada:
 ifndef DIR
 	$(error Debes indicar la carpeta destino: make ArticulosConPortada DIR=<ruta>)
 endif
-	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_ARTICULO_CON_PORTADA) DIR=$(DIR) TIPO=Articulo
+	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_ARTICULO_CON_PORTADA) DIR=$(DIR) TIPO=Articulo COLOR=$(COLOR)
 
 ArticulosSinPortada:
 ifndef DIR
 	$(error Debes indicar la carpeta destino: make ArticulosSinPortada DIR=<ruta>)
 endif
-	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_ARTICULO_SIN_PORTADA) DIR=$(DIR) TIPO=Articulo
+	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_ARTICULO_SIN_PORTADA) DIR=$(DIR) TIPO=Articulo COLOR=$(COLOR)
 
 # Alias heredado (apunta a EnsayosConPortada por compatibilidad)
 nuevo-ensayo:
 ifndef DIR
 	$(error Debes indicar la carpeta destino: make nuevo-ensayo DIR=<ruta>)
 endif
-	@$(MAKE) EnsayosConPortada DIR=$(DIR)
+	@$(MAKE) EnsayosConPortada DIR=$(DIR) COLOR=$(COLOR)
+
+nuevo-ensayo-teal:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nuevo-ensayo-teal DIR=<ruta>)
+endif
+	@$(MAKE) EnsayosConPortada DIR=$(DIR) COLOR=Teal
+
+nuevo-ensayo-olivo:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nuevo-ensayo-olivo DIR=<ruta>)
+endif
+	@$(MAKE) EnsayosConPortada DIR=$(DIR) COLOR=VerdeOlivo
+
+nuevo-ensayo-purpura:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nuevo-ensayo-purpura DIR=<ruta>)
+endif
+	@$(MAKE) EnsayosConPortada DIR=$(DIR) COLOR=Purpura
+
+nuevo-ensayo-rojo:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nuevo-ensayo-rojo DIR=<ruta>)
+endif
+	@$(MAKE) EnsayosConPortada DIR=$(DIR) COLOR=Rojo
 
 nueva-presentacion:
 ifndef DIR

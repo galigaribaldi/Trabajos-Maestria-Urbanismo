@@ -49,9 +49,12 @@ Trabajos-Maestria-Urbanismo/
 │   └── Instructions Plantilla Presentacion.md
 │
 └── TercerSemestre/                   ← Trabajos por semestre
-    └── DesarrolloUrbanoSostenible/
-        ├── Ensayo_Humedales/
-        └── Presentacion_Humedales/
+    ├── DesarrolloUrbanoSostenible/
+    │   ├── Ensayo_Humedales/
+    │   ├── Presentacion_Humedales/
+    │   └── Movilidad_Sustentable_Presentacion/
+    └── SociologiaUrbana/
+        └── EnsayoFinal/
 ```
 
 ---
@@ -75,8 +78,18 @@ make ArticulosConPortada DIR=TercerSemestre/MiMateria/NombreArticulo
 # Artículo sin portada con palabras clave (sin TOC ni índices)
 make ArticulosSinPortada DIR=TercerSemestre/MiMateria/NombreArticulo
 
-# Cualquier documento con un color específico (opcional)
+# Cualquier documento con un color específico al crearlo
 make EnsayosConPortada DIR=TercerSemestre/MiMateria/NombreEnsayo COLOR=Teal
+```
+
+### Ensayos — aliases de color (atajos directos)
+
+```bash
+make nuevo-ensayo          DIR=TercerSemestre/MiMateria/NombreEnsayo   # Azul UNAM (default)
+make nuevo-ensayo-teal     DIR=TercerSemestre/MiMateria/NombreEnsayo   # Verde azulado
+make nuevo-ensayo-olivo    DIR=TercerSemestre/MiMateria/NombreEnsayo   # Verde olivo
+make nuevo-ensayo-purpura  DIR=TercerSemestre/MiMateria/NombreEnsayo   # Púrpura
+make nuevo-ensayo-rojo     DIR=TercerSemestre/MiMateria/NombreEnsayo   # Rojo
 ```
 
 ### Presentaciones — variantes de color
@@ -110,6 +123,7 @@ make Presentacion DIR=TercerSemestre/MiMateria/MiPresentacion COLOR=Teal
 make desarrollo          # Ensayo_Humedales
 make pres-humedales      # Presentacion_Humedales
 make pres-movilidad      # Movilidad_Sustentable_Presentacion
+make sociologia          # EnsayoFinal (SociologiaUrbana)
 ```
 
 La compilación sigue el ciclo completo: `pdflatex → bibtex → pdflatex → pdflatex`. El PDF resultante queda en `<DIR>/main.pdf`.
@@ -247,6 +261,22 @@ make Presentacion DIR=<ruta> COLOR=Rojo
 | `Purpura` | Púrpura `RGB 106,27,154` | Dorado `RGB 255,196,0` | Economía, política pública |
 | `Rojo` | Rojo `RGB 183,28,28` | Dorado `RGB 255,196,0` | Derecho urbano, normatividad |
 
+### Elementos visuales con color en documentos
+
+El tema de color se aplica a los siguientes elementos en todas las plantillas de documentos:
+
+| Elemento | Descripción |
+|---|---|
+| Reglas de portada | Líneas horizontales superior e inferior en `ColorPrincipal` |
+| Línea del encabezado | Regla `fancyhdr` en `ColorPrincipal` |
+| Texto de sección en encabezado | Nombre de sección en `ColorPrincipal` bold |
+| Pie de página | Materia y fecha en `ColorPrincipal` |
+| `\section` | Título grande bold en `ColorPrincipal` |
+| `\subsection` | Título mediano bold en `ColorPrincipal!80!black` |
+| `\subsubsection` | Título itálica en `ColorPrincipal!60!black` |
+| Hipervínculos | `linkcolor`, `citecolor`, `urlcolor` en `ColorPrincipal` |
+| `\citaclave{...}` | Cita destacada en cursiva `ColorPrincipal` |
+
 ---
 
 ## Plantilla de Presentaciones
@@ -297,3 +327,9 @@ Las plantillas los referencian automáticamente vía `\graphicspath` — no es n
 | Ensayo: Humedales Urbanos y Movilidad | `TercerSemestre/DesarrolloUrbanoSostenible/Ensayo_Humedales` | `v2026-2-dsma-ens-humedales` | Terminado |
 | Presentación: Humedales Urbanos y Movilidad | `TercerSemestre/DesarrolloUrbanoSostenible/Presentacion_Humedales` | `v2026-2-urbs-pres-humedales` | Terminada |
 | Presentación: Movilidad Sustentable | `TercerSemestre/DesarrolloUrbanoSostenible/Movilidad_Sustentable_Presentacion` | `v2026-2-dsu-pres-movilidad` | Terminada |
+
+### Tercer Semestre — Sociología Urbana
+
+| Trabajo | Ruta | Tag de release | Estado |
+|---------|------|----------------|--------|
+| Ensayo Final | `TercerSemestre/SociologiaUrbana/EnsayoFinal` | — | En proceso |
