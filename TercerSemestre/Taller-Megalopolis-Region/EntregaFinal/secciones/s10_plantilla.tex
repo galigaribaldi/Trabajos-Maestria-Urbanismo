@@ -1,0 +1,192 @@
+% =============================================================================
+%  s02_desarrollo.tex — Sección 2: Desarrollo / Argumentación central
+%  Agrega tantos frames como necesites dentro de cada subsección.
+% =============================================================================
+
+\section{Plantilla: Marco Conceptual}
+
+
+% ── Frame: Contexto ───────────────────────────────────────────────────────────
+% NOTA \pause: revela bullets uno a uno durante la presentación en vivo,
+%   pero genera páginas PDF duplicadas. Descomenta solo si presentas en proyector.
+\begin{frame}{Contexto y Problemática}
+  \begin{columns}[T]
+    \begin{column}{0.58\textwidth}
+      \begin{itemize}
+        \item La \zmvm\ crece a una tasa anual de \textbf{1.4\%}, con el 80\% del suelo
+              nuevo en zonas periféricas sin servicio de transporte masivo.
+        % \pause
+        \item La expansión horizontal eleva los \alert{costos de infraestructura}
+              y reduce la accesibilidad para los estratos más vulnerables.
+        % \pause
+        \item El \termino{modelo de densificación compacta} emerge como alternativa
+              con respaldo técnico y normativo creciente \citep{lore2024densidad}.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.38\textwidth}
+      \begin{block}{Dato clave}
+        El 60\% de los viajes en la \zmvm\ se realizan en transporte informal,
+        señal de un sistema de movilidad estructuralmente insuficiente.
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+% ── Frame: Tres modelos ───────────────────────────────────────────────────────
+\begin{frame}{Modelos de Densificación Evaluados}
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}
+      \begin{block}{Modelo 1: TOD}
+        \textit{Transit-Oriented\\Development}\\[0.2cm]
+        Copenhague, Estocolmo\\[0.1cm]
+        {\small Principio: compacidad alrededor de nodos de transporte masivo.}
+      \end{block}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{block}{Modelo 2: Barrio}
+        \textit{Rehabilitación\\incremental}\\[0.2cm]
+        Medellín, Bogotá\\[0.1cm]
+        {\small Principio: participación comunitaria y urbanismo social.}
+      \end{block}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{block}{Modelo 3: Corredor}
+        \textit{Corredor\\urbano mixto}\\[0.2cm]
+        Ciudad de México\\[0.1cm]
+        {\small Principio: mixticidad de usos sobre ejes de movilidad masiva.}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: Tabla comparativa ─────────────────────────────────────────────────
+\begin{frame}{Comparativa de Modelos}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabularx}{\textwidth}{@{} l X X X @{}}
+      \toprule
+      \textbf{Criterio}   & \textbf{TOD} & \textbf{Barrio} & \textbf{Corredor} \\
+      \midrule
+      Equidad             & Media        & Alta            & Media--Alta \\
+      Eficiencia energét. & Alta         & Media           & Alta \\
+      Viabilidad inst.    & Media        & Alta            & Media \\
+      Escala de impacto   & Metropolit.  & Local           & Zonal \\
+      \bottomrule
+    \end{tabularx}
+    \fuentefigura{Elaboración propia con base en \citet{lore2024densidad}.}
+  \end{table}
+\end{frame}
+
+% ── Frame: Cita destacada ────────────────────────────────────────────────────
+\begin{frame}{Argumento Central}
+  \vfill
+  \begin{center}
+    \color{ColorPrincipal}
+    \Large\itshape
+    ``La ciudad compacta no es una utopía formal,\\
+    sino una decisión política sobre cómo se distribuyen\\
+    los recursos del suelo urbano.''
+  \end{center}
+  \vfill
+  \flushright{\small\citet{lore2024densidad}}
+\end{frame}
+
+% ── Frame con figura (plantilla) ─────────────────────────────────────────────
+\begin{frame}{Resultados del Análisis Espacial}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      % Descomenta cuando tengas la imagen:
+      % \includegraphics[width=\textwidth]{img/nombre_figura.png}
+      % \fuentefigura{Elaboración propia, 2026.}
+
+      \begin{alertblock}{Placeholder de figura}
+        Inserta aquí tu imagen con:\\
+        \texttt{\textbackslash includegraphics\{img/figura.png\}}
+      \end{alertblock}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{itemize}
+        \item Hallazgo principal 1 \citep{lore2024zmvm}
+        % \pause  ← descomenta solo para presentación en vivo (genera páginas extra en PDF)
+        \item Hallazgo principal 2
+        % \pause
+        \item Implicación para la política pública
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: Dos imágenes con texto explicativo ─────────────────────────────────
+%    USO: comparativas visuales, antes/después, dos mapas, dos planos.
+%    Ajusta height para que ambas imágenes queden alineadas verticalmente.
+%    INSTRUCCIÓN: cuando tengas tus imágenes, comenta el alertblock y descomenta \includegraphics.
+\begin{frame}{Comparativa Visual — Dos Imágenes}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \centering
+      % \includegraphics[width=\textwidth, height=3.8cm, keepaspectratio]{img/figura1.png}
+      \begin{alertblock}{Placeholder imagen 1}
+        \texttt{img/figura1.png}
+      \end{alertblock}
+      {\small Texto explicativo de la imagen izquierda. Describe el contexto, hallazgo o período temporal.}\\[0.05cm]
+      \fuentefigura{Elaboración propia, 2026.}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      % \includegraphics[width=\textwidth, height=3.8cm, keepaspectratio]{img/figura2.png}
+      \begin{alertblock}{Placeholder imagen 2}
+        \texttt{img/figura2.png}
+      \end{alertblock}
+      {\small Texto explicativo de la imagen derecha. Describe el contexto, hallazgo o período temporal.}\\[0.05cm]
+      \fuentefigura{Fuente secundaria, 2026.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+% ── Frame: Diagrama de flujo ──────────────────────────────────────────────────
+%    USO: metodología, proceso de análisis, etapas de proyecto.
+%    Modifica los nodos, colores y flechas según tu contenido.
+%    Requiere \usepackage{tikz} + \usetikzlibrary{positioning,shapes.geometric,arrows.meta,calc}
+%    (ya incluidos en Latex/BeamerTheme.tex)
+\begin{frame}{Metodología — Diagrama de Flujo}
+  \begin{center}
+  \begin{tikzpicture}[
+    % Estilos de nodos
+    caja/.style   = {rectangle, rounded corners=5pt,
+                     draw=ColorPrincipal, line width=0.8pt,
+                     fill=ColorFondo, text width=2.6cm,
+                     align=center, minimum height=0.75cm, font=\small},
+    inicio/.style = {caja, fill=ColorPrincipal, text=white, font=\small\bfseries},
+    result/.style = {caja, fill=ColorAcento,    text=black,  font=\small\bfseries},
+    decision/.style = {diamond, draw=ColorPrincipal, line width=0.8pt,
+                       fill=ColorFondo, aspect=2.5,
+                       text width=2.2cm, align=center, font=\scriptsize},
+    % Estilo de flechas
+    flecha/.style = {-Stealth, thick, color=ColorPrincipal},
+    lateral/.style= {-Stealth, thick, color=ColorAcento, dashed},
+    % Separación entre nodos
+    node distance = 0.55cm and 2.2cm
+  ]
+    % Columna principal (flujo vertical)
+    \node[inicio]   (diag)  {Diagnóstico};
+    \node[caja, below=of diag]    (anal)  {Análisis};
+    \node[decision, below=of anal](dec)   {¿Viable?};
+    \node[caja, below=of dec]     (prop)  {Propuesta};
+    \node[result, below=of prop]  (res)   {Resultado};
+
+    % Flechas principales
+    \draw[flecha] (diag) -- (anal);
+    \draw[flecha] (anal) -- (dec);
+    \draw[flecha] (dec)  -- node[right, font=\scriptsize]{Sí} (prop);
+    \draw[flecha] (prop) -- (res);
+
+    % Rama de ajuste (decisión → No → vuelve a diagnóstico)
+    \node[caja, right=of dec] (ajuste) {Ajuste\\de enfoque};
+    \draw[lateral] (dec)    -- node[above, font=\scriptsize]{No} (ajuste);
+    \draw[lateral] (ajuste) |- (diag);
+  \end{tikzpicture}
+  \end{center}
+\end{frame}

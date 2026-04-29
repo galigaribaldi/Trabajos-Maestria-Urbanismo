@@ -1,0 +1,74 @@
+% !TeX program = pdflatex
+% !TeX encoding = UTF-8
+% =============================================================================
+%  PLANTILLA — Presentación Beamer con Tema UNAM
+%  Maestría en Urbanismo, UNAM – FES Acatlán
+%  Versión 1.0 — Abril 2026
+%
+%  USO:
+%    1. Edita el bloque "PERSONALIZACIÓN" con los datos de tu presentación.
+%    2. Edita los colores en Latex/BeamerTheme.tex (sección PALETA DE COLORES).
+%    3. Completa las secciones en /secciones/ con tu contenido.
+%    4. Compila con: pdflatex → bibtex → pdflatex → pdflatex
+% =============================================================================
+
+\documentclass[aspectratio=169, 12pt]{beamer}
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PERSONALIZACIÓN — Edita solo esta sección para cada nueva presentación
+% ═════════════════════════════════════════════════════════════════════════════
+\newcommand{\TituloPresent}{Entrega Final}
+\newcommand{\SubtituloPresent}{Taller de investigación III: Megalópolis y Región}
+\newcommand{\Autor}{Cabrera Garibaldi Hernán Galileo}
+\newcommand{\MateriaCorta}{TI:Megalópolis — Semestre 2026-2}   % Aparece en el pie
+\newcommand{\ProfesorAsignado}{Dra. Ana Sagrario Castillo Ccamporro}
+\newcommand{\Semestre}{2026-2}
+\newcommand{\ProgramaCorto}{Maestría y Doctorado en Urbanismo}
+\newcommand{\Facultad}{FES Acatlán}
+\newcommand{\FechaPresent}{Naucalpan, Mayo 2026}
+% ═════════════════════════════════════════════════════════════════════════════
+
+% Metadatos de Beamer (usa las variables de arriba)
+\title{\TituloPresent}
+\subtitle{\SubtituloPresent}
+\author{\Autor}
+\date{\FechaPresent}
+
+% =============================================================================
+%  TEMA Y PAQUETES — cargados desde Latex/BeamerTheme.tex
+% =============================================================================
+\input{Latex/BeamerTheme}
+
+% =============================================================================
+%  DOCUMENTO
+% =============================================================================
+\begin{document}
+
+% ── Portada ──────────────────────────────────────────────────────────────────
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ── Índice ───────────────────────────────────────────────────────────────────
+\begin{frame}{Contenido}
+  \tableofcontents
+\end{frame}
+
+% ── Secciones ────────────────────────────────────────────────────────────────
+\input{secciones/s01_intro}
+\input{secciones/s02_espacio_geografico}
+\input{secciones/s03_estructura_regional}
+\input{secciones/s04_PU_CE}
+\input{secciones/s05_Interaccion_espacial}
+\input{secciones/s06_estructura_urbana_expansion}
+\input{secciones/s07_localizacion_aglomeracion_economica}
+\input{secciones/s10_conclusiones}
+\input{secciones/s10_plantilla}
+% ── Bibliografía ─────────────────────────────────────────────────────────────
+\section*{Referencias}
+\begin{frame}[allowframebreaks]{Referencias}
+  \bibliographystyle{apalike}
+  \bibliography{referencias}
+\end{frame}
+
+\end{document}
