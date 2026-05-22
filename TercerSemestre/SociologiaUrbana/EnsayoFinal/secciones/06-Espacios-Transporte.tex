@@ -79,3 +79,296 @@ llamándola así mismo contornos urbanos que se describen en la siguiente frase 
     \small\textit{Fuente: Diagnóstico Técnico de Movilidad para el Programa Integral de
     Movilidad (2019--2024, p.~16).}
 \end{figure}
+
+Para nadie es sorpresa que el primer contorno definido en el mapa de la SEMOVITC, es el que contiene o provee 
+la mayor cantidad de servicios (entre ellos el transporte) y también los que reportan mayor velocidad y mejor 
+desempeño frente al tiempo de traslado, siendo que la mayor parte de las líneas de Metro y Metrobus convergen 
+en algún punto de las alcaldías centrales como lo son Benito Juárez o Cuahtémoc. Demarcaciones que 
+contienen los mayores índices de calidad de vida. \\
+Inmediatamente y en azul se encuentra el llamado segundo contorno, el cual aún posee características de metrópoli 
+pero con menos índice de desarrollo en sus servicios a pesar de que uno de los CBD se encuentra en esta región 
+(Polanco) y la mayor cantidad de población de la Ciudad de México es albergada por la alcaldía de Iztapalapa. 
+Mientras el tercer y cuarto contorno son distribuidos por los \termino{sobrantes}, alcaldías como Tláhuac y 
+municipios del estado de México como Chalco o Chimalhuacán pintan en esta región. Zonas donde el transporte brilla 
+por su inefectividad, retrasos o bien su ausencia directa, siendo que la única red que llega en estas zonas es 
+la del Corredor Concesionado y el RTP. \\
+Con todo esto podemos rescatar una división dicha por Rendón Vasquez sobre la división de los ciudadanos por 
+importancia para el estado; El primer contorno corresponde a los \termino{Ciudadanos de Primera Clase}, es decir 
+políticos, empresarios y gente con un nivel socioeconómico alto y con altos niveles de ingresos netos para el estado 
+y el sector privado. El segundo contorno corresponde a los \termino{Ciudadanos de Segunda Clase}, o bien la gente 
+que sin tener acceso a posibilidades más desarrolladas o en un sector laboral con un alto ingreso económico, aún se 
+le puede considerar \termino{Trascendete}. Por último tenemos al tercer y Cuarto contorno; la población más olvidada 
+por el estado y a la vez más marginada económicamente hablando. Es también el sector de la población que se ve obligada 
+a recorrer la mayor cantidad de espacio geográfico y destinar más tiempo para el desarrollo de sus actividades tanto 
+académica y económicas; ocasionando una segregación social inmensamente marcada.
+
+
+Mucho de nuestro tiempo se consume en el transporte, para un capitalino promedio, el tiempo de traslado depende directamente 
+de el contorno en el que viva \cite{semovi2020diagnostico, inegi_enoe_laboral}, siendo que el más largo dentro de la CDMX es 
+de aproximadamente 2 hrs y media de viaje, mientras el más largo en la \zmvm es de casi 4 horas. Si compararamos el tiempo que 
+te toma viajar de un punto a otro y esto lo comparáramos de la distancia geográfica a la red existente, veríamos que la red de 
+transporte tiene una fuerte tendencia a ir hacia los puntos centrales. A este indicador se le conoce como 
+\termino{Factor de Desviación (Detaur Factor)}.
+
+\begin{equation}
+    DF = \frac{D_{\text{red}} + D_{\text{caminata}}}{D_{\text{haversine}}(O, D)}
+    \label{eq:detour-factor-res}
+\end{equation}
+
+\begin{itemize}
+    \item $D_{\text{red}}$: distancia acumulada sobre el trazo real de la ruta
+    óptima en tiempo.
+    \item $D_{\text{caminata}}$: suma de la primera y última milla peatonal.
+    \item $D_{\text{haversine}}(O,D)$: distancia en línea recta entre origen y
+    destino calculada con la fórmula de Haversine.
+\end{itemize}
+
+Donde un valor acercado a 1.0 es el más eficiente, mientras un valor que supere 
+el 1.5 tiende a ser altamente ineficiente en cuestión de tiempo y esfuerzo invertido. En la \zmvm, esto es casi una ley, las zonas 
+periféricas tienen un valor promedio de 1.5 con un valor máximo de 4.34 y un mínimo de 1.27 y 1.4 \cite{galigaribaldi_vftmodel}.
+
+\begin{table}[H]
+    \centering
+    \caption[Estadísticos globales del Factor de Desviación — muestra de 100 rutas]{
+    Estadísticos descriptivos del $DF$ sobre 100 pares O-D de la red de la \zmvm.
+    Corrida: 2026-04-27.}
+    \label{tab:df-estadisticas}
+    \begin{tabular}{|l|r|}
+        \hline
+        \textbf{Estadístico} & \textbf{Valor} \\
+        \hline
+        $n$ (rutas calculadas)     & 100   \\
+        Media ($\bar{DF}$)         & 1.545 \\
+        Desviación estándar        & 0.517 \\
+        Mínimo                     & 0.97  \\
+        Percentil 25               & 1.27  \\
+        Mediana                    & 1.40  \\
+        Percentil 75               & 1.67  \\
+        Máximo                     & 4.34  \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} (corrida 2026-04-27).}
+\end{table}
+
+
+Se analizaron doce rutas que evalúan la conectividad desde las periferias sur y
+oriente hacia distintos destinos de la metrópoli. Las
+Figuras~\ref{fig:df-casos-1-4}--\ref{fig:df-casos-9-12} presentan los trazados
+cartográficos de cada caso; el Cuadro~\ref{tab:df-casos} consolida los valores
+numéricos al final de esta sección.
+
+% --- Casos 1–4 ---------------------------------------------------------------
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{img/FactorDesviacion/Mapa/NB04_mapa04_caso01.png}
+        \caption{Caso~1: Milpa Alta → Autódromo. $DF = 1.29$.}
+        \label{fig:df-c01}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{img/FactorDesviacion/Mapa/NB04_mapa05_caso02.png}
+        \caption{Caso~2: Milpa Alta → Reforma (CBD). $DF = 1.37$.}
+        \label{fig:df-c02}
+    \end{subfigure}
+
+    \vspace{0.5em}
+    \begin{subfigure}[t]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{img/FactorDesviacion/Mapa/NB04_mapa06_caso03.png}
+        \caption{Caso~3: Milpa Alta → Santa Fe (CBD). $DF = 1.27$.}
+        \label{fig:df-c03}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{img/FactorDesviacion/Mapa/NB04_mapa07_caso04.png}
+        \caption{Caso~4: Milpa Alta → FES Acatlán. $DF = 1.35$.}
+        \label{fig:df-c04}
+    \end{subfigure}
+    \caption[Casos de estudio del Factor de Desviación: 1–4]{Rutas de los casos 1 al 4.
+    Origen común: Milpa Alta hacia distintos destinos del norte y poniente.}
+    \label{fig:df-casos-1-4}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} (corrida 2026-04-27).}
+\end{figure}
+
+% --- Casos 5–8 ---------------------------------------------------------------
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{img/FactorDesviacion/Mapa/NB04_mapa08_caso05.png}
+        \caption{Caso~5: Milpa Alta → C.U. $DF = 1.32$.}
+        \label{fig:df-c05}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{img/FactorDesviacion/Mapa/NB04_mapa09_caso06.png}
+        \caption{Caso~6: Milpa Alta → Coyoacán. $DF = 1.34$.}
+        \label{fig:df-c06}
+    \end{subfigure}
+
+    \vspace{0.5em}
+    \begin{subfigure}[t]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{img/FactorDesviacion/Mapa/NB04_mapa10_caso07.png}
+        \caption{Caso~7: Santa Catarina → C.U. $DF = 1.82$.}
+        \label{fig:df-c07}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{img/FactorDesviacion/Mapa/NB04_mapa11_caso08.png}
+        \caption{Caso~8: Santa Catarina → FES Acatlán. $DF = 1.42$.}
+        \label{fig:df-c08}
+    \end{subfigure}
+    \caption[Casos de estudio del Factor de Desviación: 5–8]{Rutas de los casos 5 al 8.
+    Destinos en el sur de la ciudad y primeros casos desde Santa Catarina.}
+    \label{fig:df-casos-5-8}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} (corrida 2026-04-27).}
+\end{figure}
+
+% --- Casos 9–12 --------------------------------------------------------------
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{img/FactorDesviacion/Mapa/NB04_mapa12_caso09.png}
+        \caption{Caso~9: Milpa Alta → Santa Catarina. $DF = 2.52$.}
+        \label{fig:df-c09}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{img/FactorDesviacion/Mapa/NB04_mapa13_caso10.png}
+        \caption{Caso~10: Milpa Alta → Ajusco. $DF = 1.42$.}
+        \label{fig:df-c10}
+    \end{subfigure}
+
+    \vspace{0.5em}
+    \begin{subfigure}[t]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{img/FactorDesviacion/Mapa/NB04_mapa14_caso11.png}
+        \caption{Caso~11: Ajusco → Preparatoria 1. $DF = 1.43$.}
+        \label{fig:df-c11}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{img/FactorDesviacion/Mapa/NB04_mapa15_caso12.png}
+        \caption{Caso~12: P. Los Olivos → Centro Tláhuac. $DF = 1.06$.}
+        \label{fig:df-c12}
+    \end{subfigure}
+    \caption[Casos de estudio del Factor de Desviación: 9–12]{Rutas de los casos 9 al 12.
+    El caso~9 (sur-oriente transversal) registra el mayor $DF$ del conjunto.}
+    \label{fig:df-casos-9-12}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} (corrida 2026-04-27).}
+\end{figure}
+
+
+% --- Extremos globales de la muestra aleatoria -------------------------------
+Para situar los casos de estudio en el contexto de la muestra completa, las
+Figuras~\ref{fig:df-mejor-caso} y~\ref{fig:df-peor-caso} ilustran los extremos
+globales obtenidos en los 100 pares O-D aleatorios.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{img//FactorDesviacion/Mapa/NB04_mapa02_ruta_mas_eficiente.png}
+        \caption{Mejor caso: Plutarco Elías Calles → Fuente de Loreto. $DF = 0.97$.}
+        \label{fig:df-mejor-caso}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{img//FactorDesviacion/Mapa/NB04_mapa03_ruta_mas_ineficiente.png}
+        \caption{Peor caso: Carlos A. Vidal → 20 de Noviembre. $DF = 4.34$.}
+        \label{fig:df-peor-caso}
+    \end{subfigure}
+    \caption[Extremos del Factor de Desviación en la muestra aleatoria]{
+    Rutas con menor y mayor Factor de Desviación en la muestra aleatoria de 100 pares O-D.}
+    \label{fig:df-extremos}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} (corrida 2026-04-27).}
+\end{figure}
+
+% --- Tabla resumen de los 12 casos -------------------------------------------
+\begin{table}[H]
+    \centering
+    \caption[Factor de Desviación — resumen de los doce casos de estudio]{
+    Resultados del Factor de Desviación para los doce casos estratégicos de la
+    \zmvm{} ilustrados en las figuras anteriores. Corrida: 2026-04-27.}
+    \label{tab:df-casos}
+    \small
+    \begin{tabularx}{\textwidth}{|l|X|X|r|r|r|}
+        \hline
+        \textbf{\#} & \textbf{Origen} & \textbf{Destino} &
+        \textbf{$D_{\text{red}}$ (km)} & \textbf{$D_{\text{Hav.}}$ (km)} & \textbf{$DF$} \\
+        \hline
+         1 & Milpa Alta        & Autódromo / Centro-Oriente   & 29.18 & 22.59 & 1.29 \\
+         2 & Milpa Alta        & Paseo de la Reforma (CBD)    & 37.73 & 27.50 & 1.37 \\
+         3 & Milpa Alta        & Santa Fe (CBD)               & 36.42 & 28.62 & 1.27 \\
+         4 & Milpa Alta        & FES Acatlán                  & 48.34 & 35.73 & 1.35 \\
+         5 & Milpa Alta        & Ciudad Universitaria         & 26.25 & 19.96 & 1.32 \\
+         6 & Milpa Alta        & Coyoacán                     & 25.24 & 18.86 & 1.34 \\
+         7 & Santa Catarina    & Ciudad Universitaria         & 42.06 & 23.10 & 1.82 \\
+         8 & Santa Catarina    & FES Acatlán                  & 45.64 & 32.16 & 1.42 \\
+         9 & Milpa Alta        & Santa Catarina (Sur-Oriente) & 37.22 & 14.79 & 2.52 \\
+        10 & Milpa Alta        & Ajusco                       & 29.19 & 20.56 & 1.42 \\
+        11 & Ajusco            & Preparatoria 1               & 15.91 & 11.16 & 1.43 \\
+        12 & Parque Los Olivos & Centro de Tláhuac            &  2.20 &  2.08 & 1.06 \\
+        \hline
+        \multicolumn{5}{|l|}{\textbf{Mejor caso global (muestra aleatoria):}
+        Plutarco Elias Calles → Fuente de Loreto} & \textbf{0.97} \\
+        \multicolumn{5}{|l|}{\textbf{Peor caso global (muestra aleatoria):}
+        Carlos A. Vidal → 20 de Noviembre} & \textbf{4.34} \\
+        \hline
+    \end{tabularx}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} (corrida 2026-04-27).}
+\end{table}
+
+
+\subsection{El transporte como Espacio, no como castigo}
+\label{transporte-castigo-espacio}
+
+Usemos el libro \textbf{La Guía del Autoespista Galáctico} \cite{adams1979hitchhiker} para dividir el movimiento de 
+las masas, por un lado; el humano con sus dos piernas puede correr, caminar y en algunos casos gatear hasta llegar a 
+su objetivo final. Pero no es el único ser con movimiento predominante sobre la superficie terrestre, el automovil 
+nos ha ganado terreno en nuestros espacios. Siendo que una buena parte de las construcciones están orientadas al 
+estacionamiento o bien la infraestructura de las carreteras. Con esto, usaremos la analogía que se sugiere en el libro 
+donde una raza alienígena ve como espectador el comportamiento y movimiento de las especies:
+
+\citaclave{
+``  Si una raza alienígena viera la tierra desde el espacio, vería 
+    a dos razas conviviendo en el planeta; una que usa sus dos piernas 
+    para desplazarse y otra más dominante que corre a gran velocidad 
+    en cuatro ruedas.''\\
+  Esta metáfora se inspira en la sátira de 
+  \citep{adams1979hitchhiker}, donde un observador 
+  externo confunde a los automóviles con la especie 
+  dominante del planeta.
+}
+
+Como mencionamos en la sección anterior, el capitalino promedio gasta la mayor parte de su tiempo en el transporte. 
+Y aquí es importante hacer una distinción con tintes sociológicos, nuestra misma red vial marca un estrato socioeconómico, 
+mientras la red de transporte privado por la que corren los automóviles se le da un mayor peso y 
+mantenimiento (dependiendo de la zona), la red de transporte público por lo general te obliga a dar vueltas inecesarias 
+por el centro de la ciudad. Si la persona que desea transportase de punto A a punto B posee un automovil privado, este 
+tiempo puede acortarse drásticamente dependiendo de la hora del día; esto sin contar que Ciudad de México es de las 
+urbes con más tráfico en el mundo con un índice de Saturación Vial TOM-TOM de \termino{.759} \cite{tomtom2026traffic}. 
+El transporte público de mejor calidad y el que presenta una mejor efectividad en sus traslados, velocidad y servicio 
+se ubica al centro de la misma \zmvm, mientras que los servicios de transporte menos eficientes en los mismos términos 
+se encuentran a las periferias, o dicho de mejor manera, en el tercer y cuarto contorno. \\
+La red de movilidad público así, se convierte en un espacio excluyente, designado para la gente que no posee un automóvil 
+privado y se ve obligada a usar dicha infraestructura, casi a manera de castigo. No es sorpresa para nadie que la mayor parte 
+de los capitalinos odie transportarse de su casa a sus actividades. Es cierto, existe un profundo amor y respeto por la red 
+de transporte colectivo Metro, pero este no llega a las zonas más desprovistas de la metrópoli, obligando a la mayor parte 
+de su gente a tomar medios intermedios con tiempos y servicios cuestionables. El estado de bienestar descrito por 
+\cite{topalov_cuestion} y cuestionado en su transición por \cite{bauman_estado} convergen en una urbe altamente fragmentada 
+que premia a quienes tienen mayores recursos económicos y aportan al estado y empresas privadas a través de gastos como lo son 
+la \termino{Tenencia Vehicular, Poliza de Seguro, estacionamientos privados, multas de tránsito} y demás gastos que implica tener 
+un transporte privado (sin contar el precio de la gasolina que cada día va más en aumento). \\
+El mismo gobierno ha intentado impulsar otros medios de transporte que se pintan como ecológicos y \termino{Sustentables}, 
+pero si analizamos esto con detalle, podemos notar que solo son discursos políticos. El uso de la \termino{ecobici} 
+inició en el año 2012 a través de una empresa privada y solo opera en ciertas regiones más económicamente desarrolladas. 
+En las demás zonas geográficas esto es casi inexistente y si estos tienen una infraestructura acomodada, esta misma posee 
+deficiencias en la seguridad para el usuario y su salud a largo plazo, sumándole claro que Ciudad de México posee 
+una marcada deficiencia ambiental, con concentraciones promedio anuales de PM2.5, siendo estas el triple de lo permitido por 
+la OMS \cite{sedema2025informe}. La bicicleta desde un punto de vista viable, es fácilmente descartable si le agregamos datos 
+geográficos, de capacidad y logística, a la vez que raya con lo excluyente. Una persona de 65 años promedio rara vez tendrá la 
+capacidad para montarse en una bicicleta por problemas de salud. Por otro lado, los menores de edad (entre 3 - 8 años de edad) 
+aunque capaces físicamente, están desprovistos de cualquier seguridad en su integridad ante robos, persecuciones y asaltos. 
+De manera contundente, la mayor parte de los trabajadores de oficina o recinto cerrado no tendrán la oportunidad de usar 
+una bicicleta en temporada de extremo frío, calor o lluvia. Este último se tienen datos promedio anuales, 
+que es de 743.47 mm anuales, siendo las temporadas de mayor concentración de lluvia en los meses de Junio a Octubre y una caída 
+drástica en temporada de sequía en los meses de Noviembre a Abril. Lo que significa que la mitad del años (en promedio) no se 
+podría usar la bicicleta por lluvia, representando una ineficacia en su uso.
