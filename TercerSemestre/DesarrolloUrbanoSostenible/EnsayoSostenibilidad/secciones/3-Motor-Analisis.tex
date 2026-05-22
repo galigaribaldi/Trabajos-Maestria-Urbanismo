@@ -1,0 +1,71 @@
+% =============================================================================
+% --- secciones/3-MotorAnalisis.tex ---
+% =============================================================================
+
+\section{Motor de Análisis}
+
+\subsection{Snapping Lógico e Impedancia Sistémica}
+\label{subsubsec:motor-analisis}
+
+El análisis de la movilidad urbana requiere una infraestructura de datos que trascienda 
+la representación geométrica simple. El \textbf{Motor de Análisis VFT} se fundamenta 
+en la premisa de que la eficiencia de un sistema no depende de la 
+\termino{distancia geodésica (línea recta)}, sino de la \textbf{conectividad operativa real} 
+y los factores de fricción que condicionan el tiempo de traslado de los usuarios.
+
+\subsection{Snapping Lógico: Resolución de la Inflación Topológica}
+
+Un error común en la modelación de redes urbanas es la utilización de grafos teóricos 
+ruidosos que no representan transferencias factibles. El Modelo VFT identifica este 
+fenómeno como \textbf{inflación topológica}, donde la superposición de capas de información 
+geoespacial genera nodos redundantes que carecen de valor operativo 
+\cite{Garibaldi2024VFT, IMCO2019Doc}.
+
+Para mitigar este ruido, se implementó un proceso de \textbf{Snapping Lógico} mediante el 
+algoritmo \texttt{scipy.spatial.KDTree}. Este procedimiento permitió transitar de un grafo 
+base desestructurado de aproximadamente 49,000 nodos a una red consolidada de 
+\textbf{11,115 nodos operativos} y 45,679 aristas \cite{mainPGaribaldi2024VFTDF}. 
+De acuerdo con los registros de ejecución del modelo (\textit{Reporte 00}), 
+se logró una \textbf{reducción del 90\% de la inflación topológica}, garantizando que los 
+cálculos de accesibilidad se realicen sobre puntos de transbordo y estaciones reales. 
+Este rigor metodológico alinea la investigación con las tendencias actuales de Ciencia 
+de Datos aplicada al urbanismo.
+
+\subsection{Impedancia Sistémica y la Ecuación VFT}
+\label{subsubsec:impendancia-VFT}
+
+Una vez consolidada la topología de la red, el motor evalúa la \textbf{impedancia sistémica}, 
+definida como el conjunto de factores físicos y operativos que restringen el derecho humano 
+a la movilidad. El cambio de paradigma propuesto sustituye el enfoque de 
+\termino{flujo vehicular} por uno de \termino{interacción de personas}, 
+priorizando la eficiencia del sistema sobre la velocidad del objeto individual.
+
+La piedra angular de este análisis es la \textbf{Ecuación VFT}, que cuantifica el tiempo 
+de viaje efectivo ($T_t$) considerando la degradación por fricción operativa:
+
+\begin{equation}
+    T_t = \left( \frac{D}{V} \right) \times C_f
+\end{equation}
+
+Donde $D$ es la distancia, $V$ la velocidad teórica y 
+\textbf{$C_f$ el Coeficiente de Fricción} \cite{Garibaldi2024VFT}. El valor de $C_f$ 
+es la variable crítica que explica por qué los sistemas de superficie no confinados 
+(como el transporte concesionado) colapsan ante la demanda, mientras que el 
+\textbf{confinamiento masivo} se presenta como la única vía técnica para reducir 
+la impedancia y garantizar tiempos de traslado competitivos.
+
+\subsection{Comparativa de Eficiencia y Capacidad Vial}
+\label{subsubsec:comparativa-eficiencia}
+
+La fundamentación técnica del motor se refuerza al contrastar la capacidad de los modos 
+de transporte. Mientras que el automóvil particular presenta una eficiencia marginal de 
+\textbf{2,000 pers/hr} por carril (con una ocupación promedio de 1.2 personas), los 
+sistemas masivos y el transporte público pueden movilizar entre 
+\textbf{19,000 y 43,000 pers/hr} \cite{IMCO2019Doc}. 
+
+Los datos del IMCO subrayan la ineficiencia del modelo actual: el 68.1\% de los viajes 
+en auto en la ZMVM transportan un solo pasajero, ocupando un espacio vial desproporcionado 
+que genera externalidades equivalentes al \textbf{4\% del PIB nacional} \cite{IMCO2019Doc}. 
+El Motor VFT permite mapear estas ineficiencias, identificando que el costo del transporte 
+consume hasta el \textbf{19\% del ingreso} en el cuarto contorno, lo que fundamenta la 
+urgencia de una reconfiguración hacia sistemas de alta capacidad y baja fricción.
