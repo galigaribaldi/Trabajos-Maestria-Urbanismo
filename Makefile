@@ -11,6 +11,7 @@
 #   make EnsayosSinPortada    DIR=<ruta> [COLOR=Teal]  → ensayo sin portada (con TOC e índices)
 #   make ArticulosConPortada  DIR=<ruta> [COLOR=Teal]  → artículo con portada minimalista
 #   make ArticulosSinPortada  DIR=<ruta> [COLOR=Teal]  → artículo sin portada (con palabras clave)
+#   make RegistroDiffDoc      DIR=<ruta> [COLOR=Teal]  → registro de avances con diff latexdiff
 #   make nuevo-ensayo-teal    DIR=<ruta>  → ensayo con tema Teal
 #   make nuevo-ensayo-olivo   DIR=<ruta>  → ensayo con tema VerdeOlivo
 #   make nuevo-ensayo-purpura DIR=<ruta>  → ensayo con tema Purpura
@@ -41,15 +42,25 @@ MOTOR  := pdflatex
 BIBTEX := bibtex
 FLAGS  := -interaction=nonstopmode -halt-on-error
 
-# Color del tema — override con COLOR=Teal, COLOR=VerdeOlivo, COLOR=Purpura, COLOR=Rojo
+# Color del tema — override con COLOR=Teal, COLOR=VerdeOlivo, COLOR=Purpura, COLOR=Rojo, COLOR=VerdeEsmeralda
 # Default: Institucional (Azul UNAM + Oro UNAM)
 COLOR  ?= Institucional
 
+# ─── latexdiff-tesis ────────────────────────────────────────────────────────
+# Parámetros con valores por defecto (se pueden sobreescribir en el llamado):
+#   TESIS_DIR — repositorio fuente de la tesis  (default: ../Tesis_Latex)
+#   REV2      — tag/commit de la versión nueva   (default: HEAD)
+#   OUT       — nombre del .tex de salida sin extensión (default: diff_evidencia)
+TESIS_DIR ?= ../Tesis_Latex
+REV2      ?= HEAD
+OUT       ?= diff_evidencia
+
 # Plantillas base — documentos
-PLANTILLA_ENSAYO_CON_PORTADA  := DocumentosPlantilla/Ensayos/ConPortada
-PLANTILLA_ENSAYO_SIN_PORTADA  := DocumentosPlantilla/Ensayos/SinPortada
+PLANTILLA_ENSAYO_CON_PORTADA   := DocumentosPlantilla/Ensayos/ConPortada
+PLANTILLA_ENSAYO_SIN_PORTADA   := DocumentosPlantilla/Ensayos/SinPortada
 PLANTILLA_ARTICULO_CON_PORTADA := DocumentosPlantilla/Articulos/ConPortada
 PLANTILLA_ARTICULO_SIN_PORTADA := DocumentosPlantilla/Articulos/SinPortada
+PLANTILLA_REGISTRO_DIFF        := DocumentosPlantilla/Articulos/RegistroDiff
 
 # Plantilla base — presentaciones
 PLANTILLA_BEAMER := PresentacionPlantilla
@@ -65,7 +76,7 @@ DIR ?=
 
 .PHONY: all Document Presentacion \
         EnsayosConPortada EnsayosSinPortada \
-        ArticulosConPortada ArticulosSinPortada \
+        ArticulosConPortada ArticulosSinPortada RegistroDiffDoc \
         nuevo-ensayo \
         nuevo-ensayo-teal nuevo-ensayo-olivo \
         nuevo-ensayo-purpura nuevo-ensayo-rojo \
@@ -74,6 +85,7 @@ DIR ?=
         nueva-presentacion-purpura nueva-presentacion-rojo \
         desarrollo pres-humedales pres-movilidad sociologia \
         release release-ens-humedales release-pres-humedales release-pres-movilidad \
+        latexdiff-tesis \
         limpiar limpiar-dir _compile _scaffold _release
 
 # =============================================================================
@@ -170,6 +182,12 @@ ifndef DIR
 	$(error Debes indicar la carpeta destino: make ArticulosSinPortada DIR=<ruta>)
 endif
 	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_ARTICULO_SIN_PORTADA) DIR=$(DIR) TIPO=Articulo COLOR=$(COLOR)
+
+RegistroDiffDoc:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make RegistroDiffDoc DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_REGISTRO_DIFF) DIR=$(DIR) TIPO=Articulo COLOR=$(COLOR)
 
 # Alias heredado (apunta a EnsayosConPortada por compatibilidad)
 nuevo-ensayo:
@@ -318,6 +336,90 @@ release-pres-movilidad:
 	    --notes "Compilado con LaTeX · Tema de color: $(COLOR) · Maestría en Urbanismo UNAM · FES Acatlán"
 	rm "$(DIR_DSU_MOVILIDAD)/v2026-2-dsu-pres-movilidad.pdf"
 	@echo ">>> Release v2026-2-dsu-pres-movilidad publicado en GitHub."
+
+# =============================================================================
+# LATEXDIFF — genera diff de un capítulo entre dos revisiones del repo de tesis
+#
+# Uso:
+#   make latexdiff-tesis \
+#        CHAPTER=<archivo.tex relativo a TESIS_DIR> \
+#        REV1=<tag-o-commit-inicial> \
+#        DIR=<directorio-del-documento-destino> \
+#        [TESIS_DIR=../Tesis_Latex] \
+#        [REV2=HEAD] \
+#        [OUT=diff_evidencia]
+#
+# Ejemplo:
+#   make latexdiff-tesis \
+#        CHAPTER=3-Conceptos-Indicadores/3-Conceptos-Indicadores.tex \
+#        REV1=v0.3.2 REV2=v0.4.1 \
+#        DIR=TercerSemestre/SeminarioInvestigacion/RegistroAvances2026-2
+#
+# Resultado:
+#   • DIR/secciones/OUT.tex  — diff listo para \input{} en el documento
+#   • DIR/Figures/           — figuras copiadas desde TESIS_DIR/Figures (sin sobreescribir)
+#
+# Notas:
+#   • Usa 'git archive' en lugar de latexdiff-vc para evitar problemas con Git LFS.
+#   • Filtra el bloque %DIF PREAMBLE generado por latexdiff (el documento destino
+#     ya lo maneja a través de Latex/latexdiff-preamble.tex).
+#   • Si CHAPTER no existe en REV1 (capítulo nuevo), se usa un archivo vacío
+#     para que el diff muestre todo el contenido como adición.
+# =============================================================================
+
+latexdiff-tesis:
+ifndef DIR
+	$(error [latexdiff-tesis] Debes indicar DIR=<directorio-del-documento>)
+endif
+ifndef CHAPTER
+	$(error [latexdiff-tesis] Debes indicar CHAPTER=<archivo.tex relativo a TESIS_DIR>)
+endif
+ifndef REV1
+	$(error [latexdiff-tesis] Debes indicar REV1=<tag-o-commit-inicial>)
+endif
+	@if [ ! -d "$(TESIS_DIR)" ]; then \
+	    echo "[ERROR] No se encontró el repositorio: $(TESIS_DIR)"; \
+	    exit 1; \
+	fi
+	@echo "========================================================"
+	@echo " latexdiff-tesis"
+	@echo "   Repo  : $(TESIS_DIR)"
+	@echo "   Cap.  : $(CHAPTER)"
+	@echo "   Rev1  : $(REV1)  →  Rev2: $(REV2)"
+	@echo "   Salida: $(DIR)/secciones/$(OUT).tex"
+	@echo "========================================================"
+	@set -e; \
+	TMPDIR=$$(mktemp -d); \
+	mkdir -p "$$TMPDIR/old" "$$TMPDIR/new"; \
+	echo "--- Extrayendo $(REV1)..."; \
+	cd "$(TESIS_DIR)" && git archive $(REV1) 2>/dev/null | tar -x -C "$$TMPDIR/old" || true; \
+	echo "--- Extrayendo $(REV2)..."; \
+	cd "$(TESIS_DIR)" && git archive $(REV2) 2>/dev/null | tar -x -C "$$TMPDIR/new"; \
+	if [ ! -f "$$TMPDIR/old/$(CHAPTER)" ]; then \
+	    echo "    ($(CHAPTER) no existe en $(REV1) — se tratará como archivo nuevo)"; \
+	    mkdir -p "$$(dirname "$$TMPDIR/old/$(CHAPTER)")"; \
+	    touch "$$TMPDIR/old/$(CHAPTER)"; \
+	fi; \
+	if [ ! -f "$$TMPDIR/new/$(CHAPTER)" ]; then \
+	    echo "[ERROR] $(CHAPTER) no existe en $(REV2)"; \
+	    rm -rf "$$TMPDIR"; \
+	    exit 1; \
+	fi; \
+	echo "--- Generando diff..."; \
+	mkdir -p "$(DIR)/secciones"; \
+	latexdiff --flatten \
+	    "$$TMPDIR/old/$(CHAPTER)" \
+	    "$$TMPDIR/new/$(CHAPTER)" \
+	    | grep -v '%DIF PREAMBLE$$' \
+	    > "$(DIR)/secciones/$(OUT).tex"; \
+	echo "--- Copiando figuras..."; \
+	if [ -d "$(TESIS_DIR)/Figures" ]; then \
+	    mkdir -p "$(DIR)/Figures"; \
+	    cp -rn "$(TESIS_DIR)/Figures/." "$(DIR)/Figures/" 2>/dev/null || true; \
+	fi; \
+	rm -rf "$$TMPDIR"; \
+	echo ">>> Listo. Archivo generado: $(DIR)/secciones/$(OUT).tex"; \
+	echo "    Compila con: make Document DIR=$(DIR) COLOR=<tema>"
 
 # =============================================================================
 # LIMPIEZA
