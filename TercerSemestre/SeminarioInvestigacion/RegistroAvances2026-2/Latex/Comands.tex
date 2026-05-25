@@ -33,7 +33,10 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{multirow}
-
+% =============================================================================
+% Necesario para latexdiff
+% =============================================================================
+\usepackage[normalem]{ulem} 
 
 % =============================================================================
 %  2. FIGURAS
@@ -42,8 +45,9 @@
 \usepackage{graphicx}
 % Ruta de búsqueda de imágenes:
 %   img/          → carpeta local del artículo
+%   Figures/      → figuras de evidencia latexdiff (Cap3, Cap4...)
 %   ../../../Img/ → carpeta compartida en raíz del proyecto (escudos UNAM/FES)
-\graphicspath{{img/}{../../../Img/}}
+\graphicspath{{img/}{Figures/}{Figures/Cap3/}{Figures/Cap4/}{Figures/Cap5/}{../../../Img/}}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{float}
@@ -112,13 +116,6 @@
   \par\vspace{2pt}{\small\textit{Fuente: #1}}%
 }
 
-% Nota al margen de revisión (comentar antes de entrega)
-\newcommand{\pendiente}[1]{%
-  \marginpar{\footnotesize\color{ColorAlerta}\textbf{[Pendiente:} #1\textbf{]}}%
-}
-
-% Término definido por primera vez
-\newcommand{\termino}[1]{\textit{#1}}
 
 % Cita o definición destacada
 \newcommand{\citaclave}[1]{%
@@ -131,7 +128,263 @@
 % =============================================================================
 %  7. ABREVIATURAS — agrega las tuyas aquí
 % =============================================================================
+
+
+% Nota: fondo de tabla → usar unamGrisClaro (ya definido arriba, RGB 240 240 240)
+% =============================================================================
+%  7. CONFIGURACIÓN DE BLOQUES DE CÓDIGO (listings)
+% =============================================================================
+\usepackage{listings}          % Bloques de código con resaltado de sintaxis
+
+
+% =============================================================================
+%  4. DIAGRAMAS Y GRÁFICOS VECTORIALES
+% =============================================================================
+\usepackage{tikz}
+\usetikzlibrary{
+  arrows.meta,                 % Puntas de flecha modernas
+  positioning,                 % Posicionamiento relativo de nodos
+  shapes.geometric,            % Formas: círculo, rectángulo, diamante, etc.
+  fit,                         % Nodo que envuelve a otros
+  backgrounds,                 % Capas de fondo en diagramas
+  calc                         % Cálculos de coordenadas
+}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+
+% =============================================================================
+%  5. ANIMACIONES
+% =============================================================================
+% \usepackage[pdftex]{animate}  % GIFs exportados como PDF animado — descomentar si se necesita
+
+
+% =============================================================================
+%  6. COLORES INSTITUCIONALES Y DE TRANSPORTE
+% =============================================================================
+
+% Paleta UNAM
+\definecolor{unamAzul}     {RGB}{  0,  56, 147}  % Azul UNAM oficial
+\definecolor{unamOro}      {RGB}{244, 180,   0}  % Oro/amarillo UNAM oficial
+\definecolor{unamGrisClaro}{RGB}{240, 240, 240}  % Fondo gris claro para tablas
+
+% Paleta de transporte (mapas y diagramas de red)
+\definecolor{colorMetro}    {RGB}{ 30, 136, 229}  % Azul metro
+\definecolor{colorMetrobus} {RGB}{229,  57,  53}  % Rojo Metrobús
+\definecolor{colorCablebus} {RGB}{ 67, 160,  71}  % Verde Cablebús
+\definecolor{colorPeriferico}{RGB}{255, 143,   0} % Naranja Periférico Sur
+\definecolor{colorPropuesto} {RGB}{142,  36, 170} % Morado corredor propuesto
+
+% Revisión académica (secciones bajo revisión del comité tutor)
+\definecolor{azulRevision}{RGB}{207, 226, 255}  % Azul tenue — título bajo revisión
+
+% Paleta para código fuente
+\definecolor{codeGray}   {RGB}{245, 245, 245}
+\definecolor{codeComment}{RGB}{117, 117, 117}
+\definecolor{codeKeyword}{RGB}{  0,  98, 179}
+\definecolor{codeString} {RGB}{183,  28,  28}
+\definecolor{codeNumber} {RGB}{ 46, 125,  50}
+
+% --- Estilo base compartido ---
+\lstdefinestyle{estiloBase}{
+  backgroundcolor  = \color{codeGray},
+  basicstyle       = \ttfamily\small,
+  breaklines       = true,
+  breakatwhitespace= true,
+  frame            = single,
+  framerule        = 0.4pt,
+  rulecolor        = \color{gray!50},
+  numbers          = left,
+  numberstyle      = \tiny\color{gray},
+  numbersep        = 8pt,
+  showstringspaces = false,
+  tabsize          = 4,
+  captionpos       = b,
+  keepspaces       = true,
+  commentstyle     = \color{codeComment}\itshape,
+  stringstyle      = \color{codeString},
+  keywordstyle     = \color{codeKeyword}\bfseries,
+}
+
+% --- Go (Golang) ---
+\lstdefinelanguage{Go}{
+  morekeywords = {
+    func, package, import, var, const, type, struct, interface,
+    return, if, else, for, range, switch, case, default, defer,
+    go, chan, select, map, make, new, nil, true, false,
+    string, int, int64, float64, bool, byte, error
+  },
+  sensitive   = true,
+  morecomment = [l]{//},
+  morecomment = [s]{/*}{*/},
+  morestring  = [b]",
+  morestring  = [b]`,
+}
+\lstdefinestyle{estiloGo}    {style=estiloBase, language=Go}
+\lstdefinestyle{estiloPython}{style=estiloBase, language=Python}
+\lstdefinestyle{estiloSQL}   {style=estiloBase, language=SQL}
+
+% --- GeoJSON / JSON ---
+\lstdefinelanguage{JSON}{
+  morestring   = [b]",
+  morekeywords = {true, false, null},
+  sensitive    = false,
+}
+\lstdefinestyle{estiloJSON}{style=estiloBase, language=JSON}
+
+% Etiqueta por defecto para todos los listings
+\renewcommand{\lstlistingname}{Código}
+\renewcommand{\lstlistlistingname}{Índice de Código}
+
+
+% =============================================================================
+%  9. COMANDOS DE PRESENTACIÓN
+% =============================================================================
+
+% Centrado vertical de logos (portada)
+% Uso: \vcenteredinclude{Logos/UNAM_crest_blue.pdf}
+\newcommand{\vcenteredinclude}[1]{%
+  \begingroup
+  \setbox0=\hbox{\includegraphics[width=2.8cm,height=2.8cm,keepaspectratio]{#1}}%
+  \parbox{\wd0}{\box0}%
+  \endgroup
+}
+
+
+
+% =============================================================================
+%  10. COMANDOS MATEMÁTICOS — Teoría de Grafos y Modelo de Transporte
+% =============================================================================
+
+% --- Notación de grafos ---
+\newcommand{\grafo}{\mathcal{G}}          % Grafo G
+\newcommand{\nodos}{\mathcal{V}}          % Conjunto de vértices/nodos V
+\newcommand{\aristas}{\mathcal{E}}        % Conjunto de aristas E
+\newcommand{\nodo}[1]{v_{#1}}             % Nodo individual: \nodo{i}
+\newcommand{\arista}[2]{e_{#1#2}}         % Arista: \arista{i}{j}
+\newcommand{\peso}[2]{w_{#1#2}}           % Peso de arista: \peso{i}{j}
+\newcommand{\costo}[2]{c_{#1#2}}          % Costo total: \costo{i}{j}
+
+% Función de costo total ponderado
+% Uso: \costototal{i}{j}
+\newcommand{\costototal}[2]{%
+  c_{#1#2} = d_{#1#2} + \alpha \cdot a_{#1#2} + \beta \cdot \delta_{#1#2}%
+}
+
+% --- Algoritmos de caminos mínimos ---
+\newcommand{\dijkstra}{\textsc{Dijkstra}}
+\newcommand{\floyd}{\textsc{Floyd-Warshall}}
+\newcommand{\kruskal}{\textsc{Kruskal}}
+
+% --- Modelo de 4 etapas ---
+\newcommand{\generacion}{T_i^{\text{gen}}}     % Viajes generados en zona i
+\newcommand{\atraccion}{T_j^{\text{atr}}}      % Viajes atraídos en zona j
+\newcommand{\distribucion}{T_{ij}}             % Viajes distribuidos i→j
+\newcommand{\particion}{p_m}                   % Partición modal modo m
+
+% --- Índices de accesibilidad ---
+\newcommand{\accesibilidad}{A_i}
+\newcommand{\impedancia}{f(c_{ij})}
+
+% --- Ecuaciones en dos columnas (uso en comparativas) ---
+\newcommand{\beqhalf}{%
+  \noindent\begin{minipage}[c]{.5\linewidth}\begin{equation}}
+\newcommand{\eeqhalf}{\end{equation}\end{minipage}}
+\newcommand{\eqhalf}[1]{\beqhalf #1 \eeqhalf}
+
+
+% =============================================================================
+%  11. ENTORNO DE SUBECUACIONES ETIQUETADAS
+% =============================================================================
+\makeatletter
+\newenvironment{taggedsubequations}[1]
+ {%
+   \addtocounter{equation}{-1}%
+   \begin{subequations}%
+   \def\@currentlabel{#1}%
+   \renewcommand{\theequation}{#1\alph{equation}}%
+ }
+ {\end{subequations}}
+\makeatother
+
+
+% =============================================================================
+%  12. COMANDOS DE UTILIDAD GENERAL
+% =============================================================================
+
+% Abreviaturas frecuentes en el texto
 \newcommand{\cdmx}{Ciudad de México}
 \newcommand{\zmvm}{Zona Metropolitana del Valle de México}
-\newcommand{\unam}{Universidad Nacional Autónoma de México}
-\newcommand{\gis}{\textsc{gis}}
+\newcommand{\brt}{\textsc{brt}}             % Bus Rapid Transit
+\newcommand{\gis}{\textsc{gis}}             % Geographic Information System
+\newcommand{\gtfs}{\textsc{gtfs}}           % General Transit Feed Specification
+\newcommand{\api}{\textsc{api}}             % Application Programming Interface
+\newcommand{\geojson}{GeoJSON}
+
+% Nota al margen para revisión (comentar antes de entrega final)
+% Uso: \pendiente{Completar con datos de campo}
+\newcommand{\pendiente}[1]{%
+  \marginpar{\footnotesize\color{red}\textbf{[Pendiente:} #1\textbf{]}}%
+}
+
+% Título de sección con fondo azul tenue — indica revisión pendiente con asesor
+% Uso: \section{\bajoRevision{Nombre de la sección}}
+\newcommand{\bajoRevision}[1]{\colorbox{azulRevision}{#1}}
+
+% Caja de nota al inicio de sección bajo revisión
+% Uso: \notaRevision{Texto de la nota.}
+\newcommand{\notaRevision}[1]{%
+  \vspace{0.4em}%
+  \noindent\colorbox{azulRevision!60}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+      \small\textcolor{unamAzul}{\textbf{Nota de revisión:}}\enspace #1%
+    }%
+  }%
+  \vspace{0.5em}%
+}
+
+% Resaltado de término definido por primera vez
+% Uso: \termino{fragmentación urbana}
+\newcommand{\termino}[1]{\textit{#1}}
+
+
+% =============================================================================
+%  13. NOTACIÓN ESPECÍFICA DE INDICADORES
+% =============================================================================
+
+% Indicador de cobertura
+\newcommand{\cobertura}{C}
+
+% Fuerza nodal / alimentación capilar
+\newcommand{\fuerzanodal}[1]{C_{#1}}
+
+% Detour Factor
+\newcommand{\detourfactor}{DI}
+\newcommand{\deuclidiana}[2]{d_{\text{euclidiana}}(#1,\,#2)}
+\newcommand{\dred}[2]{d_{\text{red}}(#1,\,#2)}
+
+% Tiempo de viaje promedio y delta
+\newcommand{\Tprom}{T}
+\newcommand{\DeltaT}{\Delta T}
+
+% Coeficiente de fricción vial
+\newcommand{\CFh}{CF_h}
+\newcommand{\Tideal}{T_{\text{ideal}}}
+\newcommand{\Treal}[1]{T_{\text{real},#1}}
+
+% Penalización por transferencia
+\newcommand{\Wsh}{W_{s,h}}
+\newcommand{\Twalk}[2]{T_{\text{walk}}(#1,\,#2)}
+\newcommand{\Twait}[2]{T_{\text{wait}}(#1,\,#2)}
+
+% Centralidad de intermediación
+\newcommand{\betw}[1]{B(#1)}
+\newcommand{\betww}[2]{B(#1,\,#2)}
+\newcommand{\sigmast}[2]{\sigma_{#1#2}}
+\newcommand{\sigmastnodo}[3]{\sigma_{#1#2}(#3)}
+
+% Robustez geométrica
+\newcommand{\DeltaE}{\Delta E}
+\newcommand{\Ezero}{E_0}
+\newcommand{\Efallido}{E_f}
+% Bloque de cita destacada
