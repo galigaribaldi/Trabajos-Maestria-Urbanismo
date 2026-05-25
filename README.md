@@ -16,6 +16,7 @@ Repositorio de documentos académicos del programa de Maestría en Urbanismo. Co
 
 - **TeX Live** (o MiKTeX) con `pdflatex` y `bibtex`
 - **Make** (`make --version`)
+- **latexdiff** — solo para el target `latexdiff-tesis` (`sudo apt install latexdiff` o `tlmgr install latexdiff`)
 - **gh CLI** — solo para publicar releases (`gh auth login` antes del primer uso)
 - Editor recomendado: VS Code con extensión LaTeX Workshop, o cualquier editor con soporte `.tex`
 
@@ -39,7 +40,8 @@ Trabajos-Maestria-Urbanismo/
 │   │   └── SinPortada/               ← Ensayo sin portada (con TOC e índices)
 │   ├── Articulos/
 │   │   ├── ConPortada/               ← Artículo con portada minimalista
-│   │   └── SinPortada/               ← Artículo sin portada (con palabras clave)
+│   │   ├── SinPortada/               ← Artículo sin portada (con palabras clave)
+│   │   └── RegistroDiff/             ← Registro de avances con evidencia latexdiff
 │   └── Instructions Plantilla Documents.md
 │
 ├── PresentacionPlantilla/            ← Plantilla Beamer UNAM
@@ -53,8 +55,10 @@ Trabajos-Maestria-Urbanismo/
     │   ├── Ensayo_Humedales/
     │   ├── Presentacion_Humedales/
     │   └── Movilidad_Sustentable_Presentacion/
-    └── SociologiaUrbana/
-        └── EnsayoFinal/
+    ├── SociologiaUrbana/
+    │   └── EnsayoFinal/
+    └── SeminarioInvestigacion/
+        └── RegistroAvances2026-2/    ← Registro de avances con diff de tesis
 ```
 
 ---
@@ -77,6 +81,9 @@ make ArticulosConPortada DIR=TercerSemestre/MiMateria/NombreArticulo
 
 # Artículo sin portada con palabras clave (sin TOC ni índices)
 make ArticulosSinPortada DIR=TercerSemestre/MiMateria/NombreArticulo
+
+# Registro de avances con evidencia latexdiff (para Seminario de Investigación)
+make RegistroDiffDoc DIR=TercerSemestre/MiMateria/NombreRegistro
 
 # Cualquier documento con un color específico al crearlo
 make EnsayosConPortada DIR=TercerSemestre/MiMateria/NombreEnsayo COLOR=Teal
@@ -208,6 +215,69 @@ make release \
 
 ---
 
+## Generar evidencia latexdiff (`latexdiff-tesis`)
+
+El target `latexdiff-tesis` compara dos versiones de un capítulo de la tesis (almacenado en un repositorio externo) y genera un archivo `.tex` con las diferencias coloreadas: adiciones en **azul** y eliminaciones en **rojo**. El resultado se incluye automáticamente en el documento `RegistroDiff` para documentar el progreso entre entregas.
+
+> **Requisito previo:** `latexdiff` instalado en el sistema.
+
+### Uso
+
+```bash
+make latexdiff-tesis \
+    CHAPTER=<archivo.tex relativo a TESIS_DIR> \
+    REV1=<tag-o-commit-inicial> \
+    DIR=<directorio-del-documento-destino> \
+    [TESIS_DIR=../Tesis_Latex] \
+    [REV2=HEAD] \
+    [OUT=diff_evidencia]
+```
+
+### Parámetros
+
+| Parámetro | Obligatorio | Default | Descripción |
+|---|---|---|---|
+| `CHAPTER` | Sí | — | Ruta del capítulo `.tex` relativa a `TESIS_DIR` |
+| `REV1` | Sí | — | Tag o hash del commit de la versión inicial |
+| `DIR` | Sí | — | Directorio del documento `RegistroDiff` destino |
+| `TESIS_DIR` | No | `../Tesis_Latex` | Ruta al repositorio de la tesis (puede ser cualquier repo local) |
+| `REV2` | No | `HEAD` | Tag o hash del commit de la versión final |
+| `OUT` | No | `diff_evidencia` | Nombre del `.tex` de salida (sin extensión) |
+
+### Ejemplo
+
+```bash
+make latexdiff-tesis \
+    CHAPTER=3-Conceptos-Indicadores/3-Conceptos-Indicadores.tex \
+    REV1=v0.3.2 REV2=v0.4.1 \
+    DIR=TercerSemestre/SeminarioInvestigacion/RegistroAvances2026-2
+```
+
+Después de ejecutarlo, compila el documento normalmente:
+
+```bash
+make Document DIR=TercerSemestre/SeminarioInvestigacion/RegistroAvances2026-2 COLOR=Rojo
+```
+
+### Notas técnicas
+
+- Usa `git archive | tar -x` en lugar de `latexdiff-vc` para evitar problemas con **Git LFS** (los punteros LFS nunca llegan al diff).
+- Si el capítulo no existía en `REV1`, el diff muestra todo el contenido como adición.
+- El bloque `%DIF PREAMBLE` generado por latexdiff se filtra automáticamente; el documento destino lo maneja con `Latex/latexdiff-preamble.tex`.
+- El markup de diferencias usa **solo color** (sin subrayado de `ulem`) para compatibilidad con cualquier comando LaTeX complejo.
+- Las figuras referenciadas por el capítulo se copian automáticamente a `DIR/Figures/` sin sobreescribir las existentes.
+
+### Flujo completo de trabajo
+
+```
+1. make RegistroDiffDoc DIR=<ruta>          # Crea el documento desde la plantilla
+2. Edita main.tex, secciones/1-Introduccion.tex, secciones/2-Desarrollo.tex y secciones/3-Conclusiones.tex
+3. make latexdiff-tesis CHAPTER=... REV1=... DIR=<ruta>   # Genera el diff
+4. make Document DIR=<ruta> COLOR=<tema>    # Compila el PDF final
+```
+
+---
+
 ## Limpiar auxiliares LaTeX
 
 ```bash
@@ -235,16 +305,19 @@ Cada plantilla tiene el mismo patrón de uso:
 | Ensayo SinPortada | — (encabezado inline) | Sí | Sí | No | Sí |
 | Artículo ConPortada | Minimalista | No | No | No | No |
 | Artículo SinPortada | — (encabezado inline) | No | No | Sí | No |
+| RegistroDiff | Minimalista + repo/versiones | No | No | No | No |
+
+> **RegistroDiff** — Variante especializada para reportes de avance de tesis. Incluye variables `\NombreRepo`, `\VerRef`, `\VerActual`; tablas `longtable` y `tabularx` pre-configuradas para bitácora de commits y autoevaluación por capítulo; y una sección de evidencia visual generada automáticamente con `latexdiff` (ver `make latexdiff-tesis` más abajo).
 
 ---
 
 ## Temas de color
 
-Todos los documentos y presentaciones soportan 5 temas de color. El tema se puede cambiar de dos maneras:
+Todos los documentos y presentaciones soportan 6 temas de color. El tema se puede cambiar de dos maneras:
 
 **Permanente** — edita `Latex/color-config.tex` dentro del documento:
 ```latex
-\providecommand{\ColorTema}{Purpura}   % opciones: Institucional | Teal | VerdeOlivo | Purpura | Rojo
+\providecommand{\ColorTema}{Purpura}   % opciones: Institucional | Teal | VerdeOlivo | Purpura | Rojo | VerdeEsmeralda
 ```
 
 **Por compilación** — sin tocar el archivo:
@@ -260,6 +333,7 @@ make Presentacion DIR=<ruta> COLOR=Rojo
 | `VerdeOlivo` | Verde olivo `RGB 56,87,35` | Ocre `RGB 188,143,60` | Historia urbana, patrimonio |
 | `Purpura` | Púrpura `RGB 106,27,154` | Dorado `RGB 255,196,0` | Economía, política pública |
 | `Rojo` | Rojo `RGB 183,28,28` | Dorado `RGB 255,196,0` | Derecho urbano, normatividad |
+| `VerdeEsmeralda` | Esmeralda `RGB 0,130,80` | Dorado cálido `RGB 255,186,8` | Ecología, sustentabilidad, tesis |
 
 ### Elementos visuales con color en documentos
 
@@ -333,3 +407,9 @@ Las plantillas los referencian automáticamente vía `\graphicspath` — no es n
 | Trabajo | Ruta | Tag de release | Estado |
 |---------|------|----------------|--------|
 | Ensayo Final | `TercerSemestre/SociologiaUrbana/EnsayoFinal` | — | En proceso |
+
+### Tercer Semestre — Seminario de Investigación
+
+| Trabajo | Ruta | Tag de release | Estado |
+|---------|------|----------------|--------|
+| Registro de Avances 2026-2 | `TercerSemestre/SeminarioInvestigacion/RegistroAvances2026-2` | — | Terminado |
