@@ -2,23 +2,273 @@
 %  2-Desarrollo.tex — Desarrollo / Argumentación central
 % =============================================================================
 
-\section{Desarrollo}
+\section{Desarrollo y Avances de Investigación}
+\label{sec:desarrollo-conceptual}
 
-\lipsum[3-4]
+Durante los primeros días de abril de 2026, mi asesor \textit{David López Flores}
+me recomendó adoptar el sistema de composición tipográfica \termino{LaTeX},
+lo que benefició enormemente el avance al poder gestionar la evolución del documento formal
+(tesis) mediante un sistema de control de versiones (\termino{Git} y \termino{GitHub}).
+Todos estos avances pueden consultarse en el siguiente repositorio:
+\url{https://github.com/galigaribaldi/TesisUrbanismo}, donde se encuentra una breve
+descripción del tema. Asimismo, en la sección \textit{Releases}:
+\url{https://github.com/galigaribaldi/TesisUrbanismo/releases}, se puede acceder
+a la última versión completada y revisada del documento de investigación, actualmente
+en su versión \texttt{v0.4.1}.
 
-\subsection{Marco Conceptual}
 
-\lipsum[5]
+\subsection{Cambio en Enfoque y herramientas}
+\label{ssec:cambio-enfoque}
 
-% ── Ejemplo de figura ─────────────────────────────────────────────────────────
-% \begin{figure}[H]
-%   \centering
-%   \includegraphics[width=0.75\textwidth]{img/nombre_figura.png}
-%   \caption{Descripción breve de la figura.}
-%   \label{fig:mi_figura}
-%   \fuentefigura{Elaboración propia, 2026.}
-% \end{figure}
+Al principio de la investigación (semestre 2025-2) se planteó el tema del corredor anillar;
+sin embargo, aún no se contaba con el conocimiento metodológico y sustantivo necesario
+para desarrollarlo con rigor. En un inicio, la investigación se abordó desde el punto
+de vista logístico. El cambio de paradigma surgió a principios de abril, cuando se tomó
+la decisión de adoptar un enfoque matemático-urbano-computacional que combina el uso de
+Grafos Matemáticos, indicadores urbanos y la implementación de sistemas computacionales
+de autoría propia: \termino{Apímetro} (la primera API de datos abiertos del Sistema de
+Transporte de la \zmvm) y \termino{VFTModel} (software libre para analizar las rutas
+geográficas de cualquier sistema de transporte mediante GeoJSON y Grafos Matemáticos).
 
-\subsection{Análisis}
+Todo esto con el objetivo de demostrar que la geometría del sistema de transporte
+actual de la \zmvm requiere un cambio de paradigma hacia el modelo circular, siendo el
+primer caso de estudio el del \termino{Anillo Periférico}.
+En un inicio, debido al cambio de herramientas y enfoque, se contempló analizar únicamente
+la sección sur de la Ciudad de México dada su gran extensión geográfica; sin embargo, esta
+limitación desapareció con la implementación de las herramientas tecnológicas mencionadas.
 
-\lipsum[6]
+\subsection{Git como registro de avances}
+\label{ssec:git-avances}
+
+Como parte del seminario de investigación y del cronograma de trabajo establecido,
+se ha realizado una reestructuración y avance sustantivo en el documento de tesis
+a lo largo del semestre 2026-2. A través del sistema de control de versiones
+(\texttt{git}) del repositorio de la tesis, es posible rastrear con precisión
+la evolución metodológica, estructural y de contenido desde el inicio del semestre
+hasta la fecha de corte actual (mayo de 2026).
+
+El Cuadro~\ref{tab:bitacora_git} presenta una bitácora cronológica de los hitos
+de desarrollo registrados en el repositorio, agrupados por semana y etapa. Cada
+entrada corresponde a una versión etiquetada (\textit{tag}) o a un conjunto de
+\textit{commits} con impacto documentado en la estructura o el contenido de la tesis.
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  TABLA 1: Bitácora cronológica por hitos de versión (git log)
+% ─────────────────────────────────────────────────────────────────────────────
+% Anchos ajustados para que suma + 2×\tabcolsep×4 cols ≤ \textwidth (155mm):
+% 2.4+2.0+3.3+5.8 = 13.5cm → 135mm + 16.9mm padding = 151.9mm < 155mm
+\begin{longtable}{>{\bfseries}p{2.4cm} p{2.0cm} p{3.3cm} p{5.8cm}}
+    \caption{Bitácora cronológica de avances en el repositorio de tesis (Corte: 24 mayo 2026).}
+    \label{tab:bitacora_git} \\
+    \toprule
+    \textbf{Versión / Hito} & \textbf{Fecha} & \textbf{Ámbito} & \textbf{Descripción del avance} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{4}{l}{\footnotesize\textit{(Continuación del Cuadro~\ref{tab:bitacora_git})}} \\
+    \toprule
+    \textbf{Versión / Hito} & \textbf{Fecha} & \textbf{Ámbito} & \textbf{Descripción del avance} \\
+    \midrule
+    \endhead
+
+    \midrule
+    \multicolumn{4}{r}{\footnotesize\textit{Continúa en la siguiente página}} \\
+    \endfoot
+
+    \bottomrule
+    \endlastfoot
+
+    % ── Semana 1 (10–11 abril) ─────────────────────────────────────────────
+    \multicolumn{4}{l}{\small\color{ColorPrincipal}\textit{Semana 1 — Configuración inicial del repositorio (10--11 de abril)}} \\
+    \addlinespace[2pt]
+
+    Plantilla base
+    & 10 abr 2026
+    & Infraestructura
+    & Creación de la plantilla \LaTeX{} UNAM con estructura de carpetas correcta
+      (\texttt{1edd8b7}). \\
+    \addlinespace[3pt]
+
+    Introducción y referencias
+    & 11 abr 2026
+    & Cap.~1 y Bibliografía
+    & Redacción de la introducción general y completado de primeras referencias
+      bibliográficas (\texttt{3faa245}). \\
+    \addlinespace[3pt]
+
+    Marco teórico — borrador
+    & 11 abr 2026
+    & Cap.~2 y Cap.~3
+    & Actualización de antecedentes, definiciones iniciales y paleta de comandos
+      \LaTeX{} (\texttt{3c555a1, 7940ed7}). \\
+    \addlinespace[8pt]
+
+    % ── Semana 2 (14 abril) ────────────────────────────────────────────────
+    \multicolumn{4}{l}{\small\color{ColorPrincipal}\textit{Semana 2 — Reestructuración y versión v0.3.0 (14 de abril)}} \\
+    \addlinespace[2pt]
+
+    \texttt{v0.3.0}
+    & 14 abr 2026
+    & Infraestructura
+    & Integración de herramientas de proyecto: Makefile, GitHub Actions (CI/CD),
+      Git LFS para datos geoespaciales, licencia CC BY-NC 4.0
+      y plantillas de \textit{issues} (\texttt{8a1467b}). \\
+    \addlinespace[3pt]
+
+    \texttt{v0.3.1} — Recalibración ZMVM
+    & 14 abr 2026
+    & Cap.~1, Metodología
+    & \textbf{Redefinición crítica}: ajuste sustantivo del alcance geográfico y
+      demográfico de la investigación, acotándolo exclusivamente a la Zona
+      Metropolitana del Valle de México (ZMVM). Eliminación de planteamientos
+      duplicados y corrección de hipótesis y objetivos
+      (\texttt{071ecc1, ff8f7df}). \\
+    \addlinespace[8pt]
+
+    % ── Semana 3 (22 abril) ────────────────────────────────────────────────
+    \multicolumn{4}{l}{\small\color{ColorPrincipal}\textit{Semana 3 — Teoría de grafos (22 de abril)}} \\
+    \addlinespace[2pt]
+
+    \texttt{v0.3.2} — Grafos Matemáticos
+    & 22 abr 2026
+    & Cap.~3
+    & Completado el subcapítulo de Grafos Matemáticos (secciones 3.2.0--3.2.6):
+      fundamentos eulerianos, grafos computacionales con mapas de adyacencia,
+      cálculo de caminos mínimos (\dijkstra, \floyd),
+      integración con \gis{} y \gtfs{}, e implementaciones tecnológicas
+      (\texttt{4de0d6a, 3284ca6}). \\
+    \addlinespace[8pt]
+
+    % ── Semana 4 (9 mayo) ─────────────────────────────────────────────────
+    \multicolumn{4}{l}{\small\color{ColorPrincipal}\textit{Semana 4 — Inicio de capas de código (9 de mayo)}} \\
+    \addlinespace[2pt]
+
+    Apímetro — fase 1
+    & 9 may 2026
+    & Cap.~4
+    & Primera versión documentada de las capas de código del Apímetro:
+      extracción y procesamiento de datos \gtfs{} desde la \api{}
+      de transporte público (\texttt{fe36c71}). \\
+    \addlinespace[8pt]
+
+    % ── Semana 5 (15–18 mayo) ─────────────────────────────────────────────
+    \multicolumn{4}{l}{\small\color{ColorPrincipal}\textit{Semana 5 — Resultados e integración final (15--18 de mayo)}} \\
+    \addlinespace[2pt]
+
+    Apímetro terminado
+    & 15 may 2026
+    & Cap.~4
+    & Cierre del capítulo de Apímetro con flujo completo de procesamiento
+      documentado (\texttt{51a465e}). \\
+    \addlinespace[3pt]
+
+    Cap.~5 — Modelo VFT
+    & 15 may 2026
+    & Cap.~5
+    & Estructuración del capítulo de resultados: estadísticas del grafo,
+      tabla de indicadores, fases 1--3 del modelo VFT (impedancia, cobertura,
+      fuerza capilar, factor de desviación, penalización por transferencia,
+      \textit{Node Score}) (\texttt{89fa819, b252695}). \\
+    \addlinespace[3pt]
+
+    Resultados de cobertura y \textit{DF}
+    & 17 may 2026
+    & Cap.~5
+    & Cálculo terminado de los indicadores de Cobertura de red y Factor de
+      Desviación ($DI$); integración de figuras y tablas comparativas
+      (\texttt{394a470}). \\
+    \addlinespace[3pt]
+
+    \texttt{v0.4.0} — Integración Cap. 4 y 5
+    & 18 may 2026
+    & Cap.~4, Cap.~5
+    & Merge a \texttt{main} de los capítulos de Capas de Código y Resultados.
+      Versión estable con todos los capítulos de análisis integrados
+      (\texttt{a0ac6bc}). \\
+    \addlinespace[3pt]
+
+    \texttt{v0.4.1} — Migración LFS
+    & 18 may 2026
+    & Infraestructura
+    & \textbf{Corrección técnica crítica}: las imágenes de los capítulos 3 y 4
+      superaban el límite de almacenamiento de GitHub. Se migraron a
+      Git LFS y se habilitó el soporte en el flujo de CI, restaurando
+      la compilación automática del PDF (\texttt{5ede766}). \\
+
+\end{longtable}
+
+Información obtenida y optimizada por la herramienta nativa de \termino{Látex}: 
+\termino{\textit{latexdiff}}.
+% ─────────────────────────────────────────────────────────────────────────────
+%  TABLA 2: Autoevaluación por capítulo
+% ─────────────────────────────────────────────────────────────────────────────
+\vspace{1em}
+
+El Cuadro~\ref{tab:autoevaluacion} complementa la bitácora anterior con una
+autoevaluación del estado actual de cada capítulo, identificando las debilidades
+que deberán atenderse en la siguiente etapa del proceso de investigación.
+
+\begin{table}[H]
+    \centering
+    \caption{Autoevaluación por capítulo: avances, redefiniciones y apartados débiles (Corte: mayo 2026).}
+    \label{tab:autoevaluacion}
+    \fontsize{9pt}{11.5pt}\selectfont
+    \begin{tabularx}{\textwidth}{
+        >{\hsize=0.55\hsize\raggedright\arraybackslash}X
+        >{\hsize=1.15\hsize\raggedright\arraybackslash}X
+        >{\hsize=1.15\hsize\raggedright\arraybackslash}X
+        >{\hsize=1.15\hsize\raggedright\arraybackslash}X}
+        \toprule
+        \textbf{Capítulo} &
+        \textbf{Avance concreto} &
+        \textbf{Redefinición / Dificultad} &
+        \textbf{Estado actual y debilidad} \\
+        \midrule
+
+        \textbf{Cap. 1}\newline Introducción y\newline Planteamiento &
+        Consolidación del planteamiento, marco referencial e hipótesis. &
+        \textit{Redefinición (v0.3.1):} Recalibración del alcance hacia la ZMVM;
+        eliminación de planteamientos duplicados. &
+        \textit{Estado:} Terminado al 100\%. \newline
+        \textit{Pendiente:} Ajuste narrativo de cohesión tras redactar las conclusiones. \\
+        \addlinespace\hline\addlinespace
+
+        \textbf{Caps. 2 y 3}\newline Marco Teórico y\newline Matemático &
+        Cap.~2 concluido. Completado subcapítulo de Grafos Matemáticos
+        (3.2.0--3.2.6) con rigor analítico y notación formal. &
+        \textit{Dificultad:} Articular el lenguaje sociológico del espacio urbano
+        con el modelo matemático de grafos exigió múltiples iteraciones teóricas. &
+        \textit{Estado:} Capítulos estructurados y cerrados. \newline
+        \textit{Pendiente:} Afinar la transición narrativa entre el marco
+        sociológico y el lenguaje formal matemático. \\
+        \addlinespace\hline\addlinespace
+
+        \textbf{Cap. 4}\newline Capas de Código\newline (Apímetro) &
+        Documentación del flujo completo del Apímetro: extracción \gtfs{},
+        construcción del grafo y cálculo de indicadores. &
+        \textit{Dificultad técnica:} Peso de datos geoespaciales bloqueó la
+        compilación; se requirió migración completa a Git LFS. &
+        \textit{Estado:} Capítulo cerrado. \newline
+        \textit{Pendiente:} Revisar consistencia de los bloques de código
+        con la versión final del Apímetro. A su vez que pasar los bloques de código
+        técnico a una sección llamada \termino{Anexos}.\\
+        \addlinespace\hline\addlinespace
+
+        \textbf{Cap. 5}\newline Resultados\newline Modelo VFT &
+        Extracción de indicadores de Cobertura, Fuerza Capilar y Factor de
+        Desviación ($DI$). Fases 1--2 del modelo VFT documentadas. &
+        \textit{Pendiente de cálculo:} Fase 3 (\textit{Node Score}, $B(v)$, $\Delta E$)
+        aún requiere completar el procesamiento computacional. &
+        \textit{Estado:} Resultados parciales integrados. \newline
+        \textit{Pendiente:} Interpretación cualitativa de los indicadores
+        frente a las hipótesis espaciales originales. \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\vspace{1em}
+\textit{Nota metodológica:} Para respaldar esta autoevaluación y hacer tangibles
+las redefiniciones estructurales, en la sección siguiente se presenta un fragmento
+de evidencia generado con la herramienta \texttt{latexdiff} sobre el repositorio
+de la tesis, permitiendo aislar visualmente (en azul las adiciones, en rojo las
+supresiones) los cambios de texto ocurridos entre versiones.

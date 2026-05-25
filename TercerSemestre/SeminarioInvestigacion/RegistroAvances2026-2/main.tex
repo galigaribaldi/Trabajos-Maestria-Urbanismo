@@ -29,9 +29,7 @@
 \newcommand{\MateriaCorta}{Materia — Semestre 2026-2}   % Aparece en encabezado y pie
 \newcommand{\ProfesorAsignado}{Nombre del Profesor Asignado}
 \newcommand{\Semestre}{2026-2}
-\newcommand{\FechaEntrega}{Abril 2026}
-% ═════════════════════════════════════════════════════════════════════════════
-
+\newcommand{\FechaEntrega}{Mayo 2026}
 % =============================================================================
 %  1. IDIOMA Y CODIFICACIÓN
 % =============================================================================
@@ -58,6 +56,9 @@
 %  4. PAQUETES ADICIONALES, COLORES Y COMANDOS PERSONALIZADOS
 % =============================================================================
 \input{Latex/Comands}
+
+% --- Soporte para latexdiff (ulem ya cargado en Comands) ---
+\input{Latex/latexdiff-preamble}
 
 % =============================================================================
 %  5. HIPERVÍNCULOS — siempre al final del preámbulo
@@ -90,6 +91,8 @@
 \input{secciones/1-Introduccion}
 \clearpage
 \input{secciones/2-Desarrollo}
+\clearpage
+\input{secciones/diff_evidencia}
 \clearpage
 \input{secciones/3-Conclusiones}
 

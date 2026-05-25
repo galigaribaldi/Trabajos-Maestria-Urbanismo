@@ -1,0 +1,36 @@
+
+% Estilo CFONT: color puro sin decoraciones de ulem.
+% \uwave y \sout fallan cuando \DIFadd/\DIFdel contiene comandos con grupos
+% propios (\dijkstra{}, \gis{}, \textbf{}, etc.). Color puro es compatible
+% con cualquier contenido LaTeX arbitrario.
+\RequirePackage[normalem]{ulem} %DIF PREAMBLE (cargado por compatibilidad, no se usa \uwave)
+\RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1} %DIF PREAMBLE
+\providecommand{\DIFadd}[1]{{\protect\color{blue}#1}}   %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{{\protect\color{red}#1}}    %DIF PREAMBLE
+%DIF SAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddbegin}{} %DIF PREAMBLE
+\providecommand{\DIFaddend}{} %DIF PREAMBLE
+\providecommand{\DIFdelbegin}{} %DIF PREAMBLE
+\providecommand{\DIFdelend}{} %DIF PREAMBLE
+\providecommand{\DIFmodbegin}{} %DIF PREAMBLE
+\providecommand{\DIFmodend}{} %DIF PREAMBLE
+%DIF FLOATSAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}} %DIF PREAMBLE
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}} %DIF PREAMBLE
+\providecommand{\DIFaddbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFaddendFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelendFL}{} %DIF PREAMBLE
+% Versiones seguras para hyperref (PDF bookmarks no admiten \color ni \uwave)
+\AtBeginDocument{%
+  \pdfstringdefDisableCommands{%
+    \def\DIFadd#1{#1}%
+    \def\DIFdel#1{}%
+    \def\DIFaddFL#1{#1}%
+    \def\DIFdelFL#1{}%
+    \def\DIFaddbegin{}%
+    \def\DIFaddend{}%
+    \def\DIFdelbegin{}%
+    \def\DIFdelend{}%
+  }%
+}
