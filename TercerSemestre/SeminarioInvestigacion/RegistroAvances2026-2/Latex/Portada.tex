@@ -1,0 +1,43 @@
+% =============================================================================
+%  Portada.tex — Portada minimalista para artículo académico
+%  Sin logos, sin bordes. Solo tipografía, espacio y una línea de color.
+% =============================================================================
+
+\begin{titlepage}
+\thispagestyle{empty}
+\setcounter{page}{0}
+\centering
+
+% ── Espacio superior ──────────────────────────────────────────────────────────
+\vspace*{4cm}
+
+% ── Título ───────────────────────────────────────────────────────────────────
+{\huge\bfseries \TituloArticulo}
+
+\vspace{0.5cm}
+{\color{ColorPrincipal}\rule{0.45\textwidth}{0.8pt}}
+\vspace{0.4cm}
+
+% ── Subtítulo (aparece solo si no está vacío) ─────────────────────────────────
+{\large\itshape\color{ColorTexto} \SubtituloArticulo}
+
+% ── Espacio central ───────────────────────────────────────────────────────────
+\vfill
+
+% ── Datos del autor y materia ─────────────────────────────────────────────────
+{\normalsize\textbf{\Autor}}\\[0.4cm]
+{\small \Materia}\\[0.15cm]
+{\small Profesor:\ \ProfesorAsignado}\\[0.15cm]
+{\small \Semestre\ \ ·\ \ \FechaEntrega}
+
+\vspace{1.8cm}
+
+% ── Institución (tipografía pequeña, sin peso) ────────────────────────────────
+{\footnotesize\color{ColorPrincipal}
+  Universidad Nacional Autónoma de México\\
+  Programa de Maestría y Doctorado en Urbanismo — FES Acatlán%
+}
+
+\vspace{1cm}
+
+\end{titlepage}
