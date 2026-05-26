@@ -17,16 +17,16 @@
 % ═════════════════════════════════════════════════════════════════════════════
 %  PERSONALIZACIÓN — Edita solo esta sección para cada nuevo entregable
 % ═════════════════════════════════════════════════════════════════════════════
-\newcommand{\TituloEnsayo}{Densificación Urbana y Movilidad Sostenible}
-\newcommand{\SubtituloEnsayo}{Modelos de Desarrollo Compacto en la Zona Metropolitana}
-\newcommand{\Autor}{Nombre Apellido Paterno Apellido Materno}
-\newcommand{\Materia}{Nombre de la Materia}
-\newcommand{\ProfesorAsignado}{Nombre del Profesor Asignado}
+\newcommand{\TituloEnsayo}{Plan de Regeneración Urbana}
+\newcommand{\SubtituloEnsayo}{Memoria y Función en el Sur de la Ciudad de México ante los Desastres Naturales}
+\newcommand{\Autor}{Hernán Galileo Cabrera Garibaldi}
+\newcommand{\Materia}{Temas Selectos de Desarrollo Urbano y Regional IV}
+\newcommand{\ProfesorAsignado}{Deborah Feber González Ramírez, Carla Adriana Contreras Lara}
 \newcommand{\Semestre}{2026-2}
 \newcommand{\Programa}{Programa de Maestría y Doctorado en Urbanismo}
 \newcommand{\Facultad}{FES Acatlán}
 \newcommand{\Ciudad}{Naucalpan, Estado de México}
-\newcommand{\FechaEntrega}{Abril 2026}
+\newcommand{\FechaEntrega}{Mayo 2026}
 % ═════════════════════════════════════════════════════════════════════════════
 
 % =============================================================================
@@ -50,6 +50,8 @@
 \usepackage{amsmath}
 \usepackage{natbib}
 \usepackage{lipsum}   % Texto de relleno — eliminar en el documento final
+\usepackage{subcaption}
+\usepackage{pdfpages}
 
 % =============================================================================
 %  4. PAQUETES ADICIONALES, COLORES Y COMANDOS PERSONALIZADOS
@@ -96,12 +98,17 @@
 \newpage
 
 % --- Cuerpo del ensayo -------------------------------------------------------
-\input{secciones/1-Introduccion}
+
+\input{secciones/00_introduccion_contexto}
 \clearpage
-\input{secciones/2-Desarrollo}
+\input{secciones/01_fase1_diagnostico}
+\clearpage
+\input{secciones/02_fase2_patrimonio}
 \clearpage
 \input{secciones/3-Conclusiones}
-
+\clearpage
+\input{secciones/06_anexos}
+\clearpage
 % --- Bibliografía ------------------------------------------------------------
 \newpage
 \bibliographystyle{apalike}
