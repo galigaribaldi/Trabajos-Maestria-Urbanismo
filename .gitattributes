@@ -4,6 +4,7 @@
 *.png
 *.JPEG
 *.jpg
-*.gpkg filter=lfs diff=lfs merge=lfs -text
+*.gpkg
 *.qpt
+*.gpkg filter=lfs diff=lfs merge=lfs -text
 docs/assets/plan-regeneracion.pdf filter=lfs diff=lfs merge=lfs -text
