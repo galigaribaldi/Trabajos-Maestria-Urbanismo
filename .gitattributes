@@ -4,5 +4,7 @@
 *.png
 *.JPEG
 *.jpg
+*.gpkg
+*.qpt
 *.gpkg filter=lfs diff=lfs merge=lfs -text
 *.qpt
