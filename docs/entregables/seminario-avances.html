@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Registro de Avances de Tesis — Seminario de Investigación 2026-2 — Maestría en Urbanismo, UNAM.">
+  <title>Registro de Avances de Tesis 2026-2 — Maestría en Urbanismo UNAM</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+  <link rel="stylesheet" href="../css/unam.css">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar saas-nav" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="brand-logo" href="../index.html">
+          <span class="brand-abbr">MU</span>
+          <span class="brand-name">Maestría en Urbanismo</span>
+        </a>
+      </div>
+      <div class="navbar-end">
+        <a href="https://github.com/galigaribaldi/Trabajos-Maestria-Urbanismo" class="gh-link" target="_blank"
+          rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero detalle -->
+  <div class="detalle-hero">
+    <div class="container">
+      <span class="saas-type-badge saas-type-art" style="margin-bottom:0.85rem;display:inline-flex;">Registro</span>
+      <h1>Registro de Avances de Tesis 2026-2</h1>
+      <p class="subtitle-hero">Seminario de Investigación — Evidencia de progreso con latexdiff</p>
+    </div>
+  </div>
+
+  <main class="saas-main">
+    <div class="container">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb saas-breadcrumb" aria-label="Ruta de navegación">
+        <ul>
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="../index.html">Tercer Semestre</a></li>
+          <li class="is-active"><a href="#" aria-current="page">Registro de Avances — Seminario</a></li>
+        </ul>
+      </nav>
+
+      <div class="columns">
+
+        <!-- Ficha lateral -->
+        <div class="column is-narrow" style="width:260px;">
+          <div class="saas-ficha">
+            <div class="saas-ficha-head">
+              <p>Metadatos</p>
+            </div>
+            <div class="saas-ficha-body">
+              <dl>
+                <dt>Tipo</dt>
+                <dd>Registro de Avances</dd>
+                <dt>Materia</dt>
+                <dd>Seminario de Investigación</dd>
+                <dt>Programa</dt>
+                <dd>Maestría en Urbanismo</dd>
+                <dt>Institución</dt>
+                <dd>FES Acatlán, UNAM</dd>
+                <dt>Semestre</dt>
+                <dd>2026-2</dd>
+                <dt>Idioma</dt>
+                <dd>Español</dd>
+              </dl>
+
+              <div class="saas-ficha-section">
+                <p class="saas-ficha-section-label">Descarga</p>
+                <a href="../assets/seminario-avances.pdf" class="btn-download" target="_blank">↓ Descargar PDF</a>
+                <span class="release-tag">v2026-2-seminario-avances</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="column">
+          <article class="detalle-texto content">
+
+            <h2>Descripción</h2>
+            <p>
+              Documento de seguimiento del progreso de la tesis doctoral elaborado para
+              el Seminario de Investigación del tercer semestre. El registro documenta
+              los avances realizados entre dos versiones del manuscrito de tesis,
+              generando evidencia visual de los cambios mediante la herramienta
+              <em>latexdiff</em>.
+            </p>
+
+            <h2>Metodología de documentación</h2>
+            <p>
+              El documento utiliza una plantilla especializada (<em>RegistroDiff</em>)
+              que integra tres componentes principales:
+            </p>
+            <ul>
+              <li><strong>Bitácora de commits:</strong> Registro tabular de los cambios
+                realizados al manuscrito entre las dos versiones comparadas, con
+                descripción de las modificaciones por capítulo.</li>
+              <li><strong>Autoevaluación por capítulo:</strong> Rúbrica de progreso
+                que evalúa el estado de avance de cada sección de la tesis.</li>
+              <li><strong>Evidencia latexdiff:</strong> Diferencias coloreadas entre
+                versiones del manuscrito — adiciones en azul, eliminaciones en rojo —
+                generadas automáticamente a partir del historial de git del repositorio
+                de tesis.</li>
+            </ul>
+
+            <h2>Aspectos técnicos</h2>
+            <p>
+              La generación del diff utiliza <code>git archive</code> en lugar de
+              <code>latexdiff-vc</code> para garantizar compatibilidad con Git LFS,
+              evitando que los punteros de archivos grandes interfieran con el proceso
+              de comparación. El flujo completo es reproducible mediante el comando
+              <code>make latexdiff-tesis</code> del repositorio.
+            </p>
+
+          </article>
+        </div>
+
+      </div><!-- /columns -->
+    </div>
+  </main>
+
+  <footer class="saas-footer">
+    <div class="container">
+      <a href="../index.html">← Volver al índice</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/galigaribaldi/Trabajos-Maestria-Urbanismo" target="_blank" rel="noopener">GitHub</a>
+      &nbsp;·&nbsp;
+      Maestría en Urbanismo, UNAM, 2026.
+    </div>
+  </footer>
+
+</body>
+
+</html>
