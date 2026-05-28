@@ -1,0 +1,86 @@
+% =============================================================================
+%  s01_seccion.tex — Sección 1: Introducción / Planteamiento del problema
+% =============================================================================
+
+\section{Introducción}
+\label{sec:introduccion}
+
+% ───────────────────────────────────────────────────────────────────────────────────────────
+\begin{frame}[c]{Pregunta de Investigación}
+  \hspace{0.8cm}%
+  \begin{minipage}{0.88\textwidth}
+    {\color{ColorAcento}\rule{0.5\textwidth}{1.2pt}}\\[0.4cm]
+    {\large\bfseries\color{ColorPrincipal}
+      Pregunta de Investigación}\\[0.6cm]
+    {\normalsize\color{black}
+      ¿En qué medida la optimización topológica de la red de transporte 
+      de la Ciudad deMéxico y la Zona Metropolitana del Valle de México, 
+      evaluada mediante el motor analítico \textit{VFT} \cite{garibaldi2023vft}, 
+      demuestra que la implementación de corredores anillares reduce 
+      la vulnerabilidad funcional y mejora la eficiencia global del sistema en 
+      comparación con el modelo radial vigente?.}\\[0.5cm]
+    {\color{ColorAcento}\rule{0.3\textwidth}{0.8pt}}
+    \vfill
+  \end{minipage}
+\end{frame}
+
+% ───────────────────────────────────────────────────────────────────────────────────────────
+\begin{frame}[c]{Paráfrasis de la Hipótesis}
+  \hspace{0.8cm}%
+  \begin{minipage}{0.88\textwidth}
+    {\color{ColorAcento}\rule{0.5\textwidth}{1.2pt}}\\[0.4cm]
+    {\large\bfseries\color{ColorPrincipal}
+        ¿Cuánto mejoraría la movilidad de las personas si el
+        Periférico tuviera transporte masivo circular,
+        en lugar de
+        que todos los viajes tengan que pasar por el centro?}\\[0.5cm]
+    {\normalsize\color{black}
+      El Anillo Periférico fue construido para conectar la ciudad,
+      pero terminó siendo una frontera. Hoy es una autopista
+      exclusiva del automóvil privado, mientras las alcaldías
+      del sur (Xochimilco, Tláhuac, Tlalpan, Milpa Alta)
+      quedan desconectadas del sistema masivo.}\\[0.4cm]
+    {\color{ColorAcento}\rule{0.3\textwidth}{0.8pt}}
+  \end{minipage}
+\end{frame}
+
+% ── Frame: Metodología en 4 fases ────────────────────────────────────────────
+\begin{frame}{Metodología en 4 Fases}
+  {\small\color{ColorPrincipal}\textit{%
+    Enfoque cuantitativo — datos GTFS de la \zmvm\ procesados mediante teoría de grafos
+    y redes complejas.}}
+  \vspace{0.4cm}
+  \begin{center}
+  \begin{tikzpicture}[
+    fase/.style  = {rectangle, rounded corners=5pt,
+                    draw=ColorPrincipal, line width=1pt,
+                    fill=ColorPrincipal, text=white,
+                    text width=2.6cm, align=center,
+                    minimum height=0.85cm, font=\small\bfseries},
+    desc/.style  = {text width=2.6cm, align=justify, font=\scriptsize, text=ColorTexto},
+    flecha/.style= {-Stealth, thick, color=ColorAcento},
+  ]
+    \node[fase] (f1) {\textbf{01}\\[1pt]Construir};
+    \node[fase, right=0.35cm of f1] (f2) {\textbf{02}\\[1pt]Diagnosticar};
+    \node[fase, right=0.35cm of f2] (f3) {\textbf{03}\\[1pt]Simular};
+    \node[fase, right=0.35cm of f3] (f4) {\textbf{04}\\[1pt]Proponer};
+
+    \draw[flecha] (f1.east) -- (f2.west);
+    \draw[flecha] (f2.east) -- (f3.west);
+    \draw[flecha] (f3.east) -- (f4.west);
+
+    \node[desc, below=0.4cm of f1]
+      {Procesar datos GTFS de Metro, Metrobús y RTP con \textit{Apimetro} para
+       construir el grafo matemático de la red.};
+    \node[desc, below=0.4cm of f2]
+      {Medir la eficiencia actual: cuellos de botella y estaciones más vulnerables
+       con \textit{VFTModel}.};
+    \node[desc, below=0.4cm of f3]
+      {Incorporar el corredor anillar al modelo y comparar tiempos de viaje y
+       vulnerabilidad antes/después.};
+    \node[desc, below=0.4cm of f4]
+      {Traducir los resultados en lineamientos de integración modal, tarifaria y
+       de política pública.};
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
