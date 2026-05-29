@@ -1,6 +1,5 @@
 % =============================================================================
-%  s02_seccion.tex — Sección 2: Desarrollo / Argumentación central
-%  Agrega tantos frames como necesites dentro de cada subsección.
+%  s02_seccion_problema.tex — Sección 2: Desarrollo / Argumentación central
 % =============================================================================
 
 \section{Marco Teórico; ¿Por qué un Anillo?}
@@ -38,4 +37,167 @@
   \end{columns}
 \end{frame}
 
+% ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+\begin{frame}{La Paradoja del Periférico}
+  \begin{columns}[T]
+    \begin{column}{0.57\textwidth}
+      % ── Sustituir cuando el mapa esté listo: ──────────────────────────────
+      % \includegraphics[width=\textwidth, height=5.5cm, keepaspectratio]{img/mapa02_cobertura_sur.png}
+      \begin{block}{\scriptsize Cobertura de transporte masivo — ZMVM}
+        \centering
+        \vspace{1.3cm}
+        {\scriptsize\texttt{img/mapa02\_cobertura\_sur.png}}\\[0.3cm]
+        {\scriptsize Isócrona de cobertura actual.\\
+          El hueco visible al sur es el argumento visual central.}
+        \vspace{1.3cm}
+      \end{block}
+      \fuentefigura{Elaboración propia con datos GTFS · SEMOVI 2024.}
+    \end{column}
+    \begin{column}{0.40\textwidth}
+      {\color{ColorAcento}\rule{0.85\textwidth}{1pt}}\\[0.2cm]
+      {\small\bfseries\color{ColorPrincipal}
+        El Periférico conecta en el plano,\\pero no en la red.}\\[0.2cm]
+      {\scriptsize
+        Fue diseñado como anillo urbano, pero opera hoy como autopista
+        exclusiva del automóvil privado. Ninguna línea de transporte
+        masivo lo recorre.\\[0.2cm]
+        La paradoja no es solo del sur: \textbf{cualquier viaje entre
+        zonas periféricas obliga a pasar por el centro}, sin importar
+        el contorno de origen.\\[0.2cm]
+        Xochimilco, Tláhuac y Milpa Alta son el caso extremo —
+        pero Ecatepec, Neza y Naucalpan padecen la misma lógica radial.
+      }\\[0.2cm]
+      {\color{ColorAcento}\rule{0.55\textwidth}{0.8pt}}
+    \end{column}
+  \end{columns}
+\end{frame}
 
+% ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+\begin{frame}{El Costo de Ser Periférico}
+  \vspace{0.1cm}
+  {\renewcommand{\arraystretch}{1.35}%
+  \begin{tabularx}{\textwidth}{@{\hspace{0.15cm}} l X r @{\hspace{0.15cm}}}
+    \toprule
+    \small\textbf{Indicador} & \small\textbf{Qué significa} & \small\textbf{Fuente} \\
+    \midrule
+    {\Large\bfseries\color{ColorPrincipal}{>}\,122 min} &
+      \small Tiempo de viaje promedio desde el 4° contorno
+      hasta el centro, solo de ida. &
+      {\scriptsize\cite{semovi2020diagnostico}} \\
+    {\Large\bfseries\color{ColorPrincipal}60\,\%} &
+      \small De los viajes en la periferia se realizan en
+      transporte informal: colectivo, combi, mototaxi. &
+      {\scriptsize\cite{semovi2020diagnostico}} \\
+    {\Large\bfseries\color{ColorPrincipal}32\,\%} &
+      \small De la población de la ZMVM vive fuera del 3er
+      contorno, con acceso limitado al transporte masivo. &
+      {\scriptsize\cite{obras2025}} \\
+    \bottomrule
+  \end{tabularx}}
+  \vspace{0.2cm}
+  {\small\itshape\color{ColorPrincipal}
+    El modelo radial tiene un precio.
+    Más de dos millones de personas lo pagan a diario.}
+\end{frame}
+
+% ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+\begin{frame}{La Red Óptima Necesita un Anillo}
+  \begin{columns}[c]
+    % ── Columna izquierda: red radial ────────────────────────────────────────
+    \begin{column}{0.27\textwidth}
+      \centering
+      \begin{tikzpicture}[
+        nodo/.style   = {circle, draw=ColorPrincipal, fill=ColorPrincipal!15,
+                         minimum size=0.45cm, line width=0.7pt},
+        centro/.style = {circle, draw=ColorPrincipal, fill=ColorPrincipal,
+                         minimum size=0.55cm, line width=0.7pt},
+        arista/.style = {draw=ColorPrincipal!70, line width=0.9pt},
+      ]
+        \node[centro] (c) at (0,0) {};
+        \foreach \i in {0,1,2,3,4,5}{
+          \node[nodo] (p\i) at ({60*\i}:1.3cm) {};
+          \draw[arista] (c) -- (p\i);
+        }
+      \end{tikzpicture}\\[0.2cm]
+      {\small\bfseries\color{ColorPrincipal} Red Radial}\\[0.08cm]
+      {\scriptsize Óptima para redes\\
+        pequeñas. Todo viaje\\
+        pasa por el centro.}
+    \end{column}
+    % ── Columna central: teorema citado ──────────────────────────────────────
+    \begin{column}{0.42\textwidth}
+      \begin{exampleblock}{La Topología Óptima}
+        \centering
+        {\scriptsize Toda red de transporte supera un umbral\\
+          crítico de longitud total:}\\[0.12cm]
+        {\LARGE\bfseries\color{ColorAcento} $L_c$}\\[0.12cm]
+        {\scriptsize
+          A partir de ese punto, la topología que\\
+          \textbf{minimiza el tiempo promedio de viaje}\\
+          incorpora obligatoriamente un anillo.\\[0.1cm]
+          Una red sin anillo es, por definición,\\
+          \textbf{subóptima}.}\\[0.12cm]
+        {\scriptsize\itshape\citet{aldous2019optimal}}
+      \end{exampleblock}
+    \end{column}
+    % ── Columna derecha: red con anillo ──────────────────────────────────────
+    \begin{column}{0.27\textwidth}
+      \centering
+      \begin{tikzpicture}[
+        nodo/.style   = {circle, draw=ColorPrincipal, fill=ColorPrincipal!15,
+                         minimum size=0.45cm, line width=0.7pt},
+        centro/.style = {circle, draw=ColorPrincipal, fill=ColorPrincipal,
+                         minimum size=0.55cm, line width=0.7pt},
+        arista/.style = {draw=ColorPrincipal!70, line width=0.9pt},
+        anillo/.style = {draw=ColorAcento, line width=1.8pt},
+      ]
+        \node[centro] (c) at (0,0) {};
+        \foreach \i in {0,1,2,3,4,5}{
+          \node[nodo] (p\i) at ({60*\i}:1.3cm) {};
+          \draw[arista] (c) -- (p\i);
+        }
+        \draw[anillo] (p0)--(p1)--(p2)--(p3)--(p4)--(p5)--cycle;
+      \end{tikzpicture}\\[0.2cm]
+      {\small\bfseries\color{ColorPrincipal} Red con Anillo}\\[0.08cm]
+      {\scriptsize Óptima cuando la red\\
+        supera~$L_c$. Viajes\\
+        periférico-periférico directos.}
+    \end{column}
+  \end{columns}
+  \vspace{0.2cm}
+  {\small\color{ColorPrincipal}
+    La \zmvm\ ya superó ese umbral —
+    el Periférico sin transporte masivo es, matemáticamente, una red subóptima.}
+\end{frame}
+
+% ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+\begin{frame}{No es un Experimento — Ya Funciona}
+  \begin{columns}[T]
+    % ── Moscú ────────────────────────────────────────────────────────────────
+    \begin{column}{0.48\textwidth}
+      \begin{block}{\scriptsize Moscú — Gran Línea Circular (2023)}
+        \centering
+        \includegraphics[width=\textwidth, height=2.5cm, keepaspectratio]{GranLineaCircularMoscu.jpg}\\[0.15cm]
+        \scriptsize 70 km diseñados para descomprimir las líneas radiales
+        y articular zonas periféricas sin pasar por las estaciones
+        centrales congestionadas.
+      \end{block}
+      \fuentefigura{\citep{efe2023}}
+    \end{column}
+    % ── Melbourne ────────────────────────────────────────────────────────────
+    \begin{column}{0.48\textwidth}
+      \begin{block}{\scriptsize Melbourne — Suburban Rail Loop (en construcción)}
+        \centering
+        \includegraphics[width=\textwidth, height=2.5cm, keepaspectratio]{MelbourneCircular.jpg}\\[0.15cm]
+        \scriptsize Conecta hospitales, universidades y centros de empleo
+        del \textit{Middle Ring} sin pasar por el centro.
+        Mismo diagnóstico que la \cdmx.
+      \end{block}
+      \fuentefigura{\citep{suburbanrailloop2021}}
+    \end{column}
+  \end{columns}
+  \vspace{0.15cm}
+  {\small\color{ColorPrincipal}
+    La inserción de una ruta anillar en el Periférico no es una solución
+    experimental — es una estrategia probada y replicable.}
+\end{frame}
