@@ -1,0 +1,537 @@
+% =============================================================================
+%  s04_seccion_resultados_preeliminares.tex — Sección 4: Resultados Preliminares
+% =============================================================================
+
+\section{Resultados Preliminares}
+
+% ── Frame 4.1: Estado del Software ───────────────────────────────────────────
+\begin{frame}{Estado del Software: ¿Qué Tenemos Hoy?}
+  \begin{columns}[T]
+    % ── Apimetro ─────────────────────────────────────────────────────────────
+    \begin{column}{0.47\textwidth}
+      \begin{block}{\scriptsize\bfseries Apimetro — En Producción}
+        \centering
+        \includegraphics[height=0.9cm, keepaspectratio]{ApimetroLogo.png}\\[0.1cm]
+        {\tiny \texttt{apimetro.dev} · Go + Python\\[0.05cm]
+          {\color{green!60!black}$\surd$} ETL de datos GTFS: completo\\[0.03cm]
+          {\color{green!60!black}$\surd$} API REST activa y pública\\[0.03cm]
+          {\color{green!60!black}$\surd$} Base de datos: 38 MB\\[0.03cm]
+          {\color{green!60!black}$\surd$} 11 sistemas representados\\[0.08cm]
+          \textbf{\color{green!60!black} Estado: Completo}}
+      \end{block}
+    \end{column}
+    % ── VFTModel ─────────────────────────────────────────────────────────────
+    \begin{column}{0.47\textwidth}
+      \begin{block}{\scriptsize\bfseries VFTModel — En Desarrollo}
+        \centering
+        \includegraphics[height=0.9cm, keepaspectratio]{VFTLogo1.png}\\[0.1cm]
+        {\tiny Python · En desarrollo activo\\[0.05cm]
+          {\color{green!60!black}$\surd$} Fase 1 (4 ind.): Calculado\\[0.03cm]
+          {\color{orange!80!black}$\triangle$} Fase 2 (3 ind.): Parcial\\[0.03cm]
+          \hspace{0.8em}{\tiny CF calc. · $T_b$ formulado · Node Score pend.}\\[0.03cm]
+          {\color{red!60!black}$\times$} Fase 3 (3 ind.): Pendiente\\[0.08cm]
+          \textbf{\color{orange!80!black} Estado: En progreso}}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \vspace{0.2cm}
+  {\scriptsize\itshape\color{gray!55}
+    La Fase 3 requiere Fases 1 y 2 completas; el cómputo sobre
+    11,115 nodos toma varias horas de procesamiento. · Elaboración propia.}
+\end{frame}
+
+% ── Frame 4.2: Apimetro en Producción ────────────────────────────────────────
+\begin{frame}{Apimetro: El Motor en Producción}
+  \begin{columns}[T]
+    % ── Logo + presentación ──────────────────────────────────────────────────
+    \begin{column}{0.35\textwidth}
+      \centering
+      \includegraphics[width=0.82\textwidth, height=1.8cm, keepaspectratio]{ApimetroLogo.png}\\[0.2cm]
+      {\small\bfseries\color{ColorPrincipal}\texttt{apimetro.dev}}\\[0.1cm]
+      {\scriptsize
+        Código abierto · Go + Python\\[0.04cm]
+        Origen: 2023–2024\\[0.04cm]
+        Soberanía tecnológica:\\
+        sin software comercial,\\
+        sin licencias propietarias.}
+    \end{column}
+    % ── Datos del grafo ──────────────────────────────────────────────────────
+    \begin{column}{0.60\textwidth}
+      \vspace{0.1cm}
+      \begin{tabular}{@{} l @{\hspace{0.7cm}} l @{}}
+        {\LARGE\bfseries\color{ColorPrincipal} 11{,}115} &
+        {\LARGE\bfseries\color{ColorPrincipal} 45{,}679} \\[-0.1cm]
+        {\tiny nodos topológicos} &
+        {\tiny aristas totales} \\[-0.08cm]
+        {\tiny (Snapping lógico $\leq 50$ m)} &
+        {\tiny (25k servicio + 20k transbordo)} \\[0.3cm]
+        {\LARGE\bfseries\color{ColorPrincipal} 11} &
+        {\LARGE\bfseries\color{ColorPrincipal} 88\,\%} \\[-0.1cm]
+        {\tiny sistemas de transporte} &
+        {\tiny transporte de superficie} \\[-0.08cm]
+        {\tiny (Metro, Mb, Trolebús, RTP…)} &
+        {\tiny (12\,\% infraestructura masiva)} \\
+      \end{tabular}
+    \end{column}
+  \end{columns}
+  \vspace{0.2cm}
+  {\scriptsize\itshape\color{gray!55}
+    22,766 entidades espaciales ingeridas · 38 MB de datos procesados. · Elaboración propia.}
+\end{frame}
+
+% ── Frame 4.3: La Red que Construimos ────────────────────────────────────────
+%
+%  DESCRIPCIÓN VISUAL:
+%  Frame centrado, sin columnas. Una línea introductoria en cursiva arriba.
+%  El mapa panel1_infraestructura.png ocupa casi toda la altura: muestra los
+%  11 sistemas superpuestos sobre la ZMVM en colores diferenciados por modo
+%  (Metro, Metrobús, RTP, Trolebús, etc.). Al pie, los tres datos clave
+%  separados por puntos medios, y la fuente en tiny italic gris.
+%
+\begin{frame}{La Red que Construimos}
+  \begin{center}
+    {\small\itshape\color{ColorPrincipal}
+      Esto es la \zmvm{} como grafo — el objeto de análisis.}\\[0.15cm]
+    \includegraphics[width=0.92\textwidth, height=5.8cm,
+      keepaspectratio]{panel1_infraestructura.png}\\[0.12cm]
+    {\scriptsize\color{gray!70}
+      \textbf{11{,}115} nodos topológicos
+      \enspace·\enspace \textbf{45{,}679} aristas
+      \enspace·\enspace \textbf{11} sistemas de transporte}\\[0.03cm]
+    {\tiny\itshape\color{gray!55}
+      Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}
+      (corrida 2026-04-18).}
+  \end{center}
+\end{frame}
+
+% ── Frame 4.3b: PLACEHOLDER — Mapa Esquemático de la Red ─────────────────────
+%
+%  DESCRIPCIÓN VISUAL:
+%  Frame completo sin columnas. Mapa estilizado del sistema de transporte de
+%  la ZMVM — estilo "mapa oficial" con líneas simplificadas y colores por modo
+%  de transporte. A diferencia del grafo matemático del frame anterior (donde
+%  los 11,115 nodos se muestran como puntos), este mapa muestra las rutas de
+%  manera reconocible para cualquier persona.
+%  Capas sugeridas: Metro (rojo), Metrobús (naranja), Tren Ligero (verde oscuro),
+%  Tren Suburbano (azul marino), Cablebús (morado), Mexibús (amarillo).
+%  El objetivo es que el comité ubique geográficamente el sistema antes de
+%  ver los mapas de resultados.
+%
+%  IMAGEN PENDIENTE: exportar desde QGIS.
+%  Plantilla: PlantillaBase_VerdeEsmeralda_Horizontal.qpt
+%  Archivo destino: img/mapa_red_esquematica.png
+%  Dimensión recomendada: 1920×1080 px a 200 DPI.
+%
+\begin{frame}{La Red de Transporte — Vista Esquemática}
+  \begin{center}
+    {\small\itshape\color{ColorPrincipal}
+      Los 11 sistemas de transporte de la \zmvm{} — organizados por modo y cobertura territorial.}\\[0.15cm]
+    \includegraphics[width=0.95\textwidth, height=5.6cm,
+      keepaspectratio]{Mapa_Transporte_Publico.pdf}\\[0.10cm]
+    {\scriptsize\color{gray!60}
+      Fuente: datos GTFS · SEMOVI 2024 · Elaboración propia con \texttt{Apimetro}.}
+  \end{center}
+\end{frame}
+
+% ── Frame 4.4: VFTModel — El Nombre y la Metáfora ────────────────────────────
+\begin{frame}{VFTModel — El Nombre y la Metáfora}
+  \begin{columns}[T]
+    % ── Citas + analogía ─────────────────────────────────────────────────────
+    \begin{column}{0.68\textwidth}
+      {\color{ColorAcento}\rule{0.95\textwidth}{0.8pt}}\\[0.12cm]
+      {\scriptsize\itshape
+        «Los higos empezaron a arrugarse y a tornarse negros, y,
+        uno por uno, cayeron al suelo, a mis pies.»}\\[0.02cm]
+      {\tiny\color{gray!65}
+        --- Sylvia Plath, \textit{La campana de cristal} \citep{plath2019campana}}\\[0.15cm]
+      {\color{ColorAcento}\rule{0.65\textwidth}{0.5pt}}\\[0.12cm]
+      {\scriptsize\itshape
+        «He cruzado el punto de no retorno.»}\\[0.02cm]
+      {\tiny\color{gray!65}
+        --- New Order, \textit{Vanishing Point} (1989) \citep{neworder_vanishingpoint_1989}}\\[0.18cm]
+      {\color{ColorAcento}\rule{0.95\textwidth}{0.8pt}}\\[0.14cm]
+      {\scriptsize\color{ColorPrincipal}
+        Una red de transporte puede mantener sus corredores troncales
+        visibles mientras sus rutas capilares \textbf{desaparecen en silencio}.
+        Las zonas que pierden esa conexión quedan aisladas aunque
+        sigan en los mapas oficiales.}
+    \end{column}
+    % ── Logo ─────────────────────────────────────────────────────────────────
+    \begin{column}{0.28\textwidth}
+      \centering
+      \includegraphics[width=\textwidth, height=2.5cm, keepaspectratio]{VFTLogo1.png}\\[0.12cm]
+      {\scriptsize\bfseries\color{ColorPrincipal} VFTModel}\\[0.04cm]
+      {\tiny\itshape Vanishing Fig-Tree Model}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame 4.5: Conceptos Clave del Modelo ────────────────────────────────────
+\begin{frame}{Conceptos Clave: El Lenguaje del Modelo}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{\scriptsize\bfseries Eficiencia de Red}
+        {\scriptsize
+          Capacidad de la red para conectar todos sus nodos
+          minimizando el \textbf{tiempo de viaje promedio}.\\[0.08cm]
+          Una red eficiente lleva a más personas en menos tiempo.}
+      \end{block}
+      \vspace{0.15cm}
+      \begin{block}{\scriptsize\bfseries Vulnerabilidad}
+        {\scriptsize
+          Cuánto \textbf{cae la eficiencia global} al eliminar
+          un nodo o una arista crítica.\\[0.08cm]
+          Una red vulnerable depende de pocos puntos para no colapsar.}
+      \end{block}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{\scriptsize\bfseries Interconectividad}
+        {\scriptsize
+          Grado en que los nodos pueden alcanzarse
+          \textbf{mutuamente sin depender de un único punto}.\\[0.08cm]
+          Baja interconectividad = todos los caminos pasan
+          por el mismo nodo central.}
+      \end{block}
+      \vspace{0.15cm}
+      \begin{block}{\scriptsize\bfseries Fuerza Capilar}
+        {\scriptsize
+          Concentración de flujos en un nodo periférico
+          \textbf{sin alternativa lateral}.\\[0.08cm]
+          Alta Fuerza Capilar indica un cuello de botella
+          invisible en la periferia.}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \vspace{0.1cm}
+  {\scriptsize\itshape\color{ColorPrincipal}
+    Estos conceptos son el lenguaje del VFTModel —
+    los indicadores los operacionalizan con datos reales de la \zmvm{}.}
+\end{frame}
+
+% ── Frame 4.6: Los 8 Indicadores del VFTModel ────────────────────────────────
+\begin{frame}{Los 8 Indicadores del VFTModel}
+  \vspace{0.05cm}
+  {\renewcommand{\arraystretch}{1.20}
+  \begin{tabularx}{\textwidth}{@{\hspace{0.10cm}} c l X c @{\hspace{0.10cm}}}
+    \toprule
+    {\tiny\textbf{Fase}} &
+    {\tiny\textbf{Símbolo}} &
+    {\tiny\textbf{Indicador}} &
+    {\tiny\textbf{Estado}} \\
+    \midrule
+    \multirow{4}{*}{\scriptsize\color{green!60!black}\bfseries 1} &
+      {\scriptsize $C$} &
+      {\tiny Cobertura — \% del territorio a $\leq800$ m de una parada} &
+      {\tiny\color{green!60!black}$\surd$} \\
+    &
+      {\scriptsize $FC_H$} &
+      {\tiny Fuerza Capilar — convergencia de flujos por hub periférico} &
+      {\tiny\color{green!60!black}$\surd$} \\
+    &
+      {\scriptsize $DF$} &
+      {\tiny Factor de Desviación — $d_\text{red}(o,d)\,/\,d_E(o,d)$} &
+      {\tiny\color{green!60!black}$\surd$} \\
+    &
+      {\scriptsize $V_\text{ef}$} &
+      {\tiny Velocidad Efectiva — $D_{uv}\,/\,t_\text{real}$ por modo de transporte} &
+      {\tiny\color{green!60!black}$\surd$} \\
+    \midrule
+    \multirow{2}{*}{\scriptsize\color{orange!80!black}\bfseries 2} &
+      {\scriptsize $CF$} &
+      {\tiny Fricción Vial — penalización por tipo de derecho de vía} &
+      {\tiny\color{green!60!black}$\surd$} \\
+    &
+      {\scriptsize $T_b$} &
+      {\tiny Penalización Transbordo — $T_b = t_\text{espera}+t_\text{caminata}$} &
+      {\tiny\color{orange!80!black}$\triangle$} \\
+    \midrule
+    \multirow{3}{*}{\scriptsize\color{red!60!black}\bfseries 3} &
+      {\scriptsize $T$} &
+      {\tiny Tiempo Promedio de Viaje — $\sum t(i,j)\,/\,N(N{-}1)$} &
+      {\tiny\color{red!60!black}$\times$} \\
+    &
+      {\scriptsize $B(v)$} &
+      {\tiny Centralidad Intermediación — $\sum\sigma_{st}(v)\,/\,\sigma_{st}$} &
+      {\tiny\color{red!60!black}$\times$} \\
+    &
+      {\scriptsize $\Delta E$} &
+      {\tiny Vulnerabilidad — $(E_0-E_f)\,/\,E_0$} &
+      {\tiny\color{red!60!black}$\times$} \\
+    \bottomrule
+  \end{tabularx}}
+  \vspace{0.08cm}
+  {\tiny\itshape\color{gray!55}
+    {\color{green!60!black}$\surd$}\,Calculado\enspace
+    {\color{orange!80!black}$\triangle$}\,Formulado / Parcial\enspace
+    {\color{red!60!black}$\times$}\,Pendiente\quad·\quad Elaboración propia.}
+\end{frame}
+
+% ── Frame 4.7: Resultados — Fases 1 y 2 ─────────────────────────────────────
+%
+%  DESCRIPCIÓN VISUAL — columna izquierda:
+%  fig01_impedancia.png ocupa casi todo el alto de la columna. La gráfica
+%  muestra barras horizontales por sistema (Metro, Metrobús, Tren Suburbano,
+%  RTP, etc.) con la velocidad efectiva calculada vs. el rango esperado oficial.
+%  Sirve como prueba de calibración: todos los modos quedan dentro de rango.
+%  Bajo la imagen, la fórmula VFT en tamaño pequeño como referencia técnica.
+%
+\begin{frame}{Resultados: Fases 1 y 2 Calculadas}
+  \begin{columns}[T]
+    % ── Validación de Impedancia ─────────────────────────────────────────────
+    \begin{column}{0.46\textwidth}
+      \begin{exampleblock}{\scriptsize Validación del Motor de Impedancia}
+        \centering
+        \includegraphics[width=\textwidth, height=3.4cm,
+          keepaspectratio]{fig01_impedancia.png}\\[0.06cm]
+        {\tiny\color{gray!60}
+          11 de 11 sistemas validan dentro\\
+          de rangos operativos nominales.}
+      \end{exampleblock}
+      \vspace{0.1cm}
+      {\tiny\itshape\color{gray!55}
+        Peso de arista:
+        $w(u,v)=\tfrac{D_{uv}}{V_{\text{modo}}}\cdot CF_{\text{vía}}+T_b$}
+    \end{column}
+    % ── 11 Sistemas de Transporte analizados ─────────────────────────────────
+    \begin{column}{0.50\textwidth}
+      \vspace{0.1cm}
+      {\renewcommand{\arraystretch}{1.12}
+      \begin{tabularx}{\textwidth}{@{\hspace{0.05cm}} X r c @{\hspace{0.05cm}}}
+        \toprule
+        {\tiny\textbf{Sistema}} &
+        {\tiny $V_\text{ef}$\,(km/h)} &
+        {\tiny\textbf{Vía}} \\
+        \midrule
+        {\tiny Metro} & {\tiny 39} & {\tiny Exc.} \\
+        {\tiny Metrobús} & {\tiny 22} & {\tiny Exc.} \\
+        {\tiny Tren Suburbano} & {\tiny 60} & {\tiny Exc.} \\
+        {\tiny Tren Ligero} & {\tiny 30} & {\tiny Exc.} \\
+        {\tiny Mexibús} & {\tiny 22} & {\tiny Exc.} \\
+        {\tiny Cablebús} & {\tiny 12} & {\tiny Aér.} \\
+        {\tiny Trolebús} & {\tiny 15} & {\tiny Mix.} \\
+        {\tiny RTP} & {\tiny 18} & {\tiny Mix.} \\
+        {\tiny Microbus} & {\tiny 15} & {\tiny Mix.} \\
+        {\tiny Colectivo} & {\tiny 18} & {\tiny Mix.} \\
+        {\tiny Autobús} & {\tiny 20} & {\tiny Mix.} \\
+        \bottomrule
+      \end{tabularx}}
+      \vspace{0.05cm}
+      {\tiny\color{gray!55}
+        Exc.~exclusivo · Mix.~mixto · Aér.~aéreo}
+    \end{column}
+  \end{columns}
+  \vspace{0.12cm}
+  {\small\itshape\color{ColorPrincipal}
+    Los indicadores de Fases 1 y 2 son el fundamento empírico de la Fase 3.}
+\end{frame}
+
+% ── Frame 4.6: El Territorio Habla — Cobertura y Fuerza Capilar ──────────────
+%
+%  DESCRIPCIÓN VISUAL:
+%  Dos columnas simétricas, cada una con un bloque que contiene un mapa y
+%  un dato destacado al pie.
+%
+%  Columna izquierda — Cobertura Espacial (C):
+%    Mapa de isócronos de 800 m sobre toda la ZMVM. Las zonas cubiertas
+%    aparecen en color (verde/azul según sistema), las zonas sin cobertura
+%    quedan en blanco o gris. El sur (Milpa Alta, Tlalpan, Magdalena Contreras)
+%    es visiblemente el área más vacía. Dato destacado en rojo: "Milpa Alta:
+%    solo el 11.75% de cobertura".
+%
+%  Columna derecha — Fuerza Capilar zona Periférico (FC_H):
+%    Mapa enfocado en la zona del Anillo Periférico. Los nodos de mayor
+%    concentración de flujos se muestran con burbujas o colores intensos.
+%    Destaca la concentración en Zona Hospitales Sur y Barranca del Muerto.
+%    Dato destacado: "Top hub: FC_H = 130, sin alternativa lateral".
+%
+%  Remate al pie: una línea que conecta ambos mapas con la hipótesis central.
+%
+\begin{frame}{El Territorio Habla: Cobertura y Fuerza Capilar}
+  {\small\itshape\color{ColorPrincipal}
+    Donde la cobertura desaparece, los flujos se concentran en un solo punto —
+    dos caras del mismo problema estructural.}\vspace{0.08cm}
+  \begin{columns}[T]
+    % ── Cobertura espacial ───────────────────────────────────────────────────
+    \begin{column}{0.48\textwidth}
+      \begin{block}{\scriptsize Cobertura Espacial ($C$) — Isócrono 800 m}
+        \centering
+        \includegraphics[width=\textwidth, height=3.4cm,
+          keepaspectratio]{Mapa_Cobertura_Mapa_Calor.pdf}\\[0.1cm]
+        {\scriptsize\bfseries\color{red!60!black}
+          Milpa Alta: solo el 11.75\,\% de cobertura}\\
+        {\tiny la peor alcaldía de la \cdmx{} — a 800 m de una parada.}
+      \end{block}
+    \end{column}
+    % ── Fuerza Capilar — zona Periférico ────────────────────────────────────
+    \begin{column}{0.48\textwidth}
+      \begin{block}{\scriptsize Fuerza Capilar ($FC_H$) — Zona Periférico}
+        \centering
+        \includegraphics[width=\textwidth, height=3.4cm,
+          keepaspectratio]{Mapa_Fuerza_Capilar.pdf}\\[0.1cm]
+        {\scriptsize\bfseries\color{red!60!black}
+          Top hub: $FC_H = 130$ — sin alternativa lateral}\\
+        {\tiny Zona Hospitales Sur concentra flujos sin rutas de desvío.}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \vspace{0.08cm}
+  {\scriptsize\itshape\color{ColorPrincipal}
+    El sur carece de cobertura y concentra sus pocos nodos en puntos únicos —
+    el corredor anillar atacaría ambos problemas simultáneamente.}
+\end{frame}
+
+% ── Frame 4.9: El Rodeo que Obliga al Centro — DF Caso 9 ─────────────────────
+%
+%  DESCRIPCIÓN VISUAL:
+%  Dos columnas asimétricas (55%/41%).
+%  Columna izquierda: mapa NB04_mapa12_caso09.png — trayecto real (rojo) vs.
+%  distancia euclidiana (azul/punteado) entre Milpa Alta y Santa Catarina
+%  Yecahuizotl. El viaje real obliga a pasar por el centro antes de regresar
+%  al sur. El hueco geográfico sin transporte masivo se hace evidente.
+%  Columna derecha: tres números grandes apilados (distancia red, distancia
+%  euclidiana, DF resultante) con la fórmula encima como referencia.
+%  El promedio de la muestra al pie contextualiza el caso.
+%
+%  RUTA DE IMAGEN: verificar existencia exacta en Tesis_Latex:
+%  ../../../Tesis_Latex/Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa12_caso09.png
+%
+\begin{frame}{El Rodeo que Obliga al Centro — Caso Extremo}
+  \begin{columns}[T]
+    % ── Mapa DF Caso 9 ───────────────────────────────────────────────────────
+    \begin{column}{0.55\textwidth}
+      \begin{block}{\scriptsize Milpa Alta $\to$ Santa Catarina Yecahuizotl}
+        \centering
+        \includegraphics[width=\textwidth, height=4.0cm,
+          keepaspectratio]{../../../Tesis_Latex/Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa12_caso09.png}\\[0.05cm]
+        {\tiny\color{gray!60}
+          El trayecto real (rojo) obliga a pasar por el centro
+          antes de llegar al destino — mismo sur de la ciudad.}
+      \end{block}
+    \end{column}
+    % ── Datos del caso ───────────────────────────────────────────────────────
+    \begin{column}{0.41\textwidth}
+      \vspace{0.15cm}
+      {\scriptsize\color{ColorPrincipal}
+        $\displaystyle DF = \frac{d_\text{red}(o,d)}{d_E(o,d)}$}\\[0.2cm]
+      \begin{center}
+        {\Large\bfseries\color{red!60!black} 37.22\,km}\\[-0.04cm]
+        {\tiny distancia real en red}\\[0.15cm]
+        {\Large\bfseries\color{ColorPrincipal} 14.79\,km}\\[-0.04cm]
+        {\tiny distancia euclidiana}\\[0.15cm]
+        {\LARGE\bfseries\color{red!60!black} DF = 2.52}\\[-0.04cm]
+        {\scriptsize El viaje es \textbf{2.5× el camino directo}}
+      \end{center}
+      \vspace{0.18cm}
+      {\scriptsize\itshape\color{ColorPrincipal}
+        Promedio de muestra:\\
+        $\bar{DF}=1.545$}\\[-0.02cm]
+      {\tiny\color{gray!55}
+        (100 rutas · corrida 2026-04-27)}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame 4.10: PLACEHOLDER — Mapa de Calor de la Desviación Espacial ─────────
+%
+%  DESCRIPCIÓN VISUAL:
+%  Frame completo con un mapa de calor (heatmap) sobre la ZMVM.
+%  El color representa el Factor de Desviación promedio calculado para los
+%  viajes que pasan por cada zona. Las zonas rojas/naranjas son aquellas donde
+%  los viajes sufren mayor rodeo; las verdes tienen trayectos más directos.
+%  Se espera que el sur y el oriente aparezcan con DF alto (rojos).
+%  Este mapa complementa al Caso 9 mostrando que no es un caso aislado
+%  sino un patrón estructural de la red radial.
+%
+%  IMAGEN PENDIENTE: exportar desde QGIS o VFTModel (resultado espacializado).
+%  Archivo destino: img/mapa_calor_df.png
+%  Dimensión recomendada: 1920×1080 px a 200 DPI.
+%  Alternativa: usar NB04_mapa_distribucion_df.png de Tesis_Latex/Figures/Cap5/FactorDesviacion/
+%
+\begin{frame}{La Desviación como Patrón — No es un Caso Aislado}
+  {\small\itshape\color{ColorPrincipal}
+    El caso de Milpa Alta no es la excepción — el mapa lo confirma.}\vspace{0.10cm}
+  \begin{columns}[T]
+    % ── Párrafo introductorio + datos clave ──────────────────────────────────
+    \begin{column}{0.34\textwidth}
+      \vspace{0.1cm}
+      {\scriptsize\color{ColorPrincipal}
+        El viaje anterior fue un caso extremo ($DF = 2.52$). Al analizar
+        100 rutas representativas de la \zmvm{}, el promedio es:}\\[0.18cm]
+      \begin{center}
+        {\Large\bfseries\color{red!60!black} $\bar{DF} = 1.545$}\\[-0.02cm]
+        {\tiny cada viaje recorre, en promedio,\\
+          54\,\% más de lo necesario.}
+      \end{center}
+      \vspace{0.18cm}
+      {\scriptsize\color{ColorPrincipal} Zonas más afectadas:}\\[0.05cm]
+      {\scriptsize\bfseries\color{red!60!black}
+        Sur — Milpa Alta, Tlalpan\\
+        Oriente — Neza, Chalco}\\[0.14cm]
+      {\scriptsize\color{gray!60}
+        La geometría radial obliga a todos a pasar por el centro,
+        incluso cuando origen y destino son periféricos.}
+    \end{column}
+    % ── Mapa DF ─────────────────────────────────────────────────────────────
+    \begin{column}{0.63\textwidth}
+      \centering
+      \includegraphics[width=\textwidth, height=5.0cm,
+        keepaspectratio]{Mapa_DF.pdf}\\[0.05cm]
+      {\tiny\itshape\color{gray!55}
+        Factor de Desviación espacializado · \texttt{VFTModel} Fase 1 ·
+        100 rutas · corrida 2026-04-27.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame 4.11: Fase 3 — El Horizonte ─────────────────────────────────────────
+\begin{frame}{Fase 3: El Horizonte — Lo que Viene}
+  \begin{columns}[T]
+    % ── T — Tiempo de Viaje ───────────────────────────────────────────────────
+    \begin{column}{0.31\textwidth}
+      \begin{block}{\scriptsize $T$ — Tiempo Promedio}
+        \centering
+        {\scriptsize\[ T = \frac{\sum_{i \neq j} t(i,j)}{N(N-1)} \]}
+        \vspace{-0.2cm}
+        {\scriptsize
+          Actual: {\color{red!60!black}\bfseries 85 min}\\[0.03cm]
+          Con anillo: {\color{green!60!black}\bfseries 65 min}\\[0.03cm]
+          Reducción esperada: $-24\,\text{\%}$}
+      \end{block}
+      \fuentefigura{Base: \citep{aldous2019optimal}}
+    \end{column}
+    % ── B(v) — Intermediación ─────────────────────────────────────────────────
+    \begin{column}{0.31\textwidth}
+      \begin{block}{\scriptsize $B(v)$ — Intermediación}
+        \centering
+        {\scriptsize Nodos críticos esperados:}\\[0.06cm]
+        {\scriptsize\bfseries\color{ColorPrincipal}
+          Pantitlán\\[0.02cm]
+          Indios Verdes\\[0.02cm]
+          Tacubaya}\\[0.1cm]
+        {\scriptsize Con el anillo: carga
+          redistribuida — ningún nodo
+          supera el 18\,\% de rutas.}
+      \end{block}
+    \end{column}
+    % ── ΔE — Vulnerabilidad ───────────────────────────────────────────────────
+    \begin{column}{0.31\textwidth}
+      \begin{block}{\scriptsize $\Delta E$ — Vulnerabilidad}
+        \centering
+        {\scriptsize\[ \Delta E = \frac{E_0 - E_f}{E_0} \]}
+        \vspace{-0.2cm}
+        {\scriptsize
+          Pantitlán hoy:
+          {\color{red!60!black}\bfseries 36\,\%}\\[0.04cm]
+          Con anillo:
+          {\color{green!60!black}\bfseries 17\,\%}
+          \,($-53\,\text{\%}$)}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \vspace{0.15cm}
+  {\small\color{ColorPrincipal}
+    La Fase 3 es el argumento cuantitativo central —
+    los resultados de Fases 1 y 2 son su fundamento.}\\[0.04cm]
+  {\tiny\itshape\color{gray!55}
+    Valores preliminares, sujetos a la ejecución completa de las Fases 1 y 2.}
+\end{frame}
