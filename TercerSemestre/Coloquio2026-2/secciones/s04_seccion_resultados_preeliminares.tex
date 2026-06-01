@@ -125,20 +125,9 @@
 \begin{frame}{La Red de Transporte — Vista Esquemática}
   \begin{center}
     {\small\itshape\color{ColorPrincipal}
-      Los 11 sistemas de transporte de la \zmvm{} — organizados por modo y cobertura territorial.}\\[0.25cm]
-    \begin{tikzpicture}
-      \node[draw=ColorPrincipal!35, fill=ColorPrincipal!5, rounded corners=5pt,
-            minimum width=10.5cm, minimum height=4.8cm,
-            text width=10cm, align=center] {
-        {\scriptsize\color{ColorPrincipal!55}
-          \textit{[Mapa esquemático pendiente — exportar desde QGIS]}\\[0.3cm]
-          Capas: Metro · Metrobús · Tren Ligero · Tren Suburbano\\
-                 Cablebús · Mexibús · Trolebús · RTP\\[0.2cm]
-          Archivo: \texttt{img/mapa\_red\_esquematica.png}\\[0.15cm]
-          \textit{Estilo: líneas simplificadas sobre alcaldías,
-                  colores oficiales por modo.}}
-      };
-    \end{tikzpicture}\\[0.18cm]
+      Los 11 sistemas de transporte de la \zmvm{} — organizados por modo y cobertura territorial.}\\[0.15cm]
+    \includegraphics[width=0.95\textwidth, height=5.6cm,
+      keepaspectratio]{Mapa_Transporte_Publico.pdf}\\[0.10cm]
     {\scriptsize\color{gray!60}
       Fuente: datos GTFS · SEMOVI 2024 · Elaboración propia con \texttt{Apimetro}.}
   \end{center}
@@ -358,13 +347,16 @@
 %  Remate al pie: una línea que conecta ambos mapas con la hipótesis central.
 %
 \begin{frame}{El Territorio Habla: Cobertura y Fuerza Capilar}
+  {\small\itshape\color{ColorPrincipal}
+    Donde la cobertura desaparece, los flujos se concentran en un solo punto —
+    dos caras del mismo problema estructural.}\vspace{0.08cm}
   \begin{columns}[T]
     % ── Cobertura espacial ───────────────────────────────────────────────────
     \begin{column}{0.48\textwidth}
       \begin{block}{\scriptsize Cobertura Espacial ($C$) — Isócrono 800 m}
         \centering
-        \includegraphics[width=\textwidth, height=3.8cm,
-          keepaspectratio]{../../../Tesis_Latex/Figures/Cap5/Cobertura/Mapas/NB02_fig01_mapa_cobertura_general.png}\\[0.1cm]
+        \includegraphics[width=\textwidth, height=3.4cm,
+          keepaspectratio]{Mapa_Cobertura_Mapa_Calor.pdf}\\[0.1cm]
         {\scriptsize\bfseries\color{red!60!black}
           Milpa Alta: solo el 11.75\,\% de cobertura}\\
         {\tiny la peor alcaldía de la \cdmx{} — a 800 m de una parada.}
@@ -374,15 +366,15 @@
     \begin{column}{0.48\textwidth}
       \begin{block}{\scriptsize Fuerza Capilar ($FC_H$) — Zona Periférico}
         \centering
-        \includegraphics[width=\textwidth, height=3.8cm,
-          keepaspectratio]{../../../Tesis_Latex/Figures/Cap5/FuerzaCapilar/Mapa/NB03_mapa03_macrohubs_periferico.png}\\[0.1cm]
+        \includegraphics[width=\textwidth, height=3.4cm,
+          keepaspectratio]{Mapa_Fuerza_Capilar.pdf}\\[0.1cm]
         {\scriptsize\bfseries\color{red!60!black}
           Top hub: $FC_H = 130$ — sin alternativa lateral}\\
         {\tiny Zona Hospitales Sur concentra flujos sin rutas de desvío.}
       \end{block}
     \end{column}
   \end{columns}
-  \vspace{0.1cm}
+  \vspace{0.08cm}
   {\scriptsize\itshape\color{ColorPrincipal}
     El sur carece de cobertura y concentra sus pocos nodos en puntos únicos —
     el corredor anillar atacaría ambos problemas simultáneamente.}
@@ -456,24 +448,39 @@
 %  Alternativa: usar NB04_mapa_distribucion_df.png de Tesis_Latex/Figures/Cap5/FactorDesviacion/
 %
 \begin{frame}{La Desviación como Patrón — No es un Caso Aislado}
-  \begin{center}
-    {\small\itshape\color{ColorPrincipal}
-      Distribución espacial del Factor de Desviación ($DF$) sobre la \zmvm{}.}\\[0.25cm]
-    \begin{tikzpicture}
-      \node[draw=ColorPrincipal!35, fill=ColorPrincipal!5, rounded corners=5pt,
-            minimum width=10.5cm, minimum height=4.6cm,
-            text width=10cm, align=center] {
-        {\scriptsize\color{ColorPrincipal!55}
-          \textit{[Mapa de calor — distribución espacial del DF]}\\[0.3cm]
-          Zonas rojas: DF alto — el viaje real supera 2× la distancia directa\\
-          Zonas verdes: DF bajo — trayectos relativamente directos\\[0.2cm]
-          Archivo: \texttt{img/mapa\_calor\_df.png}\\[0.15cm]
-          \textit{Fuente: cálculo VFTModel Fase 1 · muestra de 100 rutas · abril 2026.}}
-      };
-    \end{tikzpicture}\\[0.15cm]
-    {\scriptsize\color{gray!60}
-      El rodeo no es un accidente — es la consecuencia estructural de la geometría radial.}
-  \end{center}
+  {\small\itshape\color{ColorPrincipal}
+    El caso de Milpa Alta no es la excepción — el mapa lo confirma.}\vspace{0.10cm}
+  \begin{columns}[T]
+    % ── Párrafo introductorio + datos clave ──────────────────────────────────
+    \begin{column}{0.34\textwidth}
+      \vspace{0.1cm}
+      {\scriptsize\color{ColorPrincipal}
+        El viaje anterior fue un caso extremo ($DF = 2.52$). Al analizar
+        100 rutas representativas de la \zmvm{}, el promedio es:}\\[0.18cm]
+      \begin{center}
+        {\Large\bfseries\color{red!60!black} $\bar{DF} = 1.545$}\\[-0.02cm]
+        {\tiny cada viaje recorre, en promedio,\\
+          54\,\% más de lo necesario.}
+      \end{center}
+      \vspace{0.18cm}
+      {\scriptsize\color{ColorPrincipal} Zonas más afectadas:}\\[0.05cm]
+      {\scriptsize\bfseries\color{red!60!black}
+        Sur — Milpa Alta, Tlalpan\\
+        Oriente — Neza, Chalco}\\[0.14cm]
+      {\scriptsize\color{gray!60}
+        La geometría radial obliga a todos a pasar por el centro,
+        incluso cuando origen y destino son periféricos.}
+    \end{column}
+    % ── Mapa DF ─────────────────────────────────────────────────────────────
+    \begin{column}{0.63\textwidth}
+      \centering
+      \includegraphics[width=\textwidth, height=5.0cm,
+        keepaspectratio]{Mapa_DF.pdf}\\[0.05cm]
+      {\tiny\itshape\color{gray!55}
+        Factor de Desviación espacializado · \texttt{VFTModel} Fase 1 ·
+        100 rutas · corrida 2026-04-27.}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 % ── Frame 4.11: Fase 3 — El Horizonte ─────────────────────────────────────────
