@@ -205,6 +205,7 @@ v{AÑO}-{S}-{MAT}-{TIPO}-{TEMA}[-r{N}]
 | `art`  | Artículo |
 | `mapa` | Mapa / Cartografía |
 | `col`  | Coloquio |
+| `inf`  | Infografía |
 
 > **Regla de revisiones:** el tag sin sufijo es la entrega original. Si hay una corrección posterior, se crea un nuevo release con `-r2`, `-r3`, etc. **Nunca** se reutiliza ni sobreescribe un tag existente.
 
@@ -436,8 +437,8 @@ Las plantillas los referencian automáticamente vía `\graphicspath` — no es n
 | Ensayo: Humedales Urbanos y Movilidad | `TercerSemestre/DesarrolloUrbanoSostenible/Ensayo_Humedales` | `v2026-2-dsma-ens-humedales` | Terminado |
 | Presentación: Humedales Urbanos y Movilidad | `TercerSemestre/DesarrolloUrbanoSostenible/Presentacion_Humedales` | `v2026-2-urbs-pres-humedales` | Terminada |
 | Presentación: Movilidad Sustentable | `TercerSemestre/DesarrolloUrbanoSostenible/Movilidad_Sustentable_Presentacion` | `v2026-2-dsu-pres-movilidad` | Terminada |
-| Artículo: El Jefe Seattle y el Medio Ambiente | `TercerSemestre/DesarrolloUrbanoSostenible/JefeSeattle` | — | Terminado |
-| Infografía: Agenda 2030 — ODS 11 y Movilidad ZMVM | `TercerSemestre/DesarrolloUrbanoSostenible/Agenda2030_Infografia` | — | Terminada |
+| Artículo: El Jefe Seattle y el Medio Ambiente | `TercerSemestre/DesarrolloUrbanoSostenible/JefeSeattle` | `v2026-2-dsu-art-jefe-seattle` | Terminado |
+| Infografía: Agenda 2030 — ODS 11 y Movilidad ZMVM | `TercerSemestre/DesarrolloUrbanoSostenible/Agenda2030_Infografia` | `v2026-2-dsu-inf-agenda2030` | Terminada |
 
 ### Tercer Semestre — Sociología Urbana
 
