@@ -17,6 +17,9 @@
 #   make nuevo-ensayo-purpura DIR=<ruta>  → ensayo con tema Purpura
 #   make nuevo-ensayo-rojo    DIR=<ruta>  → ensayo con tema Rojo
 #   make nueva-presentacion   DIR=<ruta> [COLOR=Teal]  → presentación Beamer UNAM
+#   make nueva-infografia     DIR=<ruta> [COLOR=Teal] [TAMANIO=A4Portrait] → infografía TikZ UNAM
+#   make nueva-infografia-a3  DIR=<ruta> [COLOR=Teal] → infografía A3 Portrait
+#   make nueva-infografia-landscape DIR=<ruta> [COLOR=Teal] → infografía A4 Landscape
 #
 # ─── ALIASES DE MATERIAS CONOCIDAS ───────────────────────────────────────────
 #   make desarrollo            → compila Ensayo_Humedales
@@ -44,7 +47,11 @@ FLAGS  := -interaction=nonstopmode -halt-on-error
 
 # Color del tema — override con COLOR=Teal, COLOR=VerdeOlivo, COLOR=Purpura, COLOR=Rojo, COLOR=VerdeEsmeralda
 # Default: Institucional (Azul UNAM + Oro UNAM)
-COLOR  ?= Institucional
+COLOR   ?= Institucional
+
+# Tamaño de hoja para infografías — override con TAMANIO=A3Portrait, TAMANIO=A4Landscape
+# Default: A4Portrait (210×297 mm vertical)
+TAMANIO ?= A4Portrait
 
 # ─── latexdiff-tesis ────────────────────────────────────────────────────────
 # Parámetros con valores por defecto (se pueden sobreescribir en el llamado):
@@ -63,7 +70,10 @@ PLANTILLA_ARTICULO_SIN_PORTADA := DocumentosPlantilla/Articulos/SinPortada
 PLANTILLA_REGISTRO_DIFF        := DocumentosPlantilla/Articulos/RegistroDiff
 
 # Plantilla base — presentaciones
-PLANTILLA_BEAMER := PresentacionPlantilla
+PLANTILLA_BEAMER     := PresentacionPlantilla
+
+# Plantilla base — infografías
+PLANTILLA_INFOGRAFIA := InfografiaPlantilla
 
 # Rutas conocidas
 DIR_DUS_HUMEDALES      := TercerSemestre/DesarrolloUrbanoSostenible/Ensayo_Humedales
@@ -74,7 +84,7 @@ DIR_SOCIOLOGIA         := TercerSemestre/SociologiaUrbana
 # Variable de ruta arbitraria (override con DIR=...)
 DIR ?=
 
-.PHONY: all Document Presentacion \
+.PHONY: all Document Presentacion Infografia \
         EnsayosConPortada EnsayosSinPortada \
         ArticulosConPortada ArticulosSinPortada RegistroDiffDoc \
         nuevo-ensayo \
@@ -83,10 +93,14 @@ DIR ?=
         nueva-presentacion \
         nueva-presentacion-teal nueva-presentacion-olivo \
         nueva-presentacion-purpura nueva-presentacion-rojo \
+        nueva-infografia \
+        nueva-infografia-a3 nueva-infografia-landscape \
+        nueva-infografia-teal nueva-infografia-olivo \
+        nueva-infografia-purpura nueva-infografia-rojo \
         desarrollo pres-humedales pres-movilidad sociologia \
         release release-ens-humedales release-pres-humedales release-pres-movilidad \
         latexdiff-tesis \
-        limpiar limpiar-dir _compile _scaffold _release
+        limpiar limpiar-dir _compile _compile-infografia _scaffold _release
 
 # =============================================================================
 # ALIASES — materias conocidas
@@ -137,6 +151,27 @@ ifndef DIR
 	$(error Debes indicar la carpeta: make Presentacion DIR=<ruta>)
 endif
 	@$(MAKE) _compile DIR=$(DIR) TIPO=Presentacion
+
+Infografia:
+ifndef DIR
+	$(error Debes indicar la carpeta: make Infografia DIR=<ruta> [COLOR=...] [TAMANIO=A4Portrait|A3Portrait|A4Landscape])
+endif
+	@$(MAKE) _compile-infografia DIR=$(DIR) TIPO=Infografia
+
+_compile-infografia:
+	@if [ ! -f "$(DIR)/main.tex" ]; then \
+	    echo "[ERROR] No existe $(DIR)/main.tex"; \
+	    echo "        Usa: make nueva-infografia DIR=$(DIR)"; \
+	    exit 1; \
+	fi
+	@echo "--- [Infografia] Color: $(COLOR) | Tamaño: $(TAMANIO) ---"
+	@echo "--- [Infografia] Pasada 1/2: pdflatex ---"
+	cd $(DIR) && $(MOTOR) $(FLAGS) -jobname=main \
+	    "\def\ColorTema{$(COLOR)}\def\TamanioHoja{$(TAMANIO)}\input{main}"
+	@echo "--- [Infografia] Pasada 2/2: pdflatex ---"
+	cd $(DIR) && $(MOTOR) $(FLAGS) -jobname=main \
+	    "\def\ColorTema{$(COLOR)}\def\TamanioHoja{$(TAMANIO)}\input{main}"
+	@echo ">>> PDF generado: $(DIR)/main.pdf [tema: $(COLOR) | tamaño: $(TAMANIO)]"
 
 _compile:
 	@if [ ! -f "$(DIR)/main.tex" ]; then \
@@ -249,6 +284,69 @@ ifndef DIR
 	$(error Debes indicar la carpeta destino: make nueva-presentacion-rojo DIR=<ruta>)
 endif
 	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_BEAMER) DIR=$(DIR) TIPO=Presentacion COLOR=Rojo
+
+# ── Infografías TikZ ─────────────────────────────────────────────────────────
+nueva-infografia:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-infografia DIR=<ruta> [COLOR=...] [TAMANIO=A4Portrait|A3Portrait|A4Landscape])
+endif
+	@$(MAKE) _scaffold-infografia PLANTILLA=$(PLANTILLA_INFOGRAFIA) DIR=$(DIR) COLOR=$(COLOR) TAMANIO=$(TAMANIO)
+
+nueva-infografia-a3:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-infografia-a3 DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold-infografia PLANTILLA=$(PLANTILLA_INFOGRAFIA) DIR=$(DIR) COLOR=$(COLOR) TAMANIO=A3Portrait
+
+nueva-infografia-landscape:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-infografia-landscape DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold-infografia PLANTILLA=$(PLANTILLA_INFOGRAFIA) DIR=$(DIR) COLOR=$(COLOR) TAMANIO=A4Landscape
+
+nueva-infografia-teal:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-infografia-teal DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold-infografia PLANTILLA=$(PLANTILLA_INFOGRAFIA) DIR=$(DIR) COLOR=Teal TAMANIO=$(TAMANIO)
+
+nueva-infografia-olivo:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-infografia-olivo DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold-infografia PLANTILLA=$(PLANTILLA_INFOGRAFIA) DIR=$(DIR) COLOR=VerdeOlivo TAMANIO=$(TAMANIO)
+
+nueva-infografia-purpura:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-infografia-purpura DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold-infografia PLANTILLA=$(PLANTILLA_INFOGRAFIA) DIR=$(DIR) COLOR=Purpura TAMANIO=$(TAMANIO)
+
+nueva-infografia-rojo:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-infografia-rojo DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold-infografia PLANTILLA=$(PLANTILLA_INFOGRAFIA) DIR=$(DIR) COLOR=Rojo TAMANIO=$(TAMANIO)
+
+_scaffold-infografia:
+	@if [ -f "$(DIR)/main.tex" ]; then \
+	    echo "[AVISO] $(DIR)/main.tex ya existe — no se sobreescribe."; \
+	    echo "        Borra el directorio o elige otro nombre si quieres empezar de cero."; \
+	    exit 1; \
+	fi
+	@echo ">>> Creando Infografia en: $(DIR) [tema: $(COLOR) | tamaño: $(TAMANIO)]"
+	mkdir -p "$(DIR)"
+	cp -r $(PLANTILLA)/. "$(DIR)/"
+	@printf '%% color-config.tex — Temas: Institucional | Teal | VerdeOlivo | Purpura | Rojo | VerdeEsmeralda\n\\providecommand{\\ColorTema}{$(COLOR)}\n' \
+	    > "$(DIR)/Latex/color-config.tex"
+	@printf '%% size-config.tex — Tamaños: A4Portrait | A3Portrait | A4Landscape\n\\providecommand{\\TamanioHoja}{$(TAMANIO)}\n' \
+	    > "$(DIR)/Latex/size-config.tex"
+	@echo ">>> Plantilla de infografía copiada. Próximos pasos:"
+	@echo "    1. Edita el bloque PERSONALIZACIÓN en $(DIR)/main.tex"
+	@echo "    2. Tema de color activo: $(COLOR) (cambia en $(DIR)/Latex/color-config.tex)"
+	@echo "    3. Tamaño de hoja activo: $(TAMANIO) (cambia en $(DIR)/Latex/size-config.tex)"
+	@echo "    4. Coloca tus imágenes en $(DIR)/img/"
+	@echo "    5. Compila con: make Infografia DIR=$(DIR) [COLOR=$(COLOR)] [TAMANIO=$(TAMANIO)]"
 
 _scaffold:
 	@if [ -f "$(DIR)/main.tex" ]; then \

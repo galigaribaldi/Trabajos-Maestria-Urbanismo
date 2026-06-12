@@ -1,0 +1,177 @@
+% !TeX program = pdflatex
+% !TeX encoding = UTF-8
+% =============================================================================
+%  PLANTILLA — Infografía Académica
+%  Maestría en Urbanismo, UNAM – FES Acatlán
+%  Versión 1.0 — Junio 2026
+%
+%  TAMAÑOS DISPONIBLES (pasar en Makefile o en size-config.tex):
+%    A4Portrait   → 210 × 297 mm, vertical   (default)
+%    A3Portrait   → 297 × 420 mm, vertical   (más espacio para datos)
+%    A4Landscape  → 297 × 210 mm, horizontal
+%
+%  COMPILACIÓN:
+%    make Infografia DIR=<ruta> [COLOR=Teal] [TAMANIO=A3Portrait]
+%    — o bien: pdflatex -jobname=main
+%              "\def\ColorTema{Institucional}\def\TamanioHoja{A4Portrait}\input{main}"
+%
+%  PERSONALIZACIÓN:
+%    1. Edita el bloque "PERSONALIZACIÓN" con los datos del entregable.
+%    2. En el cuerpo del documento, reemplaza los placeholders con tu contenido.
+%    3. Coloca tus imágenes en img/ (o en Img/ en la raíz del proyecto).
+%    4. Compila con el comando arriba.
+% =============================================================================
+
+\documentclass[12pt]{article}
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PALETA DE COLORES
+%  El tema se inyecta desde el Makefile (\def\ColorTema{...}) o desde
+%  Latex/color-config.tex (\providecommand — valor por defecto).
+%  Temas disponibles: Institucional | Teal | VerdeOlivo | Purpura | Rojo | VerdeEsmeralda
+% ═════════════════════════════════════════════════════════════════════════════
+\usepackage[table]{xcolor}
+\input{Latex/color-config}
+\input{Latex/Colores/\ColorTema}
+
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PERSONALIZACIÓN — Edita solo este bloque para cada nueva infografía
+% ═════════════════════════════════════════════════════════════════════════════
+\newcommand{\TituloInfografia}{Título de la Infografía}
+\newcommand{\SubtituloInfografia}{Subtítulo o tema central de la infografía}
+\newcommand{\Autor}{Hernán Galileo Cabrera Garibaldi}
+\newcommand{\Materia}{Desarrollo Urbano Sostenible}
+\newcommand{\Semestre}{Semestre 2026-2}
+\newcommand{\FechaInfografia}{Junio 2026}
+\newcommand{\FuenteGeneral}{Elaboración propia. Maestría en Urbanismo, UNAM–FES Acatlán, \Semestre.}
+% ═════════════════════════════════════════════════════════════════════════════
+
+
+% =============================================================================
+%  TEMA DE INFOGRAFÍA — geometría, TikZ, tcolorbox, fontawesome y comandos
+% =============================================================================
+\input{Latex/InfografiaTheme}
+
+
+% =============================================================================
+%  HIPERENLACES — siempre al final del preámbulo
+% =============================================================================
+\usepackage[
+    colorlinks = true,
+    linkcolor  = ColorPrincipal,
+    urlcolor   = ColorPrincipal,
+    unicode    = true
+]{hyperref}
+\hypersetup{
+    pdftitle  = {\TituloInfografia},
+    pdfauthor = {\Autor},
+    pdfsubject= {Infografía — \Materia, Maestría en Urbanismo UNAM}
+}
+
+
+% =============================================================================
+%  DOCUMENTO
+% =============================================================================
+\begin{document}
+
+% Sin encabezados de página, sin numeración — la infografía ocupa la hoja completa
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  CAPA TikZ DE CABECERA Y PIE
+%  Se dibuja por encima de todo el contenido.
+%  No toques este bloque — agrega tu contenido DENTRO del área de contenido.
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{tikzpicture}[remember picture, overlay,
+    x=1pt, y=1pt,
+    shift={($ (current page.south west) + (0.8cm, 0.8cm) $)}]
+  \InfoCabecera
+  \InfoPie{\FuenteGeneral}
+\end{tikzpicture}%
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  ÁREA DE CONTENIDO
+%  Espacio disponible entre cabecera (≈4.1 cm) y pie (≈1.5 cm).
+%  Edita esta sección con los bloques de tu infografía.
+% ─────────────────────────────────────────────────────────────────────────────
+\vspace*{4.3cm}   % espacio para la cabecera
+
+% ── BLOQUE INTRODUCTORIO — ancho completo ─────────────────────────────────
+\InfoBloque{Contexto}{%
+  \textbf{[Placeholder — texto introductorio]}
+  Describe brevemente el tema central de la infografía, su relevancia y el
+  contexto geográfico o temporal. Este bloque puede contener 2–4 oraciones.
+  Puedes reemplazar este texto con tu contenido definitivo.
+}
+
+\vspace{4pt}
+
+% ── FILA DE DATOS CLAVE (3 columnas) ─────────────────────────────────────
+% Usa \InfoDato{valor}{etiqueta}{descripción}{ícono}
+% Íconos disponibles: \faLeaf \faCity \faChartBar \faBus \faWater \faSeedling
+%                     \faIndustry \faPeopleArrows \faBuilding \faRoad
+\begin{minipage}[t]{0.315\linewidth}
+  \InfoDato{00\%}{etiqueta dato 1}{Descripción breve del dato}{\faLeaf}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.315\linewidth}
+  \InfoDato{000}{etiqueta dato 2}{Descripción breve del dato}{\faCity}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.315\linewidth}
+  \InfoDato{0.0}{etiqueta dato 3}{Descripción breve del dato}{\faChartBar}
+\end{minipage}
+
+\vspace{4pt}
+
+% ── FILA IMAGEN + TEXTO (2 columnas) ─────────────────────────────────────
+\begin{minipage}[t]{0.48\linewidth}
+  % Reemplaza con: \includegraphics[width=\linewidth]{nombre-imagen}
+  \InfoImagenPlaceholder{\linewidth}{4.5cm}{Elaboración propia}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\linewidth}
+  \InfoBloque{Hallazgos principales}{%
+    \InfoIconoItem{\faLeaf}{Ítem 1 — describe un hallazgo o punto clave.}
+    \InfoIconoItem{\faWater}{Ítem 2 — describe un segundo hallazgo relevante.}
+    \InfoIconoItem{\faCity}{Ítem 3 — describe un tercer punto de análisis.}
+    \InfoIconoItem{\faSeedling}{Ítem 4 — describe una implicación o resultado.}
+  }
+\end{minipage}
+
+\vspace{4pt}
+
+% ── FILA DE TRES IMÁGENES ────────────────────────────────────────────────
+\begin{minipage}[t]{0.315\linewidth}
+  % Reemplaza con: \includegraphics[width=\linewidth,height=3.5cm,keepaspectratio]{img1}
+  \InfoImagenPlaceholder{\linewidth}{3.5cm}{Fuente 1}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.315\linewidth}
+  \InfoImagenPlaceholder{\linewidth}{3.5cm}{Fuente 2}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.315\linewidth}
+  \InfoImagenPlaceholder{\linewidth}{3.5cm}{Fuente 3}
+\end{minipage}
+
+\vspace{4pt}
+
+% ── FILA CONCLUSIÓN + NOTA ───────────────────────────────────────────────
+\begin{minipage}[t]{0.64\linewidth}
+  \InfoBloqueAcento{Conclusión / Propuesta}{%
+    \textbf{[Placeholder — texto de conclusión]}\\
+    Describe la síntesis del análisis, la propuesta de intervención o la
+    implicación principal que se desprende de los datos presentados.
+  }
+\end{minipage}\hfill
+\begin{minipage}[t]{0.33\linewidth}
+  \InfoNota{\faExclamationCircle\ Dato relevante}{%
+    \textbf{[Placeholder]}\\
+    Un dato, cifra o referencia que complementa la conclusión.
+    \vspace{4pt}\\
+    \pendiente{Completar con dato real}
+  }
+\end{minipage}
+
+\vspace{1.3cm}  % espacio para el pie de página
+
+\end{document}

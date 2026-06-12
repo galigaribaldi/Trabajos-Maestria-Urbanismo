@@ -50,6 +50,16 @@ Trabajos-Maestria-Urbanismo/
 │   ├── secciones/
 │   └── Instructions Plantilla Presentacion.md
 │
+├── InfografiaPlantilla/              ← Plantilla infografía TikZ (A4/A3/Landscape)
+│   ├── main.tex
+│   ├── Latex/
+│   │   ├── InfografiaTheme.tex       ← setup completo: TikZ, tcolorbox, fontawesome5
+│   │   ├── color-config.tex
+│   │   ├── size-config.tex
+│   │   ├── Colores/                  ← mismo sistema de 6 temas que documentos/presentaciones
+│   │   └── Tamanos/                  ← A4Portrait | A3Portrait | A4Landscape
+│   └── img/                          ← carpeta para imágenes del usuario
+│
 └── TercerSemestre/                   ← Trabajos por semestre
     ├── DesarrolloUrbanoSostenible/
     │   ├── Ensayo_Humedales/
@@ -109,6 +119,24 @@ make nueva-presentacion-purpura  DIR=TercerSemestre/MiMateria/NombrePres   # Pú
 make nueva-presentacion-rojo     DIR=TercerSemestre/MiMateria/NombrePres   # Rojo
 ```
 
+### Infografías — tamaño y color
+
+```bash
+# Por tamaño de hoja
+make nueva-infografia            DIR=TercerSemestre/MiMateria/NombreInfografia              # A4 Portrait (default)
+make nueva-infografia-a3         DIR=TercerSemestre/MiMateria/NombreInfografia              # A3 Portrait
+make nueva-infografia-landscape  DIR=TercerSemestre/MiMateria/NombreInfografia              # A4 Landscape
+
+# Por color (tamaño A4 Portrait por default; agrega TAMANIO= para cambiarlo)
+make nueva-infografia-teal       DIR=TercerSemestre/MiMateria/NombreInfografia              # Verde azulado
+make nueva-infografia-olivo      DIR=TercerSemestre/MiMateria/NombreInfografia              # Verde olivo
+make nueva-infografia-purpura    DIR=TercerSemestre/MiMateria/NombreInfografia              # Púrpura
+make nueva-infografia-rojo       DIR=TercerSemestre/MiMateria/NombreInfografia              # Rojo
+
+# Con tamaño y color combinados
+make nueva-infografia            DIR=TercerSemestre/MiMateria/NombreInfografia  COLOR=Teal  TAMANIO=A3Portrait
+```
+
 ---
 
 ## Compilar documentos existentes
@@ -125,6 +153,10 @@ make Presentacion DIR=TercerSemestre/MiMateria/MiPresentacion
 
 # Compilar una presentación en otro color
 make Presentacion DIR=TercerSemestre/MiMateria/MiPresentacion COLOR=Teal
+
+# Compilar una infografía (pdflatex × 2, sin bibtex)
+make Infografia DIR=TercerSemestre/MiMateria/MiInfografia
+make Infografia DIR=TercerSemestre/MiMateria/MiInfografia COLOR=Teal TAMANIO=A3Portrait
 
 # Alias para trabajos conocidos
 make desarrollo          # Ensayo_Humedales
@@ -306,6 +338,9 @@ Cada plantilla tiene el mismo patrón de uso:
 | Artículo ConPortada | Minimalista | No | No | No | No |
 | Artículo SinPortada | — (encabezado inline) | No | No | Sí | No |
 | RegistroDiff | Minimalista + repo/versiones | No | No | No | No |
+| Infografía | Franja TikZ + escudos | No | No | No | No |
+
+> **Infografía** — Plantilla TikZ de una página. Soporta 3 tamaños (`A4Portrait`, `A3Portrait`, `A4Landscape`) y los mismos 6 temas de color que el resto del sistema. Los comandos disponibles son: `\InfoCabecera`, `\InfoPie`, `\InfoBloque`, `\InfoBloqueAcento`, `\InfoNota`, `\InfoDato`, `\InfoIconoItem`, `\InfoImagenPlaceholder`. El layout usa `\paperwidth`/`\paperheight` — escala automáticamente entre tamaños.
 
 > **RegistroDiff** — Variante especializada para reportes de avance de tesis. Incluye variables `\NombreRepo`, `\VerRef`, `\VerActual`; tablas `longtable` y `tabularx` pre-configuradas para bitácora de commits y autoevaluación por capítulo; y una sección de evidencia visual generada automáticamente con `latexdiff` (ver `make latexdiff-tesis` más abajo).
 
@@ -401,6 +436,8 @@ Las plantillas los referencian automáticamente vía `\graphicspath` — no es n
 | Ensayo: Humedales Urbanos y Movilidad | `TercerSemestre/DesarrolloUrbanoSostenible/Ensayo_Humedales` | `v2026-2-dsma-ens-humedales` | Terminado |
 | Presentación: Humedales Urbanos y Movilidad | `TercerSemestre/DesarrolloUrbanoSostenible/Presentacion_Humedales` | `v2026-2-urbs-pres-humedales` | Terminada |
 | Presentación: Movilidad Sustentable | `TercerSemestre/DesarrolloUrbanoSostenible/Movilidad_Sustentable_Presentacion` | `v2026-2-dsu-pres-movilidad` | Terminada |
+| Artículo: El Jefe Seattle y el Medio Ambiente | `TercerSemestre/DesarrolloUrbanoSostenible/JefeSeattle` | — | Terminado |
+| Infografía: Agenda 2030 — ODS 11 y Movilidad ZMVM | `TercerSemestre/DesarrolloUrbanoSostenible/Agenda2030_Infografia` | — | Terminada |
 
 ### Tercer Semestre — Sociología Urbana
 
