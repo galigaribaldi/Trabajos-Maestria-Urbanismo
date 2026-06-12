@@ -1,0 +1,189 @@
+% !TeX program = pdflatex
+% !TeX encoding = UTF-8
+% =============================================================================
+%  PLANTILLA — Infografía Académica
+%  Maestría en Urbanismo, UNAM – FES Acatlán
+%  Versión 1.0 — Junio 2026
+%
+%  TAMAÑOS DISPONIBLES (pasar en Makefile o en size-config.tex):
+%    A4Portrait   → 210 × 297 mm, vertical   (default)
+%    A3Portrait   → 297 × 420 mm, vertical   (más espacio para datos)
+%    A4Landscape  → 297 × 210 mm, horizontal
+%
+%  COMPILACIÓN:
+%    make Infografia DIR=<ruta> [COLOR=Teal] [TAMANIO=A3Portrait]
+%    — o bien: pdflatex -jobname=main
+%              "\def\ColorTema{Institucional}\def\TamanioHoja{A4Portrait}\input{main}"
+%
+%  PERSONALIZACIÓN:
+%    1. Edita el bloque "PERSONALIZACIÓN" con los datos del entregable.
+%    2. En el cuerpo del documento, reemplaza los placeholders con tu contenido.
+%    3. Coloca tus imágenes en img/ (o en Img/ en la raíz del proyecto).
+%    4. Compila con el comando arriba.
+% =============================================================================
+
+\documentclass[12pt]{article}
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PALETA DE COLORES
+%  El tema se inyecta desde el Makefile (\def\ColorTema{...}) o desde
+%  Latex/color-config.tex (\providecommand — valor por defecto).
+%  Temas disponibles: Institucional | Teal | VerdeOlivo | Purpura | Rojo | VerdeEsmeralda
+% ═════════════════════════════════════════════════════════════════════════════
+\usepackage[table]{xcolor}
+\input{Latex/color-config}
+\input{Latex/Colores/\ColorTema}
+
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PERSONALIZACIÓN — Edita solo este bloque para cada nueva infografía
+% ═════════════════════════════════════════════════════════════════════════════
+\newcommand{\TituloInfografia}{Agenda 2030 (DUS)}
+\newcommand{\SubtituloInfografia}{Un marco global para la sostenibilidad y su impacto en la movilidad de la Ciudad de México}
+\newcommand{\Autor}{Hernán Galileo Cabrera Garibaldi}
+\newcommand{\Materia}{Desarrollo Urbano Sostenible}
+\newcommand{\Semestre}{Semestre 2026-2}
+\newcommand{\FechaInfografia}{Junio 2026}
+\newcommand{\FuenteGeneral}{Elaboración propia con base en ONU (2015)}
+% ═════════════════════════════════════════════════════════════════════════════
+
+
+% =============================================================================
+%  TEMA DE INFOGRAFÍA — geometría, TikZ, tcolorbox, fontawesome y comandos
+% =============================================================================
+\input{Latex/InfografiaTheme}
+
+
+% =============================================================================
+%  HIPERENLACES — siempre al final del preámbulo
+% =============================================================================
+\usepackage[
+    colorlinks = true,
+    linkcolor  = ColorPrincipal,
+    urlcolor   = ColorPrincipal,
+    unicode    = true
+]{hyperref}
+\hypersetup{
+    pdftitle  = {\TituloInfografia},
+    pdfauthor = {\Autor},
+    pdfsubject= {Infografía — \Materia, Maestría en Urbanismo UNAM}
+}
+
+
+% =============================================================================
+%  DOCUMENTO
+% =============================================================================
+\begin{document}
+
+% Sin encabezados de página, sin numeración — la infografía ocupa la hoja completa
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  CAPA TikZ DE CABECERA Y PIE
+%  Se dibuja por encima de todo el contenido.
+%  No toques este bloque — agrega tu contenido DENTRO del área de contenido.
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{tikzpicture}[remember picture, overlay,
+    x=1pt, y=1pt,
+    shift={($ (current page.south west) + (0.8cm, 0.8cm) $)}]
+  \InfoCabecera
+  \InfoPie{\FuenteGeneral}
+\end{tikzpicture}%
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  ÁREA DE CONTENIDO
+%  Espacio disponible entre cabecera (≈4.1 cm) y pie (≈1.5 cm).
+%  Edita esta sección con los bloques de tu infografía.
+% ─────────────────────────────────────────────────────────────────────────────
+\vspace*{4.3cm}   % espacio para la cabecera
+
+% ── BLOQUE INTRODUCTORIO — ancho completo ─────────────────────────────────
+\InfoBloque{¿Qué es la Agenda 2030?}{%
+  Aprobada en 2015 por la ONU, es un plan de acción global estructurado en 17 Objetivos
+  de Desarrollo Sostenible (ODS) y 169 metas. Su visión es universal, indivisible y
+  busca erradicar la pobreza, proteger el planeta y garantizar la prosperidad
+  sin dejar a nadie atrás.
+}
+
+\vspace{\fill}
+
+% ── FILA DE DATOS CLAVE (3 columnas) ─────────────────────────────────────
+\begin{minipage}[t]{0.315\linewidth}
+  \InfoDato{Personas}{ODS 1-6}{Erradicar la pobreza y garantizar dignidad.}{\faPeopleArrows}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.315\linewidth}
+  \InfoDato{Planeta}{ODS 6, 12-15}{Proteger el entorno natural y frenar el cambio climático.}{\faLeaf}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.315\linewidth}
+  \InfoDato{Prosperidad}{ODS 7-11}{Asegurar vidas prósperas y ciudades sostenibles.}{\faCity}
+\end{minipage}
+
+\vspace{\fill}
+
+% ── FILA IMAGEN + TEXTO (2 columnas) ─────────────────────────────────────
+\begin{minipage}[c]{0.44\linewidth}
+  \centering
+  \includegraphics[height=4.2cm, width=\linewidth, keepaspectratio]{S_SDG_Icons-01-18.jpg}
+  \fuentefigura{Naciones Unidas (2015). Agenda 2030 para el Desarrollo Sostenible.}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.52\linewidth}
+  \InfoBloque{ODS 11: Ciudades y Comunidades Sostenibles}{%
+    La ONU establece como prioridad para el 2030 proporcionar acceso a sistemas de
+    transporte seguros, asequibles y sostenibles para todos, mejorando la seguridad
+    vial y ampliando el transporte público, con especial atención a las necesidades
+    de las personas en situación de vulnerabilidad.
+  }
+\end{minipage}
+
+\vspace{\fill}
+
+% ── FILA DE TRES ODS RELACIONADOS ────────────────────────────────────────
+\begin{minipage}[t]{0.315\linewidth}
+  \centering
+  \includegraphics[height=2.8cm, keepaspectratio]{S_SDG_Icons-01-08.jpg}\\[2pt]
+  {\footnotesize\bfseries\color{ColorPrincipal} ODS 8}\\
+  {\tiny\color{ColorTexto} Trabajo Decente y Crecimiento Económico}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.315\linewidth}
+  \centering
+  \includegraphics[height=2.8cm, keepaspectratio]{S_SDG_Icons-01-09.jpg}\\[2pt]
+  {\footnotesize\bfseries\color{ColorPrincipal} ODS 9}\\
+  {\tiny\color{ColorTexto} Industria, Innovación e Infraestructura}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.315\linewidth}
+  \centering
+  \includegraphics[height=2.8cm, keepaspectratio]{S_SDG_Icons-01-11-real.jpg}\\[2pt]
+  {\footnotesize\bfseries\color{ColorPrincipal} ODS 11}\\
+  {\tiny\color{ColorTexto} Ciudades y Comunidades Sostenibles}
+\end{minipage}
+\par{\tiny\itshape Fuente: Naciones Unidas (2015). Agenda 2030 para el Desarrollo Sostenible.}\par
+
+\vspace{\fill}
+
+% ── FILA CONCLUSIÓN + NOTA ───────────────────────────────────────────────
+\begin{minipage}[c]{0.64\linewidth}
+  \InfoBloqueAcento{Aplicación a la Tesis}{%
+    \textbf{Movilidad Anillar en la ZMVM}\\
+    Históricamente, la red de transporte de la ZMVM ha sido radial, 
+    forzando los flujos hacia el centro (Fuerza Capilar) y dejando 
+    desconectadas las alcaldías periféricas. 
+    Aplicar un Transporte Masivo Anillar es fundamental 
+    para cumplir el ODS 11.
+  }
+\end{minipage}\hfill
+\begin{minipage}[c]{0.33\linewidth}
+  \InfoNota{\faExclamationCircle\ Dato relevante}{%
+    \textbf{Del Modelo Radial al Anillo Periférico}\\[2pt]
+    Implementar un transporte masivo anillar en la ZMVM logra:
+    \vspace{2pt}\\
+    \textbullet\ Reduce la Vulnerabilidad Funcional del sistema.\\
+    \textbullet\ Disminuye los tiempos de viaje (Fricción Vial) sin cruzar el centro.\\
+    \textbullet\ Fomenta la equidad territorial integrando la periferia.
+  }
+\end{minipage}
+
+\vspace{1.3cm}  % espacio para el pie de página
+
+\end{document}
