@@ -1,11 +1,25 @@
 % =============================================================================
-%  1-Introduccion.tex — Introducción / Planteamiento del problema
+%  1-Introduccion.tex — Contexto y problema que aborda el taller
 % =============================================================================
 
 \section{Introducción}
 
-\lipsum[1-2]
+El análisis de la movilidad en la Zona Metropolitana del Valle de México (ZMVM)
+suele enfrentarse a una barrera crítica: la fragmentación institucional y
+geográfica de los datos espaciales.  Mientras que los flujos de transporte masivo
+ignoran las fronteras políticas, las bases de datos gubernamentales y los archivos
+GTFS oficiales suelen interrumpirse drásticamente entre la Ciudad de México y el
+Estado de México, omitiendo además sistemas periféricos clave como el Mexibús o
+rutas complejas del Trolebús \citep{semovi2020diagnostico}.  Para geógrafos,
+urbanistas y analistas del territorio, limpiar y corregir estas discontinuidades
+geométricas exige habilidades avanzadas de programación, lo que limita la
+democratización efectiva de la información urbana.
 
-% Ejemplo de cita en texto:
-% Según \citet{autor2024}, el fenómeno se explica por...
-% Este patrón ha sido documentado ampliamente \citep{autor2024,otro2023}.
+Este taller práctico de 2~horas propone derribar esa barrera técnica enseñando a
+los asistentes a consumir e integrar datos geoespaciales estructurados en tiempo
+real utilizando \textbf{Apimetro} \citep{garibaldi2025apimetro}, una API RESTful
+de software libre que unifica las redes multimodales de la metrópoli empleando
+OpenStreetMap (OSM) como fuente geométrica de respaldo y validación cruzada
+\citep{haklay2010good}.  Los participantes aprenderán a explotar esta
+infraestructura directamente desde \textbf{QGIS}, transformando consultas
+dinámicas a la API en insumos analíticos sin escribir una sola línea de código.

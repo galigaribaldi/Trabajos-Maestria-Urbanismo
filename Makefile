@@ -81,6 +81,7 @@ DIR_DUS_PRES_HUMEDALES := TercerSemestre/DesarrolloUrbanoSostenible/Presentacion
 DIR_DSU_MOVILIDAD      := TercerSemestre/DesarrolloUrbanoSostenible/Movilidad_Sustentable_Presentacion
 DIR_SOCIOLOGIA         := TercerSemestre/SociologiaUrbana
 DIR_EXTRACURR_STATEMAP := Extracurriculares/StateMap
+DIR_EXTRACURR_TALLER   := Extracurriculares/StateMapTaller
 
 # Variable de ruta arbitraria (override con DIR=...)
 DIR ?=
@@ -98,7 +99,7 @@ DIR ?=
         nueva-infografia-a3 nueva-infografia-landscape \
         nueva-infografia-teal nueva-infografia-olivo \
         nueva-infografia-purpura nueva-infografia-rojo \
-        desarrollo pres-humedales pres-movilidad sociologia state-map \
+        desarrollo pres-humedales pres-movilidad sociologia state-map state-map-taller \
         release release-ens-humedales release-pres-humedales release-pres-movilidad \
         latexdiff-tesis \
         limpiar limpiar-dir _compile _compile-infografia _scaffold _release
@@ -142,6 +143,12 @@ state-map:
 	@echo " Compilando: Extracurricular — State of the Map LATAM 2026"
 	@echo "========================================================"
 	$(MAKE) Document DIR=$(DIR_EXTRACURR_STATEMAP)
+
+state-map-taller:
+	@echo "========================================================"
+	@echo " Compilando: Extracurricular — Taller SotM LATAM 2026"
+	@echo "========================================================"
+	$(MAKE) Document DIR=$(DIR_EXTRACURR_TALLER)
 
 # =============================================================================
 # COMPILACIÓN — pdflatex → bibtex → pdflatex × 2
