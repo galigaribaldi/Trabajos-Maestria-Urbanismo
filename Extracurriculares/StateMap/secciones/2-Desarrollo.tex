@@ -1,0 +1,80 @@
+% =============================================================================
+%  2-Desarrollo.tex — Apimetro: arquitectura, pipeline y validación empírica
+% =============================================================================
+
+\section{Apimetro: arquitectura e infraestructura tecnológica}
+
+El propósito fundamental de este trabajo es presentar el desarrollo, la arquitectura
+y la validación metodológica de \textbf{Apimetro}
+\citep{garibaldi2025apimetro}, una infraestructura de datos de software libre
+diseñada para resolver la fragmentación de la información de movilidad en la ZMVM.
+Apimetro no se concibe únicamente como un servicio de software \textit{back-end},
+sino como un motor de democratización de datos geoespaciales cuyo objetivo es
+eliminar la barrera técnica del procesamiento de datos espaciales, permitiendo que
+investigadores y tomadores de decisiones consuman topologías de red unificadas,
+continuas y enriquecidas de manera directa en Sistemas de Información Geográfica
+(SIG).
+
+\subsection{Pipeline de datos y stack tecnológico}
+
+El ecosistema opera mediante una arquitectura desacoplada en dos capas.  La primera
+corresponde al servicio de unificación de datos espaciales, construido en el
+lenguaje de programación Go ---que garantiza alta eficiencia en el procesamiento
+concurrente de flujos masivos de datos--- en combinación con una base de datos
+relacional espacial PostgreSQL equipada con la extensión PostGIS.
+
+Apimetro ingiere los \textit{feeds} GTFS oficiales de SEMOVI y los somete a un
+proceso de normalización y estandarización.  Para resolver los vacíos de información
+del Estado de México y corregir trazos geométricos gubernamentales discontinuos
+---como el caso del Trolebús Línea~13 o los sistemas de transporte metropolitano
+del Estado de México---, la API utiliza de forma estratégica la cartografía
+colaborativa de \textbf{OpenStreetMap} como fuente de validación cruzada y datos
+complementarios.  Mediante consultas SQL espaciales nativas, Apimetro unifica ambas
+fuentes y genera un modelo de datos coherente.
+
+El sistema expone la red multimodal completa ---Metro, Metrobús, Cablebús, RTP,
+Trolebús, Tren Ligero, Tren Suburbano, Mexibús, Colectivo, Microbús y Autobús---
+dividida en dos entidades relacionales: \textit{estaciones} (puntos con jerarquía
+de transporte y nodos CETRAM identificados) y \textit{líneas} (geometrías
+\texttt{MultiLineString} segmentadas tramo a tramo entre estaciones).  Un algoritmo
+de \textit{snapping} intermodal con umbral de $\leq 50$~m resuelve las
+interconexiones entre sistemas.  La salida se sirve de manera pública a través de
+\textit{endpoints} REST en formato GeoJSON nativo desde \texttt{apimetro.dev}.
+
+En total, el motor procesa 22,766 entidades espaciales que se consolidan en un grafo
+de \textbf{11,115~nodos} interconectados por \textbf{45,679~aristas}
+(25,000 de servicio y 20,000 de transbordo), abarcando \textbf{11~sistemas} de
+transporte ---de los cuales el 88\,\% corresponde a transporte de superficie y solo
+el 12\,\% a infraestructura masiva de vía exclusiva---, todo en un volumen de
+38~MB de datos procesados.  El código es abierto, sin dependencias de software
+comercial: soberanía tecnológica completa.
+
+\subsection{Validación empírica: VFTModel como cliente de Apimetro}
+
+Para demostrar la robustez de la infraestructura, se desarrolló el
+\textit{VFTModel} (\textit{Vanishing Fig-Tree Model})
+\citep{garibaldi2026vft}, un motor analítico en Python que consume directamente
+los \textit{endpoints} GeoJSON de Apimetro.  Utilizando librerías de análisis
+espacial y redes complejas (NetworkX, GeoPandas, Momepy), el modelo transforma las
+geometrías vectoriales en grafos matemáticos ruteables y calcula tres indicadores
+clave de eficiencia de red, exportados como capas vectoriales GeoPackage
+(\texttt{.gpkg}) directamente visualizables en QGIS
+\citep{fortin2016innovative, aldous2019optimal}:
+
+\begin{enumerate}[nosep, leftmargin=1.5em]
+  \item \textbf{Cobertura espacial ($C$):} isócronas peatonales de 800~m alrededor
+    de cada estación.  Resultado: Milpa Alta presenta solo el 11.75\,\% de cobertura,
+    la peor alcaldía de la Ciudad de México.
+  \item \textbf{Factor de Desviación ($DF$):} cociente entre la distancia real de
+    viaje en la red y la distancia euclidiana.  El promedio de una muestra de
+    100~rutas interalcaldías arroja $\bar{DF}=1.545$, lo que significa que cada viaje
+    recorre, en promedio, 54\,\% más de lo necesario.  El caso extremo (Milpa Alta
+    $\to$ Santa Catarina Yecahuizotl) alcanza $DF=2.52$.
+  \item \textbf{Fuerza Capilar ($FC_H$):} centralidad y grado nodal del grafo para
+    identificar hubs con mayor concentración de flujos sin alternativa lateral.  El
+    hub máximo registra $FC_H=130$ en la zona de Hospitales Sur.
+\end{enumerate}
+
+Estos resultados demuestran que la API de Apimetro permite investigación cuantitativa
+de nivel académico sin requerir que el investigador programe, limpie archivos de texto
+ni repare trazos geométricos rotos.
