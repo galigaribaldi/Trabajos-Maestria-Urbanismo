@@ -32,3 +32,18 @@ requiere habilidades avanzadas de ingeniería de software para ser interpretado 
 explotado científicamente.  Se vuelve indispensable, por tanto, contar con una
 infraestructura intermedia que unifique, limpie y exponga la red de transporte
 como un recurso directamente consumible por herramientas de análisis espacial.
+
+En este escenario, OpenStreetMap (OSM) emerge como un recurso estratégico.  La
+cartografía colaborativa de la comunidad OSM ha demostrado ser capaz de producir
+datos geoespaciales de calidad comparable ---y en contextos urbanos del Sur Global,
+superior--- a los conjuntos de datos oficiales \citep{haklay2010good,
+barrington2017world}.  La riqueza semántica del esquema de etiquetado de OSM para
+infraestructura de transporte público (\texttt{route=bus}, \texttt{route=subway},
+relaciones de tipo \texttt{public\_transport}) ofrece una base complementaria que
+permite verificar, corregir y enriquecer los \textit{feeds} GTFS gubernamentales
+\citep{luxen2011realtime}.
+
+El presente trabajo expone cómo Apimetro, una infraestructura de datos de software
+libre, articula ambas fuentes ---GTFS oficiales y OSM--- para construir un modelo
+de red metropolitana unificado, y cómo este modelo habilita análisis topológicos
+de nivel académico sin barreras técnicas de entrada.

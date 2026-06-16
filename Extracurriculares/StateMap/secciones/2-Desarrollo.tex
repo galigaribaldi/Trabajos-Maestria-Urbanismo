@@ -32,6 +32,34 @@ colaborativa de \textbf{OpenStreetMap} como fuente de validación cruzada y dato
 complementarios.  Mediante consultas SQL espaciales nativas, Apimetro unifica ambas
 fuentes y genera un modelo de datos coherente.
 
+\subsection{Rol de OpenStreetMap en el pipeline}
+
+La contribución de OSM al pipeline de Apimetro opera en tres niveles concretos:
+
+\begin{enumerate}[nosep, leftmargin=1.5em]
+  \item \textbf{Geometrías de ruta:}  Cuando los trazos GTFS presentan
+    discontinuidades o resolución insuficiente, Apimetro consulta las relaciones
+    OSM de tipo \texttt{route=bus}, \texttt{route=subway} y
+    \texttt{route=light\_rail} para obtener geometrías continuas de alta
+    resolución.  Las relaciones OSM modelan rutas completas como secuencias
+    ordenadas de vías (\textit{ways}) y paradas (\textit{nodes}), lo que permite
+    reconstruir trazos fidedignos tramo a tramo.
+  \item \textbf{Cobertura periférica:}  Los municipios conurbados del Estado de
+    México carecen en gran medida de \textit{feeds} GTFS publicados.  Las rutas
+    de sistemas como el Mexibús y los colectivos periféricos se obtienen
+    íntegramente de OSM, donde mapeadores locales han documentado recorridos que
+    las bases oficiales ignoran \citep{haklay2010good}.
+  \item \textbf{Validación cruzada:}  Apimetro ejecuta un proceso de
+    \textit{conflation} espacial que compara las geometrías GTFS con las de OSM
+    mediante distancia de Hausdorff.  Las discrepancias superiores a un umbral
+    configurable se marcan para revisión, lo que permite identificar errores
+    sistemáticos en las fuentes gubernamentales.
+\end{enumerate}
+
+Este enfoque de fuentes duales ---gubernamental y comunitaria--- no solo mejora la
+calidad del modelo resultante, sino que devuelve valor a la comunidad OSM al
+documentar y validar la infraestructura de transporte con rigor académico.
+
 El sistema expone la red multimodal completa ---Metro, Metrobús, Cablebús, RTP,
 Trolebús, Tren Ligero, Tren Suburbano, Mexibús, Colectivo, Microbús y Autobús---
 dividida en dos entidades relacionales: \textit{estaciones} (puntos con jerarquía
