@@ -1,0 +1,21 @@
+% =============================================================================
+%  Membrete.tex — Encabezado membretado primera página
+%  Logo izquierda · Nombre y datos de contacto derecha · Línea divisoria
+% =============================================================================
+
+\noindent
+\begin{minipage}[c]{0.18\textwidth}
+  \includegraphics[height=1.8cm]{logo}
+\end{minipage}%
+\hfill
+\begin{minipage}[r]{0.78\textwidth}
+  \raggedleft
+  {\large\bfseries\color{ColorPrincipal} Apimetro}\\[0.15cm]
+  {\small\color{ColorTexto} \OrganizacionDescripcion}\\[0.05cm]
+  {\small\color{ColorAcento} \ContactoEmail \ \textbf{·} \ \ContactoWeb}\\[0.05cm]
+  {\small\color{ColorTexto} \ContactoCiudad}
+\end{minipage}
+
+\vspace{0.3cm}
+{\color{ColorPrincipal}\noindent\rule{\textwidth}{1.5pt}}
+\vspace{0.5cm}

@@ -75,6 +75,9 @@ PLANTILLA_BEAMER     := PresentacionPlantilla
 # Plantilla base — infografías
 PLANTILLA_INFOGRAFIA := InfografiaPlantilla
 
+# Plantilla base — documentos oficiales Apimetro
+PLANTILLA_APIMETRO := DocumentosPlantilla/Apimetro
+
 # Rutas conocidas
 DIR_DUS_HUMEDALES      := TercerSemestre/DesarrolloUrbanoSostenible/Ensayo_Humedales
 DIR_DUS_PRES_HUMEDALES := TercerSemestre/DesarrolloUrbanoSostenible/Presentacion_Humedales
@@ -82,6 +85,7 @@ DIR_DSU_MOVILIDAD      := TercerSemestre/DesarrolloUrbanoSostenible/Movilidad_Su
 DIR_SOCIOLOGIA         := TercerSemestre/SociologiaUrbana
 DIR_EXTRACURR_STATEMAP := Extracurriculares/StateMap
 DIR_EXTRACURR_TALLER   := Extracurriculares/StateMapTaller
+DIR_APIMETRO_DOCS      := Extracurriculares/Apimetro-docs
 
 # Variable de ruta arbitraria (override con DIR=...)
 DIR ?=
@@ -99,6 +103,7 @@ DIR ?=
         nueva-infografia-a3 nueva-infografia-landscape \
         nueva-infografia-teal nueva-infografia-olivo \
         nueva-infografia-purpura nueva-infografia-rojo \
+        ApimetroDoc nueva-carta \
         desarrollo pres-humedales pres-movilidad sociologia state-map state-map-taller \
         release release-ens-humedales release-pres-humedales release-pres-movilidad \
         latexdiff-tesis \
@@ -361,6 +366,29 @@ _scaffold-infografia:
 	@echo "    3. Tamaño de hoja activo: $(TAMANIO) (cambia en $(DIR)/Latex/size-config.tex)"
 	@echo "    4. Coloca tus imágenes en $(DIR)/img/"
 	@echo "    5. Compila con: make Infografia DIR=$(DIR) [COLOR=$(COLOR)] [TAMANIO=$(TAMANIO)]"
+
+# ── Documentos oficiales Apimetro ────────────────────────────────────────────
+# Color por defecto para Apimetro: si el usuario no especificó COLOR (queda
+# en "Institucional" que no existe en este template), se fuerza a "Apimetro".
+APIMETRO_COLOR = $(if $(filter Institucional,$(COLOR)),Apimetro,$(COLOR))
+
+ApimetroDoc:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make ApimetroDoc DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_APIMETRO) DIR=$(DIR) TIPO=Apimetro COLOR=$(APIMETRO_COLOR)
+
+apimetro-doc:
+ifndef DIR
+	$(error Debes indicar la carpeta: make apimetro-doc DIR=<ruta> [COLOR=Apimetro|Negro])
+endif
+	@$(MAKE) _compile DIR=$(DIR) TIPO=Apimetro COLOR=$(APIMETRO_COLOR)
+
+nueva-carta:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-carta DIR=<ruta>)
+endif
+	@$(MAKE) ApimetroDoc DIR=$(DIR) COLOR=Apimetro
 
 _scaffold:
 	@if [ -f "$(DIR)/main.tex" ]; then \
