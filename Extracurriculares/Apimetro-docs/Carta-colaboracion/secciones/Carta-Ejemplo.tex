@@ -1,0 +1,165 @@
+% =============================================================================
+%  Carta de autorización de uso comercial — Tony Quezada / Metro Experto
+%  Acuerdo de colaboración experimental | Agosto 2026 – Agosto 2027
+% =============================================================================
+
+\DatosDestinatario
+  {Tony Quezada Vargas}
+  {Desarrollador independiente}
+  {Metro Experto}
+
+\Asunto{Autorización de uso de la API de Apimetro — Colaboración experimental
+        \RefDoc{APM-2026-100}}
+
+\Saludo{Estimado Sr. Quezada Vargas:}
+
+Por medio de la presente, y en seguimiento a la sesión de trabajo celebrada el
+\textbf{5 de agosto de 2026}, me permito formalizar los términos del acuerdo de
+colaboración experimental al que llegamos en dicha reunión, con el objetivo de
+establecer una base documental clara para ambas partes.
+
+\SeccionCarta{Antecedentes}
+
+El 2 de agosto de 2026 recibí su mensaje en el que me informó sobre
+\textbf{Metro Experto}, aplicación de monitoreo del estado del transporte
+público en la Ciudad de México (Metro, Metrobús, Cablebús y Trolebús/Tren
+Ligero), y manifestó su interés en integrar los datos de coordenadas de
+estaciones disponibles en \href{https://apimetro.dev}{apimetro.dev} para
+desarrollar una función de reportes comunitarios de usuarios.
+
+Tras revisar su proyecto y constatar la calidad del trabajo, acordamos llevar
+a cabo esta colaboración bajo los términos que se describen a continuación.
+
+\SeccionCarta{Términos del acuerdo}
+
+\begin{enumerate}[leftmargin=1.8em, label=\textbf{\arabic{enumi}.}]
+
+  \item \textbf{Alcance del acceso.} Apimetro autoriza a Metro Experto el
+        consumo de los \textit{endpoints} públicos de la API para consulta de
+        ubicaciones geoespaciales (latitud/longitud) de estaciones de los
+        siguientes sistemas: Metro de la CDMX, Cablebús y Trolebús/Tren
+        Ligero. El acceso al sistema Metrobús queda excluido del presente
+        acuerdo, dado que Metro Experto ya cuenta con acceso directo a su
+        API oficial.
+
+  \item \textbf{Modalidad de uso.} El uso autorizado es de tipo comercial
+        indirecto: la aplicación es de descarga gratuita para el usuario
+        final y puede incluir publicidad no intrusiva para costear la
+        infraestructura de hospedaje. La reventa directa de los datos de
+        Apimetro o su distribución como producto independiente queda fuera
+        del alcance de esta autorización.
+
+  \item \textbf{Vigencia.} El presente acuerdo tiene una duración de
+        \textbf{un año}, comprendido entre el \textbf{8 de agosto de 2026}
+        y el \textbf{7 de agosto de 2027}, prorrogable de mutuo acuerdo.
+
+  \item \textbf{Contraprestación simbólica.} A fin de formalizar la
+        relación y cubrir parcialmente los costos de servidor, Metro Experto
+        realizará una \textbf{donación única de \$5.00 USD} (cinco dólares
+        americanos) a Apimetro a través del canal indicado en el
+        \textbf{Anexo~I} del presente documento. Esta donación no constituye
+        tarifa de servicio ni garantía de disponibilidad, sino un mecanismo
+        de formalización de bajo riesgo que permite a ambos proyectos
+        validar el valor de la colaboración antes de comprometerse a una
+        estructura de costos más formal.
+
+  \item \textbf{Buenas prácticas de consumo.} Con objeto de minimizar la
+        carga al servidor, se recomienda que las consultas de coordenadas se
+        realicen de forma diferida (descarga inicial completa) y se
+        actualicen con una frecuencia no mayor a una vez al mes, salvo que
+        se acuerde lo contrario.
+
+\end{enumerate}
+
+\SeccionCarta{Compromisos mutuos}
+
+Durante la vigencia del acuerdo, ambas partes se comprometen a:
+
+\begin{itemize}[leftmargin=1.5em]
+  \item Reportar incidencias técnicas (errores en datos, caídas de
+        \textit{endpoints}, inconsistencias) por los canales acordados.
+  \item Intercambiar retroalimentación sobre el rendimiento y utilidad de
+        la integración, con miras a mejorar la infraestructura de Apimetro
+        y la precisión de Metro Experto.
+  \item Notificar con al menos 15 días de anticipación cualquier cambio
+        sustancial en las condiciones de uso o en la estructura de la API
+        que pudiera afectar la operación de la aplicación.
+\end{itemize}
+
+\SeccionCarta{Consideraciones finales}
+
+El presente documento no constituye un contrato de servicios con nivel de
+servicio garantizado (\textit{SLA}), dado el carácter experimental y académico
+del proyecto Apimetro en esta etapa. Sin embargo, refleja el compromiso de
+ambas partes de actuar de buena fe y de comunicarse oportunamente ante
+cualquier eventualidad.
+
+Quedo a su disposición para cualquier aclaración. Puede contactarme en
+\href{mailto:\ContactoEmail}{\ContactoEmail} o a través de
+\href{https://\ContactoWeb}{\ContactoWeb}.
+
+\vspace{1.2cm}
+\noindent\textbf{Atentamente,}
+
+\vspace{2.0cm}
+
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+  {\color{ColorPrincipal}\rule{\linewidth}{0.6pt}}\\[0.2cm]
+  \textbf{\FirmanteName}\\
+  {\small \FirmanteCargo}\\
+  {\small\color{ColorAcento}Apimetro}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+  {\color{ColorPrincipal}\rule{\linewidth}{0.6pt}}\\[0.2cm]
+  \textbf{Tony Quezada Vargas}\\
+  {\small Desarrollador independiente}\\
+  {\small\color{ColorAcento}Metro Experto}
+\end{minipage}
+
+% ── Anexo I ───────────────────────────────────────────────────────────────────
+\clearpage
+\phantomsection
+
+\begin{center}
+  {\large\bfseries\color{ColorPrincipal} ANEXO~I}\\[0.2cm]
+  {\normalsize\bfseries Información para la donación simbólica}\\[0.1cm]
+  {\color{ColorPrincipal!40}\rule{0.5\textwidth}{0.5pt}}
+\end{center}
+
+\vspace{0.6cm}
+
+\noindent
+El pago de la donación acordada de \textbf{\$5.00 USD} (cinco dólares
+americanos) deberá realizarse a través de \textbf{GitHub Sponsors},
+plataforma oficial de apoyo a desarrolladores de código abierto gestionada
+por GitHub, Inc.
+
+\vspace{0.5cm}
+
+\begin{center}
+  \begin{tabular}{ll}
+    \toprule
+    \textbf{Plataforma}   & GitHub Sponsors \\
+    \midrule
+    \textbf{Usuario}      & \texttt{galigaribaldi} \\[0.3em]
+    \textbf{URL directa}  & \href{https://github.com/sponsors/galigaribaldi}%
+                            {\texttt{github.com/sponsors/galigaribaldi}} \\[0.3em]
+    \textbf{Modalidad}    & Pago único (\textit{One-time}) \\[0.3em]
+    \textbf{Monto}        & \$5.00 USD \\[0.3em]
+    \textbf{Concepto}     & Donación — Acuerdo de colaboración \RefDoc{\FolioDoc} \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\noindent
+{\small\color{ColorTexto}
+  \textit{Nota:} GitHub Sponsors procesa pagos en dólares americanos
+  mediante tarjeta de crédito o débito. Una vez realizado el pago, se
+  recomienda notificar a Apimetro por correo electrónico a
+  \href{mailto:\ContactoEmail}{\ContactoEmail} indicando el folio
+  \RefDoc{\FolioDoc} para llevar registro del acuerdo.
+}

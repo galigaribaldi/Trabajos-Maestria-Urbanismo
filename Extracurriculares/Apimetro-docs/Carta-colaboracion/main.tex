@@ -1,0 +1,102 @@
+% !TeX encoding = UTF-8
+% =============================================================================
+%  PLANTILLA — Documento Oficial Apimetro
+%  Cartas membretadas, contratos, oficios y comunicados
+%  Versión 1.0 — Agosto 2026
+%
+%  USO:
+%    1. Edita el bloque "PERSONALIZACIÓN" con los datos del documento.
+%    2. Escribe el cuerpo en secciones/ o directamente en este archivo.
+%    3. Compila con: pdflatex → pdflatex
+%       (no requiere BibTeX para cartas simples)
+%
+%  COMANDOS DISPONIBLES:
+%    \DatosDestinatario{nombre}{cargo}{organización}
+%    \Asunto{texto del asunto}
+%    \Saludo{Estimado/a ...}
+%    \FirmaBloque{Nombre Firmante}{Cargo}
+%    \SeccionCarta{Título de sección}
+%    \RefDoc{APM-2026-01}
+% =============================================================================
+
+\documentclass[12pt,a4paper]{article}
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PERSONALIZACIÓN — Edita solo esta sección para cada nuevo documento
+% ═════════════════════════════════════════════════════════════════════════════
+\newcommand{\TituloDoc}{Carta de Colaboración con Metro Experto}            % Aparece en encabezado pág 2+
+\newcommand{\FolioDoc}{APM-2026-100}                      % Folio / número de documento
+\newcommand{\FechaDoc}{Ciudad de México, 8 de agosto de 2026}  % Fecha en texto largo
+\newcommand{\FirmanteName}{Cabrera Garibaldi Hernán Galileo}           % Quien firma
+\newcommand{\FirmanteCargo}{Fundador y Desarrollador}
+
+% Datos de contacto Apimetro (ajustar si cambian)
+\newcommand{\OrganizacionDescripcion}{Plataforma de datos de transporte y movilidad urbana — CDMX}
+\newcommand{\ContactoEmail}{galigaribaldi0@gmail.com}
+\newcommand{\ContactoWeb}{apimetro.dev}
+\newcommand{\ContactoCiudad}{Ciudad de México}
+% ═════════════════════════════════════════════════════════════════════════════
+
+% =============================================================================
+%  1. IDIOMA Y CODIFICACIÓN
+% =============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+\usepackage{csquotes}
+
+% =============================================================================
+%  2. LAYOUT
+% =============================================================================
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=2.8cm, right=2.5cm}
+
+% =============================================================================
+%  3. PAQUETES ESENCIALES
+% =============================================================================
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+% =============================================================================
+%  4. PAQUETES ADICIONALES, COLORES Y COMANDOS PERSONALIZADOS
+% =============================================================================
+\input{Latex/Comands}
+
+% =============================================================================
+%  5. HIPERVÍNCULOS — siempre al final del preámbulo
+% =============================================================================
+\usepackage[
+    colorlinks = true,
+    linkcolor  = ColorPrincipal,
+    citecolor  = ColorPrincipal,
+    urlcolor   = ColorPrincipal,
+    unicode    = true,
+    breaklinks = true
+]{hyperref}
+\hypersetup{
+    pdftitle   = {\TituloDoc\ — \FolioDoc},
+    pdfauthor  = {Apimetro},
+    pdfsubject = {Documento oficial Apimetro},
+    pdfcreator = {pdfLaTeX}
+}
+
+% =============================================================================
+%  DOCUMENTO
+% =============================================================================
+\begin{document}
+\onehalfspacing
+\thispagestyle{primera}
+
+% ── Membrete primera página ───────────────────────────────────────────────────
+\input{Latex/Membrete}
+
+% ── Folio y fecha ─────────────────────────────────────────────────────────────
+\noindent\FechaDoc \hfill \textbf{Folio:}\ \RefDoc{\FolioDoc}
+
+\vspace{0.6cm}
+
+% ── Cuerpo del documento ──────────────────────────────────────────────────────
+\pagestyle{siguientes}
+\input{secciones/Carta-Ejemplo}
+
+\end{document}
