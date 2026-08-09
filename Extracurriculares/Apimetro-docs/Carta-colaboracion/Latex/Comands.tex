@@ -1,0 +1,128 @@
+% =============================================================================
+%  Comands.tex — Paquetes y comandos para documentos oficiales Apimetro
+%  NOTA: Cargado desde main.tex con \input{Latex/Comands}
+%        Debe cargarse ANTES de \usepackage{hyperref}
+% =============================================================================
+
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PALETA DE COLORES
+%  Temas disponibles: Apimetro | Negro
+% ═════════════════════════════════════════════════════════════════════════════
+\usepackage[table]{xcolor}
+\input{Latex/color-config}
+\input{Latex/Colores/\ColorTema}
+\definecolor{ColorTexto}     {RGB}{30,  30,  30}
+\definecolor{ColorFondoTabla}{RGB}{240, 240, 240}
+\definecolor{ColorAlerta}    {RGB}{183,  28,  28}
+% ═════════════════════════════════════════════════════════════════════════════
+
+
+% =============================================================================
+%  1. FIGURAS
+% =============================================================================
+\usepackage{graphicx}
+\graphicspath{{img/}{../../../Extracurriculares/Apimetro-docs/}}
+\usepackage{caption}
+\usepackage{float}
+
+
+% =============================================================================
+%  2. TIPOGRAFÍA Y ESPACIADO
+% =============================================================================
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage[parfill]{parskip}
+\usepackage{lmodern}
+
+
+% =============================================================================
+%  3. TABLAS
+% =============================================================================
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+
+% =============================================================================
+%  4. ENCABEZADOS Y PIES DE PÁGINA
+% =============================================================================
+\usepackage{fancyhdr}
+\setlength{\headheight}{28pt}
+\addtolength{\topmargin}{-13pt}
+
+% Primera página — membrete completo, sin fancyhdr (se gestiona en main.tex)
+\fancypagestyle{primera}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+  \fancyfoot[L]{\footnotesize\color{ColorPrincipal}Apimetro\ \textbf{·}\ \ContactoCiudad\ \textbf{·}\ \ContactoWeb}
+  \fancyfoot[R]{\footnotesize\thepage}
+}
+
+% Páginas siguientes — header reducido con logo pequeño
+\fancypagestyle{siguientes}{%
+  \fancyhf{}
+  \fancyhead[L]{%
+    \raisebox{-0.25cm}{\includegraphics[height=0.7cm]{logo}}%
+    \quad{\small\bfseries\color{ColorPrincipal}Apimetro}%
+    \quad{\small\color{ColorTexto}\FolioDoc}%
+  }
+  \fancyhead[R]{\footnotesize\color{ColorTexto}\TituloDoc}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\headrule}{{\color{ColorPrincipal!60}\rule{\linewidth}{0.4pt}}}
+  \fancyfoot[L]{\footnotesize\color{ColorPrincipal}Apimetro\ \textbf{·}\ \ContactoCiudad\ \textbf{·}\ \ContactoWeb}
+  \fancyfoot[R]{\footnotesize\thepage}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+
+% =============================================================================
+%  5. COMANDOS DE CARTA OFICIAL
+% =============================================================================
+
+% Bloque del destinatario: \DatosDestinatario{nombre}{cargo}{organización}
+\newcommand{\DatosDestinatario}[3]{%
+  \noindent\textbf{#1}\\
+  #2\\
+  \textit{#3}%
+}
+
+% Línea de asunto: \Asunto{texto}
+\newcommand{\Asunto}[1]{%
+  \vspace{0.4cm}
+  \noindent\textbf{ASUNTO:}\ #1
+  \vspace{0.4cm}%
+}
+
+% Saludo de apertura: \Saludo{Estimada Mtra. Pérez:}
+\newcommand{\Saludo}[1]{%
+  \vspace{0.6cm}
+  \noindent #1
+  \vspace{0.3cm}%
+}
+
+% Bloque de firma: \FirmaBloque{nombre}{cargo}
+\newcommand{\FirmaBloque}[2]{%
+  \vspace{1.2cm}
+  \noindent\textbf{Atentamente,}\\[2.0cm]
+  \noindent{\color{ColorPrincipal}\rule{0.45\textwidth}{0.6pt}}\\[0.2cm]
+  \noindent\textbf{#1}\\
+  \noindent{\small #2}\\
+  \noindent{\small\color{ColorAcento}Apimetro}%
+}
+
+% Separador de sección dentro de carta: \SeccionCarta{texto}
+\newcommand{\SeccionCarta}[1]{%
+  \vspace{0.5cm}
+  {\small\bfseries\color{ColorPrincipal}\MakeUppercase{#1}}\\[-0.1cm]
+  {\color{ColorPrincipal!40}\rule{0.3\textwidth}{0.4pt}}
+  \vspace{0.2cm}%
+}
+
+% Referencia cruzada estilizada: \RefDoc{APM-2026-01}
+\newcommand{\RefDoc}[1]{%
+  {\small\color{ColorPrincipal}\texttt{#1}}%
+}

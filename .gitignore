@@ -330,6 +330,10 @@ TSWLatexianTemp*
 !docs/assets/*.pdf
 !Img/*.pdf
 
+### macOS
+.DS_Store
+**/.DS_Store
+
 ### Archvios VSCODE
 .vscode/
 
