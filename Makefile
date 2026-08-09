@@ -39,6 +39,10 @@
 # ─── UTILIDADES ──────────────────────────────────────────────────────────────
 #   make limpiar               → borra auxiliares LaTeX en todo el proyecto
 #   make limpiar-dir DIR=<ruta>→ borra auxiliares solo en <ruta>
+#
+# ─── ISPRS ───────────────────────────────────────────────────────────────────
+#   make IsprsAbstract DIR=<ruta>  → crea nuevo artículo ISPRS desde la plantilla
+#   make IsprsDoc      DIR=<ruta>  → compila artículo ISPRS (pdflatex + bibtex)
 # =============================================================================
 
 MOTOR  := pdflatex
@@ -78,6 +82,9 @@ PLANTILLA_INFOGRAFIA := InfografiaPlantilla
 # Plantilla base — documentos oficiales Apimetro
 PLANTILLA_APIMETRO := DocumentosPlantilla/Apimetro
 
+# Plantilla base — artículos ISPRS
+PLANTILLA_ISPRS := DocumentosPlantilla/ISPRS
+
 # Rutas conocidas
 DIR_DUS_HUMEDALES      := TercerSemestre/DesarrolloUrbanoSostenible/Ensayo_Humedales
 DIR_DUS_PRES_HUMEDALES := TercerSemestre/DesarrolloUrbanoSostenible/Presentacion_Humedales
@@ -104,6 +111,7 @@ DIR ?=
         nueva-infografia-teal nueva-infografia-olivo \
         nueva-infografia-purpura nueva-infografia-rojo \
         ApimetroDoc nueva-carta \
+        IsprsAbstract IsprsDoc _scaffold-isprs _compile-isprs \
         desarrollo pres-humedales pres-movilidad sociologia state-map state-map-taller \
         release release-ens-humedales release-pres-humedales release-pres-movilidad \
         latexdiff-tesis \
@@ -411,6 +419,51 @@ _scaffold:
 	    echo "    3. Escribe tu contenido en $(DIR)/secciones/"; \
 	fi
 	@echo "    4. Compila con: make $(if $(filter Presentacion,$(TIPO)),Presentacion,Document) DIR=$(DIR)"
+
+# ── Artículos ISPRS ──────────────────────────────────────────────────────────
+
+IsprsAbstract:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make IsprsAbstract DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold-isprs PLANTILLA=$(PLANTILLA_ISPRS) DIR=$(DIR)
+
+IsprsDoc:
+ifndef DIR
+	$(error Debes indicar la carpeta: make IsprsDoc DIR=<ruta>)
+endif
+	@$(MAKE) _compile-isprs DIR=$(DIR)
+
+_scaffold-isprs:
+	@if [ -f "$(DIR)/main.tex" ]; then \
+	    echo "[AVISO] $(DIR)/main.tex ya existe — no se sobreescribe."; \
+	    echo "        Borra el directorio o elige otro nombre si quieres empezar de cero."; \
+	    exit 1; \
+	fi
+	@echo ">>> Creando artículo ISPRS en: $(DIR)"
+	mkdir -p "$(DIR)"
+	cp -r $(PLANTILLA)/. "$(DIR)/"
+	@echo ">>> Plantilla ISPRS copiada. Próximos pasos:"
+	@echo "    1. Edita \\title, \\author y \\address en $(DIR)/main.tex"
+	@echo "    2. Reemplaza el contenido de cada sección con tu artículo"
+	@echo "    3. Actualiza $(DIR)/ISPRSguidelines_authors.bib con tus referencias"
+	@echo "    4. Compila con: make IsprsDoc DIR=$(DIR)"
+
+_compile-isprs:
+	@if [ ! -f "$(DIR)/main.tex" ]; then \
+	    echo "[ERROR] No existe $(DIR)/main.tex"; \
+	    echo "        Usa: make IsprsAbstract DIR=$(DIR)"; \
+	    exit 1; \
+	fi
+	@echo "--- [ISPRS] Pasada 1/3: pdflatex ---"
+	cd $(DIR) && $(MOTOR) $(FLAGS) main.tex
+	@echo "--- [ISPRS] Pasada BibTeX ---"
+	cd $(DIR) && $(BIBTEX) main || true
+	@echo "--- [ISPRS] Pasada 2/3: pdflatex ---"
+	cd $(DIR) && $(MOTOR) $(FLAGS) main.tex
+	@echo "--- [ISPRS] Pasada 3/3: pdflatex ---"
+	cd $(DIR) && $(MOTOR) $(FLAGS) main.tex
+	@echo ">>> PDF generado: $(DIR)/main.pdf"
 
 # =============================================================================
 # RELEASES — compila el PDF y publica en GitHub Releases
