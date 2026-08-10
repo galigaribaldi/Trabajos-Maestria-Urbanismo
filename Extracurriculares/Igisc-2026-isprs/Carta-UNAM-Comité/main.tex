@@ -1,0 +1,97 @@
+% !TeX encoding = UTF-8
+% =============================================================================
+%  PLANTILLA — Carta Oficial UNAM / FES Acatlán / Maestría en Urbanismo
+%  Cartas membretadas, solicitudes, oficios y comunicados institucionales
+%  Versión 1.0 — Agosto 2026
+%
+%  USO:
+%    1. Edita el bloque "PERSONALIZACIÓN" con los datos del documento.
+%    2. Escribe el cuerpo en secciones/ o directamente en este archivo.
+%    3. Compila con: make CartaUNAM DIR=<ruta>
+%       (pdflatex × 2, no requiere BibTeX)
+%
+%  COMANDOS DISPONIBLES:
+%    \DatosDestinatario{nombre}{cargo}{organización}
+%    \Asunto{texto del asunto}
+%    \Saludo{Estimada/o ...}
+%    \FirmaBloque{Nombre Firmante}{Cargo}
+%    \FirmaBloqueDoble{nombre1}{cargo1}{nombre2}{cargo2}  ← con visto bueno
+%    \SeccionCarta{Título de sección}
+%    \RefDoc{MU-FESA-2026-01}
+% =============================================================================
+
+\documentclass[12pt,a4paper]{article}
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PERSONALIZACIÓN — Edita solo esta sección para cada nuevo documento
+% ═════════════════════════════════════════════════════════════════════════════
+\newcommand{\TituloDoc}{Carta de Solicitud}              % Aparece en encabezado pág 2+
+\newcommand{\FolioDoc}{---}                 % Folio / número de documento
+\newcommand{\FechaDoc}{Naucalpan de Juárez, agosto de 2026} % Fecha en texto largo
+\newcommand{\FirmanteName}{Hernán Galileo Cabrera Garibaldi}
+\newcommand{\FirmanteCargo}{Estudiante de Maestría en Urbanismo}
+% ═════════════════════════════════════════════════════════════════════════════
+
+% =============================================================================
+%  1. IDIOMA Y CODIFICACIÓN
+% =============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+\usepackage{csquotes}
+
+% =============================================================================
+%  2. LAYOUT
+% =============================================================================
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=2.8cm, right=2.5cm}
+
+% =============================================================================
+%  3. PAQUETES ESENCIALES
+% =============================================================================
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+% =============================================================================
+%  4. PAQUETES ADICIONALES Y COMANDOS PERSONALIZADOS
+% =============================================================================
+\input{Latex/Comands}
+
+% =============================================================================
+%  5. HIPERVÍNCULOS — siempre al final del preámbulo
+% =============================================================================
+\usepackage[
+    colorlinks = true,
+    linkcolor  = black,
+    citecolor  = black,
+    urlcolor   = black,
+    unicode    = true,
+    breaklinks = true
+]{hyperref}
+\hypersetup{
+    pdftitle   = {\TituloDoc\ — \FolioDoc},
+    pdfauthor  = {UNAM FES Acatlán — Maestría en Urbanismo},
+    pdfsubject = {Carta oficial institucional},
+    pdfcreator = {pdfLaTeX}
+}
+
+% =============================================================================
+%  DOCUMENTO
+% =============================================================================
+\begin{document}
+\onehalfspacing
+\thispagestyle{primera}
+
+% ── Membrete primera página ───────────────────────────────────────────────────
+\input{Latex/Membrete}
+
+% ── Folio y fecha ─────────────────────────────────────────────────────────────
+\noindent\FechaDoc \hfill \textbf{Folio:}\ \RefDoc{\FolioDoc}
+
+\vspace{0.6cm}
+
+% ── Cuerpo del documento ──────────────────────────────────────────────────────
+\pagestyle{siguientes}
+\input{secciones/Carta-Ejemplo}
+
+\end{document}

@@ -40,6 +40,10 @@
 #   make limpiar               → borra auxiliares LaTeX en todo el proyecto
 #   make limpiar-dir DIR=<ruta>→ borra auxiliares solo en <ruta>
 #
+# ─── CARTAS UNAM ─────────────────────────────────────────────────────────────
+#   make nueva-carta-unam  DIR=<ruta>  → carta oficial UNAM membretada (FES Acatlán)
+#   make _compile-carta-unam DIR=<ruta> → compila carta existente (pdflatex × 2)
+#
 # ─── ISPRS ───────────────────────────────────────────────────────────────────
 #   make IsprsAbstract DIR=<ruta>  → crea nuevo artículo ISPRS desde la plantilla
 #   make IsprsDoc      DIR=<ruta>  → compila artículo ISPRS (pdflatex + bibtex)
@@ -82,6 +86,9 @@ PLANTILLA_INFOGRAFIA := InfografiaPlantilla
 # Plantilla base — documentos oficiales Apimetro
 PLANTILLA_APIMETRO := DocumentosPlantilla/Apimetro
 
+# Plantilla base — cartas oficiales UNAM
+PLANTILLA_CARTA_UNAM := DocumentosPlantilla/CartaUNAM
+
 # Plantilla base — artículos ISPRS
 PLANTILLA_ISPRS := DocumentosPlantilla/ISPRS
 
@@ -111,6 +118,7 @@ DIR ?=
         nueva-infografia-teal nueva-infografia-olivo \
         nueva-infografia-purpura nueva-infografia-rojo \
         ApimetroDoc nueva-carta \
+        CartaUNAM nueva-carta-unam _compile-carta-unam \
         IsprsAbstract IsprsDoc _scaffold-isprs _compile-isprs \
         desarrollo pres-humedales pres-movilidad sociologia state-map state-map-taller \
         release release-ens-humedales release-pres-humedales release-pres-movilidad \
@@ -397,6 +405,31 @@ ifndef DIR
 	$(error Debes indicar la carpeta destino: make nueva-carta DIR=<ruta>)
 endif
 	@$(MAKE) ApimetroDoc DIR=$(DIR) COLOR=Apimetro
+
+# ── Cartas oficiales UNAM ─────────────────────────────────────────────────────
+
+CartaUNAM:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make CartaUNAM DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_CARTA_UNAM) DIR=$(DIR) TIPO=CartaUNAM COLOR=Negro
+
+nueva-carta-unam:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-carta-unam DIR=<ruta>)
+endif
+	@$(MAKE) CartaUNAM DIR=$(DIR)
+
+_compile-carta-unam:
+	@if [ ! -f "$(DIR)/main.tex" ]; then \
+	    echo "[ERROR] No existe $(DIR)/main.tex"; \
+	    exit 1; \
+	fi
+	@echo "--- [CartaUNAM] Pasada 1/2: pdflatex ---"
+	cd $(DIR) && pdflatex $(FLAGS) main.tex
+	@echo "--- [CartaUNAM] Pasada 2/2: pdflatex ---"
+	cd $(DIR) && pdflatex $(FLAGS) main.tex
+	@echo ">>> PDF generado en $(DIR)/main.pdf"
 
 _scaffold:
 	@if [ -f "$(DIR)/main.tex" ]; then \
