@@ -1,0 +1,220 @@
+% =============================================================================
+%  BeamerThemeSotm.tex — Tema Beamer para SOTM Latam CDMX 2026
+%
+%  Paleta oficial SOTM Latam CDMX 2026 (extraída del logo):
+%    Verde oscuro  #3D5226  (0, 56, 26)  — texto, bordes, outline
+%    Verde olivo   #8FA05A  (56, 62, 36) — anillo exterior, acento secundario
+%    Terracota     #B85440  (72, 33, 25) — acento principal, detalles
+%    Crema         #F0EAD6  (94, 92, 84) — fondo suave
+%
+%  NOTA: Incluido desde main.tex con \input{Latex/BeamerThemeSotm}
+% =============================================================================
+
+
+% =============================================================================
+%  1. PALETA DE COLORES SOTM LATAM
+% =============================================================================
+\usepackage{xcolor}
+
+\definecolor{SotmVerde}     {RGB}{61,  82,  38}   % #3D5226 — verde oscuro
+\definecolor{SotmOlivo}     {RGB}{143, 160, 90}   % #8FA05A — verde olivo claro
+\definecolor{SotmTerracota} {RGB}{184, 84,  64}   % #B85440 — terracota
+\definecolor{SotmCrema}     {RGB}{240, 234, 214}  % #F0EAD6 — crema
+\definecolor{SotmTexto}     {RGB}{30,  30,  25}   % Casi negro cálido
+\definecolor{SotmAlerta}    {RGB}{160, 50,  30}   % Terracota oscura para alertas
+
+
+% =============================================================================
+%  2. IDIOMA, CODIFICACIÓN Y TIPOGRAFÍA
+% =============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+\usepackage{csquotes}
+\usepackage{microtype}
+\usepackage{lmodern}
+
+
+% =============================================================================
+%  3. TEMA BASE Y PERSONALIZACIÓN DE COLORES
+% =============================================================================
+\usetheme{Madrid}
+
+\setbeamercolor{palette primary}   {bg=SotmVerde, fg=white}
+\setbeamercolor{palette secondary} {bg=SotmVerde!85!black, fg=white}
+\setbeamercolor{palette tertiary}  {bg=SotmVerde!70!black, fg=white}
+\setbeamercolor{palette quaternary}{bg=SotmVerde, fg=white}
+\setbeamercolor{structure}         {fg=SotmVerde}
+
+\setbeamercolor{title}      {fg=white, bg=SotmVerde}
+\setbeamercolor{frametitle} {fg=white, bg=SotmVerde}
+
+\setbeamercolor{block title}{fg=white, bg=SotmVerde}
+\setbeamercolor{block body} {fg=SotmTexto, bg=SotmCrema}
+
+\setbeamercolor{block title alerted}{fg=white, bg=SotmAlerta}
+\setbeamercolor{block body alerted} {fg=SotmTexto, bg=SotmCrema}
+
+\setbeamercolor{block title example}{fg=white, bg=SotmOlivo!80!black}
+\setbeamercolor{block body example} {fg=SotmTexto, bg=SotmCrema}
+
+\setbeamercolor{alerted text}{fg=SotmTerracota}
+
+\setbeamercolor{item}   {fg=SotmVerde}
+\setbeamercolor{subitem}{fg=SotmTerracota}
+
+% Fondo general crema muy suave
+\setbeamercolor{background canvas}{bg=white}
+
+
+% =============================================================================
+%  4. FOOTLINE — Autor | SOTM Latam CDMX 2026 | N/Total
+% =============================================================================
+\makeatletter
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.45\paperwidth, ht=2.5ex, dp=1.5ex, leftskip=0.4cm]{palette primary}%
+      \usebeamerfont{author in head/foot}\AutorCorto
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.40\paperwidth, ht=2.5ex, dp=1.5ex, center]{palette secondary}%
+      \usebeamerfont{title in head/foot}SOTM Latam CDMX 2026
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.15\paperwidth, ht=2.5ex, dp=1.5ex, rightskip=0.4cm, right]{palette primary}%
+      \usebeamerfont{date in head/foot}%
+      \insertframenumber{} / \inserttotalframenumber
+    \end{beamercolorbox}%
+  }%
+  \vskip0pt%
+}
+\makeatother
+
+
+% =============================================================================
+%  5. HEADLINE — eliminado
+% =============================================================================
+\setbeamertemplate{headline}{}
+
+
+% =============================================================================
+%  6. FRAMETITLE — variante simple y variante con línea terracota
+% =============================================================================
+\usepackage{etoolbox}
+
+\defbeamertemplate{frametitle}{simple}{%
+  \begin{beamercolorbox}[wd=\paperwidth, sep=0.20cm, left, leftskip=0.20cm]{frametitle}%
+    {\tiny\color{white!60!SotmVerde}\insertsectionhead}\\[-0.05cm]%
+    \bfseries\insertframetitle\strut%
+  \end{beamercolorbox}%
+}
+
+\defbeamertemplate{frametitle}{conlinea}{%
+  \begin{beamercolorbox}[wd=\paperwidth, sep=0.20cm, dp=0cm, left, leftskip=0.20cm]{frametitle}%
+    {\tiny\color{white!60!SotmVerde}\insertsectionhead}\\[-0.05cm]%
+    \bfseries\insertframetitle\strut%
+  \end{beamercolorbox}%
+  \vspace{-0.06cm}%
+  {\color{SotmTerracota}\rule{\paperwidth}{2.5pt}}%
+}
+
+\setbeamertemplate{frametitle}[simple]
+
+\newif\ifusarlineaterracota
+\usarlineaterracotafalse
+
+\AtBeginEnvironment{frame}{%
+  \ifusarlineaterracota
+    \setbeamertemplate{frametitle}[conlinea]%
+    \global\usarlineaterracotafalse
+  \else
+    \setbeamertemplate{frametitle}[simple]%
+  \fi
+}
+
+% \framelinea — activa la línea terracota para el siguiente frame
+\newcommand{\framelinea}{\global\usarlineaterracotatrue}% activa línea terracota
+
+
+% =============================================================================
+%  7. PÁGINA DE TÍTULO PERSONALIZADA
+%     Logo SOTM Latam centrado + título + afiliación del ponente
+% =============================================================================
+\setbeamertemplate{title page}{%
+  \begin{center}
+    \vspace{0.3cm}
+    % ── Logo SOTM Latam ──────────────────────────────────────────────────────
+    \includegraphics[height=2.2cm]{sotm-latam-logo.png}\\[0.3cm]
+    {\color{SotmTerracota}\rule{0.7\textwidth}{1.5pt}}
+    \vspace{0.3cm}
+
+    {\large\bfseries\color{SotmVerde}\inserttitle}\\[0.2cm]
+    {\small\color{SotmVerde!80!black}\insertsubtitle}
+
+    \vspace{0.4cm}
+    {\color{SotmOlivo}\rule{0.4\textwidth}{0.8pt}}
+    \vspace{0.3cm}
+
+    {\small\textbf{\insertauthor}}\\[0.1cm]
+    {\scriptsize\Afiliacion}
+
+    \vfill
+    {\scriptsize\color{SotmTexto}\insertdate}
+  \end{center}
+}
+
+
+% =============================================================================
+%  8. DIAPOSITIVA DE TRANSICIÓN DE SECCIÓN
+%     Solo aparece a partir de la segunda sección
+% =============================================================================
+\newcounter{secciones}
+\setcounter{secciones}{0}
+
+\AtBeginSection[]{%
+  \addtocounter{secciones}{1}%
+  \ifnum\value{secciones}>1
+    \begin{frame}[plain, noframenumbering]
+      \begin{center}
+        \vfill
+        {\color{SotmTerracota}\rule{0.6\textwidth}{1.5pt}}\\[0.4cm]
+        {\Large\bfseries\color{SotmVerde}\insertsectionhead}\\[0.4cm]
+        {\color{SotmTerracota}\rule{0.6\textwidth}{1.5pt}}
+        \vfill
+      \end{center}
+    \end{frame}
+  \fi
+}
+
+
+% =============================================================================
+%  9. PAQUETES PARA CONTENIDO
+% =============================================================================
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{natbib}
+\usepackage{lipsum}     % Texto de relleno — eliminar en la presentación final
+
+% Ruta de imágenes: img/ local → Img/ raíz del proyecto (logo SOTM)
+\graphicspath{{img/}{../Img/}{../../Img/}{../../../Img/}}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes.geometric, arrows.meta, calc}
+
+
+% =============================================================================
+%  10. COMANDOS DE UTILIDAD
+% =============================================================================
+
+\newcommand{\fuentefigura}[1]{%
+  \vspace{0.1em}\noindent{\tiny\textit{Fuente: #1}\par}%
+}
+
+\newcommand{\tituloframe}[1]{%
+  {\large\bfseries\color{SotmVerde}#1}\\[-0.05cm]%
+  {\color{SotmTerracota}\rule{\textwidth}{1.5pt}}\\[0.3cm]%
+}
+
+\newcommand{\termino}[1]{\textit{#1}}
+\newcommand{\cdmx}{Ciudad de México}
+\newcommand{\zmvm}{Zona Metropolitana del Valle de México}

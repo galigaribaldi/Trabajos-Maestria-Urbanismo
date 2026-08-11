@@ -47,6 +47,10 @@
 # ─── ISPRS ───────────────────────────────────────────────────────────────────
 #   make IsprsAbstract DIR=<ruta>  → crea nuevo artículo ISPRS desde la plantilla
 #   make IsprsDoc      DIR=<ruta>  → compila artículo ISPRS (pdflatex + bibtex)
+#
+# ─── SOTM LATAM ──────────────────────────────────────────────────────────────
+#   make nueva-presentacion-sotm DIR=<ruta>  → presentación Beamer SOTM Latam CDMX 2026
+#   make PresentacionSotm        DIR=<ruta>  → compila presentación SOTM (pdflatex + bibtex)
 # =============================================================================
 
 MOTOR  := pdflatex
@@ -92,6 +96,9 @@ PLANTILLA_CARTA_UNAM := DocumentosPlantilla/CartaUNAM
 # Plantilla base — artículos ISPRS
 PLANTILLA_ISPRS := DocumentosPlantilla/ISPRS
 
+# Plantilla base — presentaciones SOTM Latam
+PLANTILLA_SOTM := DocumentosPlantilla/SotmLatam
+
 # Rutas conocidas
 DIR_DUS_HUMEDALES      := TercerSemestre/DesarrolloUrbanoSostenible/Ensayo_Humedales
 DIR_DUS_PRES_HUMEDALES := TercerSemestre/DesarrolloUrbanoSostenible/Presentacion_Humedales
@@ -113,6 +120,7 @@ DIR ?=
         nueva-presentacion \
         nueva-presentacion-teal nueva-presentacion-olivo \
         nueva-presentacion-purpura nueva-presentacion-rojo \
+        nueva-presentacion-sotm PresentacionSotm _scaffold-sotm _compile-sotm \
         nueva-infografia \
         nueva-infografia-a3 nueva-infografia-landscape \
         nueva-infografia-teal nueva-infografia-olivo \
@@ -452,6 +460,51 @@ _scaffold:
 	    echo "    3. Escribe tu contenido en $(DIR)/secciones/"; \
 	fi
 	@echo "    4. Compila con: make $(if $(filter Presentacion,$(TIPO)),Presentacion,Document) DIR=$(DIR)"
+
+# ── Presentaciones SOTM Latam ────────────────────────────────────────────────
+
+nueva-presentacion-sotm:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-presentacion-sotm DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold-sotm PLANTILLA=$(PLANTILLA_SOTM) DIR=$(DIR)
+
+PresentacionSotm:
+ifndef DIR
+	$(error Debes indicar la carpeta: make PresentacionSotm DIR=<ruta>)
+endif
+	@$(MAKE) _compile-sotm DIR=$(DIR)
+
+_scaffold-sotm:
+	@if [ -f "$(DIR)/main.tex" ]; then \
+	    echo "[AVISO] $(DIR)/main.tex ya existe — no se sobreescribe."; \
+	    echo "        Borra el directorio o elige otro nombre si quieres empezar de cero."; \
+	    exit 1; \
+	fi
+	@echo ">>> Creando presentación SOTM Latam en: $(DIR)"
+	mkdir -p "$(DIR)"
+	cp -r $(PLANTILLA)/. "$(DIR)/"
+	@echo ">>> Plantilla SOTM copiada. Próximos pasos:"
+	@echo "    1. Edita el bloque PERSONALIZACIÓN en $(DIR)/main.tex"
+	@echo "    2. Escribe tus slides en $(DIR)/secciones/"
+	@echo "    3. Coloca tus figuras en $(DIR)/img/"
+	@echo "    4. Compila con: make PresentacionSotm DIR=$(DIR)"
+
+_compile-sotm:
+	@if [ ! -f "$(DIR)/main.tex" ]; then \
+	    echo "[ERROR] No existe $(DIR)/main.tex"; \
+	    echo "        Usa: make nueva-presentacion-sotm DIR=$(DIR)"; \
+	    exit 1; \
+	fi
+	@echo "--- [SOTM] Pasada 1/3: pdflatex ---"
+	cd $(DIR) && $(MOTOR) $(FLAGS) main.tex
+	@echo "--- [SOTM] Pasada BibTeX ---"
+	cd $(DIR) && $(BIBTEX) main || true
+	@echo "--- [SOTM] Pasada 2/3: pdflatex ---"
+	cd $(DIR) && $(MOTOR) $(FLAGS) main.tex
+	@echo "--- [SOTM] Pasada 3/3: pdflatex ---"
+	cd $(DIR) && $(MOTOR) $(FLAGS) main.tex
+	@echo ">>> PDF generado: $(DIR)/main.pdf"
 
 # ── Artículos ISPRS ──────────────────────────────────────────────────────────
 
