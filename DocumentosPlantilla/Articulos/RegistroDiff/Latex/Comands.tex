@@ -43,29 +43,43 @@
 
 
 % =============================================================================
-%  2. FIGURAS
+%  2. FIGURAS Y DIAGRAMAS
 %  caption DEBE cargarse antes de hyperref
 % =============================================================================
 \usepackage{graphicx}
 % Rutas de búsqueda de imágenes:
 %   img/          → imágenes propias del documento
-%   Figures/      → figuras copiadas del repositorio fuente por latexdiff-tesis
-%   Figures/Cap*/  → subdirectorios por capítulo del repo fuente
 %   ../../../Img/ → escudos institucionales compartidos (raíz del proyecto)
 %
-% NOTA: latexdiff-tesis copia Figures/ del repo fuente automáticamente.
-%       Si el diff referencia subdirectorios adicionales, añádelos aquí.
+% NOTA: latexdiff-tesis NO copia figuras del repo fuente.
+%       Usa \figinclude en lugar de \includegraphics para que el documento
+%       compile en cualquier entorno (muestra placeholder si falta el archivo).
 \graphicspath{%
   {img/}%
-  {Figures/}%
-  {Figures/Cap1/}{Figures/Cap2/}{Figures/Cap3/}%
-  {Figures/Cap4/}{Figures/Cap5/}{Figures/Cap6/}%
   {../../../Img/}%
 }
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{float}
 \usepackage{wrapfig}
+
+% TikZ — necesario cuando el diff incluye diagramas vectoriales del repo fuente
+\usepackage{tikz}
+\usetikzlibrary{
+  arrows.meta,
+  positioning,
+  shapes.geometric,
+  fit,
+  backgrounds,
+  calc,
+  babel
+}
+\usepackage{forest}
+
+% Colores institucionales UNAM (usados en diagramas TikZ del repo fuente)
+\definecolor{unamAzul}     {RGB}{  0,  56, 147}
+\definecolor{unamOro}      {RGB}{244, 180,   0}
+\definecolor{unamGrisClaro}{RGB}{240, 240, 240}
 
 
 % =============================================================================
@@ -141,6 +155,35 @@
 \newcommand{\pendiente}[1]{%
   \marginpar{\footnotesize\color{red}\textbf{[Pendiente:} #1\textbf{]}}%
 }
+
+% Figura portátil: muestra la ruta del archivo como evidencia documental sin
+% necesidad de distribuir la imagen con el repositorio.
+% Uso: \figplaceholder{Figures/Mapas/Mapa_Red_Esquematica.pdf}
+\newcommand{\figplaceholder}[1]{%
+  \begin{tikzpicture}
+    \node[draw=ColorPrincipal!40, dashed, fill=gray!4, rounded corners=5pt,
+          text width=\dimexpr\textwidth-2.4cm\relax, minimum height=4cm,
+          align=center, inner sep=14pt]
+      {\small\color{gray!55}\textbf{[Figura referenciada --- archivo externo]}\\[8pt]
+       \footnotesize\color{ColorPrincipal!70}\nolinkurl{#1}};
+  \end{tikzpicture}%
+}
+
+% Figura condicional: incluye el archivo si existe; si no, muestra \figplaceholder.
+% Reemplaza \includegraphics en diffs generados por latexdiff-tesis.
+% Uso: \figinclude[width=\textwidth]{Figures/Mapas/Mapa_Red_Esquematica}
+\newcommand{\figinclude}[2][width=\textwidth]{%
+  \IfFileExists{#2.pdf}{\includegraphics[#1]{#2}}{%
+  \IfFileExists{#2.png}{\includegraphics[#1]{#2}}{%
+  \IfFileExists{#2}    {\includegraphics[#1]{#2}}{%
+    \figplaceholder{#2}%
+  }}}%
+}
+
+% Referencias tipográficas para bitácora git
+% Uso: \commitref{45d6f55}   \versiontag{v0.4.1}
+\newcommand{\commitref}[1]{\texttt{\color{ColorPrincipal!80}#1}}
+\newcommand{\versiontag}[1]{\texttt{#1}}
 
 
 % =============================================================================

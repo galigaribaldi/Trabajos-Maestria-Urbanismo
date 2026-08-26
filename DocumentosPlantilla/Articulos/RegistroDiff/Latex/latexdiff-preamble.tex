@@ -34,6 +34,10 @@
 \providecommand{\DIFaddendFL}{} %DIF PREAMBLE
 \providecommand{\DIFdelbeginFL}{} %DIF PREAMBLE
 \providecommand{\DIFdelendFL}{} %DIF PREAMBLE
+% Compatibilidad biblatex → natbib: el diff puede contener \parencite/\textcite
+\providecommand{\parencite}[2][]{\citep{#2}}
+\providecommand{\textcite}[2][]{\citet{#2}}
+
 % Versiones seguras para hyperref (PDF bookmarks no admiten \color)
 \AtBeginDocument{%
   \pdfstringdefDisableCommands{%
@@ -46,4 +50,7 @@
     \def\DIFdelbegin{}%
     \def\DIFdelend{}%
   }%
+  % babel-spanish activa ~ como carácter especial; dentro de \DIFadd{}/\DIFdel{}
+  % seguido de } provoca "extra }". Se redefine como \nobreakspace{} estándar.
+  \def~{\nobreakspace{}}%
 }
