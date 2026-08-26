@@ -349,3 +349,7 @@ MapasQgis/datos_crudos/
 # Ignorar archivos comprimidos
 *.zip
 out/
+
+## Ignorar Archivos MAC
+.DS_Store
+.DS_*

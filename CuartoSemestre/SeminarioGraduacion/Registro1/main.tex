@@ -1,16 +1,20 @@
 % !TeX program = pdflatex
 % !TeX encoding = UTF-8
 % =============================================================================
-%  PLANTILLA — Artículo Académico sin Portada
+%  Registro de Avances #1 — Seminario de Graduación 2027-1
 %  Maestría en Urbanismo, UNAM – FES Acatlán
-%  Versión 1.0 — Abril 2026
 %
-%  USO:
-%    1. Edita el bloque "PERSONALIZACIÓN" con los datos del entregable.
-%    2. Cada palabra clave va dentro de \uline{} separadas por comas.
-%    3. Completa las secciones en /secciones/ con tu contenido.
-%    4. Agrega tus referencias en referencias.bib.
-%    5. Compila con: pdflatex → bibtex → pdflatex → pdflatex
+%  FLUJO DE USO (desde la raíz del proyecto):
+%
+%  PASO 1 — Generar el diff desde el repositorio de tesis:
+%    make latexdiff-tesis \
+%         TESIS_DIR=../TesisUrbanismo \
+%         CHAPTER=4-Capas-Codigo/4-3-Visualizacion.tex \
+%         REV1=v0.4.1 REV2=45d6f55 \
+%         DIR=CuartoSemestre/SeminarioGraduacion/Registro1
+%
+%  PASO 2 — Compilar:
+%    make Document DIR=CuartoSemestre/SeminarioGraduacion/Registro1
 % =============================================================================
 
 \documentclass[12pt,a4paper]{article}
@@ -18,18 +22,21 @@
 % ═════════════════════════════════════════════════════════════════════════════
 %  PERSONALIZACIÓN — Edita solo esta sección para cada nuevo entregable
 % ═════════════════════════════════════════════════════════════════════════════
-\newcommand{\TituloArticulo}{Título del Artículo Académico}
-\newcommand{\Autor}{Hernán Galileo Cabrera Garibaldi}
-\newcommand{\Materia}{Nombre de la Materia}
-\newcommand{\MateriaCorta}{Materia — Semestre 2026-2}   % Aparece en el pie
-\newcommand{\FechaEntrega}{Abril 2026}
 
-% Palabras clave: encierra cada término en \uline{} separado por comas
-\newcommand{\PalabrasClave}{%
-  \uline{palabra clave 1},\ %
-  \uline{palabra clave 2},\ %
-  \uline{palabra clave 3}%
-}
+% ── Datos del repositorio fuente ─────────────────────────────────────────────
+\newcommand{\NombreRepo}{TesisUrbanismo}
+\newcommand{\VerRef}{v0.4.1}
+\newcommand{\VerActual}{45d6f55}
+
+% ── Datos del documento ───────────────────────────────────────────────────────
+\newcommand{\TituloArticulo}{Registro de Avances \#1 — \NombreRepo}
+\newcommand{\SubtituloArticulo}{Comparativa de versiones \VerRef{} $\rightarrow$ \VerActual}
+\newcommand{\Autor}{Hernán Galileo Cabrera Garibaldi}
+\newcommand{\Materia}{Seminario de Graduación}
+\newcommand{\MateriaCorta}{Seminario de Graduación — Semestre 2027-1}
+\newcommand{\ProfesorAsignado}{Nombre del Profesor}
+\newcommand{\Semestre}{2027-1}
+\newcommand{\FechaEntrega}{Agosto 2026}
 % ═════════════════════════════════════════════════════════════════════════════
 
 % =============================================================================
@@ -52,13 +59,14 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{natbib}
-\usepackage{lipsum}   % Texto de relleno — eliminar en el documento final
 
 % =============================================================================
 %  4. PAQUETES ADICIONALES, COLORES Y COMANDOS PERSONALIZADOS
-%     Ajusta paleta de colores y comandos en Latex/Comands.tex
 % =============================================================================
 \input{Latex/Comands}
+
+% --- Soporte para latexdiff (ulem ya cargado en Comands) ---
+\input{Latex/latexdiff-preamble}
 
 % =============================================================================
 %  5. HIPERVÍNCULOS — siempre al final del preámbulo
@@ -74,7 +82,7 @@
 \hypersetup{
     pdftitle   = {\TituloArticulo},
     pdfauthor  = {\Autor},
-    pdfsubject = {Artículo — \Materia, Maestría en Urbanismo UNAM},
+    pdfsubject = {Registro de avances — \NombreRepo},
     pdfcreator = {pdfLaTeX + natbib/bibtex}
 }
 
@@ -84,14 +92,21 @@
 \begin{document}
 \onehalfspacing
 
-% ── Bloque de título (reemplaza la portada) ───────────────────────────────────
-\cabeceroarticulo
+% ── Portada minimalista ───────────────────────────────────────────────────────
+\input{Latex/Portada}
 
 % ── Secciones ─────────────────────────────────────────────────────────────────
 \input{secciones/1-Introduccion}
 \clearpage
 \input{secciones/2-Desarrollo}
 \clearpage
+
+% ── Evidencia latexdiff ───────────────────────────────────────────────────────
+% Generado con: make latexdiff-tesis CHAPTER=... REV1=... DIR=...
+% Si el archivo aún no existe, comenta la siguiente línea hasta generarlo.
+\input{secciones/diff_evidencia}
+\clearpage
+
 \input{secciones/3-Conclusiones}
 
 % ── Bibliografía ──────────────────────────────────────────────────────────────

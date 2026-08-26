@@ -1,0 +1,316 @@
+%DIF <  \DIFdelbegin \DIFdel{!TeX root = }\DIFdelend %DIF >  !TeX root = ../tesis.tex
+%DIF > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%DIF >  SECCIÓN 4.3 — Transport-gis: Motor de Visualización
+%DIF > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DIFaddbegin 
+
+%DIF >  =============================================================================
+%DIF >   4.3 — VISIÓN GENERAL
+%DIF >  =============================================================================
+\section{\DIFadd{Transport-gis: El motor de Visualización}}
+\label{sec:transport-gis-intro}
+
+\textbf{\DIFadd{Transport-gis-zmvm-mjg}} \DIFadd{(}\termino{Transport GIS — Zona Metropolitana del Valle de México, M.J. Garibelt}\DIFadd{) 
+es el tercer y último componente de la arquitectura de código de esta investigación. Mientras }\textbf{\DIFadd{Apimetro}} 
+\DIFadd{opera como el motor de datos unificado —responsable de la ingesta, estandarización y exposición de la red de transporte 
+como servicio— y }\textbf{\DIFadd{VFTModel}} \DIFadd{constituye el núcleo analítico que calcula los indicadores de desempeño de la red, 
+}\textbf{\DIFadd{Transport-gis}} \DIFadd{representa la capa de visualización: el sistema que traduce los resultados del modelo en 
+representaciones cartográficas interpretables para el análisis urbanístico}\DIFaddend .
+\DIFaddbegin 
+
+\DIFadd{Al igual que los componentes precedentes, la denominación del sistema proviene de la obra literaria ficcional 
+}\textit{\DIFadd{Saga Diarios, tomo~2}}\DIFadd{, de autoría del investigador. En dicha novela, la urbanista ficcional 
+}\textit{\DIFadd{Mildred Julietta Cordero Garibelt}} \DIFadd{—referida por su acrónimo }\textit{\DIFadd{M.J.G}}\DIFadd{— es la responsable de la cartografía 
+y la planeación espacial del sistema de movilidad de }\textit{\DIFadd{Ciudad Capital}}\DIFadd{, ucronía de la Ciudad de México en la década de 1960. 
+La trama sitúa a este personaje en el centro de eventos políticos relevantes de la historia mexicana del siglo~}\textsc{\DIFadd{xx}} 
+\parencite{lopezmateos2023comoelcantodelcisne}\DIFadd{, cuya intervención en las decisiones sobre infraestructura y movilidad urbana articula 
+el argumento central de la novela. El paralelismo con la presente investigación es deliberado: así como }\textit{\DIFadd{M.J.G}} \DIFadd{produce 
+los mapas que hacen legible el sistema de movilidad de }\textit{\DIFadd{Ciudad Capital}}\DIFadd{, }\textbf{\DIFadd{Transport-gis}} \DIFadd{genera las representaciones 
+cartográficas que permiten interpretar los resultados del }\textbf{\DIFadd{VFTModel}} \DIFadd{sobre la red metropolitana real de la }\zmvm\DIFaddend .
+\DIFaddbegin 
+
+\subsection{\DIFadd{Transport-gis: Su arquitectura y funcionamiento}}
+\label{subsec:transport-gis-arquitectura-funcionamiento}
+
+\textbf{\DIFadd{Transport-gis}} \DIFadd{se organiza en cuatro módulos funcionales interdependientes: un módulo de }\textbf{\DIFadd{análisis}} \DIFadd{(}\texttt{\DIFadd{analysis/}}\DIFadd{), que gestiona la consulta a los servicios 
+externos y el procesamiento de indicadores; un módulo de }\textbf{\DIFadd{datos}} \DIFadd{(}\texttt{\DIFadd{data/processed/}}\DIFadd{), que almacena las capas geoespaciales en formato }\termino{GeoPackage} \DIFadd{(}\texttt{\DIFadd{.gpkg}}\DIFadd{) 
+bajo control de Git~}\textsc{\DIFadd{lfs}}\DIFadd{; un módulo }\textbf{\DIFadd{cartográfico}} \DIFadd{(}\texttt{\DIFadd{maps/}}\DIFadd{), que agrupa los proyectos QGIS, las plantillas tipográficas y los archivos de exportación; y un 
+módulo de }\textbf{\DIFadd{orquestación}} \DIFadd{(}\texttt{\DIFadd{pipeline/}}\DIFadd{), que coordina la ejecución secuencial del proceso completo. La Figura~\ref{fig:tg-pipeline} ilustra el flujo de datos 
+entre estos módulos y los componentes externos de la arquitectura de la investigación.
+}
+
+%DIF >  =============================================================================
+\subsubsection{\DIFadd{Flujo de producción de datos}}
+\label{subsubsec:tg-flujo-datos}
+%DIF >  =============================================================================
+
+\DIFadd{El proceso de producción cartográfica parte de dos fuentes primarias externas: los }\textit{\DIFadd{feeds}} \gtfs{} \DIFadd{de la }\textsc{\DIFadd{semovi}} \DIFadd{(2024), que contienen los horarios, 
+rutas y paradas de los sistemas de transporte de la }\cdmx{}\DIFadd{; y la cartografía base del }\textsc{\DIFadd{inegi}} \DIFadd{(2023), que provee los límites político-administrativos y la 
+infraestructura vial de la }\zmvm{}\DIFadd{. Estas fuentes alimentan a }\textbf{\DIFadd{Apimetro}} \DIFadd{—que las transforma en una }\api{} \textsc{\DIFadd{rest}} \DIFadd{consumible con la topología del 
+grafo de la red— y a }\textbf{\DIFadd{VFTModel}}\DIFadd{, que las procesa para calcular los indicadores de eficiencia nodal.
+}
+
+\DIFadd{Dentro del repositorio de }\textbf{\DIFadd{Transport-gis}}\DIFadd{, el script }\texttt{\DIFadd{apimetro\_client.py}} \DIFadd{consulta la }\api{} \DIFadd{de }\textbf{\DIFadd{Apimetro}} \DIFadd{para recuperar la topología del 
+grafo y los atributos de cada modo de transporte, mientras que }\texttt{\DIFadd{vft\_runner.py}} \DIFadd{ejecuta las rutinas del }\textbf{\DIFadd{VFTModel}} \DIFadd{para producir los indicadores por nodo en 
+formato }\texttt{\DIFadd{.csv}}\DIFadd{. El orquestador }\texttt{\DIFadd{pipeline/run\_pipeline.py}} \DIFadd{gestiona la secuencia completa de transformaciones hasta exportar las capas procesadas al 
+directorio }\texttt{\DIFadd{data/processed/}}\DIFadd{. Los fragmentos de código de estos componentes se documentan en el Anexo~\ref{anx:transportgis-tecnico}.}\pendiente{Crear Anexo — Documentación Técnica Transport-gis}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  srcbox/.style = {rectangle, rounded corners=3pt, draw=gray!55, fill=gray!8,
+                   minimum width=3.0cm, minimum height=0.90cm,
+                   align=center, font=\small},
+  extbox/.style = {rectangle, rounded corners=3pt, draw=unamAzul, fill=unamAzul!10,
+                   minimum width=3.2cm, minimum height=0.90cm,
+                   align=center, font=\small},
+  intbox/.style = {rectangle, rounded corners=3pt, draw=unamAzul!60, fill=unamGrisClaro,
+                   minimum width=6.4cm, minimum height=1.05cm,
+                   align=center, font=\small},
+  outbox/.style = {rectangle, rounded corners=3pt, draw=unamOro, fill=unamOro!15,
+                   minimum width=3.2cm, minimum height=0.90cm,
+                   align=center, font=\small},
+  ->, >=Stealth, thick
+]
+%% — Fuentes externas —
+\node[srcbox] (gtfs)  at (0.0, 9.2) {\gtfs{} SEMOVI~2024};
+\node[srcbox] (inegi) at (5.4, 9.2) {INEGI~2023 (cartografía)};
+
+%% — Componentes externos —
+\node[extbox] (api) at (0.0, 7.5) {\textbf{Apimetro}\\{\footnotesize API REST (Go)}};
+\node[extbox] (vft) at (5.4, 7.5) {\textbf{VFTModel}\\{\footnotesize (Python / NetworkX)}};
+
+%% — Transport-gis: análisis —
+\node[intbox] (scripts) at (2.7, 5.5)
+  {{\footnotesize\texttt{apimetro\_client.py} $\cdot$ \texttt{vft\_runner.py}}\\
+   {\footnotesize\texttt{pipeline/run\_pipeline.py}}};
+
+%% — Transport-gis: datos —
+\node[intbox] (gpkg) at (2.7, 4.0)
+  {{\small\texttt{data/processed/}}\\
+   {\footnotesize 10 capas \texttt{.gpkg} (Git~LFS)}};
+
+%% — Transport-gis: QGIS —
+\node[intbox] (qgis) at (2.7, 2.5)
+  {{\small QGIS~3.x — \texttt{maps/projects/*.qgz}}\\
+   {\footnotesize\texttt{maps/templates/*.qpt} (paletas UNAM)}};
+
+%% — Transport-gis: exports —
+\node[intbox] (exports) at (2.7, 1.0)
+  {{\small\texttt{maps/exports/}}\\
+   {\footnotesize\texttt{*.pdf} $\cdot$ \texttt{*.png}}};
+
+%% — Destino final —
+\node[outbox] (tesis) at (2.7, -0.5)
+  {\textbf{Tesis LaTeX}\\{\footnotesize\texttt{Figures/}}};
+
+%% — Flechas: fuentes → externos —
+\draw[color=gray!60] (gtfs)  -- (api);
+\draw[color=gray!60] (inegi) -- (vft);
+
+%% — Flechas: externos → scripts (convergentes, con codo exterior) —
+\draw[color=unamAzul!70] (api.south) -- ++(0,-0.55) -| (scripts.north west);
+\draw[color=unamAzul!70] (vft.south) -- ++(0,-0.55) -| (scripts.north east);
+
+%% — Flujo interno —
+\draw[color=unamAzul!70] (scripts) -- (gpkg);
+\draw[color=unamAzul!70] (gpkg)    -- (qgis);
+\draw[color=unamAzul!70] (qgis)    -- (exports);
+
+%% — Exports → LaTeX —
+\draw[color=unamOro] (exports) -- (tesis);
+
+%% — Recuadro del repositorio Transport-gis (en fondo) —
+\begin{scope}[on background layer]
+  \node[draw=unamAzul!40, dashed, rounded corners=6pt, fill=unamAzul!3,
+        fit={(scripts)(gpkg)(qgis)(exports)},
+        inner sep=14pt] (tgbox) {};
+\end{scope}
+%% — Label DENTRO del recuadro, esquina sup-izq —
+\node[font=\small\bfseries\color{unamAzul}, anchor=north west]
+  at ($(tgbox.north west) + (4pt,-3pt)$) {Transport-gis-zmvm-mjg};
+
+\end{tikzpicture}
+\caption[Pipeline de producción cartográfica de Transport-gis]%DIF > 
+  {\DIFaddFL{Flujo de datos del sistema }\textbf{\DIFaddFL{Transport-gis-zmvm-mjg}}\DIFaddFL{. 
+  Los componentes externos }\textbf{\DIFaddFL{Apimetro}} \DIFaddFL{y }\textbf{\DIFaddFL{VFTModel}} \DIFaddFL{proveen la información primaria; 
+  dentro del repositorio, los }\textit{\DIFaddFL{scripts}} \DIFaddFL{de análisis consolidan los datos en capas }\texttt{\DIFaddFL{.gpkg}} 
+  \DIFaddFL{que QGIS transforma en los mapas de presentación exportados a la tesis.}}
+\label{fig:tg-pipeline}
+\end{figure}
+
+%DIF >  =============================================================================
+\subsubsection{\DIFadd{Capas del sistema de información geográfica}}
+\label{subsubsec:tg-capas}
+%DIF >  =============================================================================
+
+\DIFadd{El módulo de datos mantiene diez capas }\termino{GeoPackage} \DIFadd{en }\texttt{\DIFadd{data/processed/}}\DIFadd{, 
+todas proyectadas en }\textsc{\DIFadd{epsg}}\DIFadd{:32614 (UTM zona~14N), referencia cartográfica adecuada 
+para la extensión de la }\zmvm{}\DIFadd{. Las capas se organizan en tres categorías temáticas, ilustradas en la 
+Figura~\ref{fig:tg-capas}: (i)~}\textbf{\DIFadd{contexto territorial}}\DIFadd{, con los límites político-administrativos de la }\cdmx{}\DIFadd{, del 
+Estado de México, el polígono de estudio y las variables de medio físico natural; (ii)~}\textbf{\DIFadd{red e infraestructura}}\DIFadd{, 
+con las geometrías de los sistemas de transporte, la infraestructura vial y el trazado del Periférico; y 
+(iii)~}\textbf{\DIFadd{indicadores del modelo VFT}}\DIFadd{, con las capas derivadas del cálculo de cobertura espacial, 
+fuerza capilar y factor de desviación descritos en el Capítulo~\ref{ch:resultados-vft}.
+}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  hdr1/.style = {rectangle, rounded corners=3pt,
+                 draw=gray!60, fill=gray!55,
+                 minimum width=4.2cm, minimum height=0.75cm,
+                 align=center, font=\small\bfseries\color{white}},
+  lyr1/.style = {rectangle, rounded corners=2pt,
+                 draw=gray!45, fill=gray!8,
+                 minimum width=4.2cm, minimum height=0.65cm,
+                 align=center, font=\footnotesize},
+  hdr2/.style = {rectangle, rounded corners=3pt,
+                 draw=unamAzul, fill=unamAzul!70,
+                 minimum width=4.2cm, minimum height=0.75cm,
+                 align=center, font=\small\bfseries\color{white}},
+  lyr2/.style = {rectangle, rounded corners=2pt,
+                 draw=unamAzul!50, fill=unamAzul!8,
+                 minimum width=4.2cm, minimum height=0.65cm,
+                 align=center, font=\footnotesize},
+  hdr3/.style = {rectangle, rounded corners=3pt,
+                 draw=unamOro!80, fill=unamOro!75,
+                 minimum width=4.2cm, minimum height=0.75cm,
+                 align=center, font=\small\bfseries\color{white}},
+  lyr3/.style = {rectangle, rounded corners=2pt,
+                 draw=unamOro!60, fill=unamOro!10,
+                 minimum width=4.2cm, minimum height=0.65cm,
+                 align=center, font=\footnotesize},
+  node distance = 0.12cm
+]
+%% — Columna 1: Contexto territorial —
+\node[hdr1] (h1) at (0,0) {Contexto territorial};
+\node[lyr1, below=of h1] (c1a) {\texttt{LimitesPoliticos.gpkg}};
+\node[lyr1, below=of c1a] (c1b) {\texttt{PoligonosEdoMex.gpkg}};
+\node[lyr1, below=of c1b] (c1c) {\texttt{PoligonoEstudio1.gpkg}};
+\node[lyr1, below=of c1c] (c1d) {\texttt{MedioFisicoNatural.gpkg}};
+
+%% — Columna 2: Red e infraestructura —
+\node[hdr2] (h2) at (4.6,0) {Red e infraestructura};
+\node[lyr2, below=of h2] (c2a) {\texttt{Transporte.gpkg}};
+\node[lyr2, below=of c2a] (c2b) {\texttt{InfraEstructura.gpkg}};
+\node[lyr2, below=of c2b] (c2c) {\texttt{Vialidades.gpkg}};
+
+%% — Columna 3: Indicadores del modelo —
+\node[hdr3] (h3) at (9.2,0) {Indicadores del modelo};
+\node[lyr3, below=of h3] (c3a) {\texttt{Cobertura800m.gpkg}};
+\node[lyr3, below=of c3a] (c3b) {\texttt{FuerzaCapilar.gpkg}};
+\node[lyr3, below=of c3b] (c3c) {\texttt{FactorDesviacion.gpkg}};
+\end{tikzpicture}
+\caption[Organización de las capas GeoPackage de Transport-gis]%DIF > 
+  {\DIFaddFL{Las diez capas }\termino{GeoPackage} \DIFaddFL{del directorio }\texttt{\DIFaddFL{data/processed/}}\DIFaddFL{, organizadas por 
+  categoría temática. Todas están proyectadas en }\textsc{\DIFaddFL{epsg}}\DIFaddFL{:32614 (UTM zona~14N) y versionadas con Git~}\textsc{\DIFaddFL{lfs}}\DIFaddFL{.}}
+\label{fig:tg-capas}
+\end{figure}
+
+%DIF >  =============================================================================
+\subsubsection{\DIFadd{Proyectos cartográficos y plantillas institucionales}}
+\label{subsubsec:tg-proyectos}
+%DIF >  =============================================================================
+
+\DIFadd{La Figura~\ref{fig:tg-arbol} muestra la estructura de directorios completa de }\textbf{\DIFadd{Transport-gis}}\DIFadd{. El repositorio se articula
+en cinco carpetas de primer nivel con responsabilidades bien delimitadas: }\texttt{\DIFadd{analysis/}} \DIFadd{centraliza los }\textit{\DIFadd{scripts}} \DIFadd{de
+procesamiento y los cuadernos de exploración; }\texttt{\DIFadd{data/processed/}} \DIFadd{almacena las diez capas }\textit{\DIFadd{GeoPackage}} \DIFadd{versionadas en
+Git~}\textsc{\DIFadd{lfs}}\DIFadd{; }\texttt{\DIFadd{maps/}} \DIFadd{agrupa los proyectos QGIS~(}\texttt{\DIFadd{.qgz}}\DIFadd{), las plantillas visuales~(}\texttt{\DIFadd{.qpt}}\DIFadd{) con las paletas
+institucionales de la }\textsc{\DIFadd{unam}} \DIFadd{y el directorio de exportaciones; }\texttt{\DIFadd{pipeline/}} \DIFadd{contiene el orquestador del proceso; y
+}\texttt{\DIFadd{setup/}} \DIFadd{distribuye los activos tipográficos para garantizar la reproducibilidad visual en distintos sistemas operativos.
+Los mapas terminados se exportan en }\texttt{\DIFadd{.pdf}} \DIFadd{(alta resolución para la tesis) y }\texttt{\DIFadd{.png}} \DIFadd{(presentaciones del coloquio),
+cerrando el ciclo descrito en la Figura~\ref{fig:tg-pipeline}.
+}
+
+\begin{figure}[htbp]
+\centering
+\iffalse
+\begin{forest}
+  \DIFaddFL{for tree = }{
+    \DIFaddFL{font   = }\footnotesize\ttfamily\DIFaddFL{,
+    grow'  = 0,
+    child anchor  = west,
+    parent anchor = east,
+    anchor = west,
+    draw   = gray!45,
+    fill   = gray!7,
+    rounded corners = 2pt,
+    inner xsep = 6pt,
+    inner ysep = 3pt,
+    l sep  = 20pt,
+    s sep  = 5pt,
+    edge path = }{
+      \noexpand\path [\DIFaddFL{draw=gray!50, thin, rounded corners=2pt}]
+        \DIFaddFL{(!u.parent anchor) -- +(8pt,0) |- (.child anchor)
+        }\forestoption{edge label}\DIFaddFL{;
+    }}\DIFaddFL{,
+  }}
+  [\DIFaddFL{Transport-gis-zmvm-mjg/, fill=unamAzul!12, draw=unamAzul!70,
+                             font=}\small\bfseries\ttfamily
+    [\DIFaddFL{analysis}\DIFaddendFL /
+      \DIFdelbeginFL \DIFdelFL{tesis.tex }\DIFdelendFL \DIFaddbeginFL [\DIFaddFL{notebooks/}]
+      [\DIFaddFL{scripts/
+        }[\DIFaddFL{apimetro\_client.py,
+          draw=none, fill=none, font=}\footnotesize\ttfamily\color{unamAzul}]
+        [\DIFaddFL{vft\_runner.py,
+          draw=none, fill=none, font=}\footnotesize\ttfamily\color{unamAzul}]
+      ]
+    ]
+    [\DIFaddFL{data/processed/
+      }[{\textit{\DIFaddFL{10 capas .gpkg}} \DIFaddFL{\textnormal{(Git~LFS)}}}\DIFaddFL{,
+        draw=none, fill=none, font=}\footnotesize\itshape\ttfamily]
+    ]
+    [\DIFaddFL{maps/, fill=unamOro!8, draw=unamOro!60
+      }[\DIFaddFL{exports/
+        }[{\textit{\DIFaddFL{*.pdf · *.png}}}\DIFaddFL{,
+          draw=none, fill=none, font=}\footnotesize\itshape\ttfamily]
+      ]
+      [\DIFaddFL{fonts/}]
+      [\DIFaddFL{projects/
+        }[\textit{\DIFaddFL{*.qgz}}\DIFaddFL{,
+          draw=none, fill=none, font=}\footnotesize\itshape\ttfamily]
+      ]
+      [\DIFaddFL{templates/
+        }[{\textit{\DIFaddFL{*.qpt}} \DIFaddFL{\textnormal{(paletas UNAM)}}}\DIFaddFL{,
+          draw=none, fill=none, font=}\footnotesize\itshape\ttfamily]
+      ]
+    ]
+    [\DIFaddFL{pipeline/
+      }[\DIFaddFL{run\_pipeline.py,
+        draw=none, fill=none, font=}\footnotesize\ttfamily\color{unamAzul}]
+    ]
+    [\DIFaddFL{setup/
+      }[\DIFaddFL{install\_fonts.sh,
+        draw=none, fill=none, font=}\footnotesize\ttfamily\color{unamAzul}]
+      [\DIFaddFL{install\_fonts.bat,
+        draw=none, fill=none, font=}\footnotesize\ttfamily\color{unamAzul}]
+    ]
+  ]
+\end{forest}
+\fi
+\caption[Estructura de directorios de Transport-gis-zmvm-mjg]%DIF > 
+  {\DIFaddFL{Árbol de directorios del repositorio }\textbf{\DIFaddFL{Transport-gis-zmvm-mjg}}\DIFaddFL{. Las carpetas }\texttt{\DIFaddFL{maps/}} \DIFaddFL{(oro) y la raíz (azul UNAM)
+  son los nodos centrales de la producción cartográfica. Los archivos en azul son }\textit{\DIFaddFL{scripts}} \DIFaddFL{ejecutables;
+  los de fondo plano son activos generados o de datos.}}
+\label{fig:tg-arbol}
+\end{figure}
+
+\DIFadd{La Figura~\ref{fig:mapa-red-esquematica} presenta el resultado de este proceso aplicado a la red de transporte completa de la }\zmvm{}\DIFadd{:
+un mapa de síntesis que integra los doce sistemas reconocidos por el modelo, proyectados en el espacio metropolitano real. Este mapa
+constituye la representación cartográfica de referencia del estudio y es el punto de partida para la interpretación de los indicadores
+presentados en el Capítulo~\ref{ch:resultados-vft}. Las versiones de alta resolución a página completa de todos los mapas producidos
+por }\textbf{\DIFadd{Transport-gis}} \DIFadd{se encuentran en el Anexo~\ref{anx:cartografia-presentacion}.
+}
+
+\begin{figure}[htbp]
+  \centering
+  \figinclude[width=\textwidth]{Figures/Mapas/Mapa_Red_Esquematica}
+  \caption[Red multimodal de transporte de la ZMVM]{\DIFaddFL{Red esquemática multimodal de la }\zmvm{} \DIFaddFL{generada por }\textbf{\DIFaddFL{Transport-gis-zmvm-mjg}}\DIFaddFL{.
+    Incluye los doce sistemas de transporte reconocidos por el modelo, proyectados en EPSG:32614 (UTM zona~14N) sobre los límites político-administrativos
+    de la }\cdmx{} \DIFaddFL{y el Estado de México. }\fuentefigura{Elaboración propia con QGIS~3.x, plantillas institucionales \textsc{unam};
+    datos: \textsc{gtfs} \textsc{semovi} 2024 e \textsc{inegi} 2023.}}
+  \label{fig:mapa-red-esquematica}
+\end{figure}
+
+ \DIFaddend

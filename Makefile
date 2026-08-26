@@ -501,6 +501,7 @@ endif
 	@echo "   Salida: $(DIR)/secciones/$(OUT).tex"
 	@echo "========================================================"
 	@set -e; \
+	ABSDIR="$(CURDIR)/$(DIR)"; \
 	TMPDIR=$$(mktemp -d); \
 	mkdir -p "$$TMPDIR/old" "$$TMPDIR/new"; \
 	echo "--- Extrayendo $(REV1)..."; \
@@ -518,17 +519,20 @@ endif
 	    exit 1; \
 	fi; \
 	echo "--- Generando diff..."; \
-	mkdir -p "$(DIR)/secciones"; \
+	mkdir -p "$$ABSDIR/secciones"; \
 	latexdiff --flatten \
 	    "$$TMPDIR/old/$(CHAPTER)" \
 	    "$$TMPDIR/new/$(CHAPTER)" \
 	    | grep -v '%DIF PREAMBLE$$' \
-	    > "$(DIR)/secciones/$(OUT).tex"; \
-	echo "--- Copiando figuras..."; \
-	if [ -d "$(TESIS_DIR)/Figures" ]; then \
-	    mkdir -p "$(DIR)/Figures"; \
-	    cp -rn "$(TESIS_DIR)/Figures/." "$(DIR)/Figures/" 2>/dev/null || true; \
-	fi; \
+	    > "$$ABSDIR/secciones/$(OUT).tex"; \
+	echo "--- Post-procesando diff..."; \
+	sed -i '' \
+	    -e 's/\\includegraphics\[/\\figinclude[/g' \
+	    -e 's/\\includegraphics{/\\figinclude{/g' \
+	    "$$ABSDIR/secciones/$(OUT).tex"; \
+	perl -0777 -i -pe \
+	    's/\\begin\{forest\}.*?\\end\{forest\}/\\iffalse\n$$&\n\\fi/gs' \
+	    "$$ABSDIR/secciones/$(OUT).tex"; \
 	rm -rf "$$TMPDIR"; \
 	echo ">>> Listo. Archivo generado: $(DIR)/secciones/$(OUT).tex"; \
 	echo "    Compila con: make Document DIR=$(DIR) COLOR=<tema>"

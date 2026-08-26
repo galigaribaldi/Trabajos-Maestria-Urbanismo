@@ -21,6 +21,7 @@
 \input{Latex/Colores/\ColorTema}      % carga ColorPrincipal y ColorAcento
 \definecolor{ColorFondoTabla}{RGB}{240, 240, 240}  % Gris claro para tablas
 \definecolor{ColorAlerta}   {RGB}{183,  28,  28}  % Rojo para notas de revisión
+\definecolor{ColorTexto}    {RGB}{ 30,  30,  30}  % Casi negro para cuerpo de texto
 % ═════════════════════════════════════════════════════════════════════════════
 
 
@@ -41,10 +42,28 @@
 
 
 % =============================================================================
-%  3. FIGURAS
+%  3. FIGURAS Y DIAGRAMAS
 %  caption DEBE cargarse antes de hyperref
 % =============================================================================
 \usepackage{graphicx}
+
+% TikZ — necesario cuando el diff incluye diagramas vectoriales de la tesis
+\usepackage{tikz}
+\usetikzlibrary{
+  arrows.meta,
+  positioning,
+  shapes.geometric,
+  fit,
+  backgrounds,
+  calc,
+  babel
+}
+\usepackage{forest}
+
+% Colores UNAM usados en diagramas TikZ de la tesis
+\definecolor{unamAzul}     {RGB}{  0,  56, 147}
+\definecolor{unamOro}      {RGB}{244, 180,   0}
+\definecolor{unamGrisClaro}{RGB}{240, 240, 240}
 % Ruta de búsqueda de imágenes:
 %   img/          → carpeta local del artículo
 %   ../../../Img/ → carpeta compartida en raíz del proyecto (escudos UNAM/FES)
@@ -162,6 +181,35 @@
   \end{quote}%
 }
 
+% Figura portátil para RegistroDiff: muestra la ruta del archivo como evidencia
+% documental sin necesidad de distribuir la imagen con el repositorio.
+% Uso: \figplaceholder{Figures/Mapas/Mapa_Red_Esquematica.pdf}
+\newcommand{\figplaceholder}[1]{%
+  \begin{tikzpicture}
+    \node[draw=ColorPrincipal!40, dashed, fill=gray!4, rounded corners=5pt,
+          text width=\dimexpr\textwidth-2.4cm\relax, minimum height=4cm,
+          align=center, inner sep=14pt]
+      {\small\color{gray!55}\textbf{[Figura referenciada --- archivo externo]}\\[8pt]
+       \footnotesize\color{ColorPrincipal!70}\nolinkurl{#1}};
+  \end{tikzpicture}%
+}
+
+% Figura condicional: incluye el archivo si existe en el entorno de compilación;
+% si no, muestra \figplaceholder. Busca extensiones .pdf y .png antes de rendirse.
+% Uso: \figinclude[width=\textwidth]{Figures/Mapas/Mapa_Red_Esquematica}
+\newcommand{\figinclude}[2][width=\textwidth]{%
+  \IfFileExists{#2.pdf}{\includegraphics[#1]{#2}}{%
+  \IfFileExists{#2.png}{\includegraphics[#1]{#2}}{%
+  \IfFileExists{#2}    {\includegraphics[#1]{#2}}{%
+    \figplaceholder{#2}%
+  }}}%
+}
+
+% Referencias tipográficas para bitácora git
+% Uso: \commitref{45d6f55}   \versiontag{v0.4.1}
+\newcommand{\commitref}[1]{\texttt{\color{ColorPrincipal!80}#1}}
+\newcommand{\versiontag}[1]{\texttt{#1}}
+
 
 % =============================================================================
 %  9. ABREVIATURAS — agrega las tuyas aquí
@@ -170,3 +218,5 @@
 \newcommand{\zmvm}{Zona Metropolitana del Valle de México}
 \newcommand{\unam}{Universidad Nacional Autónoma de México}
 \newcommand{\gis}{\textsc{gis}}
+\newcommand{\gtfs}{\textsc{gtfs}}
+\newcommand{\api}{\textsc{api}}
