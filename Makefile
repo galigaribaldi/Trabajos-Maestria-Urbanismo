@@ -39,6 +39,12 @@
 # ─── UTILIDADES ──────────────────────────────────────────────────────────────
 #   make limpiar               → borra auxiliares LaTeX en todo el proyecto
 #   make limpiar-dir DIR=<ruta>→ borra auxiliares solo en <ruta>
+#
+# ─── LATEXDIFF ───────────────────────────────────────────────────────────────
+#   make latexdiff-tesis   CHAPTER=<archivo> REV1=<commit> DIR=<ruta>
+#                              → diff de un capítulo específico
+#   make latexdiff-commit  REV1=<commit> DIR=<ruta> [REV2=HEAD]
+#                              → diff de TODOS los .tex cambiados entre commits
 # =============================================================================
 
 MOTOR  := pdflatex
@@ -533,6 +539,94 @@ endif
 	perl -0777 -i -pe \
 	    's/\\begin\{forest\}.*?\\end\{forest\}/\\iffalse\n$$&\n\\fi/gs' \
 	    "$$ABSDIR/secciones/$(OUT).tex"; \
+	rm -rf "$$TMPDIR"; \
+	echo ">>> Listo. Archivo generado: $(DIR)/secciones/$(OUT).tex"; \
+	echo "    Compila con: make Document DIR=$(DIR) COLOR=<tema>"
+
+# =============================================================================
+# LATEXDIFF-COMMIT — diff completo de todos los .tex cambiados entre dos commits
+#
+# Detecta automáticamente los archivos .tex modificados entre REV1 y REV2,
+# genera el diff de cada uno y los concatena en un único diff_evidencia.tex
+# con separadores \subsection* por archivo. El resultado es directamente
+# compilable con 'make Document'.
+#
+# Uso:
+#   make latexdiff-commit \
+#        REV1=<tag-o-commit-inicial> \
+#        DIR=<directorio-del-documento-destino> \
+#        [TESIS_DIR=../TesisUrbanismo] \
+#        [REV2=HEAD] \
+#        [OUT=diff_evidencia]
+#
+# Ejemplo:
+#   make latexdiff-commit \
+#        TESIS_DIR=../TesisUrbanismo \
+#        REV1=45d6f55 REV2=1a1137db \
+#        DIR=CuartoSemestre/SeminarioGraduacion/Registro2
+# =============================================================================
+
+latexdiff-commit:
+ifndef DIR
+	$(error [latexdiff-commit] Debes indicar DIR=<directorio-del-documento>)
+endif
+ifndef REV1
+	$(error [latexdiff-commit] Debes indicar REV1=<tag-o-commit-inicial>)
+endif
+	@if [ ! -d "$(TESIS_DIR)" ]; then \
+	    echo "[ERROR] No se encontró el repositorio: $(TESIS_DIR)"; \
+	    exit 1; \
+	fi
+	@echo "========================================================"
+	@echo " latexdiff-commit"
+	@echo "   Repo  : $(TESIS_DIR)"
+	@echo "   Rev1  : $(REV1)  →  Rev2: $(REV2)"
+	@echo "   Salida: $(DIR)/secciones/$(OUT).tex"
+	@echo "========================================================"
+	@set -e; \
+	ABSDIR="$(CURDIR)/$(DIR)"; \
+	TMPDIR=$$(mktemp -d); \
+	mkdir -p "$$TMPDIR/old" "$$TMPDIR/new"; \
+	echo "--- Extrayendo $(REV1)..."; \
+	cd "$(TESIS_DIR)" && git archive $(REV1) 2>/dev/null | tar -x -C "$$TMPDIR/old" || true; \
+	echo "--- Extrayendo $(REV2)..."; \
+	cd "$(TESIS_DIR)" && git archive $(REV2) 2>/dev/null | tar -x -C "$$TMPDIR/new"; \
+	CHANGED=$$(cd "$(TESIS_DIR)" && git diff --name-only $(REV1) $(REV2) -- '*.tex'); \
+	if [ -z "$$CHANGED" ]; then \
+	    echo "[AVISO] No hay archivos .tex cambiados entre $(REV1) y $(REV2)"; \
+	    rm -rf "$$TMPDIR"; \
+	    exit 0; \
+	fi; \
+	echo "--- Archivos .tex con cambios:"; \
+	echo "$$CHANGED" | sed 's/^/    /'; \
+	mkdir -p "$$ABSDIR/secciones"; \
+	OUTFILE="$$ABSDIR/secciones/$(OUT).tex"; \
+	> "$$OUTFILE"; \
+	for f in $$CHANGED; do \
+	    OLD="$$TMPDIR/old/$$f"; \
+	    NEW="$$TMPDIR/new/$$f"; \
+	    if [ ! -f "$$NEW" ]; then \
+	        echo "    ($$f eliminado en $(REV2) — omitido)"; \
+	        continue; \
+	    fi; \
+	    if [ ! -f "$$OLD" ]; then \
+	        echo "    ($$f es nuevo en $(REV2))"; \
+	        mkdir -p "$$(dirname "$$OLD")"; \
+	        touch "$$OLD"; \
+	    fi; \
+	    echo "--- Diffando $$f..."; \
+	    LABEL=$$(basename "$$f" .tex | tr '_-' '  '); \
+	    printf '\n%%%% ── %s\n\\subsection*{%s}\n' "$$f" "$$LABEL" >> "$$OUTFILE"; \
+	    latexdiff "$$OLD" "$$NEW" | grep -v '%DIF PREAMBLE$$' >> "$$OUTFILE"; \
+	done; \
+	echo "--- Post-procesando diff..."; \
+	sed -i '' \
+	    -e 's/\\includegraphics\[/\\figinclude[/g' \
+	    -e 's/\\includegraphics{/\\figinclude{/g' \
+	    "$$OUTFILE"; \
+	perl -0777 -i -pe \
+	    's/\\begin\{forest\}.*?\\end\{forest\}/\\iffalse\n$$&\n\\fi/gs' \
+	    "$$OUTFILE"; \
 	rm -rf "$$TMPDIR"; \
 	echo ">>> Listo. Archivo generado: $(DIR)/secciones/$(OUT).tex"; \
 	echo "    Compila con: make Document DIR=$(DIR) COLOR=<tema>"
