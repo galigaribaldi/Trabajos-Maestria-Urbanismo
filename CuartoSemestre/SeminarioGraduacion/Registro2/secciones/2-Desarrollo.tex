@@ -1,0 +1,147 @@
+% =============================================================================
+%  2-Desarrollo.tex — Bitácora de avances y autoevaluación
+%
+%  INSTRUCCIONES GENERALES:
+%  ─────────────────────────────────────────────────────────────────────────────
+%  Este archivo contiene dos tablas pre-configuradas:
+%
+%  TABLA 1 (longtable) — Bitácora cronológica de commits/tags
+%    • Llena una fila por cada hito significativo del git log.
+%    • Agrupa las filas por semana o etapa usando las filas de encabezado
+%      de color (multicolumn). Añade o elimina semanas según necesites.
+%    • Obtén los hashes y fechas con:
+%        cd <TESIS_DIR> && git log --oneline --format="%h %ad %s" --date=short
+%
+%  TABLA 2 (tabularx) — Autoevaluación por capítulo o módulo
+%    • Ajusta las filas a los capítulos/módulos de tu repositorio.
+%    • Las columnas son: Capítulo | Avance concreto | Dificultad | Estado actual
+%
+%  Parámetros útiles disponibles:
+%    \NombreRepo, \VerRef, \VerActual  (definidos en main.tex)
+% =============================================================================
+
+\section{Desarrollo y Avances}
+\label{sec:desarrollo}
+
+A través del sistema de control de versiones del repositorio \texttt{\NombreRepo},
+es posible rastrear con precisión la evolución del proyecto entre las versiones
+\texttt{\VerRef} y \texttt{\VerActual}. El Cuadro~\ref{tab:bitacora_git}
+presenta una bitácora cronológica de los hitos registrados.
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  TABLA 1: Bitácora cronológica (git log)
+%
+%  Anchos de columna: suma + 2×\tabcolsep×4cols debe ser ≤ \textwidth (155mm)
+%  Con \tabcolsep=6pt: 4cols×12pt = 48pt = 16.9mm → columnas ≤ 138mm = 13.8cm
+%  Distribución actual: 2.4+2.0+3.3+5.8 = 13.5cm → total 13.5+1.69 = 15.19cm ✓
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{longtable}{>{\bfseries}p{2.4cm} p{2.0cm} p{3.3cm} p{5.8cm}}
+    \caption{Bitácora cronológica de avances en \texttt{\NombreRepo}
+             (Corte: \FechaEntrega).}
+    \label{tab:bitacora_git} \\
+    \toprule
+    \textbf{Versión / Hito} & \textbf{Fecha} & \textbf{Ámbito} & \textbf{Descripción del avance} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{4}{l}{\footnotesize\textit{(Continuación del Cuadro~\ref{tab:bitacora_git})}} \\
+    \toprule
+    \textbf{Versión / Hito} & \textbf{Fecha} & \textbf{Ámbito} & \textbf{Descripción del avance} \\
+    \midrule
+    \endhead
+
+    \midrule
+    \multicolumn{4}{r}{\footnotesize\textit{Continúa en la siguiente página}} \\
+    \endfoot
+
+    \bottomrule
+    \endlastfoot
+
+    % ── Etapa 1 ───────────────────────────────────────────────────────────────
+    % Cambia el texto de la etiqueta y las fechas según tu proyecto.
+    \multicolumn{4}{l}{\small\color{ColorPrincipal}\textit{Etapa 1 — Descripción (dd--dd de mes de año)}} \\
+    \addlinespace[2pt]
+
+    % Fila de ejemplo — duplica o elimina según tus commits
+    Hito o tag
+    & DD mmm AAAA
+    & Capítulo / Módulo
+    & Descripción del cambio realizado (\texttt{abc1234}). \\
+    \addlinespace[3pt]
+
+    Hito o tag
+    & DD mmm AAAA
+    & Capítulo / Módulo
+    & Descripción del cambio realizado (\texttt{def5678}). \\
+    \addlinespace[8pt]
+
+    % ── Etapa 2 ───────────────────────────────────────────────────────────────
+    \multicolumn{4}{l}{\small\color{ColorPrincipal}\textit{Etapa 2 — Descripción (dd--dd de mes de año)}} \\
+    \addlinespace[2pt]
+
+    \texttt{v0.X.Y} — Nombre
+    & DD mmm AAAA
+    & Capítulo / Módulo
+    & \textbf{Hito importante}: descripción detallada del avance o redefinición
+      (\texttt{abc1234}). \\
+    \addlinespace[8pt]
+
+    % ── Etapa 3 ───────────────────────────────────────────────────────────────
+    \multicolumn{4}{l}{\small\color{ColorPrincipal}\textit{Etapa 3 — Descripción (dd--dd de mes de año)}} \\
+    \addlinespace[2pt]
+
+    \texttt{v0.X.Z} — Nombre
+    & DD mmm AAAA
+    & Capítulo / Módulo
+    & Descripción (\texttt{abc1234}). \\
+
+\end{longtable}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  TABLA 2: Autoevaluación por capítulo / módulo
+% ─────────────────────────────────────────────────────────────────────────────
+\vspace{1em}
+
+El Cuadro~\ref{tab:autoevaluacion} presenta una autoevaluación del estado actual
+por capítulo o módulo, identificando avances, dificultades encontradas y
+los apartados que requieren atención en la siguiente etapa.
+
+\begin{table}[H]
+    \centering
+    \caption{Autoevaluación por capítulo: avances, redefiniciones y apartados débiles.}
+    \label{tab:autoevaluacion}
+    \fontsize{9pt}{11.5pt}\selectfont
+    \begin{tabularx}{\textwidth}{
+        >{\hsize=0.55\hsize\raggedright\arraybackslash}X
+        >{\hsize=1.15\hsize\raggedright\arraybackslash}X
+        >{\hsize=1.15\hsize\raggedright\arraybackslash}X
+        >{\hsize=1.15\hsize\raggedright\arraybackslash}X}
+        \toprule
+        \textbf{Capítulo / Módulo} &
+        \textbf{Avance concreto} &
+        \textbf{Dificultad / Redefinición} &
+        \textbf{Estado actual y pendientes} \\
+        \midrule
+
+        % Fila de ejemplo — duplica o elimina según tus módulos
+        \textbf{Cap. 1}\newline Nombre del capítulo &
+        Descripción del avance realizado. &
+        Descripción de la dificultad o cambio de enfoque. &
+        \textit{Estado:} descripción.\newline
+        \textit{Pendiente:} descripción. \\
+        \addlinespace\hline\addlinespace
+
+        \textbf{Cap. 2}\newline Nombre del capítulo &
+        Descripción del avance realizado. &
+        Descripción de la dificultad. &
+        \textit{Estado:} descripción.\newline
+        \textit{Pendiente:} descripción. \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\vspace{1em}
+\textit{Nota metodológica:} Para respaldar esta autoevaluación, en la sección
+siguiente se presenta evidencia generada con \texttt{latexdiff}, donde las
+adiciones aparecen en \textcolor{blue}{azul} y las eliminaciones en
+\textcolor{red}{rojo}.

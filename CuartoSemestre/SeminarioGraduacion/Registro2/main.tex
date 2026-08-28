@@ -1,0 +1,130 @@
+% !TeX program = pdflatex
+% !TeX encoding = UTF-8
+% =============================================================================
+%  PLANTILLA — Registro de Avances / Diff de Repositorio
+%  Maestría en Urbanismo, UNAM – FES Acatlán
+%  Versión 1.0 — Mayo 2027
+%
+%  FLUJO DE USO (3 pasos desde la raíz del proyecto):
+%
+%  PASO 1 — Crear este documento (ya hecho si lo lees):
+%    make RegistroDiffDoc DIR=<ruta-del-documento>
+%
+%  PASO 2 — Generar el diff desde el repositorio fuente:
+%    make latexdiff-tesis \
+%         TESIS_DIR=<ruta-al-repo>          \  # p.ej. ../MiRepo  (default: ../Tesis_Latex)
+%         CHAPTER=<archivo.tex>             \  # relativo a TESIS_DIR
+%         REV1=<tag-o-commit-inicial>       \
+%         REV2=<tag-o-commit-final>         \  # default: HEAD
+%         DIR=<ruta-de-este-documento>      \
+%         OUT=diff_evidencia                   # nombre del .tex de salida (default)
+%
+%    Resultado: secciones/diff_evidencia.tex  +  Figures/ (figuras copiadas)
+%
+%  PASO 3 — Compilar:
+%    make Document DIR=<ruta-de-este-documento> COLOR=<tema>
+%
+%  NOTAS:
+%    · diff_evidencia.tex es generado automáticamente — no editar a mano.
+%    · Si el repositorio fuente no es ../Tesis_Latex, especifica TESIS_DIR.
+%    · Comandos personalizados del repo fuente que aparezcan en el diff
+%      deben añadirse en Latex/Comands.tex de este documento.
+% =============================================================================
+
+\documentclass[12pt,a4paper]{article}
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PERSONALIZACIÓN — Edita solo esta sección para cada nuevo entregable
+% ═════════════════════════════════════════════════════════════════════════════
+\newcommand{\TituloArticulo}{Registro de Avances — Tesis de Maestría en Urbanismo (27 Agosto)}
+\newcommand{\SubtituloArticulo}{Comparativa de versiones \VerRef{} a 27-Agosto}
+\newcommand{\Autor}{Hernán Galileo Cabrera Garibaldi}
+\newcommand{\Materia}{Seminario de Graduación}
+\newcommand{\MateriaCorta}{Seminario de Graduación — Semestre 2027-1}     % Encabezado y pie
+\newcommand{\ProfesorAsignado}{Rith Estefani Ochoa Alvarado}
+\newcommand{\Semestre}{2027-1}
+\newcommand{\FechaEntrega}{Agosto 2027}
+
+% ── Datos del repositorio fuente ─────────────────────────────────────────────
+\newcommand{\NombreRepo}{Transportes Anillares y su importancia en la ciudad de México y el área metropolitana}          % p.ej. TesisUrbanismo
+\newcommand{\RutaRepo}{../MiRepo}                         % ruta local al repo
+\newcommand{\VerRef}{v0.1.0}                              % versión/tag de referencia
+\newcommand{\VerActual}{1a1137db}                             % versión/tag actual
+% ═════════════════════════════════════════════════════════════════════════════
+
+% =============================================================================
+%  1. IDIOMA Y CODIFICACIÓN
+% =============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+\usepackage{csquotes}
+
+% =============================================================================
+%  2. LAYOUT BASE
+% =============================================================================
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm}
+
+% =============================================================================
+%  3. PAQUETES ESENCIALES
+% =============================================================================
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{natbib}
+
+% =============================================================================
+%  4. PAQUETES ADICIONALES, COLORES Y COMANDOS PERSONALIZADOS
+% =============================================================================
+\input{Latex/Comands}
+
+% --- Soporte para latexdiff (ulem ya cargado en Comands) ---
+\input{Latex/latexdiff-preamble}
+
+% =============================================================================
+%  5. HIPERVÍNCULOS — siempre al final del preámbulo
+% =============================================================================
+\usepackage[
+    colorlinks = true,
+    linkcolor  = ColorPrincipal,
+    citecolor  = ColorPrincipal,
+    urlcolor   = ColorPrincipal,
+    unicode    = true,
+    breaklinks = true
+]{hyperref}
+\hypersetup{
+    pdftitle   = {\TituloArticulo},
+    pdfauthor  = {\Autor},
+    pdfsubject = {Registro de avances — \NombreRepo},
+    pdfcreator = {pdfLaTeX + natbib/bibtex}
+}
+
+% =============================================================================
+%  DOCUMENTO
+% =============================================================================
+\begin{document}
+\onehalfspacing
+
+% ── Portada minimalista ───────────────────────────────────────────────────────
+\input{Latex/Portada}
+
+% ── Secciones ─────────────────────────────────────────────────────────────────
+\input{secciones/1-Introduccion}
+\clearpage
+%\input{secciones/2-Desarrollo}
+%\clearpage
+
+% ── Evidencia latexdiff ───────────────────────────────────────────────────────
+% Generado con: make latexdiff-tesis CHAPTER=... REV1=... DIR=...
+% Si el archivo aún no existe, comenta la siguiente línea hasta generarlo.
+\input{secciones/diff_evidencia}
+\clearpage
+
+\input{secciones/3-Conclusiones}
+
+% ── Bibliografía ──────────────────────────────────────────────────────────────
+\newpage
+\bibliographystyle{apalike}
+\bibliography{referencias}
+
+\end{document}

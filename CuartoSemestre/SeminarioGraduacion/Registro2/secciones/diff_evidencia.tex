@@ -1,0 +1,1858 @@
+
+%% ── 4-Capas-Codigo/4-3-Visualizacion.tex
+\subsection*{4 3 Visualizacion}
+% !TeX root = ../tesis.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SECCIÓN 4.3 — Transport-gis: Motor de Visualización
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% =============================================================================
+%  4.3 — VISIÓN GENERAL
+% =============================================================================
+\section{Transport-gis: El motor de Visualización}
+\label{sec:transport-gis-intro}
+
+\textbf{Transport-gis-zmvm-mjg} (\termino{Transport GIS — Zona Metropolitana del Valle de México, M.J. Garibelt}) 
+es el tercer y último componente de la arquitectura de código de esta investigación. Mientras \textbf{Apimetro} 
+opera como el motor de datos unificado —responsable de la ingesta, estandarización y exposición de la red de transporte 
+como servicio— y \textbf{VFTModel} constituye el núcleo analítico que calcula los indicadores de desempeño de la red, 
+\textbf{Transport-gis} representa la capa de visualización: el sistema que traduce los resultados del modelo en 
+representaciones cartográficas interpretables para el análisis urbanístico.
+
+Al igual que los componentes precedentes, la denominación del sistema proviene de la obra literaria ficcional 
+\textit{Saga Diarios, tomo~2}, de autoría del investigador. En dicha novela, la urbanista ficcional 
+\textit{Mildred Julietta Cordero Garibelt} —referida por su acrónimo \textit{M.J.G}— es la responsable de la cartografía 
+y la planeación espacial del sistema de movilidad de \textit{Ciudad Capital}, ucronía de la Ciudad de México en la década de 1960. 
+La trama sitúa a este personaje en el centro de eventos políticos relevantes de la historia mexicana del siglo~\textsc{xx} 
+\parencite{lopezmateos2023comoelcantodelcisne}, cuya intervención en las decisiones sobre infraestructura y movilidad urbana articula 
+el argumento central de la novela. El paralelismo con la presente investigación es deliberado: así como \textit{M.J.G} produce 
+los mapas que hacen legible el sistema de movilidad de \textit{Ciudad Capital}, \textbf{Transport-gis} genera las representaciones 
+cartográficas que permiten interpretar los resultados del \textbf{VFTModel} sobre la red metropolitana real de la \zmvm.
+
+\subsection{Transport-gis: Su arquitectura y funcionamiento}
+\label{subsec:transport-gis-arquitectura-funcionamiento}
+
+\textbf{Transport-gis} se organiza en cuatro módulos funcionales interdependientes: un módulo de \textbf{análisis} (\texttt{analysis/}), que gestiona la consulta a los servicios 
+externos y el procesamiento de indicadores; un módulo de \textbf{datos} (\texttt{data/processed/}), que almacena las capas geoespaciales en formato \termino{GeoPackage} (\texttt{.gpkg}) 
+bajo control de Git~\textsc{lfs}; un módulo \textbf{cartográfico} (\texttt{maps/}), que agrupa los proyectos QGIS, las plantillas tipográficas y los archivos de exportación; y un 
+módulo de \textbf{orquestación} (\texttt{pipeline/}), que coordina la ejecución secuencial del proceso completo. La Figura~\ref{fig:tg-pipeline} ilustra el flujo de datos 
+entre estos módulos y los componentes externos de la arquitectura de la investigación.
+
+% =============================================================================
+\subsubsection{Flujo de producción de datos}
+\label{subsubsec:tg-flujo-datos}
+% =============================================================================
+
+El proceso de producción cartográfica parte de dos fuentes primarias externas: los \textit{feeds} \gtfs{} de la \textsc{semovi} (2024), que contienen los horarios, 
+rutas y paradas de los sistemas de transporte de la \cdmx{}; y la cartografía base del \textsc{inegi} (2023), que provee los límites político-administrativos y la 
+infraestructura vial de la \zmvm{}. Estas fuentes alimentan a \textbf{Apimetro} —que las transforma en una \api{} \textsc{rest} consumible con la topología del 
+grafo de la red— y a \textbf{VFTModel}, que las procesa para calcular los indicadores de eficiencia nodal.
+
+Dentro del repositorio de \textbf{Transport-gis}, el script \texttt{apimetro\_client.py} consulta la \api{} de \textbf{Apimetro} para recuperar la topología del 
+grafo y los atributos de cada modo de transporte, mientras que \texttt{vft\_runner.py} ejecuta las rutinas del \textbf{VFTModel} para producir los indicadores por nodo en 
+formato \texttt{.csv}. El orquestador \texttt{pipeline/run\_pipeline.py} gestiona la secuencia completa de transformaciones hasta exportar las capas procesadas al 
+directorio \texttt{data/processed/}. Los fragmentos de código de estos componentes se \DIFdelbegin \DIFdel{documentan en el Anexo~\ref{anx:transportgis-tecnico}}\DIFdelend \DIFaddbegin \DIFadd{detallarán en un anexo técnico}\DIFaddend .\pendiente{Crear Anexo — Documentación Técnica Transport-gis}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  srcbox/.style = {rectangle, rounded corners=3pt, draw=gray!55, fill=gray!8,
+                   minimum width=3.0cm, minimum height=0.90cm,
+                   align=center, font=\small},
+  extbox/.style = {rectangle, rounded corners=3pt, draw=unamAzul, fill=unamAzul!10,
+                   minimum width=3.2cm, minimum height=0.90cm,
+                   align=center, font=\small},
+  intbox/.style = {rectangle, rounded corners=3pt, draw=unamAzul!60, fill=unamGrisClaro,
+                   minimum width=6.4cm, minimum height=1.05cm,
+                   align=center, font=\small},
+  outbox/.style = {rectangle, rounded corners=3pt, draw=unamOro, fill=unamOro!15,
+                   minimum width=3.2cm, minimum height=0.90cm,
+                   align=center, font=\small},
+  ->, >=Stealth, thick
+]
+%% — Fuentes externas —
+\node[srcbox] (gtfs)  at (0.0, 9.2) {\gtfs{} SEMOVI~2024};
+\node[srcbox] (inegi) at (5.4, 9.2) {INEGI~2023 (cartografía)};
+
+%% — Componentes externos —
+\node[extbox] (api) at (0.0, 7.5) {\textbf{Apimetro}\\{\footnotesize API REST (Go)}};
+\node[extbox] (vft) at (5.4, 7.5) {\textbf{VFTModel}\\{\footnotesize (Python / NetworkX)}};
+
+%% — Transport-gis: análisis —
+\node[intbox] (scripts) at (2.7, 5.5)
+  {{\footnotesize\texttt{apimetro\_client.py} $\cdot$ \texttt{vft\_runner.py}}\\
+   {\footnotesize\texttt{pipeline/run\_pipeline.py}}};
+
+%% — Transport-gis: datos —
+\node[intbox] (gpkg) at (2.7, 4.0)
+  {{\small\texttt{data/processed/}}\\
+   {\footnotesize 10 capas \texttt{.gpkg} (Git~LFS)}};
+
+%% — Transport-gis: QGIS —
+\node[intbox] (qgis) at (2.7, 2.5)
+  {{\small QGIS~3.x — \texttt{maps/projects/*.qgz}}\\
+   {\footnotesize\texttt{maps/templates/*.qpt} (paletas UNAM)}};
+
+%% — Transport-gis: exports —
+\node[intbox] (exports) at (2.7, 1.0)
+  {{\small\texttt{maps/exports/}}\\
+   {\footnotesize\texttt{*.pdf} $\cdot$ \texttt{*.png}}};
+
+%% — Destino final —
+\node[outbox] (tesis) at (2.7, -0.5)
+  {\textbf{Tesis LaTeX}\\{\footnotesize\texttt{Figures/}}};
+
+%% — Flechas: fuentes → externos —
+\draw[color=gray!60] (gtfs)  -- (api);
+\draw[color=gray!60] (inegi) -- (vft);
+
+%% — Flechas: externos → scripts (convergentes, con codo exterior) —
+\draw[color=unamAzul!70] (api.south) -- ++(0,-0.55) -| (scripts.north west);
+\draw[color=unamAzul!70] (vft.south) -- ++(0,-0.55) -| (scripts.north east);
+
+%% — Flujo interno —
+\draw[color=unamAzul!70] (scripts) -- (gpkg);
+\draw[color=unamAzul!70] (gpkg)    -- (qgis);
+\draw[color=unamAzul!70] (qgis)    -- (exports);
+
+%% — Exports → LaTeX —
+\draw[color=unamOro] (exports) -- (tesis);
+
+%% — Recuadro del repositorio Transport-gis (en fondo) —
+\begin{scope}[on background layer]
+  \node[draw=unamAzul!40, dashed, rounded corners=6pt, fill=unamAzul!3,
+        fit={(scripts)(gpkg)(qgis)(exports)},
+        inner sep=14pt] (tgbox) {};
+\end{scope}
+%% — Label DENTRO del recuadro, esquina sup-izq —
+\node[font=\small\bfseries\color{unamAzul}, anchor=north west]
+  at ($(tgbox.north west) + (4pt,-3pt)$) {Transport-gis-zmvm-mjg};
+
+\end{tikzpicture}
+\caption[Pipeline de producción cartográfica de Transport-gis]%
+  {Flujo de datos del sistema \textbf{Transport-gis-zmvm-mjg}. 
+  Los componentes externos \textbf{Apimetro} y \textbf{VFTModel} proveen la información primaria; 
+  dentro del repositorio, los \textit{scripts} de análisis consolidan los datos en capas \texttt{.gpkg} 
+  que QGIS transforma en los mapas de presentación exportados a la tesis.}
+\label{fig:tg-pipeline}
+\end{figure}
+
+% =============================================================================
+\subsubsection{Capas del sistema de información geográfica}
+\label{subsubsec:tg-capas}
+% =============================================================================
+
+El módulo de datos mantiene diez capas \termino{GeoPackage} en \texttt{data/processed/}, 
+todas proyectadas en \textsc{epsg}:32614 (UTM zona~14N), referencia cartográfica adecuada 
+para la extensión de la \zmvm{}. Las capas se organizan en tres categorías temáticas, ilustradas en la 
+Figura~\ref{fig:tg-capas}: (i)~\textbf{contexto territorial}, con los límites político-administrativos de la \cdmx{}, del 
+Estado de México, el polígono de estudio y las variables de medio físico natural; (ii)~\textbf{red e infraestructura}, 
+con las geometrías de los sistemas de transporte, la infraestructura vial y el trazado del Periférico; y 
+(iii)~\textbf{indicadores del modelo VFT}, con las capas derivadas del cálculo de cobertura espacial, 
+fuerza capilar y factor de desviación descritos en el Capítulo~\ref{ch:resultados-vft}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  hdr1/.style = {rectangle, rounded corners=3pt,
+                 draw=gray!60, fill=gray!55,
+                 minimum width=4.2cm, minimum height=0.75cm,
+                 align=center, font=\small\bfseries\color{white}},
+  lyr1/.style = {rectangle, rounded corners=2pt,
+                 draw=gray!45, fill=gray!8,
+                 minimum width=4.2cm, minimum height=0.65cm,
+                 align=center, font=\footnotesize},
+  hdr2/.style = {rectangle, rounded corners=3pt,
+                 draw=unamAzul, fill=unamAzul!70,
+                 minimum width=4.2cm, minimum height=0.75cm,
+                 align=center, font=\small\bfseries\color{white}},
+  lyr2/.style = {rectangle, rounded corners=2pt,
+                 draw=unamAzul!50, fill=unamAzul!8,
+                 minimum width=4.2cm, minimum height=0.65cm,
+                 align=center, font=\footnotesize},
+  hdr3/.style = {rectangle, rounded corners=3pt,
+                 draw=unamOro!80, fill=unamOro!75,
+                 minimum width=4.2cm, minimum height=0.75cm,
+                 align=center, font=\small\bfseries\color{white}},
+  lyr3/.style = {rectangle, rounded corners=2pt,
+                 draw=unamOro!60, fill=unamOro!10,
+                 minimum width=4.2cm, minimum height=0.65cm,
+                 align=center, font=\footnotesize},
+  node distance = 0.12cm
+]
+%% — Columna 1: Contexto territorial —
+\node[hdr1] (h1) at (0,0) {Contexto territorial};
+\node[lyr1, below=of h1] (c1a) {\texttt{LimitesPoliticos.gpkg}};
+\node[lyr1, below=of c1a] (c1b) {\texttt{PoligonosEdoMex.gpkg}};
+\node[lyr1, below=of c1b] (c1c) {\texttt{PoligonoEstudio1.gpkg}};
+\node[lyr1, below=of c1c] (c1d) {\texttt{MedioFisicoNatural.gpkg}};
+
+%% — Columna 2: Red e infraestructura —
+\node[hdr2] (h2) at (4.6,0) {Red e infraestructura};
+\node[lyr2, below=of h2] (c2a) {\texttt{Transporte.gpkg}};
+\node[lyr2, below=of c2a] (c2b) {\texttt{InfraEstructura.gpkg}};
+\node[lyr2, below=of c2b] (c2c) {\texttt{Vialidades.gpkg}};
+
+%% — Columna 3: Indicadores del modelo —
+\node[hdr3] (h3) at (9.2,0) {Indicadores del modelo};
+\node[lyr3, below=of h3] (c3a) {\texttt{Cobertura800m.gpkg}};
+\node[lyr3, below=of c3a] (c3b) {\texttt{FuerzaCapilar.gpkg}};
+\node[lyr3, below=of c3b] (c3c) {\texttt{FactorDesviacion.gpkg}};
+\end{tikzpicture}
+\caption[Organización de las capas GeoPackage de Transport-gis]%
+  {Las diez capas \termino{GeoPackage} del directorio \texttt{data/processed/}, organizadas por 
+  categoría temática. Todas están proyectadas en \textsc{epsg}:32614 (UTM zona~14N) y versionadas con Git~\textsc{lfs}.}
+\label{fig:tg-capas}
+\end{figure}
+
+% =============================================================================
+\subsubsection{Proyectos cartográficos y plantillas institucionales}
+\label{subsubsec:tg-proyectos}
+% =============================================================================
+
+La Figura~\ref{fig:tg-arbol} muestra la estructura de directorios completa de \textbf{Transport-gis}. El repositorio se articula
+en cinco carpetas de primer nivel con responsabilidades bien delimitadas: \texttt{analysis/} centraliza los \textit{scripts} de
+procesamiento y los cuadernos de exploración; \texttt{data/processed/} almacena las diez capas \textit{GeoPackage} versionadas en
+Git~\textsc{lfs}; \texttt{maps/} agrupa los proyectos QGIS~(\texttt{.qgz}), las plantillas visuales~(\texttt{.qpt}) con las paletas
+institucionales de la \textsc{unam} y el directorio de exportaciones; \texttt{pipeline/} contiene el orquestador del proceso; y
+\texttt{setup/} distribuye los activos tipográficos para garantizar la reproducibilidad visual en distintos sistemas operativos.
+Los mapas terminados se exportan en \texttt{.pdf} (alta resolución para la tesis) y \texttt{.png} (presentaciones del coloquio),
+cerrando el ciclo descrito en la Figura~\ref{fig:tg-pipeline}.
+
+\begin{figure}[htbp]
+\centering
+\iffalse
+\begin{forest}
+  for tree = {
+    font   = \footnotesize\ttfamily,
+    grow'  = 0,
+    child anchor  = west,
+    parent anchor = east,
+    anchor = west,
+    draw   = gray!45,
+    fill   = gray!7,
+    rounded corners = 2pt,
+    inner xsep = 6pt,
+    inner ysep = 3pt,
+    l sep  = 20pt,
+    s sep  = 5pt,
+    edge path = {
+      \noexpand\path [draw=gray!50, thin, rounded corners=2pt]
+        (!u.parent anchor) -- +(8pt,0) |- (.child anchor)
+        \forestoption{edge label};
+    },
+  }
+  [Transport-gis-zmvm-mjg/, fill=unamAzul!12, draw=unamAzul!70,
+                             font=\small\bfseries\ttfamily
+    [analysis/
+      [notebooks/]
+      [scripts/
+        [apimetro\_client.py,
+          draw=none, fill=none, font=\footnotesize\ttfamily\color{unamAzul}]
+        [vft\_runner.py,
+          draw=none, fill=none, font=\footnotesize\ttfamily\color{unamAzul}]
+      ]
+    ]
+    [data/processed/
+      [{\textit{10 capas .gpkg} \textnormal{(Git~LFS)}},
+        draw=none, fill=none, font=\footnotesize\itshape\ttfamily]
+    ]
+    [maps/, fill=unamOro!8, draw=unamOro!60
+      [exports/
+        [{\textit{*.pdf · *.png}},
+          draw=none, fill=none, font=\footnotesize\itshape\ttfamily]
+      ]
+      [fonts/]
+      [projects/
+        [\textit{*.qgz},
+          draw=none, fill=none, font=\footnotesize\itshape\ttfamily]
+      ]
+      [templates/
+        [{\textit{*.qpt} \textnormal{(paletas UNAM)}},
+          draw=none, fill=none, font=\footnotesize\itshape\ttfamily]
+      ]
+    ]
+    [pipeline/
+      [run\_pipeline.py,
+        draw=none, fill=none, font=\footnotesize\ttfamily\color{unamAzul}]
+    ]
+    [setup/
+      [install\_fonts.sh,
+        draw=none, fill=none, font=\footnotesize\ttfamily\color{unamAzul}]
+      [install\_fonts.bat,
+        draw=none, fill=none, font=\footnotesize\ttfamily\color{unamAzul}]
+    ]
+  ]
+\end{forest}
+\fi
+\caption[Estructura de directorios de Transport-gis-zmvm-mjg]%
+  {Árbol de directorios del repositorio \textbf{Transport-gis-zmvm-mjg}. Las carpetas \texttt{maps/} (oro) y la raíz (azul UNAM)
+  son los nodos centrales de la producción cartográfica. Los archivos en azul son \textit{scripts} ejecutables;
+  los de fondo plano son activos generados o de datos.}
+\label{fig:tg-arbol}
+\end{figure}
+
+La Figura~\ref{fig:mapa-red-esquematica} presenta el resultado de este proceso aplicado a la red de transporte completa de la \zmvm{}:
+un mapa de síntesis que integra los doce sistemas reconocidos por el modelo, proyectados en el espacio metropolitano real. Este mapa
+constituye la representación cartográfica de referencia del estudio y es el punto de partida para la interpretación de los indicadores
+presentados en el Capítulo~\ref{ch:resultados-vft}. Las versiones de alta resolución a página completa de todos los mapas producidos
+por \textbf{Transport-gis} se encuentran en el Anexo~\ref{anx:cartografia-presentacion}.
+
+\begin{figure}[htbp]
+  \centering
+  \figinclude[width=\textwidth]{Figures/Mapas/Mapa_Red_Esquematica}
+  \caption[Red multimodal de transporte de la ZMVM]{Red esquemática multimodal de la \zmvm{} generada por \textbf{Transport-gis-zmvm-mjg}.
+    Incluye los doce sistemas de transporte reconocidos por el modelo, proyectados en EPSG:32614 (UTM zona~14N) sobre los límites político-administrativos
+    de la \cdmx{} y el Estado de México. \fuentefigura{Elaboración propia con QGIS~3.x, plantillas institucionales \textsc{unam};
+    datos: \textsc{gtfs} \textsc{semovi} 2024 e \textsc{inegi} 2023.}}
+  \label{fig:mapa-red-esquematica}
+\end{figure}
+
+
+%% ── 5-Resultados/5-2-1-Fase1/5-2-1-2-Cobertura.tex
+\subsection*{5 2 1 2 Cobertura}
+% !TeX root = ../../tesis.tex
+% =============================================================================
+%  5.2.1.2 NIVEL DE COBERTURA ESPACIAL
+% =============================================================================
+\subsection{\bajoRevision{Nivel de Cobertura Espacial (\texorpdfstring{$C$}{C})}}
+\label{subsec:cobertura-espacial}
+\notaRevision{Los resultados de esta subsección están sujetos a revisión con el
+tutor. Los valores presentados corresponden a la corrida del modelo del
+18 de abril de 2026 con un isócrono de 800~m y pueden ajustarse tras
+validación metodológica.}
+
+El \textbf{Nivel de Cobertura Espacial} ($C$) evalúa la equidad territorial de
+la red de transporte masivo al cuantificar qué proporción del área de la
+demarcación se encuentra dentro de un radio de caminata aceptable respecto
+a alguna estación. Se define mediante la siguiente expresión:
+
+\begin{equation}
+    C = \frac{A_{\text{cubierta}}}{A_{\text{total}}} \times 100
+    \label{eq:cobertura-res}
+\end{equation}
+
+donde $A_{\text{cubierta}}$ es el área resultante de la unión de los
+isócronos peatonales (\termino{buffers} de 800~m) de todas las estaciones del sistema,
+y $A_{\text{total}}$ es la superficie geodésica total de la demarcación
+político-administrativa analizada.
+
+El Cuadro~\ref{tab:peores-cdmx} identifica las cinco alcaldías de la
+\textsc{cdmx} con menor cobertura del sistema de transporte masivo,
+evidenciando las zonas de mayor exclusión territorial.
+
+\begin{table}[H]
+    \centering
+    \caption[Alcaldías con menor cobertura de transporte masivo (CDMX)]{
+    Cinco alcaldías de la Ciudad de México con menor porcentaje de cobertura
+    territorial del sistema de transporte masivo. Isócrono: 800~m.
+    Corrida: 2026-04-18.}
+    \label{tab:peores-cdmx}
+    \begin{tabular}{|l|r|r|r|}
+        \hline
+        \textbf{Demarcación} & \textbf{Área total (km²)} &
+        \textbf{Área cubierta (km²)} & \textbf{Cobertura (\%)} \\
+        \hline
+        Milpa Alta              & 298.01 &  35.0    &  11.75 \\
+        La Magdalena Contreras  &  63.37 &  16.33   &  25.76 \\
+        Tlalpan                 & 314.25 &  94.31   &  30.01 \\
+        Tláhuac                 &  85.78 &  43.85   &  51.12 \\
+        Cuajimalpa de Morelos   &  71.10 &  37.12   &  52.20 \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de
+    \texttt{Apimetro}.}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption[Municipios del EDOMEX con menor cobertura de transporte masivo]{
+    Cinco municipios del Estado de México con menor porcentaje de cobertura
+    territorial del sistema de transporte masivo. Isócrono: 800~m.
+    Corrida: 2026-04-18.}
+    \label{tab:peores-edomex}
+    \begin{tabular}{|l|r|r|r|}
+        \hline
+        \textbf{Demarcación} & \textbf{Área total (km²)} &
+        \textbf{Área cubierta (km²)} & \textbf{Cobertura (\%)} \\
+        \hline
+        Tonanitla       &   8.52 & 0.00 & 0.00 \\
+        Capulhuac       &  21.50 & 0.00 & 0.00 \\
+        Calimaya        & 104.26 & 0.00 & 0.00 \\
+        Donato Guerra   & 181.36 & 0.00 & 0.00 \\
+        Ayapango        &  50.83 & 0.00 & 0.00 \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de
+    \texttt{Apimetro}.}
+\end{table}
+
+% =============================================================================
+%  Desglose de Cobertura por Sistema de Transporte
+% =============================================================================
+
+\subsubsection{Sistema de Transporte Colectivo Metro (METRO)}
+\label{subsubsec:cobertura-metro}
+
+El Sistema de Transporte Colectivo Metro constituye la columna vertebral de la
+movilidad masiva en la Ciudad de México. Debido a su naturaleza de red ferroviaria
+subterránea y elevada con derecho de vía exclusivo, sus estaciones actúan como
+nodos estructurales de alta capacidad que articulan los flujos intermodales de la
+metrópoli. El análisis de su cobertura espacial mediante isócronos peatonales de
+800~m permite identificar las demarcaciones que se benefician directamente de este
+sistema, así como aquellas periferias y zonas centrales que presentan una
+desconexión crítica respecto a la red de transporte más masiva de la entidad.
+
+El Cuadro~\ref{tab:cobertura-metro-cdmx} detalla las cinco alcaldías de la Ciudad de
+México con los niveles más altos de cobertura territorial respecto a la red del
+Metro, evidenciando la concentración de la infraestructura ferroviaria en el núcleo
+urbano denso de la cuenca.
+
+\begin{table}[H]
+    \centering
+    \caption[Alcaldías con mayor cobertura del STC Metro (CDMX)]{
+    Cinco alcaldías de la Ciudad de México con mayor porcentaje de cobertura
+    territorial para el Sistema de Transporte Colectivo Metro. Isócrono: 800~m.
+    Corrida: 2026-04-18.}
+    \label{tab:cobertura-metro-cdmx}
+    \begin{tabular}{|l|r|r|r|}
+        \hline
+        \textbf{Demarcación} & \textbf{Área total (km²)} & \textbf{Área cubierta (km²)} & \textbf{Cobertura (\%)} \\
+        \hline
+        Cuauhtémoc          & 32.50 &  28.35 &  87.23 \\
+        Benito Juárez       & 26.68 &  21.34 &  79.99 \\
+        Venustiano Carranza & 33.84 &  24.39 &  72.77 \\
+        Iztacalco           & 23.08 &  11.66 &  50.52 \\
+        Azcapotzalco        & 33.50 &  13.80 &  41.18 \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+Por su parte, la distribución geográfica de esta cobertura se visualiza en la
+Figura~\ref{fig:mapa-cobertura-metro}, donde se aprecia la concentración de la
+infraestructura en la zona central de la cuenca y el drástico desvanecimiento del
+servicio hacia las demarcaciones del sur y del poniente.
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/Cobertura/Mapas/NB02_fig02_METRO_cobertura.png}
+    \caption[Mapa de cobertura territorial del STC Metro en la CDMX]{Mapa del
+    nivel de cobertura territorial del Sistema de Transporte Colectivo Metro
+    por demarcación en la Ciudad de México, calculado a partir de \termino{buffers}
+    de caminata peatonal de 800~m.}
+    \label{fig:mapa-cobertura-metro}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+\end{figure}
+
+\subsubsection{Metrobús (MB)}
+\label{subsubsec:cobertura-mb}
+
+El sistema Metrobús, que opera bajo el modelo de Autobuses de Tránsito Rápido
+(\termino{Bus Rapid Transit}, BRT), se ha consolidado como la segunda red de
+transporte masivo más importante de la Ciudad de México. Dada su mayor flexibilidad
+constructiva frente a los sistemas ferroviarios pesados, su trazado ha logrado
+expandirse por corredores viales estratégicos, complementando y alimentando a la
+red del Metro. No obstante, al evaluar su cobertura mediante isócronos peatonales
+de 800~m, persisten notables brechas territoriales, dejando a varias demarcaciones
+periféricas con acceso limitado o nulo a esta red troncal.
+
+El Cuadro~\ref{tab:cobertura-mb-cdmx} presenta las cinco alcaldías con mayor
+proporción de su territorio cubierto por el Metrobús, destacando la concentración
+del servicio en las zonas centro, norte y oriente de la ciudad, siguiendo los ejes
+viales primarios.
+
+\begin{table}[H]
+    \centering
+    \caption[Alcaldías con mayor cobertura de Metrobús (CDMX)]{
+    Cinco alcaldías de la Ciudad de México con mayor porcentaje de cobertura
+    territorial para el sistema Metrobús (MB). Isócrono: 800~m.
+    Corrida: 2026-04-18.}
+    \label{tab:cobertura-mb-cdmx}
+    \begin{tabular}{|l|r|r|r|}
+        \hline
+        \textbf{Demarcación} & \textbf{Área total (km²)} & \textbf{Área cubierta (km²)} & \textbf{Cobertura (\%)} \\
+        \hline
+        Cuauhtémoc          & 32.50 &  26.74 &  82.27 \\
+        Benito Juárez       & 26.68 &  16.21 &  60.74 \\
+        Iztacalco           & 23.08 &  13.95 &  60.44 \\
+        Venustiano Carranza & 33.84 &  16.10 &  47.58 \\
+        Gustavo A. Madero   & 87.84 &  38.75 &  44.12 \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+Visualmente, el alcance espacial del sistema se ilustra en la
+Figura~\ref{fig:mapa-cobertura-mb}. El mapa confirma cómo las líneas de BRT se
+concentran fuertemente en las zonas centro, norte y oriente —siguiendo los ejes
+viales primarios—, mientras que las barreras topográficas y de traza urbana
+mantienen a las demarcaciones del surponiente con una cobertura residual o
+inexistente.
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/Cobertura/Mapas/NB02_fig02_MB_cobertura.png}
+    \caption[Mapa de cobertura territorial del Metrobús en la CDMX]{Mapa del
+    nivel de cobertura territorial del sistema Metrobús por demarcación en la
+    Ciudad de México, calculado a partir de \termino{buffers} de caminata
+    peatonal de 800~m.}
+    \label{fig:mapa-cobertura-mb}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+\end{figure}
+
+\subsubsection{Cablebús (CBB)}
+\label{subsubsec:cobertura-cbb}
+
+El Cablebús \DIFdelbegin \DIFdel{representa un paradigma distinto dentro de la red de transporte masivo.
+Al ser un }\DIFdelend \DIFaddbegin \DIFadd{es un }\DIFaddend sistema de teleférico urbano \DIFdelbegin \DIFdel{, su diseño no busca abarcar grandes
+extensiones del territorio mediante una red interconectada, sino }\DIFdelend \DIFaddbegin \DIFadd{diseñado para }\DIFaddend resolver problemas de
+accesibilidad \DIFdelbegin \DIFdel{muy puntuales }\DIFdelend en zonas de alta marginación y topografía compleja\DIFdelbegin \DIFdel{(principalmente en la periferia). Por lo tanto, su nivel de cobertura espacial a
+escala metropolitana es inherentemente focalizado, }\DIFdelend \DIFaddbegin \DIFadd{, }\DIFaddend actuando como
+alimentador de alta capacidad hacia \DIFdelbegin \DIFdel{las líneas del Metro. }%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdel{El Cuadro~\ref{tab:cobertura-cbb-cdmx} presenta las cinco alcaldías con mayor
+cobertura del Cablebús. Como es de esperarse por la naturaleza del sistema, la gran
+mayoría de las demarcaciones de la Ciudad de México carecen por completo de esta
+infraestructura, por lo que incluso los valores más altos son reducidos en términos
+porcentuales absolutos}\DIFdelend \DIFaddbegin \DIFadd{el Metro. Su cobertura se concentra en
+Gustavo A. Madero (12.88\,\%), Miguel Hidalgo (11.85\,\%) e Iztapalapa
+(11.27\,\%), con presencia marginal en el resto de la ciudad
+(Cuadro~\ref{tab:cobertura-cbb-cdmx})}\DIFaddend .
+
+\begin{table}[H]
+    \centering
+    \caption[Alcaldías con mayor cobertura de Cablebús (CDMX)]{
+    Cinco alcaldías de la Ciudad de México con mayor porcentaje de cobertura
+    territorial para el sistema Cablebús (CBB). Isócrono: 800~m.
+    Corrida: 2026-04-18.}
+    \label{tab:cobertura-cbb-cdmx}
+    \begin{tabular}{|l|r|r|r|}
+        \hline
+        \textbf{Demarcación} & \textbf{Área total (km²)} & \textbf{Área cubierta (km²)} & \textbf{Cobertura (\%)} \\
+        \hline
+        Gustavo A. Madero   &  87.84 & 11.31 &  12.88 \\
+        Miguel Hidalgo      &  46.39 &  5.50 &  11.85 \\
+        Iztapalapa          & 113.07 & 12.74 &  11.27 \\
+        Álvaro Obregón      &  95.82 &  4.38 &   4.57 \\
+        Venustiano Carranza &  33.84 &  0.00 &   0.00 \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+La Figura~\ref{fig:mapa-cobertura-cbb} ilustra esta focalización espacial. El mapa
+revela cómo las áreas de influencia del Cablebús se restringen a corredores muy
+específicos (como en Gustavo A. Madero, Iztapalapa y Álvaro Obregón), contrastando
+drásticamente con el vacío de infraestructura aérea en el resto de la cuenca.
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/Cobertura/Mapas/NB02_fig02_CBB_cobertura.png}
+    \caption[Mapa de cobertura territorial del Cablebús en la CDMX]{Mapa del
+    nivel de cobertura territorial del sistema Cablebús por demarcación en la
+    Ciudad de México, calculado a partir de \termino{buffers} de caminata
+    peatonal de 800~m.}
+    \label{fig:mapa-cobertura-cbb}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+\end{figure}
+
+\subsubsection{Red de Transporte de Pasajeros (RTP)}
+\label{subsubsec:cobertura-rtp}
+
+La Red de Transporte de Pasajeros (\textsc{rtp}) desempeña un rol fundamental en
+la equidad espacial del sistema de movilidad de la Ciudad de México. A diferencia
+de los sistemas confinados, la \textsc{rtp} opera como un servicio de superficie
+con vocación social y de alimentación, diseñado específicamente para penetrar en
+zonas periféricas, de topografía compleja y de menor densidad, donde la
+implementación de infraestructura pesada es inviable. Su extensión territorial es
+notablemente mayor que la de cualquier otro sistema de la metrópoli.
+
+El Cuadro~\ref{tab:cobertura-rtp-cdmx} presenta las cinco alcaldías con mayor
+proporción de cobertura por parte de la \textsc{rtp}, confirmando la concentración
+del servicio en el centro y norte de la ciudad, donde la densidad de rutas y paradas
+alcanza sus niveles más altos.
+
+\begin{table}[H]
+    \centering
+    \caption[Alcaldías con mayor cobertura de RTP (CDMX)]{
+    Cinco alcaldías de la Ciudad de México con mayor porcentaje de cobertura
+    territorial para la Red de Transporte de Pasajeros (RTP). Isócrono: 800~m.
+    Corrida: 2026-04-18.}
+    \label{tab:cobertura-rtp-cdmx}
+    \begin{tabular}{|l|r|r|r|}
+        \hline
+        \textbf{Demarcación} & \textbf{Área total (km²)} & \textbf{Área cubierta (km²)} & \textbf{Cobertura (\%)} \\
+        \hline
+        Miguel Hidalgo      &  46.39 &  41.90 &  90.32 \\
+        Cuauhtémoc          &  32.50 &  29.32 &  90.22 \\
+        Azcapotzalco        &  33.50 &  30.08 &  89.81 \\
+        Gustavo A. Madero   &  87.84 &  75.86 &  86.37 \\
+        Iztapalapa          & 113.07 &  93.66 &  82.83 \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+La Figura~\ref{fig:mapa-cobertura-rtp} muestra la dispersión territorial de este
+sistema. A diferencia del Metro o del Metrobús, el mapa de la \textsc{rtp} revela
+una capilaridad mucho mayor hacia el sur y poniente de la ciudad, confirmando su
+rol estratégico como conector de las zonas más alejadas de la cuenca con la red
+troncal.
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/Cobertura/Mapas/NB02_fig02_RTP_cobertura.png}
+    \caption[Mapa de cobertura territorial de la RTP en la CDMX]{Mapa del
+    nivel de cobertura territorial de la Red de Transporte de Pasajeros
+    (\textsc{rtp}) por demarcación en la Ciudad de México, calculado a partir
+    de \termino{buffers} de caminata peatonal de 800~m.}
+    \label{fig:mapa-cobertura-rtp}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+\end{figure}
+
+\subsubsection{Trolebús (TROLE)}
+\label{subsubsec:cobertura-trole}
+
+El \DIFaddbegin \DIFadd{Trolebús —operado por el }\DIFaddend Servicio de Transportes Eléctricos (\textsc{ste})\DIFdelbegin \DIFdel{, a través de su red de
+Trolebús, constituye }\DIFdelend \DIFaddbegin \DIFadd{—
+es }\DIFaddend uno de los ejes históricos \DIFdelbegin \DIFdel{y fundamentales de la
+}\DIFdelend \DIFaddbegin \DIFadd{de }\DIFaddend electromovilidad de cero emisiones en la capital\DIFdelbegin \DIFdel{. Su red se distribuye
+estratégicamente sobre los principales ejes viales,
+concentrando su mayor área
+de influencia en las zonas centro , norte }\DIFdelend \DIFaddbegin \DIFadd{,
+con presencia relevante en el centro }\DIFaddend y oriente de la ciudad. \DIFaddbegin \DIFadd{El
+Cuadro~\ref{tab:cobertura-trole-cdmx} registra coberturas superiores al 50\,\%
+en cuatro alcaldías centrales, encabezadas por Cuauhtémoc (69.90\,\%).
+}\DIFaddend 
+
+\textbf{Nota metodológica:} Es importante precisar que, al momento de la
+ejecución de este análisis espacial (18 de abril de 2026), el Portal de Datos
+Abiertos de la Ciudad de México aún no había liberado los trazados geoespaciales
+ni el padrón de paradas oficiales correspondientes a la \textbf{Línea 13} del
+Trolebús. Por consiguiente, dicha línea no se encuentra contabilizada en los
+isócronos de cobertura presentados en esta sección.
+
+\DIFdelbegin \DIFdel{El Cuadro~\ref{tab:cobertura-trole-cdmx} enumera las cinco alcaldías con mayor
+cobertura territorial de este sistema, todas ellas ubicadas en la zona central y
+oriente de la ciudad, donde se concentra la red eléctrica de superficie.
+}%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdelend \begin{table}[H]
+    \centering
+    \caption[Alcaldías con mayor cobertura de Trolebús (CDMX)]{
+    Cinco alcaldías de la Ciudad de México con mayor porcentaje de cobertura
+    territorial para el sistema Trolebús (TROLE). Isócrono: 800~m.
+    Corrida: 2026-04-18.}
+    \label{tab:cobertura-trole-cdmx}
+    \begin{tabular}{|l|r|r|r|}
+        \hline
+        \textbf{Demarcación} & \textbf{Área total (km²)} & \textbf{Área cubierta (km²)} & \textbf{Cobertura (\%)} \\
+        \hline
+        Cuauhtémoc    &  32.50 & 22.72 &  69.90 \\
+        Benito Juárez &  26.68 & 16.50 &  61.85 \\
+        Azcapotzalco  &  33.50 & 17.48 &  52.18 \\
+        Iztacalco     &  23.08 & 11.93 &  51.69 \\
+        Coyoacán      & 125.17 & 25.17 &  46.71 \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+Por su parte, la Figura~\ref{fig:mapa-cobertura-trole} ilustra la huella espacial
+del Trolebús. El mapa visibiliza la fuerte concentración del servicio en alcaldías
+como Benito Juárez, Cuauhtémoc, Iztacalco e Iztapalapa (impulsada por el Trolebús
+Elevado), contrastando drásticamente con la carencia de infraestructura eléctrica
+hacia las periferias montañosas.
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/Cobertura/Mapas/NB02_fig02_TROLE_cobertura.png}
+    \caption[Mapa de cobertura territorial del Trolebús en la CDMX]{Mapa del
+    nivel de cobertura territorial del sistema Trolebús por demarcación en la
+    Ciudad de México, calculado a partir de \termino{buffers} de caminata
+    peatonal de 800~m.}
+    \label{fig:mapa-cobertura-trole}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+\end{figure}
+
+\subsubsection{Corredores Concesionados (CC)}
+\label{subsubsec:cobertura-cc}
+
+Los Corredores Concesionados constituyen la red de rutas de transporte de
+superficie operadas por empresas privadas con concesión del Gobierno de la Ciudad
+de México. Con base en su lógica de trazado sobre los ejes viales primarios y
+secundarios de la ciudad consolidada, este sistema presenta uno de los niveles de
+cobertura territorial más altos de la metrópoli, especialmente en las alcaldías de
+mayor densidad urbana del centro y el oriente. Más que un sistema residual, los
+Corredores Concesionados actúan como la red capilar que penetra en los intersticios
+que los sistemas troncales no pueden servir directamente.
+
+El Cuadro~\ref{tab:cobertura-cc-cdmx} presenta las cinco alcaldías con mayor
+cobertura territorial de este sistema, donde se aprecia la saturación práctica del
+servicio en el núcleo urbano denso de la capital.
+
+\begin{table}[H]
+    \centering
+    \caption[Alcaldías con mayor cobertura de Corredores Concesionados (CDMX)]{
+    Cinco alcaldías de la Ciudad de México con mayor porcentaje de cobertura
+    territorial para el sistema de Corredores Concesionados (CC). Isócrono: 800~m.
+    Corrida: 2026-04-18.}
+    \label{tab:cobertura-cc-cdmx}
+    \begin{tabular}{|l|r|r|r|}
+        \hline
+        \textbf{Demarcación} & \textbf{Área total (km²)} & \textbf{Área cubierta (km²)} & \textbf{Cobertura (\%)} \\
+        \hline
+        Cuauhtémoc          & 32.50 & 32.47 &  99.90 \\
+        Benito Juárez       & 26.68 & 26.32 &  98.65 \\
+        Iztacalco           & 23.08 & 22.25 &  96.42 \\
+        Miguel Hidalgo      & 46.39 & 44.33 &  95.57 \\
+        Venustiano Carranza & 33.84 & 27.77 &  82.06 \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+La Figura~\ref{fig:mapa-cobertura-cc} confirma la distribución omnipresente de
+este sistema en la ciudad consolidada. El mapa ilustra cómo los Corredores
+Concesionados recubren de manera prácticamente total las alcaldías centrales,
+mientras que el servicio se va diluyendo hacia las periferias con suelo de
+conservación o menor densidad.
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/Cobertura/Mapas/NB02_fig02_CC_cobertura.png}
+    \caption[Mapa de cobertura territorial de Corredores Concesionados en la CDMX]{
+    Mapa del nivel de cobertura territorial del sistema de Corredores
+    Concesionados por demarcación en la Ciudad de México, calculado a partir de
+    \termino{buffers} de caminata peatonal de 800~m.}
+    \label{fig:mapa-cobertura-cc}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+\end{figure}
+
+\subsubsection{Tren Ligero (TL)}
+\label{subsubsec:cobertura-tl}
+
+El Tren Ligero es un sistema de transporte férreo de capacidad media operado por
+el Servicio de Transportes Eléctricos (\textsc{ste}). Su trazado consta de una
+única línea que conecta la estación terminal Tasqueña de la Línea 2 del Metro con
+el centro de la alcaldía Xochimilco. Debido a esta configuración lineal y su
+confinamiento exclusivo en el sur de la cuenca, su área de influencia geográfica
+es altamente focalizada.
+
+El Cuadro~\ref{tab:cobertura-tl-cdmx} presenta las alcaldías con mayor nivel de
+cobertura por parte del Tren Ligero. Únicamente Coyoacán, Xochimilco y Tlalpan
+registran acceso al sistema dentro del isócrono peatonal de 800~m, mientras que
+el resto de las demarcaciones carece por completo de este servicio.
+
+\begin{table}[H]
+    \centering
+    \caption[Alcaldías con mayor cobertura de Tren Ligero (CDMX)]{
+    Cinco alcaldías de la Ciudad de México con mayor porcentaje de cobertura
+    territorial para el sistema Tren Ligero (TL). Isócrono: 800~m.
+    Corrida: 2026-04-18.}
+    \label{tab:cobertura-tl-cdmx}
+    \begin{tabular}{|l|r|r|r|}
+        \hline
+        \textbf{Demarcación} & \textbf{Área total (km²)} & \textbf{Área cubierta (km²)} & \textbf{Cobertura (\%)} \\
+        \hline
+        Coyoacán            &  53.88 & 9.31 &  17.28 \\
+        Xochimilco          & 114.03 & 6.82 &   5.98 \\
+        Tlalpan             & 314.25 & 4.07 &   1.30 \\
+        Venustiano Carranza &  33.84 & 0.00 &   0.00 \\
+        Tláhuac             &  85.78 & 0.00 &   0.00 \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+La Figura~\ref{fig:mapa-cobertura-tl} ilustra espacialmente esta restricción
+territorial. El mapa confirma cómo el servicio es exclusivo del corredor sur,
+actuando principalmente como alimentador de la red masiva central para los
+habitantes de las alcaldías sureñas.
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/Cobertura/Mapas/NB02_fig02_TL_cobertura.png}
+    \caption[Mapa de cobertura territorial del Tren Ligero en la CDMX]{Mapa del
+    nivel de cobertura territorial del sistema Tren Ligero por demarcación en
+    la Ciudad de México, calculado a partir de \termino{buffers} de caminata
+    peatonal de 800~m.}
+    \label{fig:mapa-cobertura-tl}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+\end{figure}
+
+\subsubsection{Mexibús (MXB)}
+\label{subsubsec:cobertura-mxb}
+
+El sistema Mexibús \DIFdelbegin \DIFdel{es el equivalente al Metrobús en el Estado de México: una red
+de autobuses de tránsito rápido (}%DIFDELCMD < \termino{Bus Rapid Transit}%%%
+\DIFdel{, BRT) que }\DIFdelend opera sobre corredores viales del \DIFdelbegin \DIFdel{ámbito metropolitano conurbado. Su presencia }\DIFdelend \DIFaddbegin \DIFadd{Estado de México con una
+presencia marginal en la Ciudad de México. Su cobertura máxima }\DIFaddend dentro de los
+límites \DIFdelbegin \DIFdel{político-administrativos de la Ciudad de México es marginal, circunscrita
+únicamente a los puntos de cruce o de conexión interestatal, por lo que su
+cobertura territorial en las
+alcaldías de la capital es forzosamente residual.
+}%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdel{El }\DIFdelend \DIFaddbegin \DIFadd{capitalinos no supera el 6.58\,\% (Iztacalco), siendo nula en las
+demarcaciones del sur y oriente (}\DIFaddend Cuadro~\ref{tab:cobertura-mxb-cdmx}\DIFdelbegin \DIFdel{identifica las alcaldías de la Ciudad de México con mayor cobertura territorial del sistema Mexibús. Los valores reducidos
+—ninguno superior al 7\%— confirman que este sistema opera fundamentalmente fuera
+de los límites de la entidad y que su incidencia en la cobertura intraurbana
+capitalina es mínima}\DIFdelend \DIFaddbegin \DIFadd{). Para
+la visualización cartográfica de este sistema en el contexto de la red
+metropolitana véase la Figura~\ref{fig:anx-mapa-cobertura-total} del
+Anexo~\ref{anx:cartografia-presentacion}}\DIFaddend .
+
+\begin{table}[H]
+    \centering
+    \caption[Alcaldías con mayor cobertura de Mexibús (CDMX)]{
+    Cinco alcaldías de la Ciudad de México con mayor porcentaje de cobertura
+    territorial para el sistema Mexibús (MXB). Isócrono: 800~m.
+    Corrida: 2026-04-18.}
+    \label{tab:cobertura-mxb-cdmx}
+    \begin{tabular}{|l|r|r|r|}
+        \hline
+        \textbf{Demarcación} & \textbf{Área total (km²)} & \textbf{Área cubierta (km²)} & \textbf{Cobertura (\%)} \\
+        \hline
+        Iztacalco           &  23.08 & 1.52 & 6.58 \\
+        Venustiano Carranza &  33.84 & 1.90 & 5.62 \\
+        Gustavo A. Madero   &  87.84 & 3.23 & 3.67 \\
+        Xochimilco          & 114.03 & 0.00 & 0.00 \\
+        Tláhuac             &  85.78 & 0.00 & 0.00 \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+\DIFdelbegin \DIFdel{La Figura~\ref{fig:mapa-cobertura-mxb} confirma esta presencia puntual del
+sistema dentro de la capital. El mapa ilustra cómo la única área de influencia
+del Mexibús en la Ciudad de México corresponde a los cruces fronterizos del
+nororiente, sin penetrar en el tejido urbano interior.
+}%DIFDELCMD < 
+
+%DIFDELCMD < \begin{figure}[H]
+%DIFDELCMD <     \centering
+%DIFDELCMD <     \figinclude[width=0.85\textwidth]{Figures/Cap5/Cobertura/Mapas/NB02_fig02_MEXIBÚS_cobertura.png}
+%DIFDELCMD <     %%%
+%DIFDELCMD < \caption[Mapa de cobertura territorial de Mexibús en la CDMX]{%
+{%DIFAUXCMD
+\DIFdelFL{Mapa del
+    nivel de cobertura territorial del sistema Mexibús por demarcación en la
+    Ciudad de México, calculado a partir de }%DIFDELCMD < \termino{buffers} %%%
+\DIFdelFL{de caminata
+    peatonal de 800~m.}}
+    %DIFAUXCMD
+%DIFDELCMD < \label{fig:mapa-cobertura-mxb}
+%DIFDELCMD <     \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdelend \subsubsection{Mexicable (MEXICABLE)}
+\label{subsubsec:cobertura-mexicable}
+
+El Mexicable es un \DIFdelbegin \DIFdel{sistema de }\DIFdelend teleférico urbano \DIFdelbegin \DIFdel{que opera principalmente en el
+}\DIFdelend \DIFaddbegin \DIFadd{del }\DIFaddend Estado de México \DIFdelbegin \DIFdel{, diseñado para sortear las barreras topográficas de las zonas
+altas y densamente pobladas de la periferia metropolitana. Su }\DIFdelend \DIFaddbegin \DIFadd{cuya }\DIFaddend incursión en la
+Ciudad de México es mínima\DIFdelbegin \DIFdel{y de carácter estrictamente interconectivo, fungiendo
+como enlace alimentador hacia las redes troncales en la zona norte de la capital.
+}%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdel{El Cuadro~\ref{tab:cobertura-mexicable-cdmx} presenta las alcaldías de la capital
+con mayor nivel de cobertura para el Mexicable. Como es natural dada su jurisdicción
+y trazado, }\DIFdelend \DIFaddbegin \DIFadd{: }\DIFaddend únicamente \DIFdelbegin \DIFdel{la alcaldía }\DIFdelend Gustavo A. Madero registra \DIFdelbegin \DIFdel{un área de influencia
+efectiva dentro del isócrono peatonal de 800~m, mientras que el resto de las
+demarcaciones presentan cobertura nula}\DIFdelend \DIFaddbegin \DIFadd{cobertura
+efectiva (3.19\,\%), mientras el resto del territorio capitalino presenta valores
+nulos (Cuadro~\ref{tab:cobertura-mexicable-cdmx}). Para la visualización
+cartográfica de este sistema en el contexto de la red metropolitana véase la
+Figura~\ref{fig:anx-mapa-cobertura-total} del
+Anexo~\ref{anx:cartografia-presentacion}}\DIFaddend .
+
+\begin{table}[H]
+    \centering
+    \caption[Alcaldías con mayor cobertura de Mexicable (CDMX)]{
+    Cinco alcaldías de la Ciudad de México con mayor porcentaje de cobertura
+    territorial para el sistema Mexicable. Isócrono: 800~m.
+    Corrida: 2026-04-18.}
+    \label{tab:cobertura-mexicable-cdmx}
+    \begin{tabular}{|l|r|r|r|}
+        \hline
+        \textbf{Demarcación} & \textbf{Área total (km²)} & \textbf{Área cubierta (km²)} & \textbf{Cobertura (\%)} \\
+        \hline
+        Gustavo A. Madero   &  87.84 & 2.80 & 3.19 \\
+        Venustiano Carranza &  33.84 & 0.00 & 0.00 \\
+        Xochimilco          & 114.03 & 0.00 & 0.00 \\
+        Tláhuac             &  85.78 & 0.00 & 0.00 \\
+        Tlalpan             & 314.25 & 0.00 & 0.00 \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+\DIFdelbegin \DIFdel{La Figura~\ref{fig:mapa-cobertura-mexicable} visualiza la focalización extrema de
+este servicio. El mapa ilustra claramente cómo la infraestructura aérea del
+Mexicable se restringe a un pequeño polígono en el extremo norte de la ciudad,
+reiterando su naturaleza como transporte de penetración desde la zona conurbada.
+}%DIFDELCMD < 
+
+%DIFDELCMD < \begin{figure}[H]
+%DIFDELCMD <     \centering
+%DIFDELCMD <     \figinclude[width=0.85\textwidth]{Figures/Cap5/Cobertura/Mapas/NB02_fig02_MEXICABLE_cobertura.png}
+%DIFDELCMD <     %%%
+%DIFDELCMD < \caption[Mapa de cobertura territorial del Mexicable en la CDMX]{%
+{%DIFAUXCMD
+\DIFdelFL{Mapa del
+    nivel de cobertura territorial del sistema Mexicable por demarcación en la
+    Ciudad de México, calculado a partir de }%DIFDELCMD < \termino{buffers} %%%
+\DIFdelFL{de caminata
+    peatonal de 800~m.}}
+    %DIFAUXCMD
+%DIFDELCMD < \label{fig:mapa-cobertura-mexicable}
+%DIFDELCMD <     \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdelend \subsubsection{Tren Suburbano (SUB)}
+\label{subsubsec:cobertura-sub}
+
+El Tren Suburbano \DIFdelbegin \DIFdel{de la }%DIFDELCMD < \zmvm{} %%%
+\DIFdel{es un sistema ferroviario regional de alta
+capacidad que }\DIFdelend conecta la terminal Buenavista \DIFdelbegin \DIFdel{, en la alcaldía Cuauhtémoc, con el
+municipio de }\DIFdelend \DIFaddbegin \DIFadd{con }\DIFaddend Cuautitlán \DIFdelbegin \DIFdel{, en el }\DIFdelend \DIFaddbegin \DIFadd{(}\DIFaddend Estado de
+México\DIFdelbegin \DIFdel{. Su trazado, mayoritariamente
+confinado al corredor norte de la cuenca metropolitana, limita }\DIFdelend \DIFaddbegin \DIFadd{), limitando }\DIFaddend su área de influencia \DIFdelbegin \DIFdel{directa dentro de }\DIFdelend \DIFaddbegin \DIFadd{en }\DIFaddend la Ciudad de México \DIFdelbegin \DIFdel{a un corredor muy acotado.
+Para
+las alcaldías del sur y oriente, este sistema resulta prácticamente inaccesible
+sin una transferencia modal significativa.
+}%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdel{El }\DIFdelend \DIFaddbegin \DIFadd{al corredor norte.
+Solo Cuauhtémoc (6.18\,\%) y Azcapotzalco (5.99\,\%) registran cobertura
+efectiva, con el resto del territorio capitalino sin acceso directo al sistema
+(}\DIFaddend Cuadro~\ref{tab:cobertura-sub-cdmx}\DIFdelbegin \DIFdel{detalla las cinco alcaldías de la Ciudad de
+México con mayor nivel de cobertura por parte del Tren Suburbano, evidenciando la
+concentración casi exclusiva del servicio en las demarcaciones del norte y centro
+de la capital}\DIFdelend \DIFaddbegin \DIFadd{)}\DIFaddend .
+
+\begin{table}[H]
+    \centering
+    \caption[Alcaldías con mayor cobertura de Tren Suburbano (CDMX)]{
+    Cinco alcaldías de la Ciudad de México con mayor porcentaje de cobertura
+    territorial para el sistema Tren Suburbano (SUB). Isócrono: 800~m.
+    Corrida: 2026-04-18.}
+    \label{tab:cobertura-sub-cdmx}
+    \begin{tabular}{|l|r|r|r|}
+        \hline
+        \textbf{Demarcación} & \textbf{Área total (km²)} & \textbf{Área cubierta (km²)} & \textbf{Cobertura (\%)} \\
+        \hline
+        Cuauhtémoc          &  32.50 & 2.01 & 6.18 \\
+        Azcapotzalco        &  33.50 & 2.01 & 5.99 \\
+        Xochimilco          & 114.03 & 0.00 & 0.00 \\
+        Venustiano Carranza &  33.84 & 0.00 & 0.00 \\
+        Tláhuac             &  85.78 & 0.00 & 0.00 \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+La Figura~\ref{fig:mapa-cobertura-sub} confirma la huella territorial de este
+sistema. El mapa evidencia cómo la cobertura del Tren Suburbano apenas alcanza la
+alcaldía Cuauhtémoc y el extremo norte de Azcapotzalco, mientras que el resto del
+territorio capitalino permanece fuera de su radio de influencia peatonal.
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/Cobertura/Mapas/NB02_fig02_SUB_cobertura.png}
+    \caption[Mapa de cobertura territorial del Tren Suburbano en la CDMX]{Mapa
+    del nivel de cobertura territorial del sistema Tren Suburbano por demarcación
+    en la Ciudad de México, calculado a partir de \termino{buffers} de caminata
+    peatonal de 800~m.}
+    \label{fig:mapa-cobertura-sub}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+\end{figure}
+
+\subsubsection{Tren Interurbano (INTERURBANO)}
+\label{subsubsec:cobertura-interurbano}
+
+El Tren Interurbano ``El Insurgente''\DIFdelbegin \DIFdel{es un sistema ferroviario de carácter
+regional diseñado para conectar el Valle de Toluca con la Ciudad de México. Su
+trazo dentro de la capital es incipiente y se concentra exclusivamente }\DIFdelend \DIFaddbegin \DIFadd{, de vocación regional Toluca-}\cdmx{}\DIFadd{,
+concentra su presencia }\DIFaddend en el sector poniente \DIFdelbegin \DIFdel{, sirviendo como puerta de entrada a la metrópoli. Debido a su vocación
+interurbana, su impacto en la cobertura espacial a nivel de alcaldías es altamente
+localizado.
+}%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdel{El Cuadro~\ref{tab:cobertura-interurbano-cdmx} presenta las alcaldías con mayor
+nivel de cobertura para este sistema. Como reflejo de su ruta de ingreso, }\DIFdelend \DIFaddbegin \DIFadd{con cobertura efectiva }\DIFaddend únicamente \DIFaddbegin \DIFadd{en
+}\DIFaddend Cuajimalpa de Morelos \DIFaddbegin \DIFadd{(2.23\,\%) }\DIFaddend y Álvaro Obregón \DIFdelbegin \DIFdel{presentan áreas de influencia dentro del
+isócrono peatonal de 800~m, dejando al }\DIFdelend \DIFaddbegin \DIFadd{(0.44\,\%), mientras el }\DIFaddend resto
+de la ciudad \DIFdelbegin \DIFdel{sin cobertura directa
+por este medio}\DIFdelend \DIFaddbegin \DIFadd{carece de acceso directo al sistema
+(Cuadro~\ref{tab:cobertura-interurbano-cdmx}). Para la visualización cartográfica
+de este sistema en el contexto de la red metropolitana véase la
+Figura~\ref{fig:anx-mapa-cobertura-total} del
+Anexo~\ref{anx:cartografia-presentacion}}\DIFaddend .
+
+\begin{table}[H]
+    \centering
+    \caption[Alcaldías con mayor cobertura de Tren Interurbano (CDMX)]{
+    Cinco alcaldías de la Ciudad de México con mayor porcentaje de cobertura
+    territorial para el sistema Tren Interurbano (INTERURBANO). Isócrono: 800~m.
+    Corrida: 2026-04-18.}
+    \label{tab:cobertura-interurbano-cdmx}
+    \begin{tabular}{|l|r|r|r|}
+        \hline
+        \textbf{Demarcación} & \textbf{Área total (km²)} & \textbf{Área cubierta (km²)} & \textbf{Cobertura (\%)} \\
+        \hline
+        Cuajimalpa de Morelos &  71.10 & 1.59 & 2.23 \\
+        Álvaro Obregón        &  95.82 & 0.42 & 0.44 \\
+        Venustiano Carranza   &  33.84 & 0.00 & 0.00 \\
+        Xochimilco            & 114.03 & 0.00 & 0.00 \\
+        Tláhuac               &  85.78 & 0.00 & 0.00 \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+\DIFdelbegin \DIFdel{La Figura~\ref{fig:mapa-cobertura-interurbano} visualiza este alcance espacial
+limitado. El mapa hace evidente la focalización de la infraestructura en el límite
+occidental de la cuenca, evidenciando su papel como colector foráneo más que como
+distribuidor urbano capilar.
+}%DIFDELCMD < 
+
+%DIFDELCMD < \begin{figure}[H]
+%DIFDELCMD <     \centering
+%DIFDELCMD <     \figinclude[width=0.85\textwidth]{Figures/Cap5/Cobertura/Mapas/NB02_fig02_INTERURBANO_cobertura.png}
+%DIFDELCMD <     %%%
+%DIFDELCMD < \caption[Mapa de cobertura territorial del Tren Interurbano en la CDMX]{%
+{%DIFAUXCMD
+\DIFdelFL{Mapa
+    del nivel de cobertura territorial del sistema Tren Interurbano por
+    demarcación en la Ciudad de México, calculado a partir de }%DIFDELCMD < \termino{buffers}
+%DIFDELCMD <     %%%
+\DIFdelFL{de caminata peatonal de 800~m.}}
+    %DIFAUXCMD
+%DIFDELCMD < \label{fig:mapa-cobertura-interurbano}
+%DIFDELCMD <     \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdelend \subsubsection{Pumabús (PB)}
+\label{subsubsec:cobertura-pb}
+
+El sistema Pumabús es un servicio de transporte interno operado por la Universidad
+Nacional Autónoma de México (UNAM), de carácter público y gratuito, cuya operación
+\DIFdelbegin \DIFdel{es exclusiva del }\DIFdelend \DIFaddbegin \DIFadd{se circunscribe al }\DIFaddend campus de Ciudad Universitaria. \DIFdelbegin \DIFdel{No obstante, debido a su relevancia
+modal y estructural en el sur de la ciudad, se encuentra registrado formalmente
+dentro del Portal de Datos Abiertos de la Ciudad de México, lo que permite integrar
+su infraestructura de paradas y circuitos en el análisis macro de la conectividad
+metropolitana.
+}%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdel{El }\DIFdelend \DIFaddbegin \DIFadd{Si bien el modelo registra una
+cobertura del 20.13\,\% en Coyoacán ---el porcentaje más alto entre los sistemas
+de escala campus---, este valor refleja la concentración geométrica del isócrono
+dentro del polígono universitario y no un alcance funcional sobre la trama urbana
+circundante. El resto de las demarcaciones capitalinas registra coberturas menores
+al 2.5\,\% o nulas, confirmando su carácter de sistema cautivo del recinto
+universitario (}\DIFaddend Cuadro~\ref{tab:cobertura-pb-cdmx}\DIFdelbegin \DIFdel{identifica las cinco alcaldías de la Ciudad
+de México con mayor cobertura territorial respecto a la red del Pumabús,
+evidenciando su completa focalización en el núcleo universitario y su vecindad
+inmediata}\DIFdelend \DIFaddbegin \DIFadd{). Para la visualización
+cartográfica de este sistema en el contexto de la red metropolitana véase la
+Figura~\ref{fig:anx-mapa-cobertura-total} del
+Anexo~\ref{anx:cartografia-presentacion}}\DIFaddend .
+
+\begin{table}[H]
+    \centering
+    \caption[Alcaldías con mayor cobertura de Pumabús (CDMX)]{
+    Cinco alcaldías de la Ciudad de México con mayor porcentaje de cobertura
+    territorial para el sistema Pumabús (PB). Isócrono: 800~m.
+    Corrida: 2026-04-18.}
+    \label{tab:cobertura-pb-cdmx}
+    \begin{tabular}{|l|r|r|r|}
+        \hline
+        \textbf{Demarcación} & \textbf{Área total (km²)} & \textbf{Área cubierta (km²)} & \textbf{Cobertura (\%)} \\
+        \hline
+        Coyoacán            &  53.88 & 10.85 &  20.13 \\
+        Álvaro Obregón      &  95.82 &  2.25 &   2.34 \\
+        Tlalpan             & 314.25 &  0.25 &   0.08 \\
+        Venustiano Carranza &  33.84 &  0.00 &   0.00 \\
+        Xochimilco          & 114.03 &  0.00 &   0.00 \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+
+\DIFdelbegin \DIFdel{La configuración geoespacial de esta influencia se presenta en la Figura~\ref{fig:mapa-cobertura-pb}. El mapa hace patente la delimitación del
+servicio al polígono escolar de Ciudad Universitaria, extendiendo su área de
+influencia peatonal de 800~m únicamente hacia las franjas fronterizas de las tres
+alcaldías circundantes}\DIFdelend %DIF >  =============================================================================
+%DIF >   Vista cartográfica de la cobertura total de la red
+%DIF >  =============================================================================
+\DIFaddbegin \subsubsection{\DIFadd{Vista Cartográfica de la Cobertura Total}}
+\label{subsubsec:cobertura-total-cartografia}
+
+\DIFadd{El análisis pormenorizado por sistema presentado en las secciones anteriores
+permite construir una lectura integral del territorio metropolitano en términos
+de accesibilidad al transporte masivo. Las
+Figuras~\ref{fig:mapa-cobertura-red-total} y~\ref{fig:mapa-cobertura-calor}
+sintetizan esta lectura mediante dos representaciones cartográficas complementarias
+producidas con el sistema }\textbf{\DIFadd{Transport-gis-zmvm-mjg}}\DIFadd{: la primera muestra el
+alcance territorial acumulado de los isócronos de todos los sistemas; la segunda
+expresa la densidad de esa cobertura como mapa de calor, revelando los núcleos de
+máxima accesibilidad y los vacíos periféricos. Las versiones a página completa se
+encuentran en el Anexo~\ref{anx:cartografia-presentacion}
+(Figuras~\ref{fig:anx-mapa-cobertura-total}
+y~\ref{fig:anx-mapa-cobertura-calor})}\DIFaddend .
+
+\begin{figure}[H]
+    \centering
+    \DIFdelbeginFL %DIFDELCMD < \figinclude[width=0.85\textwidth]{Figures/Cap5/Cobertura/Mapas/NB02_fig02_PUMABUS_cobertura.png}
+%DIFDELCMD <     \caption[Mapa de cobertura territorial del Pumabús en la CDMX]{%%%
+\DIFdelFL{Mapa del
+    nivel }\DIFdelendFL \DIFaddbeginFL \figinclude[width=0.90\textwidth]{Figures/Mapas/Mapa_Cobertura_Red_Total}
+    \caption[Cobertura espacial total de la red multimodal — isócronas 800~m]{
+    \DIFaddFL{Cobertura espacial integrada }\DIFaddendFL de \DIFdelbeginFL \DIFdelFL{cobertura territorial del sistema Pumabús por demarcación en la
+    Ciudad }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{los doce sistemas }\DIFaddendFL de \DIFdelbeginFL \DIFdelFL{México}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{transporte masivo de la
+    }\zmvm{}\DIFaddendFL , \DIFdelbeginFL \DIFdelFL{calculado }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{calculada }\DIFaddendFL a partir de \DIFdelbeginFL %DIFDELCMD < \termino{buffers} %%%
+\DIFdelendFL \DIFaddbeginFL \DIFaddFL{isócronos peatonales }\DIFaddendFL de \DIFdelbeginFL \DIFdelFL{caminata
+    peatonal de }\DIFdelendFL 800~m. \DIFaddbeginFL \DIFaddFL{Las zonas sin
+    cobertura se concentran en el sur y oriente de la cuenca metropolitana,
+    evidenciando las demarcaciones con mayor exclusión territorial del sistema.}\DIFaddendFL }
+    \DIFdelbeginFL %DIFDELCMD < \label{fig:mapa-cobertura-pb}
+%DIFDELCMD <     \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+%DIFDELCMD < %%%
+\DIFdelendFL \DIFaddbeginFL \label{fig:mapa-cobertura-red-total}
+    \fuentefigura{Elaboración propia con \texttt{Transport-gis-zmvm-mjg};
+    datos: GTFS SEMOVI 2024 e INEGI 2023.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.90\textwidth]{Figures/Mapas/Mapa_Cobertura_Mapa_Calor}
+    \caption[Densidad de cobertura de la red multimodal — mapa de calor]{
+    \DIFaddFL{Densidad de la cobertura espacial de la red multimodal expresada como mapa
+    de calor. Los núcleos de máxima accesibilidad se ubican en las alcaldías
+    centrales (Cuauhtémoc, Benito Juárez, Iztacalco), mientras que las periferias
+    sur y oriente presentan densidades cercanas a cero, confirmando la inequidad
+    territorial diagnosticada.}}
+    \label{fig:mapa-cobertura-calor}
+    \fuentefigura{Elaboración propia con \texttt{Transport-gis-zmvm-mjg};
+    datos: GTFS SEMOVI 2024 e INEGI 2023.}
+\DIFaddendFL \end{figure}
+
+%% ── 5-Resultados/5-2-1-Fase1/5-2-1-3-FuerzaCapilar.tex
+\subsection*{5 2 1 3 FuerzaCapilar}
+% !TeX root = ../../tesis.tex
+% =============================================================================
+%  5.2.1.3 FUERZA CAPILAR Y NODOS DE TRANSFERENCIA
+% =============================================================================
+\subsection{\bajoRevision{Fuerza Capilar y Nodos de Transferencia (\texorpdfstring{$FC$}{FC})}}
+\label{subsec:fuerza-capilar}
+\notaRevision{Los resultados de esta subsección están sujetos a revisión con el
+comité tutor. Los valores presentados corresponden a la corrida del modelo del
+18 de abril de 2026.}
+
+La \textbf{Fuerza Capilar} ($FC$) cuantifica el nivel de convergencia de flujos
+de transporte en cada nodo o agrupación de nodos del grafo. El indicador se
+evalúa desde dos perspectivas complementarias:
+
+\textbf{A. Fuerza Capilar Geográfica ($FC_H$) — Macro-Hubs:} agrupa
+topológicamente estaciones físicamente colindantes (radio de 100~m) en un
+subgrafo $H$ que consolida los flujos de sus estaciones constituyentes,
+representando el fenómeno urbano del transbordo físico (CETRAMs):
+
+\begin{equation}
+    FC_{H} = \sum_{j \in H} \bigl(k_{\text{in}}(j) + k_{\text{out}}(j)\bigr)
+    - \text{Aristas Internas}
+    \label{eq:fc-geografica}
+\end{equation}
+
+El Cuadro~\ref{tab:fuerza-capilar-hubs} detalla el comportamiento numérico de los
+cinco principales Macro-Hubs de transferencia identificados en la red con base en
+esta formulación, mientras que la Figura~\ref{fig:barplot-macro-hubs} permite
+contrastar las magnitudes relativas de la concentración de flujos en los diez
+nodos más significativos de la metrópoli.
+
+\begin{table}[H]
+    \centering
+    \caption[Top 5 Macro-Hubs con mayor Fuerza Capilar Geográfica ($FC_H$)]{
+    Los cinco Macro-Hubs de transferencia (nodos agrupados topológicamente a
+    menos de 100~m) con mayor Fuerza Capilar Geográfica en la red metropolitana.
+    Corrida: 2026-04-18.}
+    \label{tab:fuerza-capilar-hubs}
+    \fontsize{8.5pt}{10.5pt}\selectfont
+    \begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
+        \hline
+        \textbf{ID Hub} & \textbf{Principales Estaciones Agrupadas} & \textbf{Sistemas} & \textbf{Nodos} & \textbf{Conexiones} \textit{(In / Out)} & \textbf{$FC_H$} \\
+        \hline
+        2174 & Zona Hospitales Sur (San Fernando, Chimalcoyotl, Coapa, Hosp. Manuel Gea Gtz., INER, Urgencias Respiratorias) & CC, RTP & 21 & 66 / 64 & \textbf{130} \\
+        \hline
+        136 & Eje Huipulco -- Estadio Azteca (Acoxpa, Huipulco, Estadio Azteca, Renato Leduc, San Alejandro) & CC, RTP, TL & 61 & 61 / 50 & \textbf{111} \\
+        \hline
+        1597 & Corredor Tlalpan Sur (Calle La Rosa, Tezoquipa, Galeana, Jojutla) & CC, RTP & 10 & 49 / 51 & \textbf{100} \\
+        \hline
+        259 & Nodo Barranca del Muerto (Barranca del Muerto, Alpes, Periférico Sur, José María Velasco, Miguel Ocaranza) & CC, RTP & 21 & 50 / 42 & \textbf{92} \\
+        \hline
+        129 & CETRAM Chapultepec (Metro Chapultepec, Acapulco, Agustín Melgar, Sonora, Veracruz, Tampico) & CC, METRO, RTP, TROLE & 29 & 37 / 40 & \textbf{77} \\
+        \hline
+    \end{tabularx}
+    \vspace{1ex}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/FuerzaCapilar/Tabla/NB03_fig01_top10_macrohubs_barplot.png}
+    \caption[Distribución de los principales Macro-Hubs por Fuerza Capilar]{
+    Gráfico de barras comparativo de los diez principales Macro-Hubs de la red
+    metropolitana, ordenados con base en su nivel acumulado de Fuerza Capilar
+    Geográfica ($FC_H$).}
+    \label{fig:barplot-macro-hubs}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} a partir de los resultados analíticos del modelo.}
+\end{figure}
+
+Por último, la distribución espacial y la cobertura geográfica de estos nodos de
+transferencia masiva dentro del entorno urbano de la \zmvm{} se presenta mapeada
+de forma detallada en la Figura~\ref{fig:mapa-fuerza-capilar}.
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/FuerzaCapilar/Mapa/NB03_mapa01_macrohubs.png}
+    \caption[Mapa de Macro-Hubs y Fuerza Capilar Geográfica]{
+    Representación geoespacial de la \termino{Fuerza Capilar Geográfica}
+    ($FC_H$). El mapa destaca la concentración de flujos de transporte en los
+    principales nodos y zonas de transferencia física (Macro-Hubs) de la \zmvm.}
+    \label{fig:mapa-fuerza-capilar}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+\end{figure}
+
+% =============================================================================
+%  5.2.1.4 FUERZA CAPILAR SISTÉMICA (MATEMÁTICA)
+% =============================================================================
+\subsection{\bajoRevision{Fuerza Capilar Sistémica (Matemática)}}
+\label{subsec:fuerza-capilar-matematica}
+
+\textbf{B. Fuerza Capilar Sistémica o Matemática ($FC$):} A diferencia de la
+aproximación geográfica orientada a macro-hubs, esta perspectiva evalúa de manera
+estricta la convergencia de flujos directamente sobre cada nodo topológico
+individual. El análisis permite identificar los puntos exactos de la
+infraestructura matemática de la red donde se concentra la mayor densidad de
+aristas de entrada y salida, aislando singularidades críticas en la traza sin
+aplicar tolerancias de proximidad espacial ni fusión de estaciones colindantes.
+
+El Cuadro~\ref{tab:fuerza-capilar-matematica} detalla el comportamiento de los
+cinco nodos individuales que registraron la mayor Fuerza Capilar pura dentro del
+grafo de transporte metropolitano.
+
+\begin{table}[H]
+    \centering
+    \caption[Top 5 Nodos con mayor Fuerza Capilar Sistémica (Matemática)]{
+    Los cinco nodos individuales con mayor Fuerza Capilar Sistémica (Matemática)
+    en la red metropolitana, evaluados de manera estricta sin agrupación
+    geográfica. Corrida: 2026-04-18.}
+    \label{tab:fuerza-capilar-matematica}
+    \fontsize{9.5pt}{11.5pt}\selectfont
+    \begin{tabular}{|c|l|c|c|c|}
+        \hline
+        \textbf{ID Nodo} & \textbf{Estación (Nodo Topológico)} & \textbf{Sistemas} & \textbf{Conexiones} \textit{(In / Out)} & \textbf{$FC$} \\
+        \hline
+        7270  & Luis Murillo                          & RTP & 21 / 20 & \textbf{41} \\
+        \hline
+        2817  & Calz. de Tlalpan -- Glorieta Huipulco & RTP & 19 / 15 & \textbf{34} \\
+        \hline
+        10211 & Sobre Calz. de Tlalpan y Luis Murillo & CC  & 16 / 17 & \textbf{33} \\
+        \hline
+        10717 & Tlalpan y Luis Murillo                & CC  & 18 / 15 & \textbf{33} \\
+        \hline
+        5540  & Estadio Azteca 2                      & RTP & 14 / 18 & \textbf{32} \\
+        \hline
+    \end{tabular}
+    \vspace{1ex}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+Las magnitudes y diferencias relativas entre los diez elementos individuales con
+mayor concentración de conexiones se visualizan en el gráfico de barras de la
+Figura~\ref{fig:barplot-nodos-matematicos}.
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/FuerzaCapilar/Tabla/NB03_fig02_top10_nodos_matematicos_barplot.png}
+    \caption[Distribución de los principales nodos individuales por Fuerza Capilar]{
+    Gráfico de barras comparativo de los diez nodos individuales con mayor
+    Fuerza Capilar Sistémica (Matemática) en la red metropolitana.}
+    \label{fig:barplot-nodos-matematicos}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} a partir de los resultados analíticos del modelo.}
+\end{figure}
+
+La distribución geográfica e implicación espacial de estos puntos específicos de
+alta carga conectiva dentro de la red urbana consolidada se presenta en la
+Figura~\ref{fig:mapa-nodos-matematicos}.
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/FuerzaCapilar/Mapa/NB03_mapa02_nodos_matematicos.png}
+    \caption[Mapa de Nodos Individuales y Fuerza Capilar Sistémica]{
+    Representación geoespacial de la Fuerza Capilar Sistémica (Matemática) a
+    nivel de nodo individual en la \zmvm{}.}
+    \label{fig:mapa-nodos-matematicos}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+\end{figure}
+
+\subsubsection{Análisis del Eje Periférico — Infraestructura Preexistente}
+\label{subsubsec:periferico-fc}
+
+Como diagnóstico previo a la propuesta del corredor anillar, se aislaron los nodos
+y Macro-Hubs cuyos nombres contienen la denominación ``Periférico'', con el objetivo
+de identificar los puntos de mayor tensión vehicular e intermodal sobre esta
+vialidad fundamental. Este análisis se divide en dos enfoques: la concentración
+geográfica (transbordos físicos en Macro-Hubs) y la concentración matemática
+estricta (nodos topológicos individuales).
+
+\paragraph{A. Fuerza Capilar Geográfica (Macro-Hubs) en el Periférico}
+
+Al aplicar un radio de tolerancia de 100~m para agrupar las estaciones colindantes
+sobre el eje, emergen los principales complejos de transbordo y alimentación. El
+Cuadro~\ref{tab:periferico-hubs-geo} detalla los cinco Macro-Hubs de mayor Fuerza
+Capilar Geográfica ($FC_H$), destacando la importancia de Barranca del Muerto y la
+intersección con la zona de hospitales/Tlalpan como los anclajes más fuertes del
+corredor.
+
+\begin{table}[H]
+    \centering
+    \caption[Top 5 Macro-Hubs con mayor Fuerza Capilar sobre el Eje Periférico]{
+    Cinco Macro-Hubs de transferencia con mayor Fuerza Capilar Geográfica
+    ($FC_H$) ubicados sobre el Anillo Periférico. Corrida: 2026-04-18.}
+    \label{tab:periferico-hubs-geo}
+    \fontsize{8.5pt}{10.5pt}\selectfont
+    \begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
+        \hline
+        \textbf{ID Hub} & \textbf{Principales Estaciones Agrupadas} & \textbf{Sistemas} & \textbf{Nodos} & \textbf{Conexiones} \textit{(In / Out)} & \textbf{$FC_H$} \\
+        \hline
+        259 & Nodo Barranca del Muerto (Barranca del Muerto, Alpes, Periférico Sur, Miguel Ocaranza) & CC, RTP & 21 & 50 / 42 & \textbf{92} \\
+        \hline
+        374 & Intersección Tlalpan--Periférico (Renato Leduc, Huipulco, Periférico, Av. Pedregal) & CC, RTP & 18 & 34 / 33 & \textbf{67} \\
+        \hline
+        453 & Nodo San Antonio (San Antonio, Periférico Sur, Puente Periférico Norte) & CC, RTP & 7 & 23 / 23 & \textbf{46} \\
+        \hline
+        402 & Eje Oriente Tepalcates (Constitución de Apatzingán, Canal de San Juan, Tepalcates) & CC, MB, RTP & 8 & 20 / 26 & \textbf{46} \\
+        \hline
+        291 & Intersección Xochimilco--Tepepan (16 de Septiembre, Kioto, Tec de Monterrey, Periférico Participación) & CC, RTP, TL & 14 & 23 / 22 & \textbf{45} \\
+        \hline
+    \end{tabularx}
+    \vspace{1ex}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+La Figura~\ref{fig:barplot-hubs-periferico} compara las magnitudes relativas de
+estos agrupamientos geográficos, mientras que la Figura~\ref{fig:mapa-hubs-periferico}
+espacializa su huella sobre la vialidad, revelando los polos naturales de atracción
+de demanda que la futura infraestructura anillar deberá integrar.
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/FuerzaCapilar/Tabla/NB03_fig04_top10_macrohubs_periferico_barplot.png}
+    \caption[Fuerza Capilar de Macro-Hubs en Anillo Periférico]{Gráfico de barras
+    de los diez principales Macro-Hubs geográficos ubicados en el Anillo Periférico,
+    ordenados por su nivel de Fuerza Capilar.}
+    \label{fig:barplot-hubs-periferico}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel}.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/FuerzaCapilar/Mapa/NB03_mapa03_macrohubs_periferico.png}
+    \caption[Distribución espacial de Macro-Hubs en el Periférico]{Mapa de la
+    Fuerza Capilar Geográfica ($FC_H$) en los Macro-Hubs del Anillo Periférico.}
+    \label{fig:mapa-hubs-periferico}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+\end{figure}
+
+\paragraph{B. Fuerza Capilar Sistémica (Nodos Matemáticos) en el Periférico}
+
+Al desagregar los Hubs y analizar la Fuerza Capilar Sistémica ($FC$) estricta a
+nivel de nodo individual, es posible identificar los paraderos específicos que
+soportan la mayor carga de conexiones en la infraestructura actual. El
+Cuadro~\ref{tab:periferico-nodos-math} presenta los cinco paraderos matemáticos
+de mayor convergencia de flujo.
+
+\begin{table}[H]
+    \centering
+    \caption[Nodos con mayor Fuerza Capilar Sistémica sobre el Eje Periférico]{
+    Cinco nodos topológicos individuales con mayor Fuerza Capilar Matemática
+    ($FC$) ubicados sobre el Anillo Periférico. Corrida: 2026-04-18.}
+    \label{tab:periferico-nodos-math}
+    \fontsize{9.5pt}{11.5pt}\selectfont
+    \begin{tabular}{|c|l|c|r|r|c|}
+        \hline
+        \textbf{ID Nodo} & \textbf{Estación (Nodo Topológico)} & \textbf{Sistema} & \textbf{Entr.} & \textbf{Sal.} & \textbf{$FC$} \\
+        \hline
+        707  & Anillo Periférico y Blvd. Adolfo Ruiz Cortines & RTP & 14 & 16 & \textbf{30} \\
+        \hline
+        706  & Anillo Periférico y Blvd. Adolfo Ruiz Cortines & RTP & 13 & 13 & \textbf{26} \\
+        \hline
+        8538 & Periférico -- Barranca del Muerto              &  CC & 12 &  9 & \textbf{21} \\
+        \hline
+        602  & Anillo Periférico Canal de Garay -- Bilbao     & RTP & 10 & 10 & \textbf{20} \\
+        \hline
+        8510 & Periférico                                     & RTP &  9 & 11 & \textbf{20} \\
+        \hline
+    \end{tabular}
+    \vspace{1ex}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} y datos de \texttt{Apimetro}.}
+\end{table}
+
+La jerarquía analítica de estos puntos singulares se constata en la
+Figura~\ref{fig:barplot-nodos-periferico}, seguida de la
+Figura~\ref{fig:mapa-nodos-periferico}, que detalla la distribución geográfica a
+escala de paradero individual, útil para el micro-posicionamiento de futuras
+estaciones anillares.
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/FuerzaCapilar/Tabla/NB03_fig05_top10_nodos_matematicos_periferico_barplot.png}
+    \caption[Fuerza Capilar de nodos individuales en Anillo Periférico]{
+    Gráfico de barras comparativo de los diez principales nodos matemáticos
+    individuales ubicados en el Anillo Periférico.}
+    \label{fig:barplot-nodos-periferico}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel}.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/FuerzaCapilar/Mapa/NB03_mapa04_nodos_matematicos_periferico.png}
+    \caption[Distribución espacial de nodos matemáticos en el Periférico]{Mapa
+    de la Fuerza Capilar Sistémica (Matemática) a nivel de nodo individual sobre
+    el corredor del Anillo Periférico.}
+    \label{fig:mapa-nodos-periferico}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} utilizando visualización geoespacial.}
+\end{figure}
+
+\vspace{2ex}
+\begin{quote}
+    \small\textit{Nota aclaratoria:} los datos presentados en esta sección
+    reflejan exclusivamente la infraestructura de transporte \textbf{preexistente}
+    sobre el Anillo Periférico. No se ha trazado ni modelado aún la geometría
+    del corredor anillar propuesto; la sección permanece en plano especulativo
+    para identificar los puntos naturales de anclaje de la futura línea a nivel
+    capilar.
+\end{quote}
+\DIFaddbegin 
+
+\DIFadd{La Figura~\ref{fig:mapa-fc-presentacion} consolida, mediante cartografía de
+presentación, la distribución geoespacial de los principales nodos }\termino{hub}
+\DIFadd{de la red y su intensidad capilar. La versión a página completa se encuentra en
+la Figura~\ref{fig:anx-mapa-fuerza-capilar} del
+Anexo~\ref{anx:cartografia-presentacion}.
+}
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.90\textwidth]{Figures/Mapas/Mapa_Fuerza_Capilar}
+    \caption[Cartografía de presentación — Fuerza Capilar y nodos \textit{hub} principales]{
+    \DIFaddFL{Representación cartográfica de los veinte nodos con mayor Fuerza Capilar en
+    la red de transporte de la }\zmvm{}\DIFaddFL{. Los nodos señalados corresponden a los
+    puntos de mayor influencia redistributiva de flujos intermodales, con especial
+    concentración en el corredor sur de la cuenca metropolitana, sobre el eje
+    que recorre el Anillo Periférico.}}
+    \label{fig:mapa-fc-presentacion}
+    \fuentefigura{Elaboración propia con \texttt{Transport-gis-zmvm-mjg};
+    datos: GTFS SEMOVI 2024 e INEGI 2023.}
+\end{figure}
+ \DIFaddend
+
+%% ── 5-Resultados/5-2-1-Fase1/5-2-1-4-FactorDesviacion.tex
+\subsection*{5 2 1 4 FactorDesviacion}
+% !TeX root = ../../tesis.tex
+% =============================================================================
+%  5.2.1.5 FACTOR DE DESVIACIÓN
+% =============================================================================
+\subsection{\bajoRevision{Factor de Desviación (\texorpdfstring{$DF$}{DF})}}
+\label{subsec:detour-factor}
+\notaRevision{Los resultados de esta subsección están sujetos a revisión con el
+comité tutor. Los valores presentados corresponden a una muestra de 100~rutas
+aleatorias ejecutadas el 27 de abril de 2026.}
+
+El \textbf{Factor de Desviación} ($DF$) mide la eficiencia topológica de la
+red comparando la distancia real recorrida a través de la infraestructura
+contra la distancia teórica en línea recta (Haversine) entre el mismo par
+origen-destino:
+
+\begin{equation}
+    DF = \frac{D_{\text{red}} + D_{\text{caminata}}}{D_{\text{haversine}}(O, D)}
+    \label{eq:detour-factor-res}
+\end{equation}
+
+\begin{itemize}
+    \item $D_{\text{red}}$: distancia acumulada sobre el trazo real de la ruta
+    óptima en tiempo.
+    \item $D_{\text{caminata}}$: suma de la primera y última milla peatonal.
+    \item $D_{\text{haversine}}(O,D)$: distancia en línea recta entre origen y
+    destino calculada con la fórmula de Haversine.
+\end{itemize}
+
+Un valor de $DF = 1.0$ indica una ruta perfectamente directa; valores superiores
+a $1.5$ revelan ineficiencias topológicas significativas.
+
+% -----------------------------------------------------------------------------
+\subsubsection{Estadísticas Globales de la Red}
+\label{subsubsec:df-estadisticas}
+
+Sobre una muestra aleatoria de \textbf{100 pares origen-destino} (semilla
+reproducible $= 42$), el análisis arrojó los siguientes estadísticos globales:
+
+\begin{table}[H]
+    \centering
+    \caption[Estadísticos globales del Factor de Desviación — muestra de 100 rutas]{
+    Estadísticos descriptivos del $DF$ sobre 100 pares O-D de la red de la \zmvm.
+    Corrida: 2026-04-27.}
+    \label{tab:df-estadisticas}
+    \begin{tabular}{|l|r|}
+        \hline
+        \textbf{Estadístico} & \textbf{Valor} \\
+        \hline
+        $n$ (rutas calculadas)     & 100   \\
+        Media ($\bar{DF}$)         & 1.545 \\
+        Desviación estándar        & 0.517 \\
+        Mínimo                     & 0.97  \\
+        Percentil 25               & 1.27  \\
+        Mediana                    & 1.40  \\
+        Percentil 75               & 1.67  \\
+        Máximo                     & 4.34  \\
+        \hline
+    \end{tabular}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} (corrida 2026-04-27).}
+\end{table}
+
+La Figura~\ref{fig:df-caso-inicial} muestra la distribución geoespacial de los
+100 pares O-D y las rutas calculadas sobre el territorio de la \zmvm{}.
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.85\textwidth]{Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa01_caso_inicial.png}
+    \caption[Distribución de la muestra O-D para el Factor de Desviación]{
+    Distribución de los 100 pares origen-destino de la muestra aleatoria y sus
+    rutas óptimas en la \zmvm. Corrida: 2026-04-27.}
+    \label{fig:df-caso-inicial}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} (corrida 2026-04-27).}
+\end{figure}
+
+% -----------------------------------------------------------------------------
+\subsubsection{Casos de Estudio Seleccionados}
+\label{subsubsec:df-casos}
+
+Se analizaron doce rutas que evalúan la conectividad desde las periferias sur y
+oriente hacia distintos destinos de la metrópoli. Las
+Figuras~\ref{fig:df-casos-1-4}--\ref{fig:df-casos-9-12} presentan los trazados
+cartográficos de cada caso; el Cuadro~\ref{tab:df-casos} consolida los valores
+numéricos al final de esta sección.
+
+% --- Casos 1–4 ---------------------------------------------------------------
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \figinclude[width=\textwidth]{Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa04_caso01.png}
+        \caption{Caso~1: Milpa Alta → Autódromo. $DF = 1.29$.}
+        \label{fig:df-c01}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \figinclude[width=\textwidth]{Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa05_caso02.png}
+        \caption{Caso~2: Milpa Alta → Reforma (CBD). $DF = 1.37$.}
+        \label{fig:df-c02}
+    \end{subfigure}
+
+    \vspace{0.5em}
+    \begin{subfigure}[t]{0.48\textwidth}
+        \figinclude[width=\textwidth]{Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa06_caso03.png}
+        \caption{Caso~3: Milpa Alta → Santa Fe (CBD). $DF = 1.27$.}
+        \label{fig:df-c03}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \figinclude[width=\textwidth]{Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa07_caso04.png}
+        \caption{Caso~4: Milpa Alta → FES Acatlán. $DF = 1.35$.}
+        \label{fig:df-c04}
+    \end{subfigure}
+    \caption[Casos de estudio del Factor de Desviación: 1–4]{Rutas de los casos 1 al 4.
+    Origen común: Milpa Alta hacia distintos destinos del norte y poniente.}
+    \label{fig:df-casos-1-4}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} (corrida 2026-04-27).}
+\end{figure}
+
+% --- Casos 5–8 ---------------------------------------------------------------
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \figinclude[width=\textwidth]{Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa08_caso05.png}
+        \caption{Caso~5: Milpa Alta → C.U. $DF = 1.32$.}
+        \label{fig:df-c05}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \figinclude[width=\textwidth]{Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa09_caso06.png}
+        \caption{Caso~6: Milpa Alta → Coyoacán. $DF = 1.34$.}
+        \label{fig:df-c06}
+    \end{subfigure}
+
+    \vspace{0.5em}
+    \begin{subfigure}[t]{0.48\textwidth}
+        \figinclude[width=\textwidth]{Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa10_caso07.png}
+        \caption{Caso~7: Santa Catarina → C.U. $DF = 1.82$.}
+        \label{fig:df-c07}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \figinclude[width=\textwidth]{Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa11_caso08.png}
+        \caption{Caso~8: Santa Catarina → FES Acatlán. $DF = 1.42$.}
+        \label{fig:df-c08}
+    \end{subfigure}
+    \caption[Casos de estudio del Factor de Desviación: 5–8]{Rutas de los casos 5 al 8.
+    Destinos en el sur de la ciudad y primeros casos desde Santa Catarina.}
+    \label{fig:df-casos-5-8}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} (corrida 2026-04-27).}
+\end{figure}
+
+% --- Casos 9–12 --------------------------------------------------------------
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \figinclude[width=\textwidth]{Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa12_caso09.png}
+        \caption{Caso~9: Milpa Alta → Santa Catarina. $DF = 2.52$.}
+        \label{fig:df-c09}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \figinclude[width=\textwidth]{Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa13_caso10.png}
+        \caption{Caso~10: Milpa Alta → Ajusco. $DF = 1.42$.}
+        \label{fig:df-c10}
+    \end{subfigure}
+
+    \vspace{0.5em}
+    \begin{subfigure}[t]{0.48\textwidth}
+        \figinclude[width=\textwidth]{Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa14_caso11.png}
+        \caption{Caso~11: Ajusco → Preparatoria 1. $DF = 1.43$.}
+        \label{fig:df-c11}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \figinclude[width=\textwidth]{Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa15_caso12.png}
+        \caption{Caso~12: P. Los Olivos → Centro Tláhuac. $DF = 1.06$.}
+        \label{fig:df-c12}
+    \end{subfigure}
+    \caption[Casos de estudio del Factor de Desviación: 9–12]{Rutas de los casos 9 al 12.
+    El caso~9 (sur-oriente transversal) registra el mayor $DF$ del conjunto.}
+    \label{fig:df-casos-9-12}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} (corrida 2026-04-27).}
+\end{figure}
+
+% --- Extremos globales de la muestra aleatoria -------------------------------
+Para situar los casos de estudio en el contexto de la muestra completa, las
+Figuras~\ref{fig:df-mejor-caso} y~\ref{fig:df-peor-caso} ilustran los extremos
+globales obtenidos en los 100 pares O-D aleatorios.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \figinclude[width=\textwidth]{Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa02_ruta_mas_eficiente.png}
+        \caption{Mejor caso: Plutarco Elías Calles → Fuente de Loreto. $DF = 0.97$.}
+        \label{fig:df-mejor-caso}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \figinclude[width=\textwidth]{Figures/Cap5/FactorDesviacion/Mapa/NB04_mapa03_ruta_mas_ineficiente.png}
+        \caption{Peor caso: Carlos A. Vidal → 20 de Noviembre. $DF = 4.34$.}
+        \label{fig:df-peor-caso}
+    \end{subfigure}
+    \caption[Extremos del Factor de Desviación en la muestra aleatoria]{
+    Rutas con menor y mayor Factor de Desviación en la muestra aleatoria de 100 pares O-D.}
+    \label{fig:df-extremos}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} (corrida 2026-04-27).}
+\end{figure}
+
+% --- Tabla resumen de los 12 casos -------------------------------------------
+\begin{table}[H]
+    \centering
+    \caption[Factor de Desviación — resumen de los doce casos de estudio]{
+    Resultados del Factor de Desviación para los doce casos estratégicos de la
+    \zmvm{} ilustrados en las figuras anteriores. Corrida: 2026-04-27.}
+    \label{tab:df-casos}
+    \small
+    \begin{tabularx}{\textwidth}{|l|X|X|r|r|r|}
+        \hline
+        \textbf{\#} & \textbf{Origen} & \textbf{Destino} &
+        \textbf{$D_{\text{red}}$ (km)} & \textbf{$D_{\text{Hav.}}$ (km)} & \textbf{$DF$} \\
+        \hline
+         1 & Milpa Alta        & Autódromo / Centro-Oriente   & 29.18 & 22.59 & 1.29 \\
+         2 & Milpa Alta        & Paseo de la Reforma (CBD)    & 37.73 & 27.50 & 1.37 \\
+         3 & Milpa Alta        & Santa Fe (CBD)               & 36.42 & 28.62 & 1.27 \\
+         4 & Milpa Alta        & FES Acatlán                  & 48.34 & 35.73 & 1.35 \\
+         5 & Milpa Alta        & Ciudad Universitaria         & 26.25 & 19.96 & 1.32 \\
+         6 & Milpa Alta        & Coyoacán                     & 25.24 & 18.86 & 1.34 \\
+         7 & Santa Catarina    & Ciudad Universitaria         & 42.06 & 23.10 & 1.82 \\
+         8 & Santa Catarina    & FES Acatlán                  & 45.64 & 32.16 & 1.42 \\
+         9 & Milpa Alta        & Santa Catarina (Sur-Oriente) & 37.22 & 14.79 & 2.52 \\
+        10 & Milpa Alta        & Ajusco                       & 29.19 & 20.56 & 1.42 \\
+        11 & Ajusco            & Preparatoria 1               & 15.91 & 11.16 & 1.43 \\
+        12 & Parque Los Olivos & Centro de Tláhuac            &  2.20 &  2.08 & 1.06 \\
+        \hline
+        \multicolumn{5}{|l|}{\textbf{Mejor caso global (muestra aleatoria):}
+        Plutarco Elias Calles → Fuente de Loreto} & \textbf{0.97} \\
+        \multicolumn{5}{|l|}{\textbf{Peor caso global (muestra aleatoria):}
+        Carlos A. Vidal → 20 de Noviembre} & \textbf{4.34} \\
+        \hline
+    \end{tabularx}
+    \fuentefigura{Elaboración propia con \texttt{VFTModel} (corrida 2026-04-27).}
+\end{table}
+
+El análisis revela que los viajes periféricos sur-oriente (Caso~9: $DF = 2.52$,
+Figura~\ref{fig:df-c09}) registran la mayor ineficiencia entre los casos de
+estudio, obligando al usuario a recorrer 37.2~km de red para cubrir una distancia
+lineal de 14.8~km. Esta situación responde a la ausencia de conectividad
+transversal en el arco sur-oriente de la ciudad, que impone al tránsito
+perimetral el ingreso al centro metropolitano como nodo obligado, confirmando la
+hipótesis sobre la necesidad de un corredor anillar en el Periférico.
+\DIFaddbegin 
+
+\DIFadd{La Figura~\ref{fig:mapa-df-presentacion} sintetiza estos hallazgos mediante
+cartografía de presentación del Factor de Desviación sobre el conjunto de nodos
+de la red. El gradiente de color verde-a-rojo permite identificar directamente las
+zonas donde la infraestructura existente impone los mayores rodeos, reforzando de
+forma visual el argumento sobre la necesidad del corredor anillar en el arco
+sur-oriente. La versión a página completa se encuentra en la
+Figura~\ref{fig:anx-mapa-factor-desviacion} del
+Anexo~\ref{anx:cartografia-presentacion}.
+}
+
+\begin{figure}[H]
+    \centering
+    \figinclude[width=0.90\textwidth]{Figures/Mapas/Mapa_DF}
+    \caption[Cartografía de presentación — Factor de Desviación por nodo]{
+    \DIFaddFL{Factor de Desviación ($DF$) por nodo en la red de transporte de la }\zmvm{}\DIFaddFL{.
+    El gradiente verde-a-rojo indica la relación entre la distancia real de viaje
+    y la distancia euclidiana: los nodos en rojo señalan las zonas donde las
+    rutas disponibles imponen desviaciones significativas, penalizando con mayor
+    intensidad a la periferia sur y oriente de la cuenca metropolitana.}}
+    \label{fig:mapa-df-presentacion}
+    \fuentefigura{Elaboración propia con \texttt{Transport-gis-zmvm-mjg};
+    datos: GTFS SEMOVI 2024 e INEGI 2023.}
+\end{figure}
+ \DIFaddend
+
+%% ── Anexos/E-Cartografia-Presentacion.tex
+\subsection*{E Cartografia Presentacion}
+% !TeX root = ../tesis.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ANEXO E — Cartografía de Presentación: Transport-gis-zmvm-mjg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Este anexo reúne las versiones cartográficas de alta resolución producidas por el sistema \textbf{Transport-gis-zmvm-mjg},
+generadas con QGIS~3.x a partir de las plantillas institucionales de la \textsc{unam}. Los mapas utilizan la proyección
+\textsc{epsg}:32614 (UTM zona~14N) y tienen como fuente base los \textit{feeds} \gtfs{} de la \textsc{semovi} (2024) y la cartografía
+del \textsc{inegi} (2023). Versiones reducidas de estos mapas se encuentran en los capítulos~\ref{ch:Capas-codigo}
+y~\ref{ch:resultados-vft} para su discusión contextual.
+
+% =============================================================================
+\section{Red Esquemática Multimodal}
+\label{anx:mapa-red-esquematica}
+% =============================================================================
+
+\begin{figure}[p]
+  \centering
+  \figinclude[width=\textwidth]{Figures/Mapas/Mapa_Red_Esquematica}
+  \caption[Red esquemática multimodal de la ZMVM (alta resolución)]{Red esquemática multimodal de la \zmvm{}.
+    Muestra los doce sistemas de transporte reconocidos por el modelo VFT sobre los límites político-administrativos
+    de la \cdmx{} y el Estado de México.\DIFdelbeginFL %DIFDELCMD < \fuentefigura{Elaboración propia con \textbf{Transport-gis-zmvm-mjg};
+%DIFDELCMD <     datos: \textsc{gtfs} \textsc{semovi} 2024 e \textsc{inegi} 2023.}%%%
+\DIFdelendFL }
+  \label{fig:anx-mapa-red}
+  \DIFaddbeginFL \fuentefigura{Elaboración propia con \textbf{Transport-gis-zmvm-mjg};
+    datos: GTFS SEMOVI 2024 e INEGI 2023.}
+\DIFaddendFL \end{figure}
+
+% =============================================================================
+\section{Cobertura Espacial — Isócronas 800~m}
+\label{anx:mapa-cobertura-total}
+% =============================================================================
+
+\begin{figure}[p]
+  \centering
+  \figinclude[width=\textwidth]{Figures/Mapas/Mapa_Cobertura_Red_Total}
+  \caption[Cobertura de la red por isócronas de 800~m (alta resolución)]{Cobertura espacial de la red multimodal de transporte
+    de la \zmvm{}, calculada como el área alcanzable a 800~m de caminata desde cualquier parada o estación
+    (indicador $C$ del modelo VFT). Las alcaldías del sur presentan las coberturas más bajas.\DIFdelbeginFL %DIFDELCMD < \fuentefigura{Elaboración propia con \textbf{Transport-gis-zmvm-mjg};
+%DIFDELCMD <     datos: \textsc{gtfs} \textsc{semovi} 2024 e \textsc{inegi} 2023.}%%%
+\DIFdelendFL }
+  \label{fig:anx-mapa-cobertura-total}
+  \DIFaddbeginFL \fuentefigura{Elaboración propia con \textbf{Transport-gis-zmvm-mjg};
+    datos: GTFS SEMOVI 2024 e INEGI 2023.}
+\DIFaddendFL \end{figure}
+
+% =============================================================================
+\section{Cobertura Espacial — Mapa de Calor}
+\label{anx:mapa-cobertura-calor}
+% =============================================================================
+
+\begin{figure}[p]
+  \centering
+  \figinclude[width=\textwidth]{Figures/Mapas/Mapa_Cobertura_Mapa_Calor}
+  \caption[Densidad de cobertura — mapa de calor (alta resolución)]{Densidad de la cobertura espacial de la red
+    representada como mapa de calor. La intensidad del color refleja la concentración de isócronas superpuestas,
+    revelando los núcleos de mayor accesibilidad modal en la región metropolitana.\DIFdelbeginFL %DIFDELCMD < \fuentefigura{Elaboración propia con \textbf{Transport-gis-zmvm-mjg};
+%DIFDELCMD <     datos: \textsc{gtfs} \textsc{semovi} 2024 e \textsc{inegi} 2023.}%%%
+\DIFdelendFL }
+  \label{fig:anx-mapa-cobertura-calor}
+  \DIFaddbeginFL \fuentefigura{Elaboración propia con \textbf{Transport-gis-zmvm-mjg};
+    datos: GTFS SEMOVI 2024 e INEGI 2023.}
+\DIFaddendFL \end{figure}
+
+% =============================================================================
+\section{Fuerza Capilar — Nodos \textit{Hub} Principales}
+\label{anx:mapa-fuerza-capilar}
+% =============================================================================
+
+\begin{figure}[p]
+  \centering
+  \figinclude[width=\textwidth]{Figures/Mapas/Mapa_Fuerza_Capilar}
+  \caption[Fuerza capilar: los 20 nodos \textit{hub} de mayor centralidad (alta resolución)]{Fuerza capilar de los nodos de la red
+    de transporte de la \zmvm{}. Se destacan los 20 nodos con mayor valor de centralidad de intermediación ponderada,
+    que corresponden a los puntos de mayor influencia redistributiva de flujos en la red multimodal.\DIFdelbeginFL %DIFDELCMD < \fuentefigura{Elaboración propia con \textbf{Transport-gis-zmvm-mjg};
+%DIFDELCMD <     datos: \textsc{gtfs} \textsc{semovi} 2024 e \textsc{inegi} 2023.}%%%
+\DIFdelendFL }
+  \label{fig:anx-mapa-fuerza-capilar}
+  \DIFaddbeginFL \fuentefigura{Elaboración propia con \textbf{Transport-gis-zmvm-mjg};
+    datos: GTFS SEMOVI 2024 e INEGI 2023.}
+\DIFaddendFL \end{figure}
+
+% =============================================================================
+\section{Factor de Desviación por Nodo}
+\label{anx:mapa-factor-desviacion}
+% =============================================================================
+
+\begin{figure}[p]
+  \centering
+  \figinclude[width=\textwidth]{Figures/Mapas/Mapa_DF}
+  \caption[Factor de desviación por nodo (alta resolución)]{Factor de desviación ($\text{FD}$) de los nodos de la red
+    de transporte de la \zmvm{}. El gradiente de color (verde→rojo) indica la relación entre la distancia real de viaje
+    y la distancia euclidiana óptima: valores altos (rojo) señalan nodos donde las rutas disponibles desvían significativamente
+    del trayecto directo, lo que penaliza la eficiencia de la red en esas zonas.\DIFdelbeginFL %DIFDELCMD < \fuentefigura{Elaboración propia con \textbf{Transport-gis-zmvm-mjg};
+%DIFDELCMD <     datos: \textsc{gtfs} \textsc{semovi} 2024 e \textsc{inegi} 2023.}%%%
+\DIFdelendFL }
+  \label{fig:anx-mapa-factor-desviacion}
+  \DIFaddbeginFL \fuentefigura{Elaboración propia con \textbf{Transport-gis-zmvm-mjg};
+    datos: GTFS SEMOVI 2024 e INEGI 2023.}
+\DIFaddendFL \end{figure}
