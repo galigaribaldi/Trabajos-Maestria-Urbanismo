@@ -42,13 +42,15 @@
 % KAO: Remove extra spacing
 \author{
  Hernán Galileo Cabrera Garibaldi\textsuperscript{1},
- Nombre Asesor\textsuperscript{2} % TODO: reemplazar con nombre completo del asesor
+ David López\textsuperscript{2}
 }
 
 % KAO: Remove extra newline
 \address{
-	\textsuperscript{1 }UNAM, Facultad de Estudios Superiores Acatlán, 53150 Naucalpan de Juárez, México - 313326626@pcpuma.acatlan.unam.mx\\
-	\textsuperscript{2 }TODO: institución, ciudad, país - correo@institucion.mx % TODO: reemplazar con datos del asesor
+	\textsuperscript{1 }Facultad de Estudios Superiores Acatlán, Universidad Nacional Autónoma de México, 53150 Naucalpan de Juárez, México\\
+	313326626\@pcpuma.acatlan.unam.mx\\
+	\textsuperscript{2 }Instituto de Ingeniería, Universidad Nacional Autónoma de México, 04510 Ciudad de México, México\\
+	dlopezfl\@iingen.unam.mx
 }
 
 % If the corresponding author is NOT the final author, always add a % space before the subsequent comma, i.e.
@@ -65,20 +67,20 @@
 
 
 \abstract{
-The Mexico City Metropolitan Area (ZMVM) hosts one of the largest public transit
+The Mexico City Metropolitan Area hosts one of the largest public transit
 networks in the continent, whose historically radial planning pattern generates
 quantifiable structural inefficiencies.  Access to unified geospatial data for
 this network has long been a technical barrier excluding researchers and
 policymakers without data engineering backgrounds.  This paper presents Apimetro,
-a free and open-source infrastructure that integrates official GTFS feeds and
-OpenStreetMap collaborative cartography to build a unified multimodal topological
-model of the ZMVM, exposed as a REST service in GeoJSON format.  Built on top of
-this infrastructure, the \textit{VFTModel} analytical engine computes three
-network efficiency indicators: spatial coverage, deviation factor, and capillary
-strength.  Results show that Milpa Alta borough records only 11.75\,\% pedestrian
-coverage and that the average inter-borough trip covers 54\,\% more distance than
-the geometric minimum.  The architecture is replicable in any city with available
-GTFS data and OpenStreetMap coverage.
+a free and open-source infrastructure that integrates official General Transit Feed
+Specification feeds and OpenStreetMap collaborative cartography to build a unified
+multimodal topological model of the ZMVM, exposed as a REST service in GeoJSON
+format.  Built on top of this infrastructure, the \textit{VFTModel} analytical
+engine computes three network efficiency indicators: spatial coverage, deviation
+factor, and capillary strength.  Results show that Milpa Alta borough records only
+11.75\% pedestrian coverage and that the average inter-borough trip covers 54\%
+more distance than the geometric minimum.  The architecture is replicable in any
+city with available GTFS data and OpenStreetMap coverage.
 }
 
 \keywords{Transporte Público, GTFS, OpenStreetMap, GeoJSON, Análisis topológico, ZMVM, Democratización de datos.}
@@ -89,11 +91,10 @@ GTFS data and OpenStreetMap coverage.
 \label{introduccion}
 
 La Zona Metropolitana del Valle de México (ZMVM) constituye uno de los conglomerados
-urbanos más complejos y densamente poblados del continente.  Históricamente, la
-planeación y expansión de su red de transporte masivo y semimasivo ha seguido un
-patrón predominantemente radial, orientado a conectar las periferias con el núcleo
-central de la actividad económica en la Ciudad de México
-\citep{padilla2022expansion, molinero2002}.  Esta morfología centro-periferia genera
+urbanos más complejos y densamente poblados del continente.  La planeación y
+expansión de su red de transporte ha seguido un patrón predominantemente radial,
+orientado a conectar las periferias con el núcleo central de actividades económicas
+en la Ciudad de México \citep{padilla2022expansion, molinero2002}.  Esta morfología centro-periferia genera
 una alta vulnerabilidad funcional en el sistema completo: obliga a recorridos
 ineficientes, incrementa los tiempos de viaje de la población trabajadora y satura
 las líneas troncales en puntos de transbordo críticos
@@ -132,26 +133,27 @@ permite verificar, corregir y enriquecer los archivos GTFS gubernamentales
 
 El presente trabajo expone cómo Apimetro, una infraestructura de datos de software
 libre, articula ambas fuentes ---GTFS oficiales y OSM--- para construir un modelo
-de red metropolitana unificado, y cómo este modelo habilita análisis topológicos
-de nivel académico sin barreras técnicas de entrada.
+de red metropolitana unificado, y cómo este modelo puede facilitar análisis
+topológicos y reducir las barreras técnicas de entrada.
 
 
 \section{Metodología}\label{sec:Metodologia}
 
-El ecosistema opera mediante una arquitectura desacoplada en dos capas.  La primera
-corresponde al servicio de unificación de datos espaciales, construido en el
-lenguaje de programación Go ---que garantiza alta eficiencia en el procesamiento
-concurrente de flujos masivos de datos--- en combinación con una base de datos
-relacional espacial PostgreSQL equipada con la extensión PostGIS.  Apimetro ingiere
-los archivos GTFS oficiales de SEMOVI y los somete a un proceso de
+El ecosistema Apimetro opera mediante una arquitectura desacoplada en dos capas.
+La primera capa corresponde al servicio de unificación de datos espaciales,
+construido en el lenguaje de programación Go ---que garantiza alta eficiencia en el
+procesamiento concurrente de flujos masivos de datos--- en combinación con una base
+de datos relacional espacial PostgreSQL equipada con la extensión PostGIS.  Apimetro
+ingiere los archivos GTFS oficiales de SEMOVI y los somete a un proceso de
 normalización y estandarización.  Para resolver los vacíos de información del Estado
 de México y corregir trazos geométricos gubernamentales discontinuos ---como el caso
 del Trolebús Línea~13 o los sistemas de transporte metropolitano del Estado de
-México---, la API utiliza de forma estratégica la cartografía colaborativa de
-\textbf{OpenStreetMap} como fuente de validación cruzada y datos complementarios.
-Mediante consultas SQL espaciales nativas, Apimetro unifica ambas fuentes y genera
-un modelo de datos coherente.  La segunda capa corresponde al motor analítico
-\textit{VFTModel}, que consume los servicios REST resultantes para
+México---, Apimetro utiliza de forma estratégica la cartografía colaborativa de
+OpenStreetMap como fuente de validación cruzada y datos complementarios.
+
+Mediante consultas SQL espaciales, Apimetro unifica ambas fuentes y genera un
+modelo de datos coherente.  La segunda capa de Apimetro corresponde al motor
+analítico \textit{VFTModel}, que consume los servicios REST resultantes para
 construir grafos matemáticos y calcular indicadores de eficiencia de red.
 
 La contribución de OSM a la cadena de procesamiento opera en tres niveles concretos:
@@ -179,8 +181,8 @@ Autobús--- dividida en dos entidades relacionales: \textit{estaciones} (puntos 
 jerarquía de transporte y nodos CETRAM identificados) y \textit{líneas} (geometrías
 \texttt{MultiLineString} segmentadas tramo a tramo entre estaciones).  Un algoritmo
 de ajuste geométrico intermodal con umbral de $\leq 50$~m resuelve las
-interconexiones entre sistemas.  De los 11~sistemas integrados, el 88\,\% corresponde
-a transporte de superficie y el 12\,\% a infraestructura de vía exclusiva.  La salida
+interconexiones entre sistemas.  De los 11~sistemas integrados, el 88\% corresponde
+a transporte de superficie y el 12\% a infraestructura de vía exclusiva.  La salida
 se expone públicamente a través de servicios REST en formato GeoJSON nativo
 desde \texttt{apimetro.dev}.
 
@@ -201,23 +203,22 @@ las deficiencias estructurales de la ZMVM mediante tres indicadores:
 
 \begin{enumerate}[nosep, leftmargin=1.5em]
   \item \textbf{Cobertura espacial ($C$):} isócronas peatonales de 800~m alrededor
-    de cada estación.  Resultado: Milpa Alta presenta solo el 11.75\,\% de cobertura,
-    la peor alcaldía de la Ciudad de México.
+    de cada estación.  Este indicador arroja que Milpa Alta presenta solo el
+    11.75\% de cobertura, la peor alcaldía de la Ciudad de México.
   \item \textbf{Factor de Desviación ($DF$):} cociente entre la distancia real de
     viaje en la red y la distancia euclidiana.  El promedio de una muestra de
-    100~rutas interalcaldías arroja $\bar{DF}=1.545$, lo que significa que cada
-    viaje recorre, en promedio, 54\,\% más de lo necesario.  El caso extremo
-    (Milpa Alta $\to$ Santa Catarina Yecahuizotl) alcanza $DF=2.52$.
+    100~rutas interalcaldías arroja $DF=1.545$, lo que significa que cada
+    viaje recorre, en promedio, 54\% más de lo necesario.  El caso extremo
+    Milpa Alta hacia Santa Catarina Yecahuizotl alcanza $DF=2.52$.
   \item \textbf{Fuerza Capilar ($FC_H$):} centralidad y grado nodal del grafo para
     identificar nodos centrales con mayor concentración de flujos sin alternativa lateral.  El
     nodo central máximo registra $FC_H=130$ en la zona de Hospitales Sur.
 \end{enumerate}
 
 En total, el motor procesa 22\,766 entidades espaciales que se consolidan en un
-grafo de \textbf{11\,115~nodos} interconectados por \textbf{45\,679~aristas}
-(25\,000 de servicio y 20\,000 de transbordo), abarcando \textbf{11~sistemas} de
-transporte, todo en un volumen de 38~MB
-de datos procesados.  Estos resultados demuestran que la API de Apimetro permite
+grafo de 11\,115~nodos interconectados por 45\,679~aristas
+(25\,000 de servicio y 20\,000 de transbordo), abarcando 11~sistemas de
+transporte y $XX$~rutas, todo en un volumen de 38~MB de datos procesados.  Estos resultados demuestran que la API de Apimetro permite
 investigación cuantitativa de nivel académico sin requerir que el investigador
 programe, limpie archivos de texto ni repare trazos geométricos rotos.
 
@@ -238,9 +239,9 @@ latinoamericana que publique archivos GTFS y cuente con cobertura de
 OpenStreetMap puede instanciar su propio motor de datos metropolitanos siguiendo
 el mismo patrón: ingesta, normalización, unificación con OSM y exposición vía API
 REST.  La herramienta trasciende el nicho informático para convertirse en un bien
-público digital indispensable para el análisis socioespacial, el diseño de políticas
-públicas de movilidad y el fortalecimiento del ecosistema de datos geoespaciales
-abiertos en la región.
+público digital que puede ayudar al análisis espacial de redes de transporte,
+el diseño de políticas públicas de movilidad y el fortalecimiento del ecosistema
+de datos geoespaciales abiertos en la región.
 
 Se invita a la comunidad de OpenStreetMap en Latinoamérica a colaborar en la
 mejora de la cobertura de datos de transporte público, particularmente en las
@@ -260,13 +261,14 @@ comunidad OSM:
     modo que la comunidad pueda corregir errores detectados tanto en OSM como en
     las fuentes GTFS oficiales.
   \item \textbf{Replicabilidad regional:}  Documentar el patrón
-    GTFS\,+\,OSM\,$\to$\,API REST como un modelo reproducible para otras zonas
-    metropolitanas latinoamericanas ---Bogotá, São Paulo, Buenos Aires--- que
-    enfrentan fragmentación similar de datos de transporte.
+    GTFS+OSM\,$\to$\,API REST como un modelo reproducible para otras zonas
+    metropolitanas latinoamericanas (p.e. Bogotá, São Paulo, Buenos Aires) donde
+    enfrenten fragmentación de datos de transporte.
 \end{enumerate}
 
-Apimetro demuestra que la infraestructura de datos abiertos y la cartografía
-colaborativa no son esfuerzos paralelos sino complementarios: la calidad de uno
+Apimetro demuestra que la infraestructura de datos abiertos proporcionada por los
+gobiernos locales y la cartografía colaborativa no son esfuerzos paralelos sino
+complementarios: la calidad de uno
 potencia la utilidad del otro.  La convergencia entre datos gubernamentales y
 comunitarios constituye, a juicio del autor, el camino más eficiente hacia la
 soberanía tecnológica en materia de información geoespacial urbana.
