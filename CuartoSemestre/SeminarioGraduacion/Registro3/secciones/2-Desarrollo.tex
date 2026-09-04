@@ -1,0 +1,226 @@
+% =============================================================================
+%  2-Desarrollo.tex — Bitácora de avances y autoevaluación
+%
+%  INSTRUCCIONES GENERALES:
+%  ─────────────────────────────────────────────────────────────────────────────
+%  Este archivo contiene dos tablas pre-configuradas:
+%
+%  TABLA 1 (longtable) — Bitácora cronológica de commits/tags
+%    • Llena una fila por cada hito significativo del git log.
+%    • Agrupa las filas por semana o etapa usando las filas de encabezado
+%      de color (multicolumn). Añade o elimina semanas según necesites.
+%    • Obtén los hashes y fechas con:
+%        cd <TESIS_DIR> && git log --oneline --format="%h %ad %s" --date=short
+%
+%  TABLA 2 (tabularx) — Autoevaluación por capítulo o módulo
+%    • Ajusta las filas a los capítulos/módulos de tu repositorio.
+%    • Las columnas son: Capítulo | Avance concreto | Dificultad | Estado actual
+%
+%  Parámetros útiles disponibles:
+%    \NombreRepo, \VerRef, \VerActual  (definidos en main.tex)
+% =============================================================================
+
+\section{Desarrollo y Avances}
+\label{sec:desarrollo}
+
+A través del sistema de control de versiones del repositorio \texttt{\NombreRepo},
+es posible rastrear con precisión la evolución del proyecto entre las versiones
+\texttt{\VerRef} y \texttt{\VerActual}. El Cuadro~\ref{tab:bitacora_git}
+presenta una bitácora cronológica de los hitos registrados.
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  TABLA 1: Bitácora cronológica (git log)
+%
+%  Anchos de columna: suma + 2×\tabcolsep×4cols debe ser ≤ \textwidth (155mm)
+%  Con \tabcolsep=6pt: 4cols×12pt = 48pt = 16.9mm → columnas ≤ 138mm = 13.8cm
+%  Distribución actual: 2.4+2.0+3.3+5.8 = 13.5cm → total 13.5+1.69 = 15.19cm ✓
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{longtable}{>{\bfseries}p{2.4cm} p{2.0cm} p{3.3cm} p{5.8cm}}
+    \caption{Bitácora cronológica de avances en \texttt{\NombreRepo}
+             (Corte: \FechaEntrega).}
+    \label{tab:bitacora_git} \\
+    \toprule
+    \textbf{Versión / Hito} & \textbf{Fecha} & \textbf{Ámbito} & \textbf{Descripción del avance} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{4}{l}{\footnotesize\textit{(Continuación del Cuadro~\ref{tab:bitacora_git})}} \\
+    \toprule
+    \textbf{Versión / Hito} & \textbf{Fecha} & \textbf{Ámbito} & \textbf{Descripción del avance} \\
+    \midrule
+    \endhead
+
+    \midrule
+    \multicolumn{4}{r}{\footnotesize\textit{Continúa en la siguiente página}} \\
+    \endfoot
+
+    \bottomrule
+    \endlastfoot
+
+    % ── Etapa 1 ───────────────────────────────────────────────────────────────
+    \multicolumn{4}{l}{\small\color{ColorPrincipal}\textit{Etapa 1 — Estructura inicial y reencuadre de objetivos (14--22 de abril de 2026)}} \\
+    \addlinespace[2pt]
+
+    Config. base
+    & 14 Abr 2026
+    & Repositorio / CI
+    & Configuración de Git LFS para archivos de datos y notebooks; corrección de URLs de badges e incorporación de plantillas de Issues (\texttt{2f9b431}). \\
+    \addlinespace[3pt]
+
+    \texttt{v0.3.0} — Reencuadre
+    & 14 Abr 2026
+    & Cap.\ 1 Introducción
+    & \textbf{Hito}: recalibración del alcance a la ZMVM y reescritura de objetivos; integración de cambios de la rama de desarrollo (\texttt{071ecc1}). \\
+    \addlinespace[3pt]
+
+    Grafos matemáticos
+    & 22 Abr 2026
+    & Cap.\ 3.2 Grafos
+    & Capítulo de Grafos Matemáticos completado (§§\,3.2.0–3.2.6): teoría de Euler, grafos dirigidos e implementación computacional (\texttt{4de0d6a}). \\
+    \addlinespace[8pt]
+
+    % ── Etapa 2 ───────────────────────────────────────────────────────────────
+    \multicolumn{4}{l}{\small\color{ColorPrincipal}\textit{Etapa 2 — Capas de Código y Resultados (09--18 de mayo de 2026)}} \\
+    \addlinespace[2pt]
+
+    Apimetro v1
+    & 09 May 2026
+    & Cap.\ 4.1 Apimetro
+    & Primera versión del capítulo Apimetro en Capas de Código; descripción de arquitectura y stack tecnológico (\texttt{fe36c71}). \\
+    \addlinespace[3pt]
+
+    Cap.\ 4 y 5 --- draft
+    & 15 May 2026
+    & Caps.\ 4.2 y 5
+    & Redacción inicial de VFTModel, estructuración de Cap.\ 5 Resultados e incorporación de imágenes de resultados (\texttt{b252695}, \texttt{89fa819}, \texttt{b01430e}). \\
+    \addlinespace[3pt]
+
+    Resultados Fase 1
+    & 17 May 2026
+    & Cap.\ 5 Fase 1
+    & \textbf{Hito}: resultados de Cobertura y Factor de Desviación terminados; integración de Caps.\ 4 y 5 en rama principal (\texttt{394a470}, \texttt{2472d14}). \\
+    \addlinespace[3pt]
+
+    LFS y CI
+    & 18 May 2026
+    & Repositorio / CI
+    & Conversión de imágenes de Caps.\ 3 y 4 a Git LFS; habilitación de LFS en pipeline de CI (\texttt{5ede766}). \\
+    \addlinespace[8pt]
+
+    % ── Etapa 3 ───────────────────────────────────────────────────────────────
+    \multicolumn{4}{l}{\small\color{ColorPrincipal}\textit{Etapa 3 — Ajustes post-Coloquio 2026-2 (20 de agosto -- 02 de septiembre de 2026)}} \\
+    \addlinespace[2pt]
+
+    Mapas y Anexo E
+    & 20 Ago 2026
+    & Cap.\ 5 / Anexos
+    & Primer conjunto de ajustes post-coloquio: integración de mapas cartográficos en Cap.\ 5, condensación de secciones de sistemas marginales y creación de Anexo E (\texttt{45d6f55}). \\
+    \addlinespace[3pt]
+
+    Mapas integrados
+    & 26 Ago 2026
+    & Cap.\ 5 Fase 1
+    & Integración definitiva de 4 mapas cartográficos en resultados de Fase 1; condensación de 3 bloques técnicos con referencia a Anexo E (\texttt{1a1137d}). \\
+    \addlinespace[3pt]
+
+    Correcciones Coloquio
+    & 01 Sep 2026
+    & Caps.\ 1--5
+    & \textbf{Hito}: 36 correcciones ortográficas y de redacción (J-01–J-37) del Dr.\ Jairo aplicadas en 11 archivos; eliminación de bloques \texttt{\textbackslash notaRevision}; compilación limpia a 162~pp.\ (\texttt{a1bf47e}). \\
+    \addlinespace[3pt]
+
+    TiKz\_Libraries
+    & 02 Sep 2026
+    & Caps.\ 4--5 / Figuras
+    & Creación de la librería vectorial \texttt{Figures/TiKz\_Libraries/} con 8 diagramas TiKZ migrados y nuevos (arquitectura hexagonal, ports-adapters, pipeline VFT, árbol de directorios, entre otros) (\texttt{b9584ad}). \\
+    \addlinespace[3pt]
+
+    Notas de revisión
+    & 02 Sep 2026
+    & Documentación interna
+    & Registro formal de las notas del Dr.\ Jairo (J-01–J-37) y de las 9 observaciones estratégicas de la consulta del 27-Ago (E-01–E-09) en \texttt{Anexos/Notas\_Correciones/} (\texttt{76fbbc8}). \\
+
+\end{longtable}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  TABLA 2: Autoevaluación por capítulo / módulo
+% ─────────────────────────────────────────────────────────────────────────────
+\vspace{1em}
+
+El Cuadro~\ref{tab:autoevaluacion} presenta una autoevaluación del estado actual
+por capítulo o módulo, identificando avances, dificultades encontradas y
+los apartados que requieren atención en la siguiente etapa.
+
+\begin{table}[H]
+    \centering
+    \caption{Autoevaluación por capítulo: avances, redefiniciones y apartados débiles.}
+    \label{tab:autoevaluacion}
+    \fontsize{9pt}{11.5pt}\selectfont
+    \begin{tabularx}{\textwidth}{
+        >{\hsize=0.55\hsize\raggedright\arraybackslash}X
+        >{\hsize=1.15\hsize\raggedright\arraybackslash}X
+        >{\hsize=1.15\hsize\raggedright\arraybackslash}X
+        >{\hsize=1.15\hsize\raggedright\arraybackslash}X}
+        \toprule
+        \textbf{Capítulo / Módulo} &
+        \textbf{Avance concreto} &
+        \textbf{Dificultad / Redefinición} &
+        \textbf{Estado actual y pendientes} \\
+        \midrule
+
+        \textbf{Cap.\ 1}\newline Introducción &
+        Reencuadre de objetivos al alcance ZMVM; 7 correcciones del Dr.\ Jairo aplicadas (tildes diacríticas, comillas angulares, comas). &
+        El objetivo general aún tiene énfasis computacional; requiere reorientación al discurso urbanístico. &
+        \textit{Estado:} completo con correcciones.\newline
+        \textit{Pendiente:} reformular objetivo y pregunta de investigación (Issue \#12); párrafo de cierre de Fase~2 en §Alcances (Issue \#11). \\
+        \addlinespace\hline\addlinespace
+
+        \textbf{Cap.\ 2}\newline Marco Teórico &
+        Correcciones de redacción del Dr.\ Jairo aplicadas (\textit{dependencia del automóvil}, \textit{ésta}→\textit{esta}). &
+        El marco teórico carece de referentes urbanísticos críticos señalados en el coloquio. &
+        \textit{Estado:} completo a nivel descriptivo.\newline
+        \textit{Pendiente:} incorporar Lefebvre y Harvey con 2--3 párrafos y citas formales (Issue \#16). \\
+        \addlinespace\hline\addlinespace
+
+        \textbf{Cap.\ 3}\newline Conceptos e Indicadores &
+        Cap.\ 3.2 (Grafos Matemáticos) terminado en su totalidad. Correcciones J-01, J-13–J-17 aplicadas en los tres subcapítulos. &
+        Falta definir explícitamente las capas de Medio Físico Natural señaladas por la evaluadora. &
+        \textit{Estado:} sólido; sin bloques pendientes de datos.\newline
+        \textit{Pendiente:} nueva subsección de capas físicas en 3-1-Definiciones (Issue \#15). \\
+        \addlinespace\hline\addlinespace
+
+        \textbf{Cap.\ 4}\newline Capas de Código &
+        Apimetro y VFTModel terminados; 13 correcciones del Dr.\ Jairo aplicadas; diagramas migrados a \texttt{TiKz\_Libraries}; código técnico movido a Anexos A y B. &
+        La sección VFTModel no cierra con aplicación en planeación urbana, lo que debilita el argumento ante el coloquio. &
+        \textit{Estado:} avanzado.\newline
+        \textit{Pendiente:} párrafo ``Aplicación en Planeación Urbana'' al final de §VFTModel (Issue \#13). \\
+        \addlinespace\hline\addlinespace
+
+        \textbf{Cap.\ 5}\newline Resultados &
+        Fase 1 completa con 4 mapas cartográficos integrados; correcciones J-29–J-37 aplicadas; bloques técnicos condensados con referencia a Anexo E; diagramas de pipeline migrados a librería TiKZ. &
+        Fases 2 y 3 permanecen bajo la marca \texttt{\textbackslash bajoRevision} por indicadores pendientes de cálculo (Node Score, T, B, $\Delta E$). &
+        \textit{Estado:} Fase 1 \checkmark; Fases 2 y 3 incompletas.\newline
+        \textit{Pendiente:} datos de Node Score para Fase 2; protocolo de simulación para Fase 3; crear Anexo D (Issue \#17). \\
+        \addlinespace\hline\addlinespace
+
+        \textbf{Cap.\ 6}\newline Análisis Socioespacial &
+        Archivo creado en la estructura del documento. &
+        Capítulo completamente vacío; es el nexo entre los resultados técnicos y el discurso urbanístico que el coloquio señaló como ausente. &
+        \textit{Estado:} vacío --- solo directiva root.\newline
+        \textit{Pendiente:} redacción completa una vez acordada la estructura con el asesor (Issue \#8). \\
+        \addlinespace\hline\addlinespace
+
+        \textbf{Cap.\ 7}\newline Conclusiones &
+        Archivo creado en la estructura del documento. &
+        No se puede redactar hasta que Cap.\ 6 y los pendientes de Fases 2/3 estén cerrados. &
+        \textit{Estado:} vacío --- bloqueado por dependencias.\newline
+        \textit{Pendiente:} redacción final (última etapa). \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\vspace{1em}
+\textit{Nota metodológica:} Para respaldar esta autoevaluación, en la sección
+siguiente se presenta evidencia generada con \texttt{latexdiff}, donde las
+adiciones aparecen en \textcolor{blue}{azul} y las eliminaciones en
+\textcolor{red}{rojo}.

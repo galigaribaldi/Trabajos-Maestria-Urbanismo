@@ -623,6 +623,9 @@ endif
 	sed -i '' \
 	    -e 's/\\includegraphics\[/\\figinclude[/g' \
 	    -e 's/\\includegraphics{/\\figinclude{/g' \
+	    -e 's/\\chapter\*{/\\section*{/g' \
+	    -e 's/\\chapter{/\\section*{/g' \
+	    -e 's/\\input{\(Figures\/TiKz_Libraries\/[^}]*\)}/\\figplaceholder{\1}/g' \
 	    "$$OUTFILE"; \
 	perl -0777 -i -pe \
 	    's/\\begin\{forest\}.*?\\end\{forest\}/\\iffalse\n$$&\n\\fi/gs' \
