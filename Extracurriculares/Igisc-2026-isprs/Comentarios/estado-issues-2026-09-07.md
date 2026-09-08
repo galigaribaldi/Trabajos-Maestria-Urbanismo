@@ -1,5 +1,5 @@
 # Estado de issues — artículo iGISc 2026
-**Última actualización:** 2026-09-07
+**Última actualización:** 2026-09-08
 **Rama:** `igisc-geoint`
 **Archivo principal:** `Extracurriculares/Igisc-2026-isprs/main.tex`
 
@@ -19,9 +19,9 @@
 - Cita `goauthors2025` (Go 1.25, go.dev/doc/) para eficiencia concurrente en Metodología §1
 - Autorreferencia `galigaribaldi2026vftmodel` → nota al pie con repositorio + blog
 - `\usepackage{url}` agregado al preámbulo
-- Issue #12 (Hausdorff): cita `hausdorff1914` + `neis2012street` + definición en texto — **CERRADO**
-- Issue #8 ("estandarización" → "normalización"): texto actualizado con explicación de alcance — **CERRADO**
-- Issue #9 ("modelo de datos coherente" → "base de datos homogénea"): texto actualizado — **CERRADO**
+- Issue #12 (Hausdorff): cita `hausdorff1914` + `neis2012street` + definición en texto — **CERRADO** (en commit "Correcciones 3")
+- Issue #8 ("estandarización" → "normalización"): texto actualizado con explicación de alcance — **CERRADO** (en commit "Correcciones 3")
+- Issue #9 ("modelo de datos coherente" → "base de datos homogénea"): texto actualizado — **CERRADO** (en commit "Correcciones 3")
 
 ---
 
@@ -63,14 +63,14 @@
 
 ---
 
-## Issues Group B NUEVOS (de reunión 09-04, aún sin crear en GitHub)
+## Issues Group B — CREADOS en GitHub (sesión 2026-09-08)
 
-| Tema | Descripción |
+| # | Tema |
 |---|---|
-| Recortar introducción | Condensar a ~1 columna; 3 párrafos: problema / solución / estructura del paper |
-| Convertir listas numeradas en texto corrido | `\begin{enumerate}` en Metodología, Resultados y Conclusiones → párrafos con numeración inline |
-| Conclusiones: lista de 3 frentes → narrativo | Convertir mapatones/bidireccional/replicabilidad en texto seguido de párrafo de trabajo futuro |
-| Abstract en inglés | Revisar y condensar el abstract actual |
+| **#24** | Recortar introducción a ~1 columna; 3 párrafos: problema / solución / estructura del paper |
+| **#25** | Convertir `\begin{enumerate}` en Metodología y Resultados → texto corrido con numeración inline |
+| **#26** | Conclusiones: lista de 3 frentes OSM → párrafo narrativo + trabajo futuro |
+| **#27** | Abstract en inglés: revisar y condensar |
 
 ---
 
