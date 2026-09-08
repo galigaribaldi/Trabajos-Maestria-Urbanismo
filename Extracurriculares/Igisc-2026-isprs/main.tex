@@ -102,27 +102,29 @@ las líneas troncales en puntos de transbordo críticos
 \citep{semovi2020diagnostico}.
 
 El estudio cuantitativo y espacial del transporte público a escala de megalópolis
-enfrenta un obstáculo recurrente: la fragmentación institucional de la información
+enfrenta un problema recurrente de homologación: la fragmentación institucional de la información
 geoespacial.  Si bien existen iniciativas de datos abiertos gubernamentales y
 especificaciones estandarizadas como los \textit{General Transit Feed Specification}
 (GTFS) provistos por la Secretaría de Movilidad (SEMOVI), estos archivos presentan
-severas discontinuidades cuando la red cruza las fronteras políticas entre la Ciudad
-de México y los municipios conurbados del Estado de México.  Los portales oficiales
-suelen ofrecer geometrías desactualizadas, tramos rotos, atributos inconsistentes
-o, en el peor de los casos, la exclusión total de sistemas periféricos críticos como
-el Mexibús o el Trolebús elevado \citep{semovi2020diagnostico}.  La calidad desigual
-de estas fuentes contrasta con la de iniciativas de cartografía colaborativa como
-OpenStreetMap, cuya precisión geométrica ha sido documentada ampliamente en contextos
-urbanos \citep{hadas2013assessing}.
+severas discontinuidades ---rutas geométricamente inconclusas, atributos faltantes
+o incompatibles entre esquemas, y en casos extremos la exclusión total de sistemas
+periféricos críticos como el Mexibús o el Trolebús elevado
+\citep{semovi2020diagnostico}--- cuando la red cruza las fronteras políticas entre
+la Ciudad de México y los municipios conurbados del Estado de México.  La incompatibilidad entre los archivos GTFS de SEMOVI y los datos disponibles
+para los municipios del Estado de México contrasta con la consistencia de iniciativas
+de cartografía colaborativa como OpenStreetMap, cuya precisión geométrica ha sido
+documentada ampliamente en contextos urbanos \citep{hadas2013assessing}.
 
-Esta fricción de entrada contradice el principio de acceso a la información: la
-apertura formal de un dato gubernamental no equivale a su democratización si este
-requiere habilidades avanzadas de ingeniería de software para ser interpretado y
-explotado científicamente.  Se vuelve indispensable, por tanto, contar con una
+Si bien el derecho de acceso a la información está constitucionalmente garantizado
+en México \citep{cpeum_art6}, la apertura formal de un dato gubernamental no equivale
+a su democratización \citep{gurstein2011open}: si su interpretación requiere
+habilidades avanzadas de ingeniería de software, el dato permanece inaccesible para
+la mayoría de quienes podrían aprovecharlo.  Se vuelve indispensable, por tanto, contar con una
 infraestructura intermedia que unifique, limpie y exponga la red de transporte
 como un recurso directamente consumible por herramientas de análisis espacial.
 
-En este escenario, OpenStreetMap (OSM) emerge como un recurso estratégico.  La
+Ante la fragmentación institucional de los datos y la brecha entre apertura formal
+y accesibilidad real, OpenStreetMap (OSM) emerge como un recurso estratégico.  La
 cartografía colaborativa de la comunidad OSM ha demostrado ser capaz de producir
 datos geoespaciales de calidad comparable ---y en contextos urbanos del Sur Global,
 superior--- a los conjuntos de datos oficiales \citep{haklay2010good,
@@ -135,7 +137,11 @@ permite verificar, corregir y enriquecer los archivos GTFS gubernamentales
 El presente trabajo expone cómo Apimetro, una infraestructura de datos de software
 libre, articula ambas fuentes ---GTFS oficiales y OSM--- para construir un modelo
 de red metropolitana unificado, y cómo este modelo puede facilitar análisis
-topológicos y reducir las barreras técnicas de entrada.
+topológicos y reducir las barreras técnicas de entrada.  El artículo se organiza
+como sigue: la sección~2 describe la arquitectura de Apimetro y el motor analítico
+\textit{VFTModel}; la sección~3 presenta los resultados sobre la red de la ZMVM;
+la sección~4 ofrece conclusiones e implicaciones para la investigación urbana en
+América Latina.
 
 
 \section{Metodología}\label{sec:Metodologia}
