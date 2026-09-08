@@ -25,6 +25,7 @@
 
 \geometry{a4paper, top=25mm, left=20mm, right=20mm, bottom=25mm, headsep=10mm, footskip=12mm} % added 27-02-2014 Markus Englich
 \usepackage{enumitem}
+\usepackage{url}
 
 %\usepackage{isprs}
 %\usepackage[perpage,para,symbol*]{footmisc}
@@ -142,7 +143,7 @@ topológicos y reducir las barreras técnicas de entrada.
 El ecosistema Apimetro opera mediante una arquitectura desacoplada en dos capas.
 La primera capa corresponde al servicio de unificación de datos espaciales,
 construido en el lenguaje de programación Go ---que garantiza alta eficiencia en el
-procesamiento concurrente de flujos masivos de datos--- en combinación con una base
+procesamiento concurrente de flujos masivos de datos \citep{goauthors2025}--- en combinación con una base
 de datos relacional espacial PostgreSQL equipada con la extensión PostGIS.  Apimetro
 ingiere los archivos GTFS oficiales de SEMOVI y los somete a un proceso de
 normalización y estandarización.  Para resolver los vacíos de información del Estado
@@ -164,10 +165,11 @@ La contribución de OSM a la cadena de procesamiento opera en tres niveles concr
     OSM de tipo \texttt{route=bus}, \texttt{route=subway} y
     \texttt{route=light\_rail} para obtener geometrías continuas de alta resolución.
   \item \textbf{Cobertura periférica:}  Los municipios conurbados del Estado de
-    México carecen en gran medida de archivos GTFS publicados.  Las rutas de
-    sistemas como el Mexibús y los colectivos periféricos se obtienen íntegramente
-    de OSM, donde mapeadores locales han documentado recorridos que las bases
-    oficiales ignoran \citep{haklay2010good}.
+    México carecen en gran medida de archivos GTFS publicados.  La comunidad OSM,
+    sin embargo, documenta los recorridos que las fuentes oficiales omiten,
+    cubriendo la brecha de datos donde la información gubernamental es insuficiente
+    \citep{haklay2010good}.  Las rutas del Mexibús y los autobuses periféricos
+    se obtienen íntegramente de OSM.
   \item \textbf{Validación cruzada:}  Apimetro ejecuta un proceso de
     integración espacial que compara las geometrías GTFS con las de OSM
     mediante distancia de Hausdorff.  Las discrepancias superiores a un umbral
@@ -179,16 +181,17 @@ El sistema expone la red multimodal completa ---Metro, Metrobús, Cablebús, RTP
 Trolebús, Tren Ligero, Tren Suburbano, Mexibús, Colectivo, Microbús y
 Autobús--- dividida en dos entidades relacionales: \textit{estaciones} (puntos con
 jerarquía de transporte y nodos CETRAM identificados) y \textit{líneas} (geometrías
-\texttt{MultiLineString} segmentadas tramo a tramo entre estaciones).  Un algoritmo
-de ajuste geométrico intermodal con umbral de $\leq 50$~m resuelve las
-interconexiones entre sistemas.  De los 11~sistemas integrados, el 88\% corresponde
+\texttt{MultiLineString} segmentadas tramo a tramo entre estaciones).  Un proceso de \textit{snapping} con umbral de $\leq 50$~m resuelve las
+interconexiones entre sistemas por proximidad geográfica.  De los 11~sistemas integrados, el 88\% corresponde
 a transporte de superficie y el 12\% a infraestructura de vía exclusiva.  La salida
 se expone públicamente a través de servicios REST en formato GeoJSON nativo
 desde \texttt{apimetro.dev}.
 
 Para demostrar la robustez de la infraestructura, se desarrolló el
-\textit{VFTModel} (\textit{Vanishing Fig-Tree Model})
-\citep{galigaribaldi2026vftmodel}, un motor analítico en Python que consume
+\textit{VFTModel} (\textit{Vanishing Fig-Tree Model})%
+\footnote{Repositorio: \url{https://github.com/galigaribaldi/VFTModel};
+documentación: \url{https://galigaribaldi.github.io/VFTModel/notebooks/intro.html}},
+un motor analítico en Python que consume
 directamente los servicios GeoJSON de Apimetro.  Utilizando librerías de
 análisis espacial y redes complejas (NetworkX, GeoPandas, Momepy), el modelo
 transforma las geometrías vectoriales en grafos matemáticos ruteables y calcula tres
@@ -204,7 +207,7 @@ las deficiencias estructurales de la ZMVM mediante tres indicadores:
 \begin{enumerate}[nosep, leftmargin=1.5em]
   \item \textbf{Cobertura espacial ($C$):} isócronas peatonales de 800~m alrededor
     de cada estación.  Este indicador arroja que Milpa Alta presenta solo el
-    11.75\% de cobertura, la peor alcaldía de la Ciudad de México.
+    11.75\% de su superficie dentro del radio de 800~m de una estación.
   \item \textbf{Factor de Desviación ($DF$):} cociente entre la distancia real de
     viaje en la red y la distancia euclidiana.  El promedio de una muestra de
     100~rutas interalcaldías arroja $DF=1.545$, lo que significa que cada
@@ -253,7 +256,7 @@ comunidad OSM:
 
 \begin{enumerate}[nosep, leftmargin=1.5em]
   \item \textbf{Mapatones temáticos:}  Organizar sesiones de mapeo enfocadas en
-    sistemas de transporte periférico (colectivos, microbuses, rutas alimentadoras)
+    sistemas de transporte periférico (autobuses, microbuses, rutas alimentadoras)
     cuya cobertura OSM es aún incompleta en municipios conurbados como Ecatepec,
     Nezahualcóyotl y Chimalhuacán.
   \item \textbf{Validación bidireccional:}  Publicar como conjuntos de datos
