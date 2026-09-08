@@ -145,15 +145,17 @@ La primera capa corresponde al servicio de unificación de datos espaciales,
 construido en el lenguaje de programación Go ---que garantiza alta eficiencia en el
 procesamiento concurrente de flujos masivos de datos \citep{goauthors2025}--- en combinación con una base
 de datos relacional espacial PostgreSQL equipada con la extensión PostGIS.  Apimetro
-ingiere los archivos GTFS oficiales de SEMOVI y los somete a un proceso de
-normalización y estandarización.  Para resolver los vacíos de información del Estado
+ingiere los archivos GTFS oficiales de SEMOVI y los normaliza: homologa
+campos faltantes y unifica formatos entre fuentes para que sean
+directamente comparables.  Para resolver los vacíos de información del Estado
 de México y corregir trazos geométricos gubernamentales discontinuos ---como el caso
 del Trolebús Línea~13 o los sistemas de transporte metropolitano del Estado de
 México---, Apimetro utiliza de forma estratégica la cartografía colaborativa de
 OpenStreetMap como fuente de validación cruzada y datos complementarios.
 
-Mediante consultas SQL espaciales, Apimetro unifica ambas fuentes y genera un
-modelo de datos coherente.  La segunda capa de Apimetro corresponde al motor
+Mediante consultas SQL espaciales, Apimetro unifica ambas fuentes y genera
+una base de datos homogénea: un único formato donde geometrías,
+identificadores y atributos son consistentes entre sistemas.  La segunda capa de Apimetro corresponde al motor
 analítico \textit{VFTModel}, que consume los servicios REST resultantes para
 construir grafos matemáticos y calcular indicadores de eficiencia de red.
 
@@ -170,11 +172,14 @@ La contribución de OSM a la cadena de procesamiento opera en tres niveles concr
     cubriendo la brecha de datos donde la información gubernamental es insuficiente
     \citep{haklay2010good}.  Las rutas del Mexibús y los autobuses periféricos
     se obtienen íntegramente de OSM.
-  \item \textbf{Validación cruzada:}  Apimetro ejecuta un proceso de
-    integración espacial que compara las geometrías GTFS con las de OSM
-    mediante distancia de Hausdorff.  Las discrepancias superiores a un umbral
-    configurable se marcan para revisión, lo que permite identificar errores
-    sistemáticos en las fuentes gubernamentales.
+  \item \textbf{Validación cruzada:}  Para detectar inconsistencias
+    geométricas entre las trazas GTFS y las de OSM, Apimetro emplea la
+    distancia de Hausdorff, métrica que cuantifica la mayor discrepancia
+    posicional entre dos conjuntos geométricos y es especialmente adecuada
+    para comparar redes de transporte con fuentes de referencia
+    \citep{hausdorff1914, neis2012street}.  Las discrepancias superiores a
+    un umbral configurable se marcan para revisión, lo que permite
+    identificar errores sistemáticos en las fuentes gubernamentales.
 \end{enumerate}
 
 El sistema expone la red multimodal completa ---Metro, Metrobús, Cablebús, RTP,
