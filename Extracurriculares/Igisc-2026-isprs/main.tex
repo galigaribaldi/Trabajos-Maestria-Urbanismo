@@ -165,28 +165,20 @@ identificadores y atributos son consistentes entre sistemas.  La segunda capa de
 analítico \textit{VFTModel}, que consume los servicios REST resultantes para
 construir grafos matemáticos y calcular indicadores de eficiencia de red.
 
-La contribución de OSM a la cadena de procesamiento opera en tres niveles concretos:
+La contribución de OSM al \textit{pipeline} de extracción y tratamiento de datos
+de Apimetro opera en tres niveles concretos:
 
-\begin{enumerate}[nosep, leftmargin=1.5em]
-  \item \textbf{Geometrías de ruta:}  Cuando los trazos GTFS presentan
-    discontinuidades o resolución insuficiente, Apimetro consulta las relaciones
-    OSM de tipo \texttt{route=bus}, \texttt{route=subway} y
-    \texttt{route=light\_rail} para obtener geometrías continuas de alta resolución.
-  \item \textbf{Cobertura periférica:}  Los municipios conurbados del Estado de
-    México carecen en gran medida de archivos GTFS publicados.  La comunidad OSM,
-    sin embargo, documenta los recorridos que las fuentes oficiales omiten,
-    cubriendo la brecha de datos donde la información gubernamental es insuficiente
-    \citep{haklay2010good}.  Las rutas del Mexibús y los autobuses periféricos
-    se obtienen íntegramente de OSM.
-  \item \textbf{Validación cruzada:}  Para detectar inconsistencias
-    geométricas entre las trazas GTFS y las de OSM, Apimetro emplea la
-    distancia de Hausdorff, métrica que cuantifica la mayor discrepancia
-    posicional entre dos conjuntos geométricos y es especialmente adecuada
-    para comparar redes de transporte con fuentes de referencia
-    \citep{hausdorff1914, neis2012street}.  Las discrepancias superiores a
-    un umbral configurable se marcan para revisión, lo que permite
-    identificar errores sistemáticos en las fuentes gubernamentales.
-\end{enumerate}
+(1)~\textbf{geometrías de ruta}, cuando los trazos GTFS presentan discontinuidades
+o resolución insuficiente, Apimetro consulta las relaciones OSM de tipo
+\texttt{route=bus}, \texttt{route=subway} y \texttt{route=light\_rail} para obtener
+geometrías continuas de alta resolución; (2)~\textbf{cobertura periférica}, los
+municipios conurbados del Estado de México carecen en gran medida de archivos GTFS
+publicados, por lo que la comunidad OSM cubre los recorridos que las fuentes
+oficiales omiten \citep{haklay2010good} ---las rutas del Mexibús y los autobuses
+periféricos se obtienen íntegramente de OSM; y (3)~\textbf{validación cruzada},
+Apimetro emplea la distancia de Hausdorff para detectar inconsistencias geométricas
+entre trazas GTFS y OSM \citep{hausdorff1914, neis2012street}, marcando para
+revisión las discrepancias superiores a un umbral configurable.
 
 El sistema expone la red multimodal completa ---Metro, Metrobús, Cablebús, RTP,
 Trolebús, Tren Ligero, Tren Suburbano, Mexibús, Colectivo, Microbús y
@@ -198,17 +190,22 @@ a transporte de superficie y el 12\% a infraestructura de vía exclusiva.  La sa
 se expone públicamente a través de servicios REST en formato GeoJSON nativo
 desde \texttt{apimetro.dev}.
 
-Para demostrar la robustez de la infraestructura, se desarrolló el
+Para demostrar la capacidad analítica de la infraestructura, se desarrolló el
 \textit{VFTModel} (\textit{Vanishing Fig-Tree Model})%
 \footnote{Repositorio: \url{https://github.com/galigaribaldi/VFTModel};
 documentación: \url{https://galigaribaldi.github.io/VFTModel/notebooks/intro.html}},
-un motor analítico en Python que consume
-directamente los servicios GeoJSON de Apimetro.  Utilizando librerías de
-análisis espacial y redes complejas (NetworkX, GeoPandas, Momepy), el modelo
-transforma las geometrías vectoriales en grafos matemáticos ruteables y calcula tres
-indicadores clave de eficiencia de red, exportados como capas vectoriales GeoPackage
-(\texttt{.gpkg}) directamente visualizables en QGIS
-\citep{fortin2016innovative, aldous2019optimal}.
+un motor analítico en Python que consume directamente los servicios GeoJSON de
+Apimetro.  Utilizando librerías de análisis espacial y redes complejas (NetworkX,
+GeoPandas, Momepy), el modelo transforma las geometrías vectoriales en grafos
+matemáticos ruteables y calcula tres indicadores de eficiencia de red
+\citep{fortin2016innovative, aldous2019optimal}: (1)~\textbf{cobertura espacial},
+porcentaje de superficie urbana dentro del radio peatonal de 800~m de cada estación;
+(2)~\textbf{factor de desviación}, exceso de la distancia real en red sobre la
+distancia euclidiana mínima entre dos puntos; y (3)~\textbf{fuerza capilar},
+concentración de flujos en nodos del grafo con escasas rutas alternativas.  Los
+resultados de su aplicación a la ZMVM se detallan en la
+sección~\ref{sec:Resultados}; los datos se exportan como capas vectoriales
+GeoPackage (\texttt{.gpkg}) directamente visualizables en QGIS.
 
 \section{Resultados}\label{sec:Resultados}
 
