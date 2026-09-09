@@ -209,29 +209,25 @@ GeoPackage (\texttt{.gpkg}) directamente visualizables en QGIS.
 
 \section{Resultados}\label{sec:Resultados}
 
-La aplicación del VFTModel sobre la red expuesta por Apimetro permite cuantificar
-las deficiencias estructurales de la ZMVM mediante tres indicadores:
-
-\begin{enumerate}[nosep, leftmargin=1.5em]
-  \item \textbf{Cobertura espacial ($C$):} isócronas peatonales de 800~m alrededor
-    de cada estación.  Este indicador arroja que Milpa Alta presenta solo el
-    11.75\% de su superficie dentro del radio de 800~m de una estación.
-  \item \textbf{Factor de Desviación ($DF$):} cociente entre la distancia real de
-    viaje en la red y la distancia euclidiana.  El promedio de una muestra de
-    100~rutas interalcaldías arroja $DF=1.545$, lo que significa que cada
-    viaje recorre, en promedio, 54\% más de lo necesario.  El caso extremo
-    Milpa Alta hacia Santa Catarina Yecahuizotl alcanza $DF=2.52$.
-  \item \textbf{Fuerza Capilar ($FC_H$):} centralidad y grado nodal del grafo para
-    identificar nodos centrales con mayor concentración de flujos sin alternativa lateral.  El
-    nodo central máximo registra $FC_H=130$ en la zona de Hospitales Sur.
-\end{enumerate}
+Los tres indicadores calculados por el VFTModel sobre la red de Apimetro arrojan
+los siguientes resultados para la ZMVM:
+(1)~\textbf{cobertura espacial ($C$)}, isócronas peatonales de 800~m alrededor de
+cada estación ---Milpa Alta presenta solo el 11.75\% de su superficie dentro del
+radio de cobertura; (2)~\textbf{factor de desviación ($DF$)}, cociente entre la
+distancia real en red y la distancia euclidiana mínima ---el promedio en
+100~rutas interalcaldías arroja $DF=1.545$, es decir, cada viaje recorre 54\%
+más de lo necesario (caso extremo San Pedro Atocapan, Alcaldía Milpa Alta, a
+Santa Catarina Yecahuizotl, Alcaldía Tláhuac: $DF=2.52$); y
+(3)~\textbf{fuerza capilar ($FC_H$)}, índice que cuantifica la concentración de
+flujos en nodos del grafo con pocas rutas alternativas ---el nodo máximo registra
+$FC_H=130$ en la zona de Hospitales Sur.
 
 En total, el motor procesa 22\,766 entidades espaciales que se consolidan en un
 grafo de 11\,115~nodos interconectados por 45\,679~aristas
 (25\,000 de servicio y 20\,000 de transbordo), abarcando 11~sistemas de
-transporte y $XX$~rutas, todo en un volumen de 38~MB de datos procesados.  Estos resultados demuestran que la API de Apimetro permite
-investigación cuantitativa de nivel académico sin requerir que el investigador
-programe, limpie archivos de texto ni repare trazos geométricos rotos.
+transporte y $XX$~rutas, todo en un volumen de 38~MB de datos procesados.  Estos resultados ilustran cómo Apimetro facilita el acceso a datos de red
+normalizados para cualquier usuario, sin necesidad de programar, limpiar archivos
+de texto ni reparar trazos geométricos rotos.
 
 \section{Conclusiones}
 \label{sec:Conclusiones}
