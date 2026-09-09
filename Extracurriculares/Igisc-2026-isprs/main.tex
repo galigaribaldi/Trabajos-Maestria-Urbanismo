@@ -232,53 +232,36 @@ de texto ni reparar trazos geométricos rotos.
 \section{Conclusiones}
 \label{sec:Conclusiones}
 
-La integración exitosa de Apimetro demuestra que la colaboración entre datos
-gubernamentales (GTFS) y cartografía colaborativa (OpenStreetMap) abre un canal
-inédito para la investigación urbana en América Latina.  Al empaquetar una base de
-datos PostGIS compleja detrás de una API REST que entrega GeoJSON limpios, se logra
-el cometido de la democratización: cualquier urbanista, geógrafo o estudiante puede,
-a través de protocolos HTTP, inyectar la red de transporte completa de la ZMVM
-directamente en herramientas como QGIS, Kepler.gl o Leaflet, sin necesidad de
-programar ni reparar datos.
+La combinación de datos gubernamentales (GTFS) y cartografía colaborativa
+(OpenStreetMap) que articula Apimetro ofrece una vía concreta para reducir las
+barreras técnicas en la investigación de redes de transporte urbano.  Al exponer
+una base PostGIS compleja como API REST en formato GeoJSON, cualquier urbanista,
+geógrafo o desarrollador puede integrar la red multimodal de la ZMVM en herramientas
+como QGIS, Kepler.gl o Leaflet sin necesidad de programar ni limpiar datos.
 
-La arquitectura de Apimetro es deliberadamente replicable.  Cualquier ciudad
-latinoamericana que publique archivos GTFS y cuente con cobertura de
-OpenStreetMap puede instanciar su propio motor de datos metropolitanos siguiendo
-el mismo patrón: ingesta, normalización, unificación con OSM y exposición vía API
-REST.  La herramienta trasciende el nicho informático para convertirse en un bien
-público digital que puede ayudar al análisis espacial de redes de transporte,
-el diseño de políticas públicas de movilidad y el fortalecimiento del ecosistema
-de datos geoespaciales abiertos en la región.
+El patrón arquitectónico de Apimetro ---ingesta de GTFS, normalización, unificación
+con OSM y exposición vía API REST--- es reproducible en cualquier ciudad que disponga
+de archivos GTFS y cobertura de OpenStreetMap, lo que lo convierte en un recurso
+potencialmente útil para otras zonas metropolitanas con problemáticas similares de
+fragmentación de datos.
 
-Se invita a la comunidad de OpenStreetMap en Latinoamérica a colaborar en la
-mejora de la cobertura de datos de transporte público, particularmente en las
-periferias metropolitanas donde la información gubernamental es más escasa y donde
-la cartografía colaborativa tiene mayor potencial de impacto.
+Se invita a la comunidad de OpenStreetMap en Latinoamérica a colaborar en tres
+frentes: (1)~\textbf{mapatones temáticos}, sesiones de mapeo enfocadas en sistemas
+de transporte periférico cuya cobertura OSM es aún incompleta en municipios
+conurbados como Ecatepec, Nezahualcóyotl y Chimalhuacán; (2)~\textbf{validación
+bidireccional}, publicar como datos abiertos los resultados del proceso de
+\textit{conflation} de Apimetro para que la comunidad corrija errores detectados
+tanto en OSM como en los GTFS oficiales; y (3)~\textbf{replicabilidad regional},
+documentar el patrón GTFS+OSM\,$\to$\,API REST como modelo de referencia para
+otras zonas metropolitanas latinoamericanas (p.e.\ Bogotá, São Paulo, Buenos Aires)
+que enfrenten fragmentación de datos de transporte.
 
-El desarrollo de Apimetro abre al menos tres frentes de colaboración con la
-comunidad OSM:
-
-\begin{enumerate}[nosep, leftmargin=1.5em]
-  \item \textbf{Mapatones temáticos:}  Organizar sesiones de mapeo enfocadas en
-    sistemas de transporte periférico (autobuses, microbuses, rutas alimentadoras)
-    cuya cobertura OSM es aún incompleta en municipios conurbados como Ecatepec,
-    Nezahualcóyotl y Chimalhuacán.
-  \item \textbf{Validación bidireccional:}  Publicar como conjuntos de datos
-    abiertos los resultados del proceso de \textit{conflation} de Apimetro, de
-    modo que la comunidad pueda corregir errores detectados tanto en OSM como en
-    las fuentes GTFS oficiales.
-  \item \textbf{Replicabilidad regional:}  Documentar el patrón
-    GTFS+OSM\,$\to$\,API REST como un modelo reproducible para otras zonas
-    metropolitanas latinoamericanas (p.e. Bogotá, São Paulo, Buenos Aires) donde
-    enfrenten fragmentación de datos de transporte.
-\end{enumerate}
-
-Apimetro demuestra que la infraestructura de datos abiertos proporcionada por los
-gobiernos locales y la cartografía colaborativa no son esfuerzos paralelos sino
-complementarios: la calidad de uno
-potencia la utilidad del otro.  La convergencia entre datos gubernamentales y
-comunitarios constituye, a juicio del autor, el camino más eficiente hacia la
-soberanía tecnológica en materia de información geoespacial urbana.
+La experiencia de Apimetro sugiere que los datos gubernamentales abiertos y la
+cartografía colaborativa son esfuerzos complementarios: la calidad de uno potencia
+la utilidad del otro.  Entre las líneas de trabajo futuro se identifican la
+incorporación de indicadores personalizables por el usuario, la mejora de la
+integración OSM--GTFS en municipios con baja cobertura colaborativa, y la
+documentación del sistema para públicos no técnicos.
 
 {
 	\begin{spacing}{1.17}
