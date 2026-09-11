@@ -173,7 +173,7 @@ un motor analítico en Python que consume directamente los servicios GeoJSON de
 Apimetro.  Utilizando librerías de análisis espacial y redes complejas (NetworkX,
 GeoPandas, Momepy), el modelo transforma las geometrías vectoriales en grafos
 matemáticos ruteables y calcula tres indicadores de eficiencia de red
-\citep{fortin2016innovative, aldous2019optimal}: (1)~\textbf{cobertura espacial},
+\citep{fortin2016innovative}: (1)~\textbf{cobertura espacial},
 porcentaje de superficie urbana dentro del radio peatonal de 800~m de cada estación;
 (2)~\textbf{factor de desviación}, exceso de la distancia real en red sobre la
 distancia euclidiana mínima entre dos puntos; y (3)~\textbf{fuerza capilar},
@@ -188,17 +188,15 @@ Los tres indicadores calculados por el VFTModel sobre la red de Apimetro arrojan
 los siguientes resultados para la ZMVM:
 (1)~\textbf{cobertura espacial ($C$)}, isócronas peatonales de 800~m alrededor de
 cada estación ---Milpa Alta presenta solo el 11.75\% de su superficie dentro del
-radio de cobertura (Figura~\ref{fig:cobertura}, véase Anexo);
+radio de cobertura (véase Anexo);
 (2)~\textbf{factor de desviación ($DF$)}, cociente entre la
 distancia real en red y la distancia euclidiana mínima ---el promedio en
 100~rutas interalcaldías arroja $DF=1.545$, es decir, cada viaje recorre 54\%
 más de lo necesario (caso extremo San Pedro Atocapan, Alcaldía Milpa Alta, a
-Santa Catarina Yecahuizotl, Alcaldía Tláhuac: $DF=2.52$;
-Figura~\ref{fig:desviacion}, véase Anexo); y
+Santa Catarina Yecahuizotl, Alcaldía Tláhuac: $DF=2.52$; véase Anexo); y
 (3)~\textbf{fuerza capilar ($FC_H$)}, índice que cuantifica la concentración de
 flujos en nodos del grafo con pocas rutas alternativas ---el nodo máximo registra
-$FC_H=130$ en la zona de Hospitales Sur
-(Figura~\ref{fig:fuerza_capilar}, véase Anexo).
+$FC_H=130$ en la zona de Hospitales Sur (véase Anexo).
 
 En total, el motor procesa 22\,766 entidades espaciales que se consolidan en un
 grafo de 11\,115~nodos interconectados por 45\,679~aristas: 25\,197 de servicio
@@ -208,8 +206,8 @@ MEXICABLE:~17; SUB:~3), y 20\,482 de transbordo peatonal, todo en un volumen
 de 38~MB de datos procesados.  Estos resultados ilustran cómo Apimetro facilita
 el acceso a datos de red normalizados para cualquier usuario, sin necesidad de
 programar, limpiar archivos de texto ni reparar trazos geométricos rotos.
-La Figura~\ref{fig:red} muestra la red unificada de la ZMVM expuesta por Apimetro
-y la Figura~\ref{fig:dashboard} el panel de consulta REST (véase Anexo).
+Los recursos interactivos completos ---red unificada y panel de consulta REST--- están
+disponibles en el Anexo.
 
 \section{Conclusiones}
 \label{sec:Conclusiones}
@@ -254,45 +252,18 @@ documentación del sistema para públicos no técnicos.
 
 \section*{Anexo}
 
-\begin{figure*}[h]
-  \centering
-  \includegraphics[width=\textwidth]{Dashboard_Apimetro_2026_Red_ZMVM}
-  \caption{Red multimodal unificada de la ZMVM expuesta por Apimetro.
-           Fuente: elaboración propia.}
-  \label{fig:red}
-\end{figure*}
+\begin{itemize}
+  \item \textbf{Dashboard Apimetro} (red multimodal ZMVM y panel de consulta REST):\\
+        \url{https://public.tableau.com/views/DashboardRedApimetro2025/DashboardResultadosApimetro}
 
-\begin{figure*}[h]
-  \centering
-  \includegraphics[width=\textwidth]{Dashboard_Apimetro_2026}
-  \caption{Panel de consulta de Apimetro: interfaz REST con capas de red
-           multimodal de la ZMVM en formato GeoJSON.  Fuente: elaboración propia.}
-  \label{fig:dashboard}
-\end{figure*}
+  \item \textbf{VFTModel --- Factor de desviación} (distribución en 100 rutas interalcaldías):\\
+        \url{https://public.tableau.com/views/RedVFTModelZMVM2025-2027FacotrdeDeviacin/PlantillaDashboardUnigrafico}
 
-\begin{figure*}[h]
-  \centering
-  \includegraphics[width=\textwidth]{Mapa_Cobertura_Mapa_Calor_vftmodel}
-  \caption{Mapa de calor de cobertura espacial peatonal (isócrona 800~m)
-           calculado por VFTModel sobre la red de la ZMVM.
-           Fuente: elaboración propia.}
-  \label{fig:cobertura}
-\end{figure*}
+  \item \textbf{VFTModel --- Fuerza capilar} (top estaciones por concentración de flujos):\\
+        \url{https://public.tableau.com/views/RedVFTModelZMVM2025-2027FuerzaCapilarTopEstacionesTabla/PlantillaDashboardUnigrafico2}
 
-\begin{figure*}[h]
-  \centering
-  \includegraphics[width=\textwidth]{Dashboard_Apimetro_2026_Factor_desviacion_grafica}
-  \caption{Distribución del factor de desviación en 100~rutas interalcaldías
-           de la ZMVM calculado por VFTModel.  Fuente: elaboración propia.}
-  \label{fig:desviacion}
-\end{figure*}
-
-\begin{figure*}[h]
-  \centering
-  \includegraphics[width=\textwidth]{Dashboard_VFTModel_2026_Fuerza_capilar_grafica}
-  \caption{Concentración de fuerza capilar ($FC_H$) en nodos del grafo de la ZMVM
-           calculada por VFTModel.  Fuente: elaboración propia.}
-  \label{fig:fuerza_capilar}
-\end{figure*}
+  \item \textbf{Mapa de calor --- Cobertura espacial peatonal} (isócrona 800~m, VFTModel):\\
+        \url{https://github.com/galigaribaldi/Transport-gis-zmvm-mjg/releases/tag/v2026-2-col-mapas-cobertura-calor}
+\end{itemize}
 
 \end{document}
