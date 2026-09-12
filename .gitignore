@@ -329,6 +329,11 @@ TSWLatexianTemp*
 *.pdf
 !docs/assets/*.pdf
 !Img/*.pdf
+!Extracurriculares/Igisc-2026-isprs/figures/*.pdf
+
+### macOS
+.DS_Store
+**/.DS_Store
 
 ### Archvios VSCODE
 .vscode/

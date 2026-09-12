@@ -1,10 +1,12 @@
-# Instrucciones — Plantillas de Documentos Académicos
+# Instrucciones — Plantillas de Documentos
 
-**Maestría en Urbanismo · UNAM – FES Acatlán**
+**Maestría en Urbanismo · UNAM – FES Acatlán | Documentos oficiales Apimetro**
 
 ---
 
 ## Plantillas disponibles
+
+### Documentos académicos (UNAM)
 
 Hay cuatro plantillas de documentos. Elige según el tipo de entregable y las indicaciones del profesor:
 
@@ -14,6 +16,12 @@ Hay cuatro plantillas de documentos. Elige según el tipo de entregable y las in
 | `EnsayosSinPortada` | `Ensayos/SinPortada` | — (encabezado inline) | Sí | Sí | No |
 | `ArticulosConPortada` | `Articulos/ConPortada` | Minimalista | No | No | No |
 | `ArticulosSinPortada` | `Articulos/SinPortada` | — (encabezado inline) | No | No | Sí (subrayadas) |
+
+### Documentos oficiales Apimetro
+
+| Comando Make | Carpeta plantilla | Uso típico | Colores disponibles |
+|---|---|---|---|
+| `nueva-carta` o `ApimetroDoc` | `DocumentosPlantilla/Apimetro` | Cartas, oficios, contratos, autorizaciones | `Apimetro` (default), `Negro` |
 
 ---
 
@@ -146,3 +154,84 @@ make limpiar-dir DIR=<ruta>       # Solo una carpeta
 ```
 
 Elimina: `.aux`, `.log`, `.out`, `.toc`, `.lof`, `.bbl`, `.blg`, `.synctex.gz`.
+
+---
+
+## Plantilla Apimetro — documentos oficiales
+
+Para cartas membretadas, contratos, oficios y autorizaciones con la identidad visual de Apimetro.
+
+### Crear un nuevo documento
+
+```bash
+make nueva-carta DIR=Extracurriculares/Apimetro-docs/NombreDocumento
+# equivalente explícito:
+make ApimetroDoc DIR=Extracurriculares/Apimetro-docs/NombreDocumento COLOR=Apimetro
+```
+
+### Compilar
+
+```bash
+make Document DIR=<ruta> COLOR=Apimetro   # color turquesa + naranja (default)
+make Document DIR=<ruta> COLOR=Negro      # versión formal blanco y negro
+```
+
+### Personalizar (`main.tex`)
+
+```latex
+\newcommand{\TituloDoc}{Título del documento}      % encabezado pág 2+
+\newcommand{\FolioDoc}{APM-2026-001}               % folio correlativo
+\newcommand{\FechaDoc}{Ciudad de México, agosto de 2026}
+\newcommand{\FirmanteName}{Cabrera Garibaldi Hernán Galileo}
+\newcommand{\FirmanteCargo}{Fundador y Desarrollador}
+\newcommand{\ContactoEmail}{galigaribaldi0@gmail.com}
+\newcommand{\ContactoWeb}{apimetro.dev}
+```
+
+### Comandos disponibles en el cuerpo
+
+| Comando | Resultado |
+|---|---|
+| `\DatosDestinatario{nombre}{cargo}{org}` | Bloque de destinatario |
+| `\Asunto{texto}` | Línea de asunto en negritas |
+| `\Saludo{Estimado/a ...}` | Párrafo de apertura |
+| `\FirmaBloque{nombre}{cargo}` | Bloque de firma único |
+| `\SeccionCarta{título}` | Separador de sección interno |
+| `\RefDoc{APM-2026-XX}` | Folio estilizado en turquesa |
+
+Para **firma de dos partes** (acuerdos bilaterales) usar `minipage` directamente:
+
+```latex
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+  {\color{ColorPrincipal}\rule{\linewidth}{0.6pt}}\\[0.2cm]
+  \textbf{Nombre parte A} \\ {\small Cargo} \\ {\small\color{ColorAcento}Apimetro}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+  {\color{ColorPrincipal}\rule{\linewidth}{0.6pt}}\\[0.2cm]
+  \textbf{Nombre parte B} \\ {\small Cargo} \\ {\small\color{ColorAcento}Organización}
+\end{minipage}
+```
+
+### Estructura de archivos
+
+```
+NombreDocumento/
+├── main.tex
+├── Latex/
+│   ├── Comands.tex
+│   ├── Membrete.tex
+│   ├── color-config.tex
+│   └── Colores/
+│       ├── Apimetro.tex   ← turquesa RGB(0,188,212) + naranja RGB(230,81,0)
+│       └── Negro.tex
+├── img/logo.png
+└── secciones/
+    └── Carta-Ejemplo.tex  ← renombrar por el contenido real
+```
+
+### Documento de referencia
+
+`Extracurriculares/Apimetro-docs/Carta-colaboracion/` — Folio APM-2026-100.
+Carta de autorización de uso comercial para Tony Quezada (Metro Experto), con Anexo I de pago vía GitHub Sponsors.
