@@ -39,6 +39,18 @@
 # ─── UTILIDADES ──────────────────────────────────────────────────────────────
 #   make limpiar               → borra auxiliares LaTeX en todo el proyecto
 #   make limpiar-dir DIR=<ruta>→ borra auxiliares solo en <ruta>
+#
+# ─── CARTAS UNAM ─────────────────────────────────────────────────────────────
+#   make nueva-carta-unam  DIR=<ruta>  → carta oficial UNAM membretada (FES Acatlán)
+#   make _compile-carta-unam DIR=<ruta> → compila carta existente (pdflatex × 2)
+#
+# ─── ISPRS ───────────────────────────────────────────────────────────────────
+#   make IsprsAbstract DIR=<ruta>  → crea nuevo artículo ISPRS desde la plantilla
+#   make IsprsDoc      DIR=<ruta>  → compila artículo ISPRS (pdflatex + bibtex)
+#
+# ─── SOTM LATAM ──────────────────────────────────────────────────────────────
+#   make nueva-presentacion-sotm DIR=<ruta>  → presentación Beamer SOTM Latam CDMX 2026
+#   make PresentacionSotm        DIR=<ruta>  → compila presentación SOTM (pdflatex + bibtex)
 # =============================================================================
 
 MOTOR  := pdflatex
@@ -78,6 +90,15 @@ PLANTILLA_INFOGRAFIA := InfografiaPlantilla
 # Plantilla base — documentos oficiales Apimetro
 PLANTILLA_APIMETRO := DocumentosPlantilla/Apimetro
 
+# Plantilla base — cartas oficiales UNAM
+PLANTILLA_CARTA_UNAM := DocumentosPlantilla/CartaUNAM
+
+# Plantilla base — artículos ISPRS
+PLANTILLA_ISPRS := DocumentosPlantilla/ISPRS
+
+# Plantilla base — presentaciones SOTM Latam
+PLANTILLA_SOTM := DocumentosPlantilla/SotmLatam
+
 # Rutas conocidas
 DIR_DUS_HUMEDALES      := TercerSemestre/DesarrolloUrbanoSostenible/Ensayo_Humedales
 DIR_DUS_PRES_HUMEDALES := TercerSemestre/DesarrolloUrbanoSostenible/Presentacion_Humedales
@@ -99,11 +120,14 @@ DIR ?=
         nueva-presentacion \
         nueva-presentacion-teal nueva-presentacion-olivo \
         nueva-presentacion-purpura nueva-presentacion-rojo \
+        nueva-presentacion-sotm PresentacionSotm _scaffold-sotm _compile-sotm \
         nueva-infografia \
         nueva-infografia-a3 nueva-infografia-landscape \
         nueva-infografia-teal nueva-infografia-olivo \
         nueva-infografia-purpura nueva-infografia-rojo \
         ApimetroDoc nueva-carta \
+        CartaUNAM nueva-carta-unam _compile-carta-unam \
+        IsprsAbstract IsprsDoc _scaffold-isprs _compile-isprs \
         desarrollo pres-humedales pres-movilidad sociologia state-map state-map-taller \
         release release-ens-humedales release-pres-humedales release-pres-movilidad \
         latexdiff-tesis \
@@ -390,6 +414,31 @@ ifndef DIR
 endif
 	@$(MAKE) ApimetroDoc DIR=$(DIR) COLOR=Apimetro
 
+# ── Cartas oficiales UNAM ─────────────────────────────────────────────────────
+
+CartaUNAM:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make CartaUNAM DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold PLANTILLA=$(PLANTILLA_CARTA_UNAM) DIR=$(DIR) TIPO=CartaUNAM COLOR=Negro
+
+nueva-carta-unam:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-carta-unam DIR=<ruta>)
+endif
+	@$(MAKE) CartaUNAM DIR=$(DIR)
+
+_compile-carta-unam:
+	@if [ ! -f "$(DIR)/main.tex" ]; then \
+	    echo "[ERROR] No existe $(DIR)/main.tex"; \
+	    exit 1; \
+	fi
+	@echo "--- [CartaUNAM] Pasada 1/2: pdflatex ---"
+	cd $(DIR) && pdflatex $(FLAGS) main.tex
+	@echo "--- [CartaUNAM] Pasada 2/2: pdflatex ---"
+	cd $(DIR) && pdflatex $(FLAGS) main.tex
+	@echo ">>> PDF generado en $(DIR)/main.pdf"
+
 _scaffold:
 	@if [ -f "$(DIR)/main.tex" ]; then \
 	    echo "[AVISO] $(DIR)/main.tex ya existe — no se sobreescribe."; \
@@ -411,6 +460,96 @@ _scaffold:
 	    echo "    3. Escribe tu contenido en $(DIR)/secciones/"; \
 	fi
 	@echo "    4. Compila con: make $(if $(filter Presentacion,$(TIPO)),Presentacion,Document) DIR=$(DIR)"
+
+# ── Presentaciones SOTM Latam ────────────────────────────────────────────────
+
+nueva-presentacion-sotm:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make nueva-presentacion-sotm DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold-sotm PLANTILLA=$(PLANTILLA_SOTM) DIR=$(DIR)
+
+PresentacionSotm:
+ifndef DIR
+	$(error Debes indicar la carpeta: make PresentacionSotm DIR=<ruta>)
+endif
+	@$(MAKE) _compile-sotm DIR=$(DIR)
+
+_scaffold-sotm:
+	@if [ -f "$(DIR)/main.tex" ]; then \
+	    echo "[AVISO] $(DIR)/main.tex ya existe — no se sobreescribe."; \
+	    echo "        Borra el directorio o elige otro nombre si quieres empezar de cero."; \
+	    exit 1; \
+	fi
+	@echo ">>> Creando presentación SOTM Latam en: $(DIR)"
+	mkdir -p "$(DIR)"
+	cp -r $(PLANTILLA)/. "$(DIR)/"
+	@echo ">>> Plantilla SOTM copiada. Próximos pasos:"
+	@echo "    1. Edita el bloque PERSONALIZACIÓN en $(DIR)/main.tex"
+	@echo "    2. Escribe tus slides en $(DIR)/secciones/"
+	@echo "    3. Coloca tus figuras en $(DIR)/img/"
+	@echo "    4. Compila con: make PresentacionSotm DIR=$(DIR)"
+
+_compile-sotm:
+	@if [ ! -f "$(DIR)/main.tex" ]; then \
+	    echo "[ERROR] No existe $(DIR)/main.tex"; \
+	    echo "        Usa: make nueva-presentacion-sotm DIR=$(DIR)"; \
+	    exit 1; \
+	fi
+	@echo "--- [SOTM] Pasada 1/3: pdflatex ---"
+	cd $(DIR) && $(MOTOR) $(FLAGS) main.tex
+	@echo "--- [SOTM] Pasada BibTeX ---"
+	cd $(DIR) && $(BIBTEX) main || true
+	@echo "--- [SOTM] Pasada 2/3: pdflatex ---"
+	cd $(DIR) && $(MOTOR) $(FLAGS) main.tex
+	@echo "--- [SOTM] Pasada 3/3: pdflatex ---"
+	cd $(DIR) && $(MOTOR) $(FLAGS) main.tex
+	@echo ">>> PDF generado: $(DIR)/main.pdf"
+
+# ── Artículos ISPRS ──────────────────────────────────────────────────────────
+
+IsprsAbstract:
+ifndef DIR
+	$(error Debes indicar la carpeta destino: make IsprsAbstract DIR=<ruta>)
+endif
+	@$(MAKE) _scaffold-isprs PLANTILLA=$(PLANTILLA_ISPRS) DIR=$(DIR)
+
+IsprsDoc:
+ifndef DIR
+	$(error Debes indicar la carpeta: make IsprsDoc DIR=<ruta>)
+endif
+	@$(MAKE) _compile-isprs DIR=$(DIR)
+
+_scaffold-isprs:
+	@if [ -f "$(DIR)/main.tex" ]; then \
+	    echo "[AVISO] $(DIR)/main.tex ya existe — no se sobreescribe."; \
+	    echo "        Borra el directorio o elige otro nombre si quieres empezar de cero."; \
+	    exit 1; \
+	fi
+	@echo ">>> Creando artículo ISPRS en: $(DIR)"
+	mkdir -p "$(DIR)"
+	cp -r $(PLANTILLA)/. "$(DIR)/"
+	@echo ">>> Plantilla ISPRS copiada. Próximos pasos:"
+	@echo "    1. Edita \\title, \\author y \\address en $(DIR)/main.tex"
+	@echo "    2. Reemplaza el contenido de cada sección con tu artículo"
+	@echo "    3. Actualiza $(DIR)/ISPRSguidelines_authors.bib con tus referencias"
+	@echo "    4. Compila con: make IsprsDoc DIR=$(DIR)"
+
+_compile-isprs:
+	@if [ ! -f "$(DIR)/main.tex" ]; then \
+	    echo "[ERROR] No existe $(DIR)/main.tex"; \
+	    echo "        Usa: make IsprsAbstract DIR=$(DIR)"; \
+	    exit 1; \
+	fi
+	@echo "--- [ISPRS] Pasada 1/3: pdflatex ---"
+	cd $(DIR) && $(MOTOR) $(FLAGS) main.tex
+	@echo "--- [ISPRS] Pasada BibTeX ---"
+	cd $(DIR) && $(BIBTEX) main || true
+	@echo "--- [ISPRS] Pasada 2/3: pdflatex ---"
+	cd $(DIR) && $(MOTOR) $(FLAGS) main.tex
+	@echo "--- [ISPRS] Pasada 3/3: pdflatex ---"
+	cd $(DIR) && $(MOTOR) $(FLAGS) main.tex
+	@echo ">>> PDF generado: $(DIR)/main.pdf"
 
 # =============================================================================
 # RELEASES — compila el PDF y publica en GitHub Releases

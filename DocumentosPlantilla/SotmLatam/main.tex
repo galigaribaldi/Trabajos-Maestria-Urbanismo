@@ -1,0 +1,65 @@
+% !TeX encoding = UTF-8
+% =============================================================================
+%  PLANTILLA — Presentación Beamer SOTM Latam CDMX 2026
+%  State of the Map Latinoamérica — Antiguo Colegio de San Ildefonso, CDMX
+%  Versión 1.0 — Agosto 2026
+%
+%  USO:
+%    1. Edita el bloque "PERSONALIZACIÓN" con los datos de tu ponencia.
+%    2. Completa las secciones en /secciones/ con tu contenido.
+%    3. Compila con: make PresentacionSotm DIR=<ruta>
+%       o directamente: pdflatex → bibtex → pdflatex → pdflatex
+% =============================================================================
+
+\documentclass[aspectratio=169, 12pt]{beamer}
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PERSONALIZACIÓN — Edita solo esta sección para cada nueva presentación
+% ═════════════════════════════════════════════════════════════════════════════
+\newcommand{\TituloPresent}{Título de la Ponencia}
+\newcommand{\SubtituloPresent}{Subtítulo descriptivo}
+\newcommand{\Autor}{Nombre Apellido Paterno Apellido Materno}
+\newcommand{\AutorCorto}{N. Apellido}        % Aparece en el pie
+\newcommand{\Afiliacion}{Institución / Organización}
+\newcommand{\FechaPresent}{Ciudad de México, Octubre 2026}
+% ═════════════════════════════════════════════════════════════════════════════
+
+% Metadatos de Beamer (usa las variables de arriba)
+\title{\TituloPresent}
+\subtitle{\SubtituloPresent}
+\author{\Autor}
+\date{\FechaPresent}
+
+% =============================================================================
+%  TEMA Y PAQUETES — cargados desde Latex/BeamerThemeSotm.tex
+% =============================================================================
+\input{Latex/BeamerThemeSotm}
+
+% =============================================================================
+%  DOCUMENTO
+% =============================================================================
+\begin{document}
+
+% ── Portada ──────────────────────────────────────────────────────────────────
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ── Índice ───────────────────────────────────────────────────────────────────
+\begin{frame}{Contenido}
+  \tableofcontents
+\end{frame}
+
+% ── Secciones ────────────────────────────────────────────────────────────────
+\input{secciones/s01_intro}
+\input{secciones/s02_desarrollo}
+\input{secciones/s03_conclusiones}
+
+% ── Bibliografía ─────────────────────────────────────────────────────────────
+\section*{Referencias}
+\begin{frame}[allowframebreaks]{Referencias}
+  \bibliographystyle{apalike}
+  \bibliography{referencias}
+\end{frame}
+
+\end{document}

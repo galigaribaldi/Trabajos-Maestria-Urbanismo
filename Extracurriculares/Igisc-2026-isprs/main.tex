@@ -1,0 +1,269 @@
+% Version 2022-09-2022
+% update – 161114 by Ken Arroyo Ohori: made spacing closer to Word template throughout, put proper quotes everywhere, removed spacing that could cause labels to be wrong, added non-breaking and inter-sentence spacing where applicable, removed explicit newlines
+% update – 010819 by Dennis Wittich: made spacing and font size closer to Word template, updated references and refernces style
+% update – 042319 by Dennis Wittich: font size of captions set to 'small', first author names are shortened, hyphenation fixed
+% update – 010620 by Dennis Wittich: Footnotes alignment set to left
+% update - 151220 by Clement Mallet: Template adapted for single blind abstract submissions
+% update - 060321 by Christian Heipke: Template refined for single blind abstract submissions
+% update - 090921 by Christian Heipke: Template refined for single blind abstract submissions
+% update - 200922 by Christian Heipke: general template update
+% update - 080124 by Christian Heipke: general template update
+
+\documentclass{isprs} % isprs class modified 23-04-2019 (Dennis Wittich)
+\usepackage{subfigure}
+\usepackage{setspace}
+\usepackage{geometry} % added 27-02-2014 Markus Englich
+\usepackage{epstopdf}
+\usepackage[labelsep=period]{caption}  % added 14-04-2016 Markus Englich - Recommendation by Sebastian Brocks
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel} 
+\usepackage[hang]{footmisc}
+\def\footnotemargin{1em} % added 08-01-2020 Dennis Wittich
+
+
+\usepackage[authoryear]{natbib}
+\def\bibhang{0pt}
+
+\geometry{a4paper, top=25mm, left=20mm, right=20mm, bottom=25mm, headsep=10mm, footskip=12mm} % added 27-02-2014 Markus Englich
+\usepackage{enumitem}
+\usepackage{url}
+\graphicspath{{figures/}}
+
+%\usepackage{isprs}
+%\usepackage[perpage,para,symbol*]{footmisc}
+
+%\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+\captionsetup{justification=centering,font=normal} % thanks to Niclas Borlin 05-05-2016
+\captionsetup[figure]{font=small} % added 23-04-2019 Dennis Wittich
+\captionsetup[table]{font=small} % added 23-04-2019 Dennis Wittich
+
+\begin{document}
+
+\title{Democratización de la Información Metropolitana: Apimetro como Infraestructura de Datos Abiertos y Motor de Análisis Topológico de Red en la ZMVM
+}
+
+% KAO: Remove extra spacing
+\author{
+ Hernán Galileo Cabrera Garibaldi\textsuperscript{1},
+ David López\textsuperscript{2}
+}
+
+% KAO: Remove extra newline
+\address{
+	\textsuperscript{1 }Facultad de Estudios Superiores Acatlán, Universidad Nacional Autónoma de México, 53150 Naucalpan de Juárez, México\\
+	313326626\@pcpuma.acatlan.unam.mx\\
+	\textsuperscript{2 }Instituto de Ingeniería, Universidad Nacional Autónoma de México, 04510 Ciudad de México, México\\
+	dlopezfl\@iingen.unam.mx
+}
+
+% If the corresponding author is NOT the final author, always add a % space before the subsequent comma, i.e.
+% first author name\textsuperscript{a,}\thanks{Corresponding author} , % second author name \textsuperscript{b}, etc.
+% thanks to Niclas Borlin 05-05-2016
+% information on the corresponding author should not be used any longer and has been commented out
+% C. Heipke, Jan 03,2024
+
+% the use of the information of commissions and working groups should not be used any longer and has been commented out
+% C. Heipke, Sept. 20,2022
+%\commission{XX, }{YY} %This field is optional. If filled, XX and YY should be replaced by adequate numbers. See https://www2.isprs.org/commissions/
+%\workinggroup{XX/YY} %This field is optional.
+%\icwg{}   %This field is optional.
+
+
+\abstract{
+The Mexico City Metropolitan Area (ZMVM) operates one of the largest multimodal
+transit networks in Latin America, yet access to unified geospatial data for this
+network remains a persistent barrier: official GTFS feeds and OpenStreetMap data
+are heterogeneous, institutionally fragmented, and technically demanding to use.
+This paper presents Apimetro, a free and open-source infrastructure that normalizes
+and integrates both sources into a unified REST service delivering GeoJSON, reducing
+the technical barrier for urban researchers and practitioners.  Built on this
+infrastructure, the \textit{VFTModel} analytical engine computes three network
+efficiency indicators: spatial coverage, deviation factor, and capillary strength.
+Results show that Milpa Alta borough records only 11.75\% pedestrian coverage and
+that the average inter-borough trip covers 54\% more distance than the geometric
+minimum.  The pattern is applicable in cities with available GTFS data and
+OpenStreetMap coverage.
+}
+
+\keywords{Transporte Público, GTFS, OpenStreetMap, GeoJSON, Análisis topológico, ZMVM, Democratización de datos.}
+\maketitle
+\sloppy
+
+\section{Introducción}
+\label{introduccion}
+
+La ZMVM opera una de las redes de transporte público más complejas del continente
+bajo un patrón predominantemente radial que genera ineficiencias funcionales
+documentadas \citep{padilla2022expansion, molinero2002}.  El estudio cuantitativo
+de esta red enfrenta un problema recurrente de homologación: los archivos GTFS de
+la Secretaría de Movilidad (SEMOVI) presentan severas discontinuidades ---rutas
+inconclusas, atributos incompatibles entre esquemas y exclusión de sistemas
+periféricos como el Mexibús \citep{semovi2020diagnostico}--- al cruzar las fronteras
+entre la Ciudad de México y los municipios del Estado de México.  Aunque el derecho
+de acceso a la información está constitucionalmente garantizado en México
+\citep{cpeum_art6}, la apertura formal del dato no equivale a su democratización
+\citep{gurstein2011open}: si su interpretación exige habilidades avanzadas de
+ingeniería de software, el dato permanece inaccesible para la mayoría.
+
+Ante esta fragmentación, OpenStreetMap (OSM) emerge como un recurso complementario:
+su cartografía colaborativa produce datos de calidad comparable a los oficiales
+\citep{haklay2010good, barrington2017world} y cubre los sistemas periféricos que los
+GTFS gubernamentales omiten.  El presente trabajo expone cómo Apimetro, una
+infraestructura de software libre, integra ambas fuentes ---GTFS oficiales y
+OSM--- para construir un modelo de red metropolitana unificado expuesto como API
+REST en formato GeoJSON, reduciendo la barrera técnica de entrada para
+investigadores y profesionales urbanos.
+
+El artículo se organiza como sigue: la sección~2 describe la arquitectura de
+Apimetro y el motor analítico \textit{VFTModel}; la sección~3 presenta los
+resultados sobre la red de la ZMVM; la sección~4 ofrece conclusiones e
+implicaciones.
+
+
+\section{Metodología}\label{sec:Metodologia}
+
+El ecosistema Apimetro opera mediante una arquitectura desacoplada en dos capas.
+La primera capa corresponde al servicio de unificación de datos espaciales,
+construido en el lenguaje de programación Go ---que garantiza alta eficiencia en el
+procesamiento concurrente de flujos masivos de datos \citep{goauthors2025}--- en combinación con una base
+de datos relacional espacial PostgreSQL equipada con la extensión PostGIS.  Apimetro
+ingiere los archivos GTFS oficiales de SEMOVI y los normaliza: homologa
+campos faltantes y unifica formatos entre fuentes para que sean
+directamente comparables.  Para resolver los vacíos de información del Estado
+de México y corregir trazos geométricos gubernamentales discontinuos ---como el caso
+del Trolebús Línea~13 o los sistemas de transporte metropolitano del Estado de
+México---, Apimetro utiliza de forma estratégica la cartografía colaborativa de
+OpenStreetMap como fuente de validación cruzada y datos complementarios.
+
+Mediante consultas SQL espaciales, Apimetro unifica ambas fuentes y genera
+una base de datos homogénea: un único formato donde geometrías,
+identificadores y atributos son consistentes entre sistemas.  La segunda capa de Apimetro corresponde al motor
+analítico \textit{VFTModel}, que consume los servicios REST resultantes para
+construir grafos matemáticos y calcular indicadores de eficiencia de red.
+
+La contribución de OSM al \textit{pipeline} de extracción y tratamiento de datos
+de Apimetro opera en tres niveles concretos:
+
+(1)~\textbf{geometrías de ruta}, cuando los trazos GTFS presentan discontinuidades
+o resolución insuficiente, Apimetro consulta las relaciones OSM de tipo
+\texttt{route=bus}, \texttt{route=subway} y \texttt{route=light\_rail} para obtener
+geometrías continuas de alta resolución; (2)~\textbf{cobertura periférica}, los
+municipios conurbados del Estado de México carecen en gran medida de archivos GTFS
+publicados, por lo que la comunidad OSM cubre los recorridos que las fuentes
+oficiales omiten \citep{haklay2010good} ---las rutas del Mexibús y los autobuses
+periféricos se obtienen íntegramente de OSM; y (3)~\textbf{validación cruzada},
+Apimetro emplea la distancia de Hausdorff para detectar inconsistencias geométricas
+entre trazas GTFS y OSM \citep{hausdorff1914, neis2012street}, marcando para
+revisión las discrepancias superiores a un umbral configurable.
+
+El sistema expone la red multimodal completa ---Metro, Metrobús, Cablebús, RTP,
+Trolebús, Tren Ligero, Tren Suburbano, Mexibús, Colectivo, Microbús y
+Autobús--- dividida en dos entidades relacionales: \textit{estaciones} (puntos con
+jerarquía de transporte y nodos CETRAM identificados) y \textit{líneas} (geometrías
+\texttt{MultiLineString} segmentadas tramo a tramo entre estaciones).  Un proceso de \textit{snapping} con umbral de $\leq 50$~m resuelve las
+interconexiones entre sistemas por proximidad geográfica.  De los 11~sistemas integrados, el 88\% corresponde
+a transporte de superficie y el 12\% a infraestructura de vía exclusiva.  La salida
+se expone públicamente a través de servicios REST en formato GeoJSON nativo
+desde \texttt{apimetro.dev}.
+
+Para demostrar la capacidad analítica de la infraestructura, se desarrolló el
+\textit{VFTModel} (\textit{Vanishing Fig-Tree Model})%
+\footnote{Repositorio: \url{https://github.com/galigaribaldi/VFTModel};
+documentación: \url{https://galigaribaldi.github.io/VFTModel/notebooks/intro.html}},
+un motor analítico en Python que consume directamente los servicios GeoJSON de
+Apimetro.  Utilizando librerías de análisis espacial y redes complejas (NetworkX,
+GeoPandas, Momepy), el modelo transforma las geometrías vectoriales en grafos
+matemáticos ruteables y calcula tres indicadores de eficiencia de red
+\citep{fortin2016innovative}: (1)~\textbf{cobertura espacial},
+porcentaje de superficie urbana dentro del radio peatonal de 800~m de cada estación;
+(2)~\textbf{factor de desviación}, exceso de la distancia real en red sobre la
+distancia euclidiana mínima entre dos puntos; y (3)~\textbf{fuerza capilar},
+concentración de flujos en nodos del grafo con escasas rutas alternativas.  Los
+resultados de su aplicación a la ZMVM se detallan en la
+sección~\ref{sec:Resultados}; los datos se exportan como capas vectoriales
+GeoPackage (\texttt{.gpkg}) directamente visualizables en QGIS.
+
+\section{Resultados}\label{sec:Resultados}
+
+Los tres indicadores calculados por el VFTModel sobre la red de Apimetro arrojan
+los siguientes resultados para la ZMVM:
+(1)~\textbf{cobertura espacial ($C$)}, isócronas peatonales de 800~m alrededor de
+cada estación ---Milpa Alta presenta solo el 11.75\% de su superficie dentro del
+radio de cobertura (véase Anexo);
+(2)~\textbf{factor de desviación ($DF$)}, cociente entre la
+distancia real en red y la distancia euclidiana mínima ---el promedio en
+100~rutas interalcaldías arroja $DF=1.545$, es decir, cada viaje recorre 54\%
+más de lo necesario (caso extremo San Pedro Atocapan, Alcaldía Milpa Alta, a
+Santa Catarina Yecahuizotl, Alcaldía Tláhuac: $DF=2.52$; véase Anexo); y
+(3)~\textbf{fuerza capilar ($FC_H$)}, índice que cuantifica la concentración de
+flujos en nodos del grafo con pocas rutas alternativas ---el nodo máximo registra
+$FC_H=130$ en la zona de Hospitales Sur (véase Anexo).
+
+En total, el motor procesa 22\,766 entidades espaciales que se consolidan en un
+grafo de 11\,115~nodos interconectados por 45\,679~aristas: 25\,197 de servicio
+real, distribuidas en 11~sistemas (RTP:~11\,041; CC:~10\,603; TROLE:~1\,506;
+MB:~792; METRO:~528; MEXIBÚS:~391; PUMABUS:~234; TL:~52; CBB:~30;
+MEXICABLE:~17; SUB:~3), y 20\,482 de transbordo peatonal, todo en un volumen
+de 38~MB de datos procesados.  Estos resultados ilustran cómo Apimetro facilita
+el acceso a datos de red normalizados para cualquier usuario, sin necesidad de
+programar, limpiar archivos de texto ni reparar trazos geométricos rotos.
+Los recursos interactivos completos ---red unificada y panel de consulta REST--- están
+disponibles en el Anexo.
+
+\section{Conclusiones}
+\label{sec:Conclusiones}
+
+La combinación de datos gubernamentales (GTFS) y cartografía colaborativa
+(OpenStreetMap) que articula Apimetro ofrece una vía concreta para reducir las
+barreras técnicas en la investigación de redes de transporte urbano.  Al exponer
+una base PostGIS compleja como API REST en formato GeoJSON, cualquier urbanista,
+geógrafo o desarrollador puede integrar la red multimodal de la ZMVM en herramientas
+como QGIS, Kepler.gl o Leaflet sin necesidad de programar ni limpiar datos.
+
+El patrón arquitectónico de Apimetro ---ingesta de GTFS, normalización, unificación
+con OSM y exposición vía API REST--- es reproducible en cualquier ciudad que disponga
+de archivos GTFS y cobertura de OpenStreetMap, lo que lo convierte en un recurso
+potencialmente útil para otras zonas metropolitanas con problemáticas similares de
+fragmentación de datos.
+
+Se invita a la comunidad de OpenStreetMap en Latinoamérica a colaborar en tres
+frentes: (1)~\textbf{mapatones temáticos}, sesiones de mapeo enfocadas en sistemas
+de transporte periférico cuya cobertura OSM es aún incompleta en municipios
+conurbados como Ecatepec, Nezahualcóyotl y Chimalhuacán; (2)~\textbf{validación
+bidireccional}, publicar como datos abiertos los resultados del proceso de
+\textit{conflation} de Apimetro para que la comunidad corrija errores detectados
+tanto en OSM como en los GTFS oficiales; y (3)~\textbf{replicabilidad regional},
+documentar el patrón GTFS+OSM\,$\to$\,API REST como modelo de referencia para
+otras zonas metropolitanas latinoamericanas (p.e.\ Bogotá, São Paulo, Buenos Aires)
+que enfrenten fragmentación de datos de transporte.
+
+La experiencia de Apimetro sugiere que los datos gubernamentales abiertos y la
+cartografía colaborativa son esfuerzos complementarios: la calidad de uno potencia
+la utilidad del otro.  Entre las líneas de trabajo futuro se identifican la
+incorporación de indicadores personalizables por el usuario, la mejora de la
+integración OSM--GTFS en municipios con baja cobertura colaborativa, y la
+documentación del sistema para públicos no técnicos.
+
+{
+	\begin{spacing}{1.17}
+		\normalsize
+		\bibliography{ISPRSguidelines_authors}
+	\end{spacing}
+}
+
+\section*{Anexo}
+
+\begin{itemize}
+  \item \textbf{Dashboard Apimetro} (red multimodal ZMVM y panel de consulta REST):\\
+        \url{https://public.tableau.com/views/DashboardRedApimetro2025/DashboardResultadosApimetro}
+
+  \item \textbf{VFTModel --- Factor de desviación} (distribución en 100 rutas interalcaldías):\\
+        \url{https://public.tableau.com/views/RedVFTModelZMVM2025-2027FacotrdeDeviacin/PlantillaDashboardUnigrafico}
+
+  \item \textbf{VFTModel --- Fuerza capilar} (top estaciones por concentración de flujos):\\
+        \url{https://public.tableau.com/views/RedVFTModelZMVM2025-2027FuerzaCapilarTopEstacionesTabla/PlantillaDashboardUnigrafico2}
+
+  \item \textbf{Mapa de calor --- Cobertura espacial peatonal} (isócrona 800~m, VFTModel):\\
+        \url{https://github.com/galigaribaldi/Transport-gis-zmvm-mjg/releases/tag/v2026-2-col-mapas-cobertura-calor}
+\end{itemize}
+
+\end{document}
