@@ -134,3 +134,85 @@
     \end{column}
   \end{columns}
 \end{frame}
+
+% ── Frame: Dispersión en los datos ─────────────────────────────────────────────────────
+\begin{frame}[t]{Dispersión en los datos}
+  \small
+  La red de transporte de la \zmvm{} no es un dato único y homologado. Es, en cambio, la intersección
+  de al menos tres fuentes institucionales con formatos y esquemas propios que no fueron
+  diseñados para operar conjuntamente:
+
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}
+      \begin{block}{\parbox[c][1.4em][c]{\linewidth}{\small\textbf{01}\enspace\textit{Feeds} GTFS}}
+        \begin{minipage}[t][3.0cm][t]{\linewidth}\scriptsize
+          Archivos de texto delimitado que describen paradas, viajes y trazos,
+          publicados por la ADIP \citeyearpar{adip_gtfs_2024}.
+          % EDITAR: fallas documentadas en el artículo
+          \vspace{-0.15cm}
+          \begin{itemize}\setlength{\itemsep}{0pt}
+            \item Rutas inconclusas.
+            \item Atributos incompatibles entre esquemas.
+            \item Mexibús excluido.
+          \end{itemize}
+        \end{minipage}
+      \end{block}
+    \end{column}
+    % \pause
+    \begin{column}{0.32\textwidth}
+      \begin{block}{\parbox[c][1.4em][c]{\linewidth}{\small\textbf{02}\enspace Polígonos administrativos}}
+        \begin{minipage}[t][3.0cm][t]{\linewidth}\scriptsize
+          Límites de alcaldías y municipios en formato vectorial, provenientes del
+          Instituto Nacional de Estadística y Geografía.
+          % EDITAR: corte de información en la frontera
+          \vspace{-0.15cm}
+          \begin{itemize}\setlength{\itemsep}{0pt}
+            \item En la frontera CDMX / EDOMEX la información se corta.
+          \end{itemize}
+        \end{minipage}
+      \end{block}
+    \end{column}
+    % \pause
+    \begin{column}{0.32\textwidth}
+      \begin{block}{\parbox[c][1.4em][c]{\linewidth}{\small\textbf{03}\enspace Parámetros operativos}}
+        \begin{minipage}[t][3.0cm][t]{\linewidth}\scriptsize
+          Velocidades comerciales, frecuencias de paso y capacidades de flota por sistema,
+          derivados de reportes de la SEMOVI \citeyearpar{semovi2020diagnostico}.
+        \end{minipage}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+% ── Frame: Democratización de los Datos ─────────────────────────────────────────────────────
+\begin{frame}{Abrir el dato no es democratizarlo}
+  \begin{columns}[T]
+    \begin{column}{0.56\textwidth}
+      \small
+      En México, la apertura de datos de transporte público ha sido un esfuerzo institucional
+      que ha permitido la publicación de información en formatos abiertos y accesibles,
+      respaldada por el derecho de acceso a la información \citep{cpeum_art6}.   % EDITAR: frase añadida para anclar la cita
+
+      \vspace{0.2cm}
+      Sin embargo, la disponibilidad de datos no garantiza su comprensión ni su uso efectivo
+      por parte de la ciudadanía. La democratización del dato requiere no solo acceso, sino también
+      educación, herramientas y contextos que permitan a los usuarios interpretar y aplicar
+      la información de manera significativa \citep{gurstein2011open}.
+    \end{column}
+    \begin{column}{0.40\textwidth}
+      % EDITAR: una línea de explicación por barrera
+      \begin{exampleblock}{\footnotesize 1.\enspace Tiempo}
+        \scriptsize Limpiar y homologar fuentes toma semanas de trabajo.
+      \end{exampleblock}
+      % \pause
+      \begin{block}{\footnotesize 2.\enspace Conocimientos técnicos y sociales}
+        \scriptsize Programación, SIG y lectura del contexto urbano.
+      \end{block}
+      % \pause
+      \begin{alertblock}{\footnotesize 3.\enspace Capital tecnológico}
+        \scriptsize Equipo, software y servidores para procesar los datos.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
