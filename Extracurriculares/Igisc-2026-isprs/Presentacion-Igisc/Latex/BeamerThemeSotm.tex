@@ -143,7 +143,7 @@
   \begin{center}
     \vspace{0.3cm}
     % ── Logo SOTM Latam ──────────────────────────────────────────────────────
-    \includegraphics[height=2.2cm]{sotm-latam-logo.png}\\[0.3cm]
+    \includegraphics[height=1.8cm]{sotm-latam-logo.png}\\[0.3cm]
     {\color{SotmTerracota}\rule{0.7\textwidth}{1.5pt}}
     \vspace{0.3cm}
 
@@ -154,8 +154,22 @@
     {\color{SotmOlivo}\rule{0.4\textwidth}{0.8pt}}
     \vspace{0.3cm}
 
-    {\small\textbf{\insertauthor}}\\[0.1cm]
-    {\scriptsize\Afiliacion}
+    \ifdefined\Coautor
+      % ── Autor + coautor lado a lado ──
+      \begin{minipage}[t]{0.46\textwidth}\centering
+        {\small\textbf{\insertauthor}}\\[0.1cm]
+        {\scriptsize\Afiliacion}
+      \end{minipage}%
+      \hspace{0.02\textwidth}%
+      \begin{minipage}[t]{0.46\textwidth}\centering
+        {\small\textbf{\Coautor}}\\[0.1cm]
+        {\scriptsize\AfiliacionCoautor}
+      \end{minipage}
+    \else
+      {\small\textbf{\insertauthor}}\\[0.1cm]
+      {\scriptsize\Afiliacion}
+    \fi
+    \par\vspace{0.3cm}
 
     \vfill
     {\scriptsize\color{SotmTexto}\insertdate}
@@ -192,7 +206,9 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{tabularx}
-\usepackage{natbib}
+\usepackage[round]{natbib}
+% Beamer + hyperref borra el separador autor–año de natbib ("Autor2020]"); esto lo restaura
+\makeatletter\renewcommand\hyper@natlinkbreak[2]{#1}\makeatother
 \usepackage{lipsum}     % Texto de relleno — eliminar en la presentación final
 
 % Ruta de imágenes: img/ local → Img/ raíz del proyecto (logo SOTM)

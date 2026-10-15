@@ -21,6 +21,8 @@
 \newcommand{\Autor}{Hernán Galileo Cabrera Garibaldi}
 \newcommand{\AutorCorto}{Galileo Garibaldi (galigaribaldi)}        % Aparece en el pie
 \newcommand{\Afiliacion}{FES Acatlán / UNAM}
+\newcommand{\Coautor}{Dr. David López Flores}                       % Opcional: borrar para portada de un solo autor
+\newcommand{\AfiliacionCoautor}{Instituto de Ingeniería, UNAM\\Asesor de tesis}
 \newcommand{\FechaPresent}{Ciudad de México, Octubre 2026}
 % ═════════════════════════════════════════════════════════════════════════════
 
@@ -51,6 +53,8 @@
 \end{frame}
 
 % ── Secciones ────────────────────────────────────────────────────────────────
+\input{secciones/01-apertura}
+\input{secciones/02-problema}
 \input{secciones/s01_intro}
 \input{secciones/s02_desarrollo}
 \input{secciones/s03_conclusiones}
@@ -58,7 +62,7 @@
 % ── Bibliografía ─────────────────────────────────────────────────────────────
 \section*{Referencias}
 \begin{frame}[allowframebreaks]{Referencias}
-  \bibliographystyle{apalike}
+  \bibliographystyle{plainnat}
   \bibliography{referencias}
 \end{frame}
 

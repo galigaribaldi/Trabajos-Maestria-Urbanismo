@@ -1,0 +1,78 @@
+\section{Apertura}
+
+% ── Frame: Contexto ───────────────────────────────────────────────────────────
+\begin{frame}{¿Quién y por qué?}
+  \begin{columns}[T]
+    \begin{column}{0.58\textwidth}
+      {\color{SotmVerde}\bfseries ¿Quién?}
+      \begin{itemize}
+        \item Hernán Galileo Cabrera Garibaldi.
+        % \pause
+        \item Ingeniero en Computación y Maestrante de Urbanismo; UNAM.
+        \item Fundador y Desarrollador de Apimetro.   % EDITAR: descomentar si aplica
+        % \pause
+      \end{itemize}
+
+      \vspace{0.2cm}
+      {\color{SotmVerde}\bfseries ¿Por qué?}
+      \begin{itemize}
+        % EDITAR: borradores tomados del artículo; ajusta la redacción
+        \item Uno de los grandes desafíos en el \textbf{World Building} es la creación de un mundo congruente para sus personajes y sus necesidades.
+        % \pause
+        \item Abrir el dato no es democratizarlo.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.38\textwidth}
+      \begin{block}{Pregunta Gancho}
+        ¿Cuántas fuentes de datos necesitas para trazar un viaje de Ecatepec (EDOMEX) a Milpa Alta (CDMX)?
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: Respuesta al gancho — flujo manual sin Apimetro ───────────────────
+\begin{frame}{Respuesta a la Pregunta Gancho}
+  \centering
+  \begin{tikzpicture}[
+    fuente/.style   = {rectangle, rounded corners=5pt,
+                       draw=SotmVerde, line width=0.8pt,
+                       fill=SotmCrema, text width=3.8cm,
+                       align=left, minimum height=0.85cm, font=\small},
+    num/.style      = {circle, fill=SotmVerde, text=white,
+                       font=\small\bfseries, inner sep=0pt, minimum size=0.5cm},
+    caja/.style     = {rectangle, rounded corners=5pt,
+                       draw=SotmVerde, line width=0.8pt,
+                       fill=SotmCrema, text width=2.4cm,
+                       align=center, minimum height=0.8cm, font=\small},
+    result/.style   = {caja, fill=SotmTerracota, draw=SotmTerracota,
+                       text=white, font=\small\bfseries},
+    decision/.style = {diamond, draw=SotmVerde, line width=0.8pt,
+                       fill=SotmCrema, aspect=2, inner sep=1pt,
+                       text width=2.0cm, align=center, font=\scriptsize},
+    flecha/.style   = {-Stealth, thick, color=SotmVerde},
+    lateral/.style  = {-Stealth, thick, color=SotmTerracota, dashed}
+  ]
+    % ── Fuentes: la respuesta a "¿cuántas?" ──
+    \node[fuente] (f1) at (0,  1.05) {\textbf{GTFS SEMOVI}\\{\scriptsize Metro · Metrobús · RTP}};
+    \node[fuente] (f2) at (0,  0)    {\textbf{OSM}\\{\scriptsize Mexibús · Mexicable}};
+    \node[fuente] (f3) at (0, -1.05) {\textbf{Trazos a mano}\\{\scriptsize Trolebús L13 · colectivos}};
+    \foreach \i in {1,2,3}
+      \node[num, left=0.15cm of f\i] {\i};
+
+    % ── Validación y resultado ──
+    \node[decision] (dec)  at (5.0, 0)    {¿Los trazos coinciden?};
+    \node[result]   (res)  at (9.1, 0)    {Iniciar el viaje};
+    \node[caja]     (corr) at (5.0, -1.95) {Corrección};
+
+    \foreach \i in {1,2,3}
+      \draw[flecha] (f\i.east) -- (dec.west);
+    \draw[flecha]  (dec)  -- node[above, font=\scriptsize]{Sí} (res);
+    \draw[lateral] (dec)  -- node[right, font=\scriptsize]{No} (corr);
+    \draw[lateral] (corr) -| (f3.south);
+  \end{tikzpicture}
+
+  \vspace{0.1cm}
+  {\color{SotmTerracota}\rule{0.6\textwidth}{0.8pt}}\\[0.15cm]
+  {\bfseries\color{SotmVerde} $\geq 3$ fuentes · formatos incompatibles · trabajo manual}\\[0.1cm]
+  {\small\itshape …¿y si fuera una sola consulta?}
+\end{frame}
