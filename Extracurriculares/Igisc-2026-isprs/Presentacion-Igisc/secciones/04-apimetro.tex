@@ -1,0 +1,60 @@
+\section{Apimetro}
+% ── Frame: Origen de Apimetro ────────────────────────────────────────────────
+\begin{frame}{¿Cómo surge Apimetro?}
+  \begin{columns}[T]
+    \begin{column}{0.58\textwidth}
+      \small
+      El proyecto Apimetro tiene su génesis entre los años 2023 y 2024,
+      derivado de una necesidad cartográfica y de modelación espacial para el universo
+      narrativo de \textbf{\enquote{La Saga de la Catacumba}}, proyecto de \termino{World Building}
+      que explora la historia de la Ciudad de México.
+
+      \vspace{0.2cm}
+      Sin embargo, conforme la historia fue creciendo, se decidió darle un mapa al
+      protagonista, el cual contenía las rutas de transporte público y una tarjeta con 4
+      viajes gratuitos cada 30 minutos. Para poder modelar el mapa y la tarjeta,
+      se necesitaba el panorama completo de la red de transporte, lo cual no existía en un solo lugar.
+    \end{column}
+    \begin{column}{0.38\textwidth}
+      % EDITAR: una línea de explicación por etapa del flujo
+      \begin{exampleblock}{\footnotesize 1.\enspace Entrada de datos}
+        \scriptsize SHP, GTFS, GeoPackage, CSV, JSON.
+      \end{exampleblock}
+      % \pause
+      \begin{block}{\footnotesize 2.\enspace Procesamiento y limpieza}
+        \scriptsize Normalizar todos los datos a un solo formato.
+      \end{block}
+      % \pause
+      \begin{alertblock}{\footnotesize 3.\enspace Salida de datos}
+        \scriptsize Se optó por el formato GeoJSON.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: E-R ───────────────────────────────────────────────────
+\begin{frame}{Esquema E-R de Apimetro}
+  \begin{columns}[c]
+    \begin{column}{0.52\textwidth}
+      \centering
+      \resizebox{\linewidth}{!}{\input{Diagramas-TiKz/apimetro-er-simple}}
+      \fuentefigura{Elaboración propia, 2026.}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      \footnotesize
+      \vspace*{-0.3cm}
+      \begin{itemize}\setlength{\itemsep}{0.05cm}
+        \item \textbf{Estaciones:} nodos puntuales de la red con atributos de
+              conectividad, sistema de transporte y ubicación administrativa.
+        \item \textbf{Líneas:} trazos de los ramales con las métricas operativas
+              necesarias para el cálculo posterior (velocidad promedio, frecuencia de paso,
+              capacidad del vehículo).
+        \item \textbf{Polígonos:} áreas administrativas para filtrar cualquier
+              consulta por alcaldía o municipio.
+        \item \textbf{Relaciones:} las líneas se vinculan a las estaciones mediante
+              un identificador de sistema y ramal, lo que permite reconstruir el grafo
+              metropolitano.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}

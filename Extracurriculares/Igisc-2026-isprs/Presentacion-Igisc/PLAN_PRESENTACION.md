@@ -61,9 +61,12 @@ Diapositivas construidas:
 - 🔴 Nivel 3 — **Validación cruzada:** distancia de Hausdorff entre trazas GTFS y OSM, umbral configurable
 - 🔴 Visual antes/después: trazo GTFS roto (Trolebús L13) vs. geometría OSM
 
-### 🔴 4. Apimetro — bloque central — 8:00–13:00 (4 diapositivas)
-- 🔴 Diagrama de arquitectura: GTFS + OSM → Go / PostgreSQL + PostGIS → normalización → *snapping* ≤ 50 m → API REST / GeoJSON
-- 🔴 Modelo de datos: *estaciones* (jerarquía, nodos CETRAM) y *líneas* (`MultiLineString` tramo a tramo)
+### 🟡 4. Apimetro — bloque central — 8:00–13:00 (4 diapositivas, `secciones/04-apimetro.tex`)
+- ✅ Origen del proyecto: *"¿Cómo surge Apimetro?"* — La Saga de la Catacumba + flujo entrada → procesamiento → salida (borradores `% EDITAR`)
+- 🔴 Diagrama de arquitectura: GTFS + OSM → Go / PostgreSQL + PostGIS → normalización → *snapping* ≤ 50 m → API REST / GeoJSON (el flujo de "¿Cómo surge?" es solo una versión simplificada)
+- 🟡 Modelo de datos: frame *"Esquema E-R de Apimetro"* con diagrama TikZ (`Diagramas-TiKz/apimetro-er-simple.tex`) — estaciones, líneas, polígonos y relaciones
+  - 🟡 Etiquetas de cardinalidad (N, M, 1) encimadas sobre las cajas: corregir en el diagrama (aquí o en la tesis)
+  - 🔴 Mencionar jerarquía / nodos CETRAM y `MultiLineString` tramo a tramo
 - 🔴 11 sistemas: Metro, Metrobús, Cablebús, RTP, Trolebús, Tren Ligero, Tren Suburbano, Mexibús, Colectivo, Microbús, Autobús (88 % superficie / 12 % vía exclusiva)
 - 🔴 Cifras de escala: 22 766 entidades · 11 115 nodos · 45 679 aristas (25 197 servicio + 20 482 transbordo) · 38 MB
 - 🔴 **Demo en video local (60–90 s):** consulta a `apimetro.dev` → capa cargada en QGIS

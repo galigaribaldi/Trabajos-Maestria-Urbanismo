@@ -217,6 +217,12 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning, shapes.geometric, arrows.meta, calc}
 
+% Compatibilidad con diagramas copiados de la tesis (Diagramas-TiKz/):
+%   \tikzsetnextfilename es de la librería external (no cargada aquí) → se ignora
+%   unamAzul es el color de la tesis → se mapea a la paleta SOTM
+\providecommand{\tikzsetnextfilename}[1]{}
+\colorlet{unamAzul}{SotmVerde}
+
 
 % =============================================================================
 %  10. COMANDOS DE UTILIDAD
