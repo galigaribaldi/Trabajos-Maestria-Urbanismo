@@ -120,6 +120,22 @@
   \vspace{0.7cm}\par%
 }
 
+% Variante para acuerdos: título + línea + partes, fecha y carácter
+% Requiere \ParteA, \ParteB y \FechaAcuerdo definidos en main.tex
+\newcommand{\cabeceroacuerdo}{%
+  \thispagestyle{primerapagina}%
+  \vspace*{0.4cm}%
+  \noindent{\Large\bfseries \TituloArticulo}\\[0.15cm]%
+  {\color{ColorPrincipal}\rule{\textwidth}{2pt}}\\[0.3cm]%
+  \noindent\begin{tabularx}{\textwidth}{@{} >{\bfseries}l X @{}}
+    Partes:               & \ParteA \\
+                          & \ParteB \\
+    Fecha de celebración: & \FechaAcuerdo \\
+    Carácter:             & Bilateral, voluntario y de buena fe \\
+  \end{tabularx}%
+  \vspace{0.7cm}\par%
+}
+
 
 % =============================================================================
 %  7. CONFIGURACIÓN DE FIGURAS
@@ -153,6 +169,26 @@
 
 % Término definido por primera vez
 \newcommand{\termino}[1]{\textit{#1}}
+
+% Frase clave del acuerdo, entre comillas y resaltada
+% Uso: \fraseclave{No quiero hablar sobre ello}
+\newcommand{\fraseclave}[1]{\textbf{\color{ColorPrincipal}\enquote{#1}}}
+
+% Título de cláusula
+% Uso: \clausula{Primera}{Objeto}
+\newcommand{\clausula}[2]{\subsection*{Cláusula #1. #2}}
+
+% Bloque de firma: línea + nombre + rol
+% Uso: \firma{Nombre completo}{Parte}
+\newcommand{\firma}[2]{%
+  \begin{minipage}[t]{0.45\textwidth}
+    \centering
+    \vspace*{2.2cm}
+    {\color{ColorPrincipal}\rule{\linewidth}{0.6pt}}\\[0.1cm]
+    \textbf{#1}\\
+    {\small #2}
+  \end{minipage}%
+}
 
 % Bloque de cita destacada
 % Uso: \citaclave{Texto de la definición clave.}

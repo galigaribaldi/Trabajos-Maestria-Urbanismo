@@ -23,7 +23,7 @@
 | Carpeta     | Acuerdo                                                        | Fecha              | Estado              |
 |-------------|----------------------------------------------------------------|--------------------|---------------------|
 | `Acuerdo1/` | Derecho a decir no y pausa activa en las conversaciones        | 17 de octubre 2026 | Redactado, en revisión |
-| `Acuerdo2/` | —                                                              | —                  | Plantilla sin editar |
+| `Acuerdo2/` | Respeto a la identidad de las personas y límites en el humor  | 17 de octubre 2026 | Redactado, en revisión |
 
 ### Acuerdo 1 — resumen
 
@@ -36,6 +36,20 @@
 4. **Excepciones** por integridad, seguridad o salud: se suspende la pausa y se prioriza la ayuda.
 5. **Plazos**: el tema se retoma tras 24 h mínimo y 7 días máximo; si no, queda como
    «Conflicto solucionado». Cada nueva pausa reinicia ambos plazos.
+
+### Acuerdo 2 — resumen
+
+1. **Respeto a la identidad** de las personas (LGBTQ+ y cualquier otra), en ambos sentidos y
+   hacia terceros.
+2. **Explicación anticipada**: antes de convivir con alguien, quien conoce el tema explica qué
+   puede ofender y cómo dirigirse con respeto; un error por desconocimiento se señala con
+   respeto y se corrige, sin presumir mala fe.
+3. **Bromas sobre la muerte o el suicidio**: no se incluye a la otra Parte (predominantemente
+   Galileo → Rosario, sin eximir a Rosario); sobre la propia persona sí. La otra Parte puede
+   preguntar en serio si hay algo real detrás; si hay riesgo, aplica la Cláusula Quinta del
+   Acuerdo 1.
+4. **Procedimiento ante una broma** no entendida u ofensiva: (1) pausa de aclaración
+   («¿Es broma?»), (2) evaluación del límite personal, (3) rechazo respetuoso y cambio de tema.
 
 ## Estructura y compilación
 
