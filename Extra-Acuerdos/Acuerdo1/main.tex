@@ -1,0 +1,83 @@
+% !TeX encoding = UTF-8
+% =============================================================================
+%  ACUERDO 1 — Derecho a decir no y pausa activa en las conversaciones
+%  Acuerdos interpersonales: Rosario De Los Santos — Galileo Cabrera
+%  Basado en la plantilla «Artículo Académico sin Portada»
+%
+%  Compila con: make Document DIR=Extra-Acuerdos/Acuerdo1
+% =============================================================================
+
+\documentclass[12pt,a4paper]{article}
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PERSONALIZACIÓN
+% ═════════════════════════════════════════════════════════════════════════════
+\newcommand{\TituloArticulo}{Acuerdo 1: Derecho a decir no y pausa activa en las conversaciones}
+\newcommand{\ParteA}{Martha Rosario De Los Santos González}
+\newcommand{\ParteB}{Hernán Galileo Cabrera Garibaldi}
+\newcommand{\Autor}{Rosario De Los Santos · Galileo Cabrera}   % Encabezado derecho
+\newcommand{\Materia}{Acuerdos interpersonales}                % Encabezado izquierdo
+\newcommand{\MateriaCorta}{Acuerdo 1}                          % Aparece en el pie
+\newcommand{\FechaEntrega}{17 de octubre de 2026}
+\newcommand{\FechaAcuerdo}{sábado 17 de octubre de 2026}
+% ═════════════════════════════════════════════════════════════════════════════
+
+% =============================================================================
+%  1. IDIOMA Y CODIFICACIÓN
+% =============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+\usepackage{csquotes}
+
+% =============================================================================
+%  2. LAYOUT BASE
+% =============================================================================
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm}
+
+% =============================================================================
+%  3. PAQUETES ESENCIALES
+% =============================================================================
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+% =============================================================================
+%  4. PAQUETES ADICIONALES, COLORES Y COMANDOS PERSONALIZADOS
+%     Ajusta paleta de colores y comandos en Latex/Comands.tex
+% =============================================================================
+\input{Latex/Comands}
+
+% =============================================================================
+%  5. HIPERVÍNCULOS — siempre al final del preámbulo
+% =============================================================================
+\usepackage[
+    colorlinks = true,
+    linkcolor  = ColorPrincipal,
+    citecolor  = ColorPrincipal,
+    urlcolor   = ColorPrincipal,
+    unicode    = true,
+    breaklinks = true
+]{hyperref}
+\hypersetup{
+    pdftitle   = {\TituloArticulo},
+    pdfauthor  = {\ParteA, \ParteB},
+    pdfsubject = {\Materia},
+    pdfcreator = {pdfLaTeX}
+}
+
+% =============================================================================
+%  DOCUMENTO
+% =============================================================================
+\begin{document}
+\onehalfspacing
+
+% ── Bloque de título: partes, fecha y carácter del acuerdo ────────────────────
+\cabeceroacuerdo
+
+% ── Secciones ─────────────────────────────────────────────────────────────────
+\input{secciones/1-Introduccion}     % Declaraciones y definiciones
+\input{secciones/2-Desarrollo}       % Cláusulas
+\input{secciones/3-Conclusiones}     % Aceptación y firmas
+
+\end{document}
