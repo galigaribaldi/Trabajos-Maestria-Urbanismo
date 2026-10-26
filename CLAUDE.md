@@ -49,7 +49,15 @@ make Infografia   DIR=<ruta> [COLOR=Tema]
 ```bash
 make limpiar                    # todo el proyecto
 make limpiar-dir DIR=<ruta>     # solo una carpeta
+make compilar-limpio DIR=<ruta> [COMPILADOR=Tipo]  # limpiar-dir + recompilar (detecta el tipo por main.tex)
 ```
+Usar `compilar-limpio` tras borrar o renombrar archivos (referencias viejas en `.aux`/`.nav`/`.toc`).
+
+### Ayuda
+```bash
+make help                       # (o make ayuda) imprime la cabecera del Makefile: todos los comandos
+```
+La cabecera del `Makefile` es la única fuente de documentación de `make help`: al agregar un comando, documentarlo ahí.
 
 ## Paleta de colores (sistema unificado)
 
