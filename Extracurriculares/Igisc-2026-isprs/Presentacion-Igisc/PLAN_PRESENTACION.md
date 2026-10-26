@@ -77,12 +77,13 @@ Diapositivas construidas:
 - 🔴 Cifras de escala (tesis 5.2): 11 115 nodos · 45 517 aristas (25 025 servicio + 20 492 transbordo) · 38 MB — el artículo trae 45 679 (ver notas de corrección)
 - 🔴 **Pendiente al final — Demo en video local (60–90 s, aún no existe → frame placeholder):** consulta a `apimetro.dev` → capa cargada en QGIS
 
-### 🔴 5. Usos: qué se puede hacer — 13:00–17:00 (3 diapositivas)
-- 🔴 VFTModel como caso de uso (Python: NetworkX, GeoPandas, Momepy)
-- 🔴 **Cobertura espacial:** Milpa Alta con 11.75 % de superficie dentro de 800 m
-- 🔴 **Factor de desviación:** DF = 1.545 (54 % más recorrido); caso extremo San Pedro Atocapan → Santa Catarina Yecahuizotl, DF = 2.52
-- 🔴 **Fuerza capilar:** FC_H = 130 en Hospitales Sur
-- 🔴 Otros usos sin programar: QGIS, Kepler.gl, Leaflet; exportación GeoPackage
+### ✅ 5. Usos: qué se puede hacer — 13:00–17:00 (3 diapositivas, `secciones/05-usos.tex`)
+- Cifras de la **tesis** (cap. 5, corrida 2026-10-04): fuente de verdad; el artículo es anterior a una corrección del código
+- ✅ **Apimetro como motor: analizar, crear, hacer**: diagrama de 3 capas (`Diagramas-TiKz/macro-arquitectura-stack.tex`, copia adaptada: Python en Capa 1, Tableau en Capa 3, cifras del grafo) + caja punteada "Capa N — tu proyecto" → puente al bloque 6
+- ✅ **Cobertura: ¿quién tiene transporte a 800 m?**: mapa QGIS `pdf_apoyo/Mapa_Cobertura_Mapa_Calor.pdf` + Milpa Alta 11.75 % vs. alcaldías centrales > 90 %
+- ✅ **El costo de una red radial**: tablero Tableau `pdf_apoyo/Dashboard_VFTModel_2026_Factor_desviacion.pdf` + DI medio 1.701 (≈ 70 % más) · caso 9 Milpa Alta → Santa Catarina Yecahuizotl DI = 2.99 (14.8 vs. 44.3 km) · $FC_H$ = 130 Hospital Gea González (Acoxpa 111, La Rosa 100)
+- ❌ Descartado: diapositiva "otros usos" con Leaflet / Kepler.gl (no hay desarrollos reales); la reemplaza la "Capa N"
+- ⚠️ `Mapa_Cobertura_Mapa_Calor.pdf` pesa 30 MB → `main.pdf` ≈ 31 MB
 
 ### 🔴 6. Invitación a la comunidad — 17:00–19:00 (1–2 diapositivas)
 - 🔴 Mapatones temáticos: Ecatepec, Nezahualcóyotl, Chimalhuacán
@@ -130,7 +131,7 @@ Diapositivas construidas:
 - 🟡 Repartir los bloques en archivos propios (`01-apertura`, `02-problema`, `03-osm-pieza-clave`, …); `main.tex` aún incluye las plantillas `s01_intro`, `s02_desarrollo`, `s03_conclusiones` — quitarlas al final
 - ✅ Compilar: `make PresentacionSotm DIR=Extracurriculares/Igisc-2026-isprs/Presentacion-Igisc`
 - ✅ Citas autor–año: `plainnat` + `natbib[round]` + corrección de `hyperref` en `Latex/BeamerThemeSotm.tex`
-- 🔴 Agregar `../figures/` al `\graphicspath` del tema para usar las figuras del artículo
+- ✅ `\graphicspath` del tema incluye `pdf_apoyo/` (mapas y tableros copiados de la tesis; se versionan con `git add -f`)
 - 🔴 Decidir si se conserva el frame de Contenido (resta tiempo al bloque 1)
 
 ---
