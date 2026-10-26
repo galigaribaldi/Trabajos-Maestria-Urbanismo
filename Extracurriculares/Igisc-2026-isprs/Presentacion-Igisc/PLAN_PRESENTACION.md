@@ -85,15 +85,14 @@ Diapositivas construidas:
 - ❌ Descartado: diapositiva "otros usos" con Leaflet / Kepler.gl (no hay desarrollos reales); la reemplaza la "Capa N"
 - ⚠️ `Mapa_Cobertura_Mapa_Calor.pdf` pesa 30 MB → `main.pdf` ≈ 31 MB
 
-### 🔴 6. Invitación a la comunidad — 17:00–19:00 (1–2 diapositivas)
-- 🔴 Mapatones temáticos: Ecatepec, Nezahualcóyotl, Chimalhuacán
-- 🔴 Validación bidireccional: publicar resultados de *conflation* para corregir OSM y GTFS
-- 🔴 Replicabilidad regional: Bogotá, São Paulo, Buenos Aires
+### ✅ 6. Invitación a la comunidad — 17:00–19:00 (2 diapositivas, `secciones/06-comunidad.tex`)
+- ✅ **Súmate: tres frentes**: mapear lo que falta (sin municipios concretos: eran supuestos) · reportar y corregir en GitHub *Discussions* (sustituye la "validación bidireccional / *conflation*" del artículo) · replicar en tu ciudad + eco de la "Capa N" (`% EDITAR`)
+- ✅ **Dónde encontrarnos**: diagrama `Diagramas-TiKz/apimetro-ecosistema.tex` (copia adaptada: Wiki sin `seed.sql`) + enlaces de Apimetro y VFTModel (Discussions y Wiki activos en GitHub)
+- ✅ Códigos QR (paquete `qrcode`, fondo blanco): Apimetro → `https://apimetro.dev`, VFTModel → repositorio (sin versión estable); solo en "Dónde encontrarnos" — ✅ probados por el usuario
 
-### 🔴 7. Cierre — 19:00–20:00 (1 diapositiva)
-- 🔴 Mensaje final: *"el dato oficial y el colaborativo se potencian mutuamente"*
-- 🔴 Códigos QR: dashboard, repositorio, API
-- 🔴 Contacto y agradecimientos
+### ✅ 7. Cierre — 19:00–20:00 (2 diapositivas, `secciones/07-cierre.tex`)
+- ✅ **Agradecimientos**: Dr. David López Flores, Dr. Jairo Olguín Roque y Dra. Ruth Stephanie Alvarado Ochoa (asesores y revisores de tesis) · comunidad OSM / SOTM Latam · mensaje *"el dato oficial y el colaborativo se potencian mutuamente"*
+- ✅ **Gracias** (`plain`): frase del autor *«El conocimiento que no se comparte, se pierde»* · `galigaribaldi0@gmail.com` · `@galigaribaldi` (GitHub · X · LinkedIn)
 
 ---
 
@@ -102,7 +101,7 @@ Diapositivas construidas:
 - 🔴 **Licencias:** BSL 1.1 → Apache 2.0 en 2029 (código) / uso libre (datos CDMX) / ODbL (datos OSM) — atribución y *share-alike*
 - 🔴 **Actualización:** frecuencia de reingesta de GTFS y OSM; ¿automática?
 - 🔴 **Colectivos y microbuses:** origen de los datos y confiabilidad
-- 🔴 **Cómo contribuir:** repositorio, *issues*, documentación
+- 🔴 **Cómo contribuir:** repositorio, *Discussions*, Wiki
 - 🔴 **Sostenibilidad:** quién mantiene el proyecto y dónde está alojado
 
 ---
@@ -120,7 +119,7 @@ Diapositivas construidas:
 - 🔴 Diagrama de arquitectura de Apimetro (bloque 4)
 - ❌ Antes/después GTFS vs. OSM — Trolebús L13 (descartado: la base debe ser íntegra)
 - 🔴 Video de demo local (bloque 4)
-- 🔴 Códigos QR (bloque 7)
+- ✅ Códigos QR (bloque 6): generados en LaTeX con `qrcode`, probados
 
 ---
 

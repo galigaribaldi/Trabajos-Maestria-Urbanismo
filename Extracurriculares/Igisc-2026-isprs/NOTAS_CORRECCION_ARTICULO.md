@@ -23,3 +23,27 @@ código de VFTModel; las cifras de resultados deben tomarse de la tesis (cap. 5,
 | 11 | 🔴 | Metodología, párr. 3 | Describe la integración de OSM en "tres niveles" con consultas a relaciones `route=bus/subway/light_rail` | Proceso real (autor, 26 oct): (1) identificar vacíos del portal de datos abiertos, (2) buscar los sistemas faltantes en otras fuentes, (3) OSM los resuelve, (4) script de validación en Python para integrarlos. OSM aporta ubicación, nombres, alcaldía / municipio y actualizaciones; los datos técnicos (velocidad, frecuencia, capacidad, CETRAM) vienen del portal |
 | 12 | 🔴 | Resultados, párr. 1 | Factor de desviación: "DF = 1.545, 54 % más"; caso extremo San Pedro Atocapan → Santa Catarina Yecahuizotl, DF = 2.52 | Tesis 5.3.4: indicador **DI**; media 1.701 (≈ 70 % más), mediana 1.54, rango 1.03–4.42 (100 pares, semilla 42); caso 9 Milpa Alta → Santa Catarina Yecahuizotl, DI = 2.99 (14.8 km en línea recta vs. 44.3 km en red). Revisar también la figura `Dashboard_Apimetro_2026_Factor_desviacion_grafica.pdf` (otra corrida) |
 | 13 | 🔴 | Resultados, párr. 1 | Fuerza capilar: nodo máximo "en la zona de Hospitales Sur" | Tesis 5.3.3: $FC_H$ = 130 en el entorno del Hospital Gea González; le siguen Acoxpa (111) y La Rosa, todos sobre la Calzada de Tlalpan. Cobertura de Milpa Alta (11.75 %) sí coincide |
+
+---
+
+## Comentarios de las personas revisoras — SOTM Latam 2026
+
+**Plazo:** versión corregida del resumen hasta el **9 de noviembre de 2026** (prórroga). El plazo
+permite incorporar también los comentarios que surjan durante la presentación (27 oct).
+**Formato:** máximo **2 páginas**, PDF, plantilla de resúmenes de *The International Archives of the
+Photogrammetry, Remote Sensing and Spatial Information Sciences* (ISPRS):
+<https://www.isprs.org/documents/orangebook/app5.aspx>. Se sube a la plataforma **Pretalx**.
+
+> ⚠️ El correo cita el título como "…Motor de **Optimización** Topológica en la ZMVM"; el
+> `main.tex` y la presentación dicen "Motor de **Análisis Topológico de Red**". Confirmar cuál
+> es el título registrado en Pretalx.
+
+| # | Estado | Revisor | Comentario | Corrección propuesta |
+|---|---|---|---|---|
+| R1 | 🔴 | 1 | La licencia *Business Source License* 1.1 **no es software libre**: permite uso académico / no comercial y pasa a software libre después de algunos años. "Si eso está bien para SotM LatAm no hay problema" | No llamar "software libre" ni *free and open-source* a Apimetro: resumen en inglés (l. ~76: "a free and open-source infrastructure") e introducción (l. ~111: "infraestructura de software libre"). Declarar la licencia de forma explícita: BSL 1.1, uso gratuito académico, de investigación y del sector público, conversión a Apache 2.0 en abril de 2029. Ver también la nota 7 |
+| R2 | 🔴 | 2 | Sería ideal una **gráfica que sumarice la arquitectura** y los **puntos de acceso (API)** expuestos | Agregar una figura: reutilizar el diagrama ETL de la presentación (`Presentacion-Igisc/Diagramas-TiKz/apimetro-etl.tex`) o el de 3 capas (`macro-arquitectura-stack.tex`), más la tabla de rutas de la API (Anexo A5 de la tesis: `geojsonEstacion`, `geojsonLinea`, `geojsonPoligono`, `agebs`, CRUD por `:sistema`). Cuidar el límite de 2 páginas |
+| R3 | 🔴 | 2 | "Infraestructura de datos de software libre" es **confuso**. Sugiere "infraestructura de datos libres", "infraestructura de datos abiertos" o "infraestructura de datos"; como la propuesta se enfoca en un producto de software, hablar de una infraestructura de datos **soportada en / desarrollada con software libre** | Unificar la expresión en todo el texto como "infraestructura de datos abiertos". Por la licencia (R1), evitar "desarrollada con software libre" para Apimetro; se puede decir que se apoya en componentes de software libre (PostgreSQL / PostGIS, Python, Go, QGIS) |
+| R4 | 🔴 | 2 | Presentar con más detalle las **métricas de validación empírica** y, de ser posible, **visuales de las pruebas** (p. ej., isócronas) o **discrepancias en la topología** de los datos de transporte, para que audiencias no especialistas entiendan el valor del servicio | Usar las cifras de la tesis (notas 8, 9, 12 y 13) y una figura de resultados (mapa de cobertura de la presentación, `pdf_apoyo/Mapa_Cobertura_Mapa_Calor.pdf`). ⚠️ La cobertura usa ***buffers* circulares de 800 m, no isócronas** (tesis 5.3.2; observación C7 en `Apimetro/Revision-2/Nota-Cap-3-29-09-2026.md`): el artículo (l. ~189 y Anexo l. ~265) los llama "isócronas" → corregir el término o declararlo como limitación. Discrepancias topológicas posibles: 554 nodos fuera de la componente gigante, Cablebús L3 en un solo sentido, aristas *phantom* > 5 km eliminadas |
+| R5 | 🔴 | 2 | En las **tres líneas de trabajo abiertas**, reforzar las ventajas indicando **cómo los servicios de datos actuales no permiten** desarrollarlas | Reescribir la invitación a la comunidad con los frentes de la presentación (mapear lo que falta · reportar y corregir en GitHub *Discussions* · replicar en otra ciudad) y, para cada uno, qué impide hacerlo hoy con el portal de datos abiertos / GTFS: sin Mexibús ni Mexicable, L13 incompleta, sin canal de reporte, formatos no homologados entre sistemas. Quitar los mapatones en municipios concretos y la "validación bidireccional / *conflation*" (nota 11) |
+| R6 | — | 2 | Positivo: excelente descripción de la fragmentación; propuesta "robusta y consistente"; "muy buen trabajo" | Sin acción |
+| R7 | 🔴 | 3 | "Excelente propuesta…" (comentario truncado en la captura) | Transcribir el comentario completo |
