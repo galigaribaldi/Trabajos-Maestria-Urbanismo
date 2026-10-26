@@ -54,16 +54,15 @@ Diapositivas construidas:
 5. ✅ Dispersión en los datos (GTFS · polígonos · parámetros)
 6. ✅ Abrir el dato no es democratizarlo (tiempo · conocimientos · capital tecnológico)
 
-### 🔴 3. OSM como pieza clave — 6:00–8:00 (2 diapositivas, `secciones/03-osm-pieza-clave.tex` vacío)
-- 🔴 Calidad comparable a la oficial (Haklay 2010; Barrington-Leigh 2017)
-- 🔴 Nivel 1 — **Geometrías de ruta:** relaciones `route=bus`, `route=subway`, `route=light_rail`
-- 🔴 Nivel 2 — **Cobertura periférica:** Mexibús y autobuses del Edomex obtenidos íntegramente de OSM
-- 🔴 Nivel 3 — **Validación cruzada:** distancia de Hausdorff entre trazas GTFS y OSM, umbral configurable
-- 🔴 Visual antes/después: trazo GTFS roto (Trolebús L13) vs. geometría OSM
+### ✅ 3. OSM como pieza clave — 6:00–8:00 (2 diapositivas, `secciones/03-osm-pieza-clave.tex`)
+- ✅ Incluido en `main.tex` entre los bloques 2 y 4. No repite el *qué* (ya está en el ETL y en la tabla de sistemas del bloque 4): explica el *por qué* y el *cómo*
+- ✅ **¿Por qué confiar en OpenStreetMap?**: precisión \citep{haklay2010good} · completitud \citep{barrington2017world} · velocidad \citep{neis2012street} + cifra "más del 80 %" y frase a la comunidad (`% EDITAR`)
+- ✅ **Donde el dato oficial no llega, llegó la comunidad**: proceso real (vacíos del portal → otras fuentes → OSM → script de validación en Python) + "lo que aportó OSM" vs. "lo que ya tenía el portal" (`% EDITAR`)
+- ❌ Descartado: validación con distancia de Hausdorff (no existe en Apimetro), relaciones `route=` (la integración fue manual) y visual antes/después (la base debe ser íntegra)
 
-### 🟡 4. Apimetro — bloque central — 8:00–13:00 (4 diapositivas, `secciones/04-apimetro.tex`)
+### ✅ 4. Apimetro — bloque central — 8:00–13:00 (8 diapositivas, `secciones/04-apimetro.tex`)
 - ✅ Origen del proyecto: *"¿Cómo surge Apimetro?"* — La Saga de la Catacumba + flujo entrada → procesamiento → salida (borradores `% EDITAR`)
-- ✅ **Proceso 1 — ETL** (*Extraction, Treatment and Liberation*): datos abiertos + OSM (Mexibús, Mexicable, Trolebús L13) → Python/GeoPandas en 2 fases → PostgreSQL + PostGIS (`Diagramas-TiKz/apimetro-etl.tex`, borrador `% EDITAR` sobre OSM). Normalización → *snapping* ≤ 50 m **no** es de Apimetro: no va aquí
+- ✅ **Proceso 1 — ETL** (*Extraction, Treatment and Liberation*): datos abiertos + OSM (Mexibús, Mexicable, Trolebús L13) → Python/GeoPandas en 2 fases → PostgreSQL + PostGIS (`Diagramas-TiKz/apimetro-etl.tex`); OSM solo como línea de recordatorio (el detalle está en el bloque 3). Normalización → *snapping* ≤ 50 m **no** es de Apimetro: no va aquí
 - 🟡 Modelo de datos: frame *"Esquema E-R de Apimetro"* con diagrama TikZ (`Diagramas-TiKz/apimetro-er-simple.tex`) — estaciones, líneas, polígonos y relaciones
   - ✅ Etiquetas de cardinalidad (N, M, 1) ancladas con `pos=` (solo en la copia de la presentación)
   - 🔴 Mencionar jerarquía / nodos CETRAM y `MultiLineString` tramo a tramo
@@ -76,7 +75,7 @@ Diapositivas construidas:
 - ⏱️ El bloque ya suma 8 diapositivas + demo para 5 min: revisar tiempos al final
 - 🔴 Sistemas (Tabla 5.3 de la tesis): Tren Interurbano, Tren Suburbano, Metro, Tren Ligero, Trolebús (L10 y compartido), Cablebús, Mexicable, Metrobús, Mexibús, Pumabús, RTP, Corredores Conc. — ⚠️ son 12, el artículo dice 11; revisar 88 % / 12 %
 - 🔴 Cifras de escala (tesis 5.2): 11 115 nodos · 45 517 aristas (25 025 servicio + 20 492 transbordo) · 38 MB — el artículo trae 45 679 (ver notas de corrección)
-- 🔴 **Demo en video local (60–90 s, aún no existe → frame placeholder):** consulta a `apimetro.dev` → capa cargada en QGIS
+- 🔴 **Pendiente al final — Demo en video local (60–90 s, aún no existe → frame placeholder):** consulta a `apimetro.dev` → capa cargada en QGIS
 
 ### 🔴 5. Usos: qué se puede hacer — 13:00–17:00 (3 diapositivas)
 - 🔴 VFTModel como caso de uso (Python: NetworkX, GeoPandas, Momepy)
@@ -101,7 +100,6 @@ Diapositivas construidas:
 
 - 🔴 **Licencias:** BSL 1.1 → Apache 2.0 en 2029 (código) / uso libre (datos CDMX) / ODbL (datos OSM) — atribución y *share-alike*
 - 🔴 **Actualización:** frecuencia de reingesta de GTFS y OSM; ¿automática?
-- 🔴 **Umbral de Hausdorff:** valor usado y tratamiento de discrepancias marcadas
 - 🔴 **Colectivos y microbuses:** origen de los datos y confiabilidad
 - 🔴 **Cómo contribuir:** repositorio, *issues*, documentación
 - 🔴 **Sostenibilidad:** quién mantiene el proyecto y dónde está alojado
@@ -119,7 +117,7 @@ Diapositivas construidas:
 
 ### Por crear
 - 🔴 Diagrama de arquitectura de Apimetro (bloque 4)
-- 🔴 Antes/después GTFS vs. OSM — Trolebús L13 (bloque 3)
+- ❌ Antes/después GTFS vs. OSM — Trolebús L13 (descartado: la base debe ser íntegra)
 - 🔴 Video de demo local (bloque 4)
 - 🔴 Códigos QR (bloque 7)
 
@@ -128,7 +126,7 @@ Diapositivas construidas:
 ## Pendientes técnicos (plantilla)
 
 - ✅ Agregar coautor y su afiliación en el bloque `PERSONALIZACIÓN` de `main.tex` (`\Coautor`, `\AfiliacionCoautor`)
-- 🟡 Pasar referencias de `../ISPRSguidelines_authors.bib` a `referencias.bib` — copiadas las de los bloques 1–2; faltan las de los bloques 3–5 (Barrington-Leigh, Hausdorff, Neis, Fortin…)
+- 🟡 Pasar referencias de `../ISPRSguidelines_authors.bib` a `referencias.bib` — copiadas las de los bloques 1–2; copiadas Barrington-Leigh y Neis (bloque 3); faltan las del bloque 5 (Fortin…)
 - 🟡 Repartir los bloques en archivos propios (`01-apertura`, `02-problema`, `03-osm-pieza-clave`, …); `main.tex` aún incluye las plantillas `s01_intro`, `s02_desarrollo`, `s03_conclusiones` — quitarlas al final
 - ✅ Compilar: `make PresentacionSotm DIR=Extracurriculares/Igisc-2026-isprs/Presentacion-Igisc`
 - ✅ Citas autor–año: `plainnat` + `natbib[round]` + corrección de `hyperref` en `Latex/BeamerThemeSotm.tex`

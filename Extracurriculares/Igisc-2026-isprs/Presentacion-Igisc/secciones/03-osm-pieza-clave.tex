@@ -1,0 +1,84 @@
+\section{OSM como pieza clave}
+% ── Frame: Calidad de OSM ────────────────────────────────────────────────────
+\begin{frame}{¿Por qué confiar en OpenStreetMap?}
+  \begin{columns}[c]
+    \begin{column}{0.58\textwidth}
+      \begin{exampleblock}{\footnotesize Precisión}
+        \scriptsize Comparable con la cartografía oficial del Reino Unido: más del 80\,\%
+        de coincidencia en zonas urbanas densas \citep{haklay2010good}.
+      \end{exampleblock}
+      \begin{block}{\footnotesize Completitud}
+        \scriptsize La red vial del mundo está completa en más del 80\,\%; las ciudades
+        latinoamericanas de la escala de la ZMVM superan el promedio
+        \citep{barrington2017world}.
+      \end{block}
+      \begin{alertblock}{\footnotesize Velocidad}
+        \scriptsize Entre 2007 y 2011 la comunidad cartografió la red vial completa de
+        Alemania \citep{neis2012street}.
+      \end{alertblock}
+    \end{column}
+    \begin{column}{0.38\textwidth}
+      \centering
+      {\small más del\par}
+      {\fontsize{40}{44}\selectfont\bfseries\color{SotmVerde} 80\,\%\par}
+      \vspace{0.2cm}
+      {\small de la red vial del mundo ya está en OSM}\\[0.5cm]
+      % EDITAR: frase dirigida a la comunidad
+      {\footnotesize\itshape\color{SotmTerracota} Ese dato lo construyó esta comunidad.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: Cómo se integró OSM ───────────────────────────────────────────────
+% Proceso manual descrito por el autor: vacíos del portal → otras fuentes → OSM
+% → script de validación en Python. Sin antes/después: la base debe ser íntegra.
+\begin{frame}{Donde el dato oficial no llega, llegó la comunidad}
+  \centering
+  \begin{tikzpicture}[
+    paso/.style   = {rectangle, rounded corners=5pt,
+                     draw=SotmVerde, line width=0.8pt,
+                     fill=SotmCrema, minimum width=2.95cm,
+                     align=center, minimum height=1.1cm, font=\scriptsize},
+    clave/.style  = {paso, fill=SotmTerracota, draw=SotmTerracota,
+                     text=white, font=\scriptsize\bfseries},
+    flecha/.style = {-Stealth, thick, color=SotmVerde}
+  ]
+    \node[paso]  (p1) at (0,    0) {\textbf{1.} Identificar los vacíos\\ del portal de\\ datos abiertos};
+    \node[paso]  (p2) at (3.5, 0) {\textbf{2.} Buscar los sistemas\\ faltantes en\\ otras fuentes};
+    \node[clave] (p3) at (7.0,  0) {3. OpenStreetMap\\ los resuelve};
+    \node[paso]  (p4) at (10.5, 0) {\textbf{4.} Script de validación\\ en Python\\ para integrarlos};
+    \draw[flecha] (p1) -- (p2);
+    \draw[flecha] (p2) -- (p3);
+    \draw[flecha] (p3) -- (p4);
+  \end{tikzpicture}
+
+  \vspace{0.35cm}
+  \raggedright
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      % EDITAR
+      \begin{exampleblock}{\footnotesize Lo que aportó OSM}
+        \scriptsize \textbf{Mexibús · Mexicable · Trolebús L13}
+
+        \vspace{0.05cm}
+        Un estándar con lo necesario para funcionar: ubicación, nombres correctos,
+        alcaldía o municipio y actualizaciones constantes.
+      \end{exampleblock}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      % EDITAR
+      \begin{block}{\footnotesize Lo que ya tenía el portal}
+        \scriptsize \textbf{Los datos técnicos de operación}
+
+        \vspace{0.05cm}
+        Velocidad, frecuencia, capacidad y nodos CETRAM: lo que OSM no
+        registra, el dato oficial sí lo trae.
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.3cm}
+  \centering
+  % EDITAR: frase de cierre del bloque
+  {\small\bfseries\color{SotmVerde} OSM y los datos abiertos no se sustituyen: se complementan.}
+\end{frame}
