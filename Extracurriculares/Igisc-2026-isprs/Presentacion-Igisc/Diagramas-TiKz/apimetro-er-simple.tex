@@ -23,19 +23,21 @@
 \node[entidad] (lin) at (6.5,  0)    {Líneas};
 \node[entidad] (pol) at (3.25, -3.1) {Polígonos};
 
+%% — Cardinalidades ancladas a cada flecha con pos= (no coordenadas fijas):
+%%    así no se enciman con las cajas si cambia la fuente o el tamaño —
 %% — Estaciones ↔ Líneas (N:M) —
-\draw[relacion] (est) -- node[etiqrel, above] {agrupa / conecta} (lin);
-\node[card] at (1.0,  0.25) {N};
-\node[card] at (5.5,  0.25) {M};
+\draw[relacion] (est) -- node[etiqrel, above] {agrupa / conecta}
+  node[card, pos=0.08, below] {N}
+  node[card, pos=0.92, below] {M} (lin);
 
 %% — Estaciones ↔ Polígonos (N:1) —
-\draw[relacion] (est) -- node[etiqrel, left, xshift=-4pt] {ubicada en} (pol);
-\node[card] at (0.55, -0.75) {N};
-\node[card] at (2.65, -2.55) {1};
+\draw[relacion] (est) -- node[etiqrel, left, xshift=-4pt] {ubicada en}
+  node[card, pos=0.12, right, xshift=2pt] {N}
+  node[card, pos=0.88, right, xshift=2pt] {1} (pol);
 
 %% — Líneas ↔ Polígonos (M:N) —
-\draw[relacion] (lin) -- node[etiqrel, right, xshift=4pt] {atraviesa} (pol);
-\node[card] at (5.95, -0.75) {M};
-\node[card] at (3.85, -2.55) {N};
+\draw[relacion] (lin) -- node[etiqrel, right, xshift=4pt] {atraviesa}
+  node[card, pos=0.12, left, xshift=-2pt] {M}
+  node[card, pos=0.88, left, xshift=-2pt] {N} (pol);
 
 \end{tikzpicture}
