@@ -32,6 +32,21 @@
   \end{columns}
 \end{frame}
 
+% ── Frame: Proceso 1 — ETL ───────────────────────────────────────────────────
+\begin{frame}{Proceso 1 — ETL: dos fuentes, una base}
+  \centering
+  \resizebox{0.92\linewidth}{!}{\input{Diagramas-TiKz/apimetro-etl}}\par
+  \fuentefigura{Elaboración propia, 2026.}
+
+  \vspace{0.3cm}
+  % EDITAR: frase sobre el papel de OSM (el detalle va en el bloque 3)
+  \begin{exampleblock}{\footnotesize OpenStreetMap llena los vacíos del dato oficial}
+    \scriptsize A la fecha de ingesta, el portal de datos abiertos no tenía registros del
+    Mexibús ni del Mexicable y publicaba incompleta la Línea 13 del Trolebús: sus
+    geometrías y paradas provienen de OSM.
+  \end{exampleblock}
+\end{frame}
+
 % ── Frame: E-R ───────────────────────────────────────────────────
 \begin{frame}{Esquema E-R de Apimetro}
   \begin{columns}[c]
@@ -57,4 +72,220 @@
       \end{itemize}
     \end{column}
   \end{columns}
+\end{frame}
+
+% ── Frame: Proceso 2 — Salida GeoJSON ────────────────────────────────────────
+% Comillas JSON con \textquotedbl: el " está activo con babel-spanish
+\providecommand{\jq}[1]{\textquotedbl#1\textquotedbl}
+\begin{frame}[t]{Proceso 2 — Salida: API REST en GeoJSON}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \centering
+      \resizebox{\linewidth}{!}{\input{Diagramas-TiKz/apimetro-salidas-tipos}}
+      \fuentefigura{Elaboración propia, 2026.}
+
+      \raggedright\scriptsize
+      \vspace*{-0.2cm}
+      % EDITAR: porqués del GeoJSON y del modelo SaaS
+      \begin{itemize}\setlength{\itemsep}{0.05cm}
+        \item \textbf{Se procesa una vez, se consulta siempre:} cualquier cliente
+              recibe la red ya normalizada desde \texttt{apimetro.dev}.
+        \item \textbf{Texto plano:} legible, versionable y nativo en la web.
+        \item \textbf{Una línea de Python} lo convierte a GeoPackage para QGIS o cualquier otro software cartográfico.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.51\textwidth}
+      % EDITAR: fragmento reducido de una estación (Anexo A6 de la tesis)
+      \begin{block}{\footnotesize ¿Qué devuelve una consulta? Una estación}
+        \scriptsize
+        \begin{tabular}{@{}l@{\enspace}l@{}}
+          \ttfamily \{ \jq{geometry}: \{ & \\
+          \ttfamily\quad \jq{type}: \jq{Point}, &
+            {\color{SotmTerracota}← \itshape es un punto} \\
+          \ttfamily\quad \jq{coordinates}: & \\
+          \ttfamily\quad\quad [-99.134, 19.429] \}, &
+            {\color{SotmTerracota}← \itshape dónde está} \\
+          \ttfamily\ \ \jq{properties}: \{ & \\
+          \ttfamily\quad \jq{nombre}: \jq{20 de Noviembre}, &
+            {\color{SotmTerracota}← \itshape qué es} \\
+          \ttfamily\quad \jq{sistema}: \jq{MB}, &
+            {\color{SotmTerracota}← \itshape a qué red} \\
+          \ttfamily\quad \jq{alcaldia}: \jq{Cuauhtémoc}, &
+            {\color{SotmTerracota}← \itshape para filtrar} \\
+          \ttfamily\quad \jq{es\_cetram}: false \} \} &
+            {\color{SotmTerracota}← \itshape ¿es CETRAM?} \\
+        \end{tabular}
+      \end{block}
+      \vspace{0.1cm}
+      \footnotesize Las líneas viajan igual, como \texttt{MultiLineString}, con
+      velocidad, frecuencia y capacidad en sus \texttt{properties}: listas para
+      calcular sin cruzar archivos.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: Sistemas integrados ───────────────────────────────────────────────
+% Cifras de Apimetro/db/init/04_seed.sql (26 oct 2026): ubicaciones únicas por sistema
+%   (22 878 registros → 11 115 ubicaciones; la suma por sistema da 11 154 porque
+%   39 paradas son compartidas entre sistemas). Coincide con los nodos del grafo (tesis 5.2)
+\begin{frame}{¿Qué transportes integra Apimetro?}
+  \begin{columns}[c]
+    \begin{column}{0.58\textwidth}
+      \centering\scriptsize
+      \begin{tabular}{@{}lrr@{}}
+        \toprule
+        \textbf{Sistema} & \textbf{Líneas o rutas} & \textbf{Estaciones y paradas} \\
+        \midrule
+        Metro                    &   12 &     195 \\
+        Metrobús                 &    8 &     373 \\
+        Tren Ligero              &    1 &      18 \\
+        Tren Suburbano           &    1 &       7 \\
+        Tren Interurbano         &    1 &       5 \\
+        Cablebús                 &    3 &      19 \\
+        Mexicable                &    2 &      14 \\
+        Mexibús                  &    6 &     157 \\
+        Trolebús                 &   12 &     740 \\
+        RTP                      &  114 & 4\,907 \\
+        Corredores Concesionados &  137 & 4\,629 \\
+        Pumabús                  &   12 &      90 \\
+        \midrule
+        \textbf{Total}           & \textbf{309} & \textbf{11\,115}\textsuperscript{*} \\
+        \bottomrule
+      \end{tabular}
+
+      {\tiny\textsuperscript{*}\,Cada parada se cuenta una sola vez, aunque la usen varias rutas.}
+
+      \fuentefigura{Elaboración propia con datos de Apimetro, 2026.}
+    \end{column}
+    \begin{column}{0.38\textwidth}
+      \centering
+      {\Huge\bfseries\color{SotmVerde} 12}\\[-0.05cm]
+      {\small sistemas de transporte}\\[0.25cm]
+      {\Huge\bfseries\color{SotmVerde} 309}\\[-0.05cm]
+      {\small líneas y rutas}\\[0.25cm]
+      {\Huge\bfseries\color{SotmTerracota} 11\,115}\\[-0.05cm]
+      {\small estaciones y paradas}\\[0.3cm]
+      % EDITAR: frase de cierre
+      {\footnotesize\itshape De la CDMX y del Estado de México, en una sola base.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: Líneas por sistema ────────────────────────────────────────────────
+\begin{frame}{Las líneas, una por una}
+  \centering\scriptsize
+  \begin{tabular}{@{}lp{0.68\textwidth}@{}}
+    \toprule
+    \textbf{Sistema} & \textbf{Líneas} \\
+    \midrule
+    Metro            & 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B y 12 \\
+    Metrobús         & 1, 2, 3, 4, 5, 6, 7 y SL01 \\
+    Tren Ligero      & 1 línea \\
+    Tren Suburbano   & 1 línea \\
+    Tren Interurbano & El Insurgente \\
+    Cablebús         & 1, 2 y 3 \\
+    Mexicable        & 1 y 2 \\
+    Mexibús          & 01, 1, 2, 2A, 3 y 4 \\
+    Trolebús         & 1 a 10, 12 y 13 \\
+    \midrule
+    RTP              & 114 rutas \enspace{\itshape(p.\,ej. Ruta 1-D: Metro Santa Martha – Metro Mixcoac)} \\
+    Corredores Conc. & 137 rutas \enspace{\itshape(p.\,ej. Ruta 10C: RCA Víctor – Peñón)} \\
+    Pumabús          & 12 rutas \enspace{\itshape(p.\,ej. PUMA1: Metro Universidad – Islas)} \\
+    \bottomrule
+  \end{tabular}
+
+  \fuentefigura{Elaboración propia con datos de Apimetro, 2026.}
+\end{frame}
+
+% ── Frame: Homologación ──────────────────────────────────────────────────────
+\begin{frame}{Un solo estándar, sin perder detalles}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      % EDITAR: el problema de la homologación
+      \begin{alertblock}{\footnotesize El problema: cada sistema, su propio formato}
+        \scriptsize
+        \begin{itemize}\setlength{\itemsep}{0.05cm}
+          \item Cada transporte tiene su organismo, su sindicato o concesionario
+                y sus particularidades.
+          \item Cada uno registra sus datos a su manera: nombres, claves,
+                sentidos de ida y regreso, formatos distintos.
+          \item El dato existe, pero no se puede cruzar: falta
+                \textbf{homologación}.
+        \end{itemize}
+      \end{alertblock}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      % EDITAR: lo que resuelve la normalización
+      \begin{block}{\footnotesize La solución: un mismo formato para todos}
+        \scriptsize
+        \begin{itemize}\setlength{\itemsep}{0.05cm}
+          \item Toda línea y estación se describe con los mismos campos:
+                nombre, sistema, color oficial, año, alcaldía o municipio.
+          \item Sin omitir lo particular: velocidad, frecuencia, capacidad,
+                tipo de vía y si la estación es CETRAM.
+          \item Resultado: una base estándar que se puede usar de forma
+                \textbf{independiente}, sin depender de cada operador.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.4cm}
+  \centering
+  {\bfseries\color{SotmVerde} 12 sistemas · 12 formatos} \enspace
+  {\color{SotmTerracota}\Large$\rightarrow$} \enspace
+  {\bfseries\color{SotmTerracota} 1 estándar}
+\end{frame}
+
+% ── Frame: Acceso a los datos ────────────────────────────────────────────────
+\begin{frame}{Tres formas de usar los datos}
+  \begin{columns}[T]
+    \begin{column}{0.31\textwidth}
+      % EDITAR
+      \begin{exampleblock}{\footnotesize 1.\enspace En la web}
+        \scriptsize
+        \texttt{apimetro.dev}
+
+        \vspace{0.1cm}
+        Consulta desde el navegador con la documentación interactiva
+        (Swagger), sin instalar nada.
+
+        \vspace{0.1cm}
+        {\itshape Para cualquier persona.}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      % EDITAR
+      \begin{block}{\footnotesize 2.\enspace La base de datos}
+        \scriptsize
+        \texttt{seed.sql} ($\approx$\,38 MB)
+
+        \vspace{0.1cm}
+        Se genera con el ETL y carga la red completa en PostgreSQL + PostGIS,
+        lista para QGIS. \textbf{Próximamente en GitHub.}
+
+        \vspace{0.1cm}
+        {\itshape Para analistas SIG.}
+      \end{block}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      % EDITAR
+      \begin{alertblock}{\footnotesize 3.\enspace El código completo}
+        \scriptsize
+        \texttt{github.com/}\\
+        \texttt{galigaribaldi/Apimetro}
+
+        \vspace{0.1cm}
+        Se descarga y se levanta en cualquier equipo con Docker Compose.
+
+        \vspace{0.1cm}
+        {\itshape Para desarrolladores.}
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.4cm}
+  \centering\scriptsize
+  Licencia \textit{Business Source License} 1.1: uso gratuito académico,\\
+  de investigación y del sector público · Apache 2.0 a partir de 2029
 \end{frame}

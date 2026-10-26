@@ -5,7 +5,7 @@
 **Duración:** 20 min exposición + 5–10 min preguntas (total ≈ 30 min)
 **Fuente:** `../main.tex` (artículo iGISc / ISPRS)
 
-**Estado:** ✅ construido · 🟡 en revisión · 🔴 no implementado — *actualizado 15 oct 2026*
+**Estado:** ✅ construido · 🟡 en revisión · 🔴 no implementado — *actualizado 26 oct 2026*
 
 ---
 
@@ -26,7 +26,7 @@
 - ✅ **Tiempos:** se mantienen las 6 diapositivas del bloque 2 (son problemas de la investigación); el bloque 3 cede 1–2 min
 - ✅ **Idioma:** español; anglicismos en *cursiva* (p. ej. *snapping*, *pipeline*, *conflation*, *dashboard*), igual que las citas
 - 🟡 **Licencias:**
-  - 🟡 Código de Apimetro: BSD (confirmar variante: BSD-2 / BSD-3)
+  - ✅ Código de Apimetro: *Business Source License* 1.1 (BSL) — uso gratuito académico / investigación / sector público; pasa a Apache 2.0 en abril de 2029
   - 🟡 Datos abiertos CDMX: uso libre (confirmar nombre exacto de la licencia del portal)
   - 🟡 Datos OSM: abiertos bajo ODbL — requiere atribución "© colaboradores de OpenStreetMap" y aplica *share-alike* a bases de datos derivadas (preparar respuesta)
 
@@ -63,13 +63,20 @@ Diapositivas construidas:
 
 ### 🟡 4. Apimetro — bloque central — 8:00–13:00 (4 diapositivas, `secciones/04-apimetro.tex`)
 - ✅ Origen del proyecto: *"¿Cómo surge Apimetro?"* — La Saga de la Catacumba + flujo entrada → procesamiento → salida (borradores `% EDITAR`)
-- 🔴 Diagrama de arquitectura: GTFS + OSM → Go / PostgreSQL + PostGIS → normalización → *snapping* ≤ 50 m → API REST / GeoJSON (el flujo de "¿Cómo surge?" es solo una versión simplificada)
+- ✅ **Proceso 1 — ETL** (*Extraction, Treatment and Liberation*): datos abiertos + OSM (Mexibús, Mexicable, Trolebús L13) → Python/GeoPandas en 2 fases → PostgreSQL + PostGIS (`Diagramas-TiKz/apimetro-etl.tex`, borrador `% EDITAR` sobre OSM). Normalización → *snapping* ≤ 50 m **no** es de Apimetro: no va aquí
 - 🟡 Modelo de datos: frame *"Esquema E-R de Apimetro"* con diagrama TikZ (`Diagramas-TiKz/apimetro-er-simple.tex`) — estaciones, líneas, polígonos y relaciones
-  - 🟡 Etiquetas de cardinalidad (N, M, 1) encimadas sobre las cajas: corregir en el diagrama (aquí o en la tesis)
+  - ✅ Etiquetas de cardinalidad (N, M, 1) ancladas con `pos=` (solo en la copia de la presentación)
   - 🔴 Mencionar jerarquía / nodos CETRAM y `MultiLineString` tramo a tramo
-- 🔴 11 sistemas: Metro, Metrobús, Cablebús, RTP, Trolebús, Tren Ligero, Tren Suburbano, Mexibús, Colectivo, Microbús, Autobús (88 % superficie / 12 % vía exclusiva)
-- 🔴 Cifras de escala: 22 766 entidades · 11 115 nodos · 45 679 aristas (25 197 servicio + 20 482 transbordo) · 38 MB
-- 🔴 **Demo en video local (60–90 s):** consulta a `apimetro.dev` → capa cargada en QGIS
+- ✅ **Proceso 2 — Salida: API REST en GeoJSON**: diagrama `apimetro-salidas-tipos` (copia de la tesis) + porqués (*SaaS*, texto plano, GeoPackage) + fragmento explicado de la estación 20 de Noviembre (borradores `% EDITAR`)
+- ✅ **¿Qué transportes integra Apimetro?**: tabla sencilla sistema → líneas → estaciones (12 · 309 · **11 115** estaciones y paradas = ubicaciones únicas, igual que los nodos del grafo de la tesis; los 22 878 son registros con paradas repetidas por ruta); sin jerarquía ni derecho de vía (decisión del usuario)
+- ✅ **Las líneas, una por una**: tabla sencilla con los nombres de las líneas; RTP, Corredores Conc. y Pumabús solo con conteo + ejemplo. Mexibús "01" se cuenta como línea distinta
+- ✅ **Un solo estándar, sin perder detalles**: homologación (cada sistema con su organismo / sindicato) → mismo formato e independencia de datos (borradores `% EDITAR`)
+- ✅ **Tres formas de usar los datos**: web (`apimetro.dev`) · base de datos (`seed.sql` generado con el ETL, *próximamente en GitHub*) · código (Docker Compose) + licencia BSL 1.1
+  - 🔴 Pendiente posterior: subir el `seed.sql` actual a GitHub (hoy `04_seed.sql` está en `.gitignore`; en el repo solo existe `seed.sql.disabled` del 28 ago)
+- ⏱️ El bloque ya suma 8 diapositivas + demo para 5 min: revisar tiempos al final
+- 🔴 Sistemas (Tabla 5.3 de la tesis): Tren Interurbano, Tren Suburbano, Metro, Tren Ligero, Trolebús (L10 y compartido), Cablebús, Mexicable, Metrobús, Mexibús, Pumabús, RTP, Corredores Conc. — ⚠️ son 12, el artículo dice 11; revisar 88 % / 12 %
+- 🔴 Cifras de escala (tesis 5.2): 11 115 nodos · 45 517 aristas (25 025 servicio + 20 492 transbordo) · 38 MB — el artículo trae 45 679 (ver notas de corrección)
+- 🔴 **Demo en video local (60–90 s, aún no existe → frame placeholder):** consulta a `apimetro.dev` → capa cargada en QGIS
 
 ### 🔴 5. Usos: qué se puede hacer — 13:00–17:00 (3 diapositivas)
 - 🔴 VFTModel como caso de uso (Python: NetworkX, GeoPandas, Momepy)
@@ -92,7 +99,7 @@ Diapositivas construidas:
 
 ## Diapositivas de respaldo para preguntas (fuera del conteo)
 
-- 🔴 **Licencias:** BSD (código) / uso libre (datos CDMX) / ODbL (datos OSM) — atribución y *share-alike*
+- 🔴 **Licencias:** BSL 1.1 → Apache 2.0 en 2029 (código) / uso libre (datos CDMX) / ODbL (datos OSM) — atribución y *share-alike*
 - 🔴 **Actualización:** frecuencia de reingesta de GTFS y OSM; ¿automática?
 - 🔴 **Umbral de Hausdorff:** valor usado y tratamiento de discrepancias marcadas
 - 🔴 **Colectivos y microbuses:** origen de los datos y confiabilidad
