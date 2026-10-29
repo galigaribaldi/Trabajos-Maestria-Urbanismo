@@ -1,0 +1,59 @@
+% Diagrama: arquitectura de Apimetro — ETL (Extraction, Treatment and Liberation) → API REST
+% Dos fuentes (datos abiertos + OSM) → ETL en Python (dos fases) → PostgreSQL/PostGIS
+% → API REST en Go (apimetro.dev) → consumidores vía GeoJSON. Una sola fila (límite de 2 págs.)
+% Adaptado de: Presentacion-Igisc/Diagramas-TiKz/apimetro-etl.tex
+% Basado en: TesisUrbanismo 4-1-1-Intro.tex (flujo), Anexos A2-ETL.tex y A5-Replicabilidad.tex
+\begin{tikzpicture}[
+  fuente/.style = {rectangle, rounded corners=5pt,
+                   draw=SotmVerde, line width=0.8pt,
+                   fill=SotmCrema, text width=3.3cm,
+                   align=flush left, minimum height=0.9cm, font=\scriptsize},
+  fase/.style   = {rectangle, rounded corners=4pt,
+                   draw=SotmVerde!70, fill=white, text width=3.3cm,
+                   align=flush left, minimum height=0.6cm, font=\scriptsize},
+  marco/.style  = {rectangle, rounded corners=6pt,
+                   draw=SotmVerde, line width=0.8pt, dashed,
+                   fill=SotmOlivo!12, inner sep=0.15cm},
+  result/.style = {rectangle, rounded corners=5pt,
+                   fill=SotmTerracota, draw=SotmTerracota, text=white,
+                   text width=2.3cm, align=center, minimum height=1.4cm,
+                   font=\scriptsize},
+  api/.style    = {result, fill=SotmVerde, draw=SotmVerde},
+  flecha/.style = {-Stealth, thick, color=SotmVerde}
+]
+  % ── Fuentes ──
+  \node[fuente] (f1) at (0,  0.6) {{\small\bfseries Datos abiertos}\\
+    GTFS (ADIP) · SHP (INEGI) · SEMOVI};
+  \node[fuente] (f2) at (0, -0.6) {{\small\bfseries OpenStreetMap}\\
+    Mexibús · Mexicable · Trolebús L13};
+
+  % ── ETL: dos fases ──
+  \node[fase] (p1) at (4.6,  0.35) {\textbf{1.} GTFS → plantilla con campos
+    normalizados};
+  \node[fase] (p2) at (4.6, -0.55) {\textbf{2.} Cruce de geometrías y carga};
+  \draw[-Stealth, color=SotmVerde!70] (p1) -- (p2);
+  \begin{scope}[on background layer]
+    \node[marco, fit=(p1)(p2), inner ysep=0.3cm,
+          label={[font=\scriptsize\bfseries, text=SotmVerde, yshift=-0.1cm]above:%
+          ETL · \textit{Extraction, Treatment and Liberation}}] (etl) {};
+  \end{scope}
+  \node[font=\tiny\itshape, text=SotmVerde, anchor=north] at (etl.south)
+    {Python · GeoPandas};
+
+  % ── Base de datos, API y consumidores ──
+  \node[result] (db) at (8.4, 0) {{\small\bfseries PostgreSQL\\ + PostGIS}\\[2pt]
+    estaciones · líneas · polígonos};
+  \node[api] (api) at (11.6, 0) {{\small\bfseries API REST (Go)}\\[2pt]
+    \texttt{apimetro.dev}\\ Swagger};
+  \node[fuente, text width=2.3cm, minimum height=1.4cm] (cons) at (15.0, 0)
+    {{\small\bfseries Consumidores}\\
+    VFTModel · QGIS · Tableau · Leaflet};
+
+  % ── Flujo ──
+  \draw[flecha] (f1.east) -- (etl.west |- f1.east);
+  \draw[flecha] (f2.east) -- (etl.west |- f2.east);
+  \draw[flecha] (etl.east |- db.west) -- (db.west);
+  \draw[flecha] (db.east) -- (api.west);
+  \draw[flecha] (api.east) -- node[above, font=\tiny\bfseries,
+    text=SotmVerde] {GeoJSON} (cons.west);
+\end{tikzpicture}
