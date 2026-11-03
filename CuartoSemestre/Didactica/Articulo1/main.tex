@@ -18,17 +18,19 @@
 % ═════════════════════════════════════════════════════════════════════════════
 %  PERSONALIZACIÓN — Edita solo esta sección para cada nuevo entregable
 % ═════════════════════════════════════════════════════════════════════════════
-\newcommand{\TituloArticulo}{Título del Artículo Académico}
+\newcommand{\TituloArticulo}{El aula como entorno inmersivo: experiencia sensorial y cognitiva del autismo}
 \newcommand{\Autor}{Hernán Galileo Cabrera Garibaldi}
-\newcommand{\Materia}{Nombre de la Materia}
-\newcommand{\MateriaCorta}{Materia — Semestre 2026-2}   % Aparece en el pie
-\newcommand{\FechaEntrega}{Abril 2026}
+\newcommand{\Materia}{Didáctica}
+\newcommand{\MateriaCorta}{Didáctica — Semestre 2027-1}   % Aparece en el pie
+\newcommand{\FechaEntrega}{Noviembre 2026}
 
 % Palabras clave: encierra cada término en \uline{} separado por comas
 \newcommand{\PalabrasClave}{%
-  \uline{palabra clave 1},\ %
-  \uline{palabra clave 2},\ %
-  \uline{palabra clave 3}%
+  \uline{neurodiversidad},\ %
+  \uline{autismo},\ %
+  \uline{sobrecarga sensorial},\ %
+  \uline{enmascaramiento},\ %
+  \uline{diseño inclusivo}%
 }
 % ═════════════════════════════════════════════════════════════════════════════
 
@@ -52,7 +54,6 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{natbib}
-\usepackage{lipsum}   % Texto de relleno — eliminar en el documento final
 
 % =============================================================================
 %  4. PAQUETES ADICIONALES, COLORES Y COMANDOS PERSONALIZADOS
@@ -88,14 +89,15 @@
 \cabeceroarticulo
 
 % ── Secciones ─────────────────────────────────────────────────────────────────
-\input{secciones/1-Introduccion}
-\clearpage
-\input{secciones/2-Desarrollo}
-\clearpage
-\input{secciones/3-Conclusiones}
+\input{secciones/1-Objetivos}
+\input{secciones/2-Introduccion}
+\input{secciones/3-Conceptos}
+\input{secciones/4-Actividades}
+\input{secciones/5-Conclusiones}
+\input{secciones/6-Preguntas}
 
 % ── Bibliografía ──────────────────────────────────────────────────────────────
-\newpage
+\clearpage
 \bibliographystyle{apalike}
 \bibliography{referencias}
 

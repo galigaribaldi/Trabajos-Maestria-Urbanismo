@@ -358,3 +358,9 @@ out/
 ## Ignorar Archivos MAC
 .DS_Store
 .DS_*
+
+### Didáctica — Articulo1: recursos pesados o con derechos de terceros
+CuartoSemestre/Didactica/Articulo1/Resources/Final/*
+!CuartoSemestre/Didactica/Articulo1/Resources/Final/Audio_Base_Ambiental.wav
+CuartoSemestre/Didactica/Articulo1/Resources/Audio_Experimental.aup4*
+CuartoSemestre/Didactica/Articulo1/Resources/img/Original_img/
