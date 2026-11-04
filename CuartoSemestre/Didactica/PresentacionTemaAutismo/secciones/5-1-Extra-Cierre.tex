@@ -1,0 +1,296 @@
+% =============================================================================
+%  5-1-Extra-Cierre.tex — ANEXO: suicidio y neurodivergencia (material extra)
+% =============================================================================
+%  Se trata como POSIBLE CONSECUENCIA ASOCIADA a la sobrecarga (masking,
+%  burnout, sobrecarga sensorial), no como causa ni como destino.
+%  Citas: traducción propia; original en % ORIG:. Fuentes verificadas en
+%  texto completo o resumen (PMC / Europe PMC / Crossref / editorial):
+%    conner2023   PMC11042491 (manuscrito NIH)
+%    septier2019  doi:10.1016/j.neubiorev.2019.05.022 (resumen)
+%    sun2024      doi:10.1057/s41599-024-03578-1 (texto completo, acceso abierto)
+%    moseley2024  doi:10.1089/aut.2022.0042 (resumen)
+%    cassidy2018  doi:10.1186/s13229-018-0226-4 (resumen)
+%  DESCARTADO del prompt por no poder verificarse textualmente:
+%    «hasta 10 veces más en mujeres», «20.39 %», «3 a 5 veces» (Psychology
+%    Today), «indefensión aprendida frente a reactividad», «exponencialmente».
+%  Pautas: sin métodos, sin sensacionalismo; Línea de la Vida al inicio y al final.
+% =============================================================================
+
+\section{Anexo: suicidio y neurodivergencia}
+
+% ── Frame: Aviso de contenido ────────────────────────────────────────────────
+\begin{frame}{Antes de continuar: aviso de contenido}
+  \begin{alertblock}{Este anexo habla de suicidio}
+    \small
+    Se presenta como material extra y con datos de investigación. El suicidio
+    se aborda como una \textbf{posible consecuencia asociada} a la sobrecarga
+    que vivimos en las dinámicas, no como un destino de las personas autistas
+    o con TDAH.
+  \end{alertblock}
+
+  \vspace{0.4cm}
+  \begin{block}{Si tú o alguien cercano lo necesita}
+    \centering
+    {\Large\bfseries\color{ColorPrincipal} Línea de la Vida: 800 911 2000}\par
+    \vspace{0.1cm}
+    {\small Gratuita, confidencial, las 24 horas, todos los días.}\par
+  \end{block}
+\end{frame}
+
+% ── Frame: ¿Por qué hablar de esto? ──────────────────────────────────────────
+\begin{frame}{¿Por qué hablar de esto?}
+  \begin{block}{Un riesgo que pasa desapercibido}
+    \small
+    \enquote{Los últimos años de investigación nos han enseñado que las personas
+    autistas tienen más probabilidad de morir por suicidio que las personas no
+    autistas} \citep{conner2023}.
+    % ORIG: The past several years of research have taught us that autistic
+    %       people are more likely to die from suicide than non-autistic people.
+  \end{block}
+
+  \begin{block}{Lo que ya vivimos hoy}
+    \small
+    \enquote{La investigación ha mostrado que existen factores de riesgo y de
+    protección potencialmente propios de las conductas y pensamientos suicidas
+    en personas autistas, como \textbf{enmascarar sus características autistas},
+    el \textbf{burnout autista} y la \textbf{sobrecarga sensorial}}
+    \citep{conner2023}.
+    % ORIG: research has shown that there are potentially unique risk and
+    %       protective factors for suicidal thoughts and behaviors in autistic
+    %       people, like masking their autism characteristics, autistic
+    %       burnout, and sensory overload.
+  \end{block}
+
+  % EDITAR: frase puente (redacción propia).
+  {\footnotesize\color{gray!80}
+  Masking (Dinámica 1) y sobrecarga sensorial (Dinámica 3) aparecen aquí como
+  factores de riesgo, no solo como experiencias incómodas.\par}
+\end{frame}
+
+% ── Frame: Autismo (gráfica) ─────────────────────────────────────────────────
+\begin{frame}{Autismo: ideación e intentos en el último año}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.56\textwidth}
+      \centering
+      % Escala: 1 % = 0.078 cm. Datos: Conner et al. (2023).
+      \begin{tikzpicture}[x=1cm,y=0.078cm,font=\scriptsize]
+        \draw[gray!60] (0,0) -- (6.4,0);
+        % Jóvenes — ideación
+        \fill[ColorPrincipal] (0.3,0) rectangle (0.8,20);
+        \fill[gray!50]        (0.8,0) rectangle (1.3,14.2);
+        \node[above] at (0.55,20)   {20};
+        \node[above] at (1.05,14.2) {14.2};
+        % Jóvenes — intentos
+        \fill[ColorPrincipal] (1.7,0) rectangle (2.2,10);
+        \fill[gray!50]        (2.2,0) rectangle (2.7,4.5);
+        \node[above] at (1.95,10)  {10};
+        \node[above] at (2.45,4.5) {4.5};
+        % Adultos — ideación
+        \fill[ColorPrincipal] (3.7,0) rectangle (4.2,42);
+        \fill[gray!50]        (4.2,0) rectangle (4.7,4.8);
+        \node[above] at (3.95,42)  {42};
+        \node[above] at (4.45,4.8) {4.8};
+        % Adultos — intentos
+        \fill[ColorPrincipal] (5.1,0) rectangle (5.6,18);
+        \fill[gray!50]        (5.6,0) rectangle (6.1,0.7);
+        \node[above] at (5.35,18)  {18};
+        \node[above] at (5.85,0.7) {0.7};
+        % Etiquetas
+        \node[below,align=center] at (0.8,0) {Ideación};
+        \node[below,align=center] at (2.2,0) {Intentos};
+        \node[below,align=center] at (4.2,0) {Ideación};
+        \node[below,align=center] at (5.6,0) {Intentos};
+        \node[font=\footnotesize\bfseries] at (1.5,-9) {Niñez y adolescencia};
+        \node[font=\footnotesize\bfseries] at (4.9,-9) {Adultez};
+        % Leyenda
+        \fill[ColorPrincipal] (0.3,52) rectangle (0.55,55);
+        \node[right] at (0.55,53.5) {Personas autistas};
+        \fill[gray!50] (2.9,52) rectangle (3.15,55);
+        \node[right] at (3.15,53.5) {Personas no autistas};
+        \node[font=\tiny,gray] at (3.2,-14) {Porcentaje de personas en cada grupo};
+      \end{tikzpicture}\par
+      \vspace{0.1cm}
+      {\tiny\itshape Fuente: elaboración propia con datos de \citet{conner2023}.\par}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{block}{Diagnóstico en la adultez}
+        \scriptsize
+        \enquote{En estudios con personas que fueron diagnosticadas como autistas
+        por primera vez en la adultez, más del 60\,\% reportó haber tenido
+        ideación suicida} \citep{conner2023}.
+        % ORIG: In studies of people who were first diagnosed as autistic in
+        %       adulthood, over 60% reported having suicidal ideation.
+      \end{block}
+      \begin{alertblock}{Cómo leer la gráfica}
+        \scriptsize
+        Las cifras provienen de estudios distintos. Además, \enquote{muchos
+        estudios han usado muestras en línea}, lo que podría elevar las tasas
+        \citep{conner2023}.
+        % ORIG: Many studies have used online samples, and it may be possible
+        %       that relying on online studies may result in higher rates.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: TDAH y comorbilidad ───────────────────────────────────────────────
+\begin{frame}{TDAH y la co-ocurrencia TEA + TDAH}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{TDAH}
+        \scriptsize
+        Metaanálisis de 57 estudios: asociación significativa entre TDAH e
+        \enquote{intentos de suicidio (2.37 \ldots), ideaciones suicidas
+        (3.53 \ldots), planes suicidas (4.54 \ldots) y suicidio consumado
+        (6.69 \ldots)}, en razón de momios \citep{septier2019}.
+        % ORIG: we found a significant association between ADHD and suicidal
+        %       attempts (2.37, 95% CI = 1.64-3.43; ...), suicidal ideations
+        %       (3.53, 2.94-4.25; ...), suicidal plans (4.54, 2.46-8.37; ...),
+        %       and completed suicide (6.69, 3.24-17.39; ...).
+
+        \vspace{0.15cm}
+        Un mecanismo posible es \enquote{la impulsividad, síntoma central bien
+        establecido del TDAH}, junto con \enquote{déficits en las funciones
+        ejecutivas implicadas en la regulación del control de impulsos y de las
+        emociones} \citep{sun2024}.
+        % ORIG: One of the possible underlying mechanisms might be, impulsivity,
+        %       a well-established core symptom of ADHD [...]; and deficits in
+        %       executive functions, that implicated in the regulation of
+        %       impulse control and emotions, may further contribute to the
+        %       suicidal behaviors
+      \end{block}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Rasgos TEA + TDAH}
+        \scriptsize
+        En 90\,882 universitarios (rasgos autorreportados, no diagnósticos), el
+        riesgo fue \enquote{significativamente mayor en el grupo con rasgos de
+        TDAH (OR = 1.24) y de TEA + TDAH (OR = 1.49)}; con rasgos de TEA solos
+        no hubo diferencia frente al grupo control. El riesgo fue mayor en
+        mujeres en los cuatro grupos \citep{sun2024}.
+        % ORIG: Suicide risks were significantly higher in the ADHD (OR = 1.24,
+        %       p < 0.001) and ASD + ADHD (OR = 1.49, p < 0.001) traits group.
+        %       However, there was no significant difference in suicide risk
+        %       between the ASD traits group (OR = 1.00, p = 1.00) and the
+        %       control group. The risk of suicide was significantly higher for
+        %       females than for males across all four groups (p < 0.001).
+      \end{block}
+      \begin{block}{¿Por qué?}
+        \scriptsize
+        En adultos autistas con probable TDAH, la suicidalidad podría
+        relacionarse \enquote{con la percepción de ser una carga y con la
+        capacidad suicida adquirida tras la exposición a eventos dolorosos y
+        provocadores} \citep{moseley2024}.
+        % ORIG: suicidality in autistic people with ADHD may be partially
+        %       related to perceived burdensomeness and to acquired suicide
+        %       capability after exposure to painful and provocative events.
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: Tabla comparativa ─────────────────────────────────────────────────
+\begin{frame}{Resumen comparativo}
+  % Sin >{...} en la especificación de columnas: babel-spanish activa < y >.
+  \begingroup\scriptsize
+  \renewcommand{\arraystretch}{1.05}
+  \begin{tabularx}{\textwidth}{@{}p{0.17\textwidth}p{0.11\textwidth}p{0.11\textwidth}Xp{0.20\textwidth}@{}}
+    \toprule
+    \textbf{Población} & \textbf{Ideación} & \textbf{Intentos} & \textbf{Factores que señalan los autores} & \textbf{Medida y fuente} \tabularnewline
+    \midrule
+    \raggedright No autista, jóvenes & 14.2\,\% & 4.5\,\% & \raggedright ---
+      & \raggedright Último año \citep{conner2023} \tabularnewline
+    \raggedright No autista, adultos & 4.8\,\% & 0.7\,\% & \raggedright ---
+      & \raggedright Último año \citep{conner2023} \tabularnewline
+    \raggedright TEA, jóvenes & 20\,\% & 10\,\%
+      & \raggedright Masking, burnout autista, sobrecarga sensorial
+      & \raggedright Último año, metaanálisis \citep{conner2023} \tabularnewline
+    \raggedright TEA, adultos & 42\,\% & 18\,\%
+      & \raggedright Igual; con diagnóstico en la adultez, más del 60\,\% con ideación
+      & \raggedright Último año \citep{conner2023} \tabularnewline
+    \raggedright TDAH
+      & OR 3.53
+      & OR 2.37
+      & \raggedright Impulsividad; funciones ejecutivas (control de impulsos y emociones)
+      & \raggedright Metaanálisis, 57 estudios \citep{septier2019,sun2024} \tabularnewline
+    \raggedright Rasgos TEA + TDAH
+      & \multicolumn{2}{l}{Riesgo global: OR 1.49}
+      & \raggedright Mayor riesgo en mujeres; percepción de ser una carga; eventos dolorosos
+      & \raggedright Autorreporte, 90\,882 universitarios \citep{sun2024,moseley2024} \tabularnewline
+    \bottomrule
+  \end{tabularx}
+  \par\endgroup
+
+  \vspace{0.2cm}
+  {\scriptsize\color{gray!80}
+  OR (razón de momios): cuántas veces mayores son las probabilidades frente al
+  grupo de comparación. Porcentajes y OR provienen de estudios y medidas
+  distintas: no se suman ni se comparan directamente.\par}
+\end{frame}
+
+% ── Frame: El entorno como catalizador ───────────────────────────────────────
+\begin{frame}{El entorno como catalizador}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Propios del autismo}
+        \footnotesize
+        \enquote{El camuflaje y las necesidades de apoyo no atendidas parecen
+        ser marcadores de riesgo de suicidalidad propios de las condiciones del
+        espectro autista} \citep{cassidy2018}.
+        % ORIG: Camouflaging and unmet support needs appear to be risk markers
+        %       for suicidality unique to ASC.
+      \end{block}
+      \begin{block}{Compartidos, pero más frecuentes}
+        \footnotesize
+        \enquote{La autolesión no suicida, el empleo y los problemas de salud
+        mental parecen ser marcadores de riesgo compartidos con la población
+        general, que son significativamente más prevalentes en la comunidad
+        autista} \citep{cassidy2018}.
+        % ORIG: Non-suicidal self-injury, employment, and mental health problems
+        %       appear to be risk markers shared with the general population
+        %       that are significantly more prevalent in the autistic community.
+      \end{block}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{La respuesta de los demás}
+        \footnotesize
+        \enquote{A menudo las personas autistas viven la suicidalidad como una
+        reacción a experiencias sociales negativas repetidas}
+        \citep{conner2023}.
+        % ORIG: often autistic people experience suicidality as a reaction to
+        %       repeated negative social experiences.
+      \end{block}
+      \begin{alertblock}{Desde la experiencia personal}
+        \footnotesize
+        % EDITAR: el usuario redacta este bloque (sin cifras ni citas).
+        El acoso escolar y la falta de diagnóstico se presentan aquí como una
+        aproximación desde la experiencia personal, no como un dato
+        estadístico.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: ¿Qué podemos hacer? ───────────────────────────────────────────────
+\begin{frame}{¿Qué podemos hacer?}
+  \begin{block}{Preguntar no hace daño}
+    \small
+    \enquote{Es importante preguntarle a la persona de forma clara y directa,
+    con apoyo y sin castigo. Muchos años de investigación han mostrado que
+    preguntar a las personas si han considerado el suicidio no las hace más
+    propensas a tener pensamientos o conductas suicidas} \citep{conner2023}.
+    % ORIG: it is important to ask the person clearly and directly, in a
+    %       supportive and non-punitive manner. Many years of research has
+    %       shown that asking people if they have considered suicide does not
+    %       make them more likely to have suicidal thoughts or behaviors.
+  \end{block}
+  \begin{block}{Escuchar}
+    \small
+    \enquote{Escuchar y brindar apoyo y validación puede ser el primer y más
+    importante paso} \citep{conner2023}.
+    % ORIG: Listening and providing support and validation can be the first
+    %       and most important step.
+  \end{block}
+  \vspace{0.1cm}
+  {\centering\bfseries\color{ColorPrincipal} Línea de la Vida: 800 911 2000\par}
+\end{frame}
