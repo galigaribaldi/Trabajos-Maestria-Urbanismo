@@ -1,0 +1,73 @@
+% !TeX program = pdflatex
+% !TeX encoding = UTF-8
+% =============================================================================
+%  PLANTILLA — Presentación Beamer con Tema UNAM
+%  Maestría en Urbanismo, UNAM – FES Acatlán
+%  Versión 1.0 — Noviembre 2027
+%
+%  USO:
+%    1. Edita el bloque "PERSONALIZACIÓN" con los datos de tu presentación.
+%    2. Edita los colores en Latex/BeamerTheme.tex (sección PALETA DE COLORES).
+%    3. Completa las secciones en /secciones/ con tu contenido.
+%    4. Compila con: pdflatex → bibtex → pdflatex → pdflatex
+% =============================================================================
+
+\documentclass[aspectratio=169, 12pt]{beamer}
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  PERSONALIZACIÓN — Edita solo esta sección para cada nueva presentación
+% ═════════════════════════════════════════════════════════════════════════════
+\newcommand{\TituloPresent}{El aula como entorno inmersivo}
+\newcommand{\SubtituloPresent}{Experiencia Sensorial y cognitiva del autismo y el suicidio}
+\newcommand{\Autor}{Hernán Galileo Cabrera Garibaldi}
+\newcommand{\MateriaCorta}{Didáctica — Semestre 2027-1}   % Aparece en el pie
+\newcommand{\ProfesorAsignado}{Dra. Lorena Beatriz Garces Zepeda}
+\newcommand{\Semestre}{2027-1}
+\newcommand{\ProgramaCorto}{Maestría y Doctorado en Urbanismo}
+\newcommand{\Facultad}{FES Acatlán}
+\newcommand{\FechaPresent}{Naucalpan, 2027-1}
+% ═══════════════════════════════════════════════════════════════════════════──
+
+% Metadatos de Beamer (usa las variables de arriba)
+\title{\TituloPresent}
+\subtitle{\SubtituloPresent}
+\author{\Autor}
+\date{\FechaPresent}
+
+% =============================================================================
+%  TEMA Y PAQUETES — cargados desde Latex/BeamerTheme.tex
+% =============================================================================
+\input{Latex/BeamerTheme}
+
+% =============================================================================
+%  DOCUMENTO
+% =============================================================================
+\begin{document}
+
+% ── Portada ──────────────────────────────────────────────────────────────────
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ── Índice ───────────────────────────────────────────────────────────────────
+\begin{frame}{Contenido}
+  \tableofcontents
+\end{frame}
+
+% ── Secciones ────────────────────────────────────────────────────────────────
+\input{secciones/1-Apertura}
+\input{secciones/2-Dinamica-1}
+\input{secciones/3-Dinamica-2}
+\input{secciones/4-Dinamica-3}
+\input{secciones/s01_intro}
+\input{secciones/s02_desarrollo}
+\input{secciones/s03_conclusiones}
+
+% ── Bibliografía ─────────────────────────────────────────────────────────────
+\section*{Referencias}
+\begin{frame}[allowframebreaks]{Referencias}
+  \bibliographystyle{apalike}
+  \bibliography{referencias}
+\end{frame}
+
+\end{document}

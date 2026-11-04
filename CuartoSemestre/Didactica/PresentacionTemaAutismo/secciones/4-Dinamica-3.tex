@@ -1,0 +1,42 @@
+% =============================================================================
+%  4-Dinamica-3.tex — Continuación directa de la inmersión: Rayuela, cap. 34
+%  (hiperfoco ante un texto más complejo) y cap. 68 (meltdown), y el corte.
+%  Usa \DiapositivaCompleta y \RutaDinamicaTres, definidos en 3-Dinamica-2.tex.
+%  Intervalos de audio: propuesta de la guía (sección 4.5), pendientes de confirmar.
+% =============================================================================
+
+% ── Fase 2: Rayuela, cap. 34 (audio 4:52 – 10:34, punto medio) ───────────────
+\DiapositivaCompleta{\RutaDinamicaTres/Fase2/Dinamica3_Fase2_Diapositiva1.png}{}
+  {Audio 4:52 -- 10:34 (propuesta): punto medio. Pedir al grupo que lea el
+  texto de corrido.}
+
+\DiapositivaCompleta{\RutaDinamicaTres/Fase2/Dinamica3_Fase2_Diapositiva2.png}{}
+  {Explicar que el filtro separa los dos hilos del texto y deja pasar solo el
+  que interesa.}
+
+\DiapositivaCompleta{\RutaDinamicaTres/Fase2/Dinamica3_Fase2_Diapositiva3.png}{}
+  {El resumen evidencia el resultado del procesamiento analítico.}
+
+% ── Fase 3: crisis (audio 10:34 – 13:57, punto alto) ─────────────────────────
+\DiapositivaCompleta{\RutaDinamicaTres/Fase3/Dinamica3_Fase3_Diapositiva1.png}{}
+  {FASE DE CRISIS. Audio 10:34 -- 13:57 (propuesta): punto alto, tinnitus
+  agudo. Se proyecta de nuevo el resumen que el grupo ya comprendió.}
+
+\DiapositivaCompleta{\RutaDinamicaTres/Fase3/Dinamica3_Fase3_Diapositiva2.png}{}
+  {Crisis: luces agresivas y desenfoque severo; ya no hay capa nítida.}
+
+% EDITAR: qué se proyecta durante la meseta final del audio (13:57 – 18:58).
+\DiapositivaCompleta{\RutaDinamicaTres/Fase3/Dinamica3_Fase3_Diapositiva3.png}{}
+  {Crisis: el quiebre al glíglico. Las letras se ven con claridad, pero el
+  significado ya no llega.}
+
+% ── Frame: Corte (pantalla en blanco) ────────────────────────────────────────
+{\setbeamertemplate{navigation symbols}{}% sin íconos de navegación
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[white] (current page.south west) rectangle (current page.north east);
+  \end{tikzpicture}
+  \note{Cortar el audio de tajo y sustituirlo por ruido blanco. Explicar el
+  shutdown.}
+\end{frame}
+}

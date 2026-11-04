@@ -1,0 +1,228 @@
+% =============================================================================
+%  s02_desarrollo.tex — Sección 2: Desarrollo / Argumentación central
+%  Agrega tantos frames como necesites dentro de cada subsección.
+% =============================================================================
+
+\section{Marco Conceptual y Análisis}
+
+% ── Frame: Tres modelos ───────────────────────────────────────────────────────
+\begin{frame}{Modelos de Densificación Evaluados}
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}
+      \begin{block}{Modelo 1: TOD}
+        \textit{Transit-Oriented\\Development}\\[0.2cm]
+        Copenhague, Estocolmo\\[0.1cm]
+        {\small Principio: compacidad alrededor de nodos de transporte masivo.}
+      \end{block}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{block}{Modelo 2: Barrio}
+        \textit{Rehabilitación\\incremental}\\[0.2cm]
+        Medellín, Bogotá\\[0.1cm]
+        {\small Principio: participación comunitaria y urbanismo social.}
+      \end{block}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{block}{Modelo 3: Corredor}
+        \textit{Corredor\\urbano mixto}\\[0.2cm]
+        Ciudad de México\\[0.1cm]
+        {\small Principio: mixticidad de usos sobre ejes de movilidad masiva.}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: Tabla comparativa ─────────────────────────────────────────────────
+\begin{frame}{Comparativa de Modelos}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabularx}{\textwidth}{@{} l X X X @{}}
+      \toprule
+      \textbf{Criterio}   & \textbf{TOD} & \textbf{Barrio} & \textbf{Corredor} \\
+      \midrule
+      Equidad             & Media        & Alta            & Media--Alta \\
+      Eficiencia energét. & Alta         & Media           & Alta \\
+      Viabilidad inst.    & Media        & Alta            & Media \\
+      Escala de impacto   & Metropolit.  & Local           & Zonal \\
+      \bottomrule
+    \end{tabularx}
+    \fuentefigura{Elaboración propia con base en \citet{lore2024densidad}.}
+  \end{table}
+\end{frame}
+
+% ── Frame: Cita destacada ────────────────────────────────────────────────────
+\begin{frame}{Argumento Central}
+  \vfill
+  \begin{center}
+    \color{ColorPrincipal}
+    \Large\itshape
+    ``La ciudad compacta no es una utopía formal,\\
+    sino una decisión política sobre cómo se distribuyen\\
+    los recursos del suelo urbano.''
+  \end{center}
+  \vfill
+  \flushright{\small\citet{lore2024densidad}}
+\end{frame}
+
+% ── Frame con figura (plantilla) ─────────────────────────────────────────────
+\begin{frame}{Resultados del Análisis Espacial}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      % Descomenta cuando tengas la imagen:
+      % \includegraphics[width=\textwidth]{img/nombre_figura.png}
+      % \fuentefigura{Elaboración propia, 2026.}
+
+      \begin{alertblock}{Placeholder de figura}
+        Inserta aquí tu imagen con:\\
+        \texttt{\textbackslash includegraphics\{img/figura.png\}}
+      \end{alertblock}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{itemize}
+        \item Hallazgo principal 1 \citep{lore2024zmvm}
+        % \pause  ← descomenta solo para presentación en vivo (genera páginas extra en PDF)
+        \item Hallazgo principal 2
+        % \pause
+        \item Implicación para la política pública
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: Dos imágenes con texto explicativo ─────────────────────────────────
+%    USO: comparativas visuales, antes/después, dos mapas, dos planos.
+%    Ajusta height para que ambas imágenes queden alineadas verticalmente.
+%    INSTRUCCIÓN: cuando tengas tus imágenes, comenta el alertblock y descomenta \includegraphics.
+\begin{frame}{Comparativa Visual — Dos Imágenes}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \centering
+      % \includegraphics[width=\textwidth, height=3.8cm, keepaspectratio]{img/figura1.png}
+      \begin{alertblock}{Placeholder imagen 1}
+        \texttt{img/figura1.png}
+      \end{alertblock}
+      {\small Texto explicativo de la imagen izquierda. Describe el contexto, hallazgo o período temporal.}\\[0.05cm]
+      \fuentefigura{Elaboración propia, 2026.}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      % \includegraphics[width=\textwidth, height=3.8cm, keepaspectratio]{img/figura2.png}
+      \begin{alertblock}{Placeholder imagen 2}
+        \texttt{img/figura2.png}
+      \end{alertblock}
+      {\small Texto explicativo de la imagen derecha. Describe el contexto, hallazgo o período temporal.}\\[0.05cm]
+      \fuentefigura{Fuente secundaria, 2026.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: Tres imágenes con texto explicativo ────────────────────────────────
+%    USO: secuencias temporales, etapas de un proceso, comparativa de tres casos.
+%    Con tres columnas el texto usa \scriptsize para no saturar la diapositiva.
+%    INSTRUCCIÓN: cuando tengas tus imágenes, comenta el alertblock y descomenta \includegraphics.
+\begin{frame}{Análisis Comparativo — Tres Imágenes}
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}
+      \centering
+      % \includegraphics[width=\textwidth, height=3.5cm, keepaspectratio]{img/figura1.png}
+      \begin{alertblock}{\scriptsize Placeholder 1}
+        \scriptsize\texttt{img/figura1.png}
+      \end{alertblock}
+      {\scriptsize Texto explicativo de la imagen 1. Describe el caso, período o variable representada.}\\[0.05cm]
+      \fuentefigura{Fuente 1, 2026.}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      % \includegraphics[width=\textwidth, height=3.5cm, keepaspectratio]{img/figura2.png}
+      \begin{alertblock}{\scriptsize Placeholder 2}
+        \scriptsize\texttt{img/figura2.png}
+      \end{alertblock}
+      {\scriptsize Texto explicativo de la imagen 2. Describe el caso, período o variable representada.}\\[0.05cm]
+      \fuentefigura{Fuente 2, 2026.}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      % \includegraphics[width=\textwidth, height=3.5cm, keepaspectratio]{img/figura3.png}
+      \begin{alertblock}{\scriptsize Placeholder 3}
+        \scriptsize\texttt{img/figura3.png}
+      \end{alertblock}
+      {\scriptsize Texto explicativo de la imagen 3. Describe el caso, período o variable representada.}\\[0.05cm]
+      \fuentefigura{Fuente 3, 2026.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: Solo texto — mensaje clave, cita o puente entre secciones ─────────
+%    USO: para declaraciones fuertes, preguntas retóricas o transiciones.
+%    Copia y adapta. No lleva título de frame ni elementos gráficos.
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture, overlay]
+    % Banda lateral de color
+    \fill[ColorPrincipal]
+      (current page.north west) rectangle
+      ([xshift=0.35cm] current page.south west);
+    % Línea dorada en el borde de la banda
+    \fill[ColorAcento]
+      ([xshift=0.32cm] current page.north west) rectangle
+      ([xshift=0.35cm] current page.south west);
+  \end{tikzpicture}
+  \hspace{0.8cm}%
+  \begin{minipage}{0.88\textwidth}
+    \vspace{2.2cm}
+    {\color{ColorAcento}\rule{0.5\textwidth}{1.2pt}}\\[0.5cm]
+    {\large\bfseries\color{ColorPrincipal}
+      ¿Puede la infraestructura de movilidad\\
+      actuar como frontera ecológica?}\\[0.6cm]
+    {\normalsize\color{black}
+      Una intervención de transporte masivo bien diseñada no destruye
+      el territorio: lo delimita, lo protege y lo articula.}\\[0.5cm]
+    {\color{ColorAcento}\rule{0.3\textwidth}{0.8pt}}
+    \vfill
+  \end{minipage}
+\end{frame}
+
+% ── Frame: Diagrama de flujo ──────────────────────────────────────────────────
+%    USO: metodología, proceso de análisis, etapas de proyecto.
+%    Modifica los nodos, colores y flechas según tu contenido.
+%    Requiere \usepackage{tikz} + \usetikzlibrary{positioning,shapes.geometric,arrows.meta,calc}
+%    (ya incluidos en Latex/BeamerTheme.tex)
+\begin{frame}{Metodología — Diagrama de Flujo}
+  \begin{center}
+  \begin{tikzpicture}[
+    % Estilos de nodos
+    caja/.style   = {rectangle, rounded corners=5pt,
+                     draw=ColorPrincipal, line width=0.8pt,
+                     fill=ColorFondo, text width=2.6cm,
+                     align=center, minimum height=0.75cm, font=\small},
+    inicio/.style = {caja, fill=ColorPrincipal, text=white, font=\small\bfseries},
+    result/.style = {caja, fill=ColorAcento,    text=black,  font=\small\bfseries},
+    decision/.style = {diamond, draw=ColorPrincipal, line width=0.8pt,
+                       fill=ColorFondo, aspect=2.5,
+                       text width=2.2cm, align=center, font=\scriptsize},
+    % Estilo de flechas
+    flecha/.style = {-Stealth, thick, color=ColorPrincipal},
+    lateral/.style= {-Stealth, thick, color=ColorAcento, dashed},
+    % Separación entre nodos
+    node distance = 0.55cm and 2.2cm
+  ]
+    % Columna principal (flujo vertical)
+    \node[inicio]   (diag)  {Diagnóstico};
+    \node[caja, below=of diag]    (anal)  {Análisis};
+    \node[decision, below=of anal](dec)   {¿Viable?};
+    \node[caja, below=of dec]     (prop)  {Propuesta};
+    \node[result, below=of prop]  (res)   {Resultado};
+
+    % Flechas principales
+    \draw[flecha] (diag) -- (anal);
+    \draw[flecha] (anal) -- (dec);
+    \draw[flecha] (dec)  -- node[right, font=\scriptsize]{Sí} (prop);
+    \draw[flecha] (prop) -- (res);
+
+    % Rama de ajuste (decisión → No → vuelve a diagnóstico)
+    \node[caja, right=of dec] (ajuste) {Ajuste\\de enfoque};
+    \draw[lateral] (dec)    -- node[above, font=\scriptsize]{No} (ajuste);
+    \draw[lateral] (ajuste) |- (diag);
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
