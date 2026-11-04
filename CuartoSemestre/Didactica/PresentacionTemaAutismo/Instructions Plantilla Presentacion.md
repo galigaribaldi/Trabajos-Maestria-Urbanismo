@@ -372,6 +372,88 @@ Los escudos (`UNAM_crest_blue.pdf`, `escudo-fes-azul.png`) se toman automáticam
 
 ---
 
+## Diapositivas TikZ e imágenes en Git LFS (presentación TEA)
+
+### ¿Se compila el TikZ al construir la presentación?
+
+**No.** `make Presentacion` solo inserta las PNG ya generadas (macro `\DiapositivaCompleta`
+en `secciones/3-Dinamica-2.tex`, que hace `\includegraphics` a pantalla completa).
+La guía (`Articulo1`) hace lo mismo. Son dos pasos independientes:
+
+```
+tikz/*.tex ──(compilar_diapositivas.sh, manual)──▶ *.png ──(make Presentacion / make Document)──▶ main.pdf
+```
+
+Si editas un `.tex` de TikZ y no corres el script, el PDF sigue mostrando la PNG anterior.
+
+### Dónde vive cada archivo (una sola fuente)
+
+| Tipo | Ubicación | Cómo se guarda |
+|---|---|---|
+| Fuente TikZ (`.tex`) y script | `../Articulo1/Resources/img/DinamicaN/FaseN/tikz/` | Git normal |
+| PNG generadas (1920×1080) | `../Articulo1/Resources/img/DinamicaN/FaseN/` | Git LFS |
+| Fotos que solo usa la presentación | `img/` | Git LFS, reducidas a 1920 px |
+| Fotos originales de cámara | `../Articulo1/Resources/img/Original_img/` | Fuera de git (`.gitignore`) |
+
+La presentación toma las PNG desde la guía con
+`\RutaDinamicaTres` = `../Articulo1/Resources/img/Dinamica3`. No copiar las PNG a `img/`.
+
+La regla LFS está en `.gitattributes` (raíz del repositorio) y aplica **solo a Didáctica**:
+
+```
+CuartoSemestre/Didactica/**/*.png  filter=lfs diff=lfs merge=lfs -text
+CuartoSemestre/Didactica/**/*.jpg  filter=lfs diff=lfs merge=lfs -text
+CuartoSemestre/Didactica/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+```
+
+### Flujo para crear o modificar una diapositiva TikZ
+
+Desde la raíz del repositorio:
+
+```bash
+# 1. Editar o crear la fuente
+#    CuartoSemestre/Didactica/Articulo1/Resources/img/Dinamica3/Fase2/tikz/Dinamica3_Fase2_Diapositiva1.tex
+
+# 2. Generar la PNG (todas, una fase o un solo archivo)
+bash CuartoSemestre/Didactica/Articulo1/Resources/img/compilar_diapositivas.sh
+bash CuartoSemestre/Didactica/Articulo1/Resources/img/compilar_diapositivas.sh Dinamica3/Fase2
+bash CuartoSemestre/Didactica/Articulo1/Resources/img/compilar_diapositivas.sh \
+     Dinamica3/Fase2/tikz/Dinamica3_Fase2_Diapositiva1.tex
+
+# 3. Recompilar los documentos que la usan
+make Presentacion DIR=CuartoSemestre/Didactica/PresentacionTemaAutismo
+make Document     DIR=CuartoSemestre/Didactica/Articulo1
+
+# 4. Versionar fuente + PNG (la PNG entra a LFS automáticamente)
+git add CuartoSemestre/Didactica/Articulo1/Resources/img/Dinamica3/Fase2/
+```
+
+### Agregar una foto nueva a la presentación
+
+```bash
+# Reducir a 1920 px en el lado mayor, calidad 85 (macOS)
+sips -Z 1920 -s formatOptions 85 foto_original.jpeg \
+     --out CuartoSemestre/Didactica/PresentacionTemaAutismo/img/foto.jpeg
+git add CuartoSemestre/Didactica/PresentacionTemaAutismo/img/foto.jpeg
+```
+
+### Verificar que las imágenes van por LFS
+
+```bash
+git check-attr filter -- <ruta/a/imagen.png>   # debe decir: filter: lfs
+git lfs ls-files | grep Didactica              # lista los archivos en LFS
+git lfs status                                 # qué se subirá por LFS en el próximo push
+```
+
+Si una imagen ya estaba en git normal antes de la regla:
+`git add --renormalize CuartoSemestre/Didactica`.
+
+> El remoto usa el alias SSH `github.com-personal`; LFS necesita el endpoint HTTPS
+> (`git config lfs.url https://github.com/galigaribaldi/Trabajos-Maestria-Urbanismo.git/info/lfs`),
+> ya configurado en este repositorio.
+
+---
+
 ## Nota sobre `\pause`
 
 `\pause` genera una página PDF por cada overlay — la misma diapositiva aparece N veces en el visor.
