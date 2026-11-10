@@ -21,3 +21,5 @@ Extracurriculares/Igisc-2026-isprs/figures/Dashboard_Apimetro_2026.pdf filter=lf
 CuartoSemestre/Didactica/**/*.png  filter=lfs diff=lfs merge=lfs -text
 CuartoSemestre/Didactica/**/*.jpg  filter=lfs diff=lfs merge=lfs -text
 CuartoSemestre/Didactica/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+Extracurriculares/SOTM-2026/Articulo/figures/Dashboard_Apimetro_2026_Red_ZMVM.pdf filter=lfs diff=lfs merge=lfs -text
+Extracurriculares/SOTM-2026/Articulo/figures/Dashboard_Apimetro_2026.pdf filter=lfs diff=lfs merge=lfs -text

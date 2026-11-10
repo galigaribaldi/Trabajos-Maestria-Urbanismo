@@ -1,0 +1,43 @@
+% Diagrama: Esquema Entidad-Relación simplificado de Apimetro
+% Tres entidades: Estaciones (nodos puntuales), Líneas (trazos con métricas),
+%   Polígonos (áreas administrativas). Sin columnas individuales.
+% Usado en: 4-Capas-Codigo/4-1-Apimetro/4-1-2-Modelo-Datos.tex  (fig:apimetro-er-simple)
+\tikzsetnextfilename{apimetro-er-simple}
+\begin{tikzpicture}[
+  entidad/.style={
+    rectangle, draw=unamAzul, fill=unamAzul!12,
+    thick, rounded corners=4pt,
+    minimum width=3.4cm, minimum height=1.1cm,
+    align=center, font=\small\bfseries
+  },
+  relacion/.style={Stealth-Stealth, thick, color=unamAzul!60},
+  card/.style={font=\footnotesize\color{unamAzul!80}},
+  etiqrel/.style={
+    font=\footnotesize\itshape\color{gray!65},
+    fill=white, inner sep=2pt
+  }
+]
+
+%% — Vértices del triángulo —
+\node[entidad] (est) at (0,    0)    {Estaciones};
+\node[entidad] (lin) at (6.5,  0)    {Líneas};
+\node[entidad] (pol) at (3.25, -3.1) {Polígonos};
+
+%% — Cardinalidades ancladas a cada flecha con pos= (no coordenadas fijas):
+%%    así no se enciman con las cajas si cambia la fuente o el tamaño —
+%% — Estaciones ↔ Líneas (N:M) —
+\draw[relacion] (est) -- node[etiqrel, above] {agrupa / conecta}
+  node[card, pos=0.08, below] {N}
+  node[card, pos=0.92, below] {M} (lin);
+
+%% — Estaciones ↔ Polígonos (N:1) —
+\draw[relacion] (est) -- node[etiqrel, left, xshift=-4pt] {ubicada en}
+  node[card, pos=0.12, right, xshift=2pt] {N}
+  node[card, pos=0.88, right, xshift=2pt] {1} (pol);
+
+%% — Líneas ↔ Polígonos (M:N) —
+\draw[relacion] (lin) -- node[etiqrel, right, xshift=4pt] {atraviesa}
+  node[card, pos=0.12, left, xshift=-2pt] {M}
+  node[card, pos=0.88, left, xshift=-2pt] {N} (pol);
+
+\end{tikzpicture}

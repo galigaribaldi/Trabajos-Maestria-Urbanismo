@@ -329,7 +329,8 @@ TSWLatexianTemp*
 *.pdf
 !docs/assets/*.pdf
 !Img/*.pdf
-!Extracurriculares/Igisc-2026-isprs/figures/*.pdf
+!Extracurriculares/SOTM-2026/Articulo/figures/*.pdf
+!Extracurriculares/SOTM-2026/Presentacion/pdf_apoyo/*.pdf
 
 ### macOS
 .DS_Store
