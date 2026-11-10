@@ -54,11 +54,6 @@
 #   make release-pres-humedales  → v2026-2-urbs-pres-humedales
 #   make release-pres-movilidad  → v2026-2-dsu-pres-movilidad
 #
-# ─── LATEXDIFF ───────────────────────────────────────────────────────────────
-#   make latexdiff-tesis DIR=<ruta> REV1=<commit> CHAPTER=<ruta.tex> [REV2=HEAD] [TESIS_DIR=..] [OUT=..]
-#                              → diff de un capítulo de la tesis entre dos versiones
-#                                (ver bloque de documentación de latexdiff-tesis)
-#
 # ─── UTILIDADES ──────────────────────────────────────────────────────────────
 #   make limpiar               → borra auxiliares LaTeX en todo el proyecto
 #   make limpiar-dir DIR=<ruta>→ borra auxiliares solo en <ruta>
@@ -68,6 +63,7 @@
 #                              → diff de un capítulo específico
 #   make latexdiff-commit  REV1=<commit> DIR=<ruta> [REV2=HEAD]
 #                              → diff de TODOS los .tex cambiados entre commits
+#
 # ─── DOCUMENTOS OFICIALES APIMETRO ───────────────────────────────────────────
 #   make nueva-carta  DIR=<ruta>  → documento oficial Apimetro (alias de ApimetroDoc)
 #   make ApimetroDoc  DIR=<ruta> [COLOR=Apimetro|Negro] → crea documento desde la plantilla
