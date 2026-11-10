@@ -2,9 +2,21 @@
 # Makefile — Compilación y scaffolding de documentos académicos de Maestría
 # UNAM — Maestría en Urbanismo, FES Acatlán
 #
+# ─── AYUDA ───────────────────────────────────────────────────────────────────
+#   make help  (o make ayuda)     → muestra esta lista de comandos
+#
 # ─── COMPILACIÓN (requiere main.tex ya existente) ────────────────────────────
-#   make Document     DIR=<ruta>   → compila ensayo/artículo en <ruta>
-#   make Presentacion DIR=<ruta>   → compila presentación Beamer en <ruta>
+#   make Document     DIR=<ruta> [COLOR=Tema]  → ensayo/artículo (pdflatex → bibtex → pdflatex × 2)
+#   make Presentacion DIR=<ruta> [COLOR=Tema]  → presentación Beamer UNAM
+#   make Infografia   DIR=<ruta> [COLOR=Tema] [TAMANIO=A4Portrait|A3Portrait|A4Landscape]
+#                                              → infografía TikZ (pdflatex × 2)
+#   make compilar-limpio DIR=<ruta> [COMPILADOR=Tipo] [COLOR=Tema]
+#                                              → borra auxiliares y recompila desde cero;
+#                                                detecta el tipo leyendo main.tex
+#                                                (usar tras borrar/renombrar archivos o
+#                                                 si quedan referencias viejas en .aux/.nav/.toc)
+#        COMPILADOR fuerza el tipo: Document | Presentacion | PresentacionSotm |
+#                                   IsprsDoc | Infografia | apimetro-doc | _compile-carta-unam
 #
 # ─── SCAFFOLDING — crea documento nuevo desde plantilla ──────────────────────
 #   make EnsayosConPortada    DIR=<ruta> [COLOR=Teal]  → ensayo con portada institucional
@@ -12,20 +24,26 @@
 #   make ArticulosConPortada  DIR=<ruta> [COLOR=Teal]  → artículo con portada minimalista
 #   make ArticulosSinPortada  DIR=<ruta> [COLOR=Teal]  → artículo sin portada (con palabras clave)
 #   make RegistroDiffDoc      DIR=<ruta> [COLOR=Teal]  → registro de avances con diff latexdiff
+#   make nuevo-ensayo         DIR=<ruta> [COLOR=Tema] → alias de EnsayosConPortada
 #   make nuevo-ensayo-teal    DIR=<ruta>  → ensayo con tema Teal
 #   make nuevo-ensayo-olivo   DIR=<ruta>  → ensayo con tema VerdeOlivo
 #   make nuevo-ensayo-purpura DIR=<ruta>  → ensayo con tema Purpura
 #   make nuevo-ensayo-rojo    DIR=<ruta>  → ensayo con tema Rojo
 #   make nueva-presentacion   DIR=<ruta> [COLOR=Teal]  → presentación Beamer UNAM
+#        (variantes: nueva-presentacion-teal | -olivo | -purpura | -rojo)
 #   make nueva-infografia     DIR=<ruta> [COLOR=Teal] [TAMANIO=A4Portrait] → infografía TikZ UNAM
 #   make nueva-infografia-a3  DIR=<ruta> [COLOR=Teal] → infografía A3 Portrait
 #   make nueva-infografia-landscape DIR=<ruta> [COLOR=Teal] → infografía A4 Landscape
+#        (variantes: nueva-infografia-teal | -olivo | -purpura | -rojo)
 #
 # ─── ALIASES DE MATERIAS CONOCIDAS ───────────────────────────────────────────
+#   make  (sin argumentos)     → igual que make desarrollo
 #   make desarrollo            → compila Ensayo_Humedales
 #   make pres-humedales        → compila Presentacion_Humedales
 #   make pres-movilidad        → compila Movilidad_Sustentable_Presentacion
 #   make sociologia            → compila SociologiaUrbana (si existe)
+#   make state-map             → compila Extracurriculares/StateMap
+#   make state-map-taller      → compila Extracurriculares/StateMapTaller
 #
 # ─── RELEASES (requiere gh CLI autenticado) ──────────────────────────────────
 #   make release DIR=<ruta> TAG=<tag> TITULO="..." [TIPO=Document|Presentacion]
@@ -36,9 +54,19 @@
 #   make release-pres-humedales  → v2026-2-urbs-pres-humedales
 #   make release-pres-movilidad  → v2026-2-dsu-pres-movilidad
 #
+# ─── LATEXDIFF ───────────────────────────────────────────────────────────────
+#   make latexdiff-tesis DIR=<ruta> REV1=<commit> CHAPTER=<ruta.tex> [REV2=HEAD] [TESIS_DIR=..] [OUT=..]
+#                              → diff de un capítulo de la tesis entre dos versiones
+#                                (ver bloque de documentación de latexdiff-tesis)
+#
 # ─── UTILIDADES ──────────────────────────────────────────────────────────────
 #   make limpiar               → borra auxiliares LaTeX en todo el proyecto
 #   make limpiar-dir DIR=<ruta>→ borra auxiliares solo en <ruta>
+#
+# ─── DOCUMENTOS OFICIALES APIMETRO ───────────────────────────────────────────
+#   make nueva-carta  DIR=<ruta>  → documento oficial Apimetro (alias de ApimetroDoc)
+#   make ApimetroDoc  DIR=<ruta> [COLOR=Apimetro|Negro] → crea documento desde la plantilla
+#   make apimetro-doc DIR=<ruta> [COLOR=Apimetro|Negro] → compila documento Apimetro
 #
 # ─── CARTAS UNAM ─────────────────────────────────────────────────────────────
 #   make nueva-carta-unam  DIR=<ruta>  → carta oficial UNAM membretada (FES Acatlán)
@@ -52,7 +80,6 @@
 #   make nueva-presentacion-sotm DIR=<ruta>  → presentación Beamer SOTM Latam CDMX 2026
 #   make PresentacionSotm        DIR=<ruta>  → compila presentación SOTM (pdflatex + bibtex)
 # =============================================================================
-
 MOTOR  := pdflatex
 BIBTEX := bibtex
 FLAGS  := -interaction=nonstopmode -halt-on-error
@@ -131,7 +158,8 @@ DIR ?=
         desarrollo pres-humedales pres-movilidad sociologia state-map state-map-taller \
         release release-ens-humedales release-pres-humedales release-pres-movilidad \
         latexdiff-tesis \
-        limpiar limpiar-dir _compile _compile-infografia _scaffold _release
+        limpiar limpiar-dir compilar-limpio help ayuda \
+        _compile _compile-infografia _scaffold _release
 
 # =============================================================================
 # ALIASES — materias conocidas
@@ -728,3 +756,72 @@ endif
 	    -name '*.snm' -o -name '*.vrb' \
 	\) -delete
 	@echo "Limpieza de $(DIR) completada."
+
+# =============================================================================
+# COMPILACIÓN LIMPIA — limpiar-dir + compilación según el tipo de documento
+#
+#   make compilar-limpio DIR=<ruta> [COMPILADOR=Tipo] [COLOR=Tema] [TAMANIO=...]
+#
+# Detecta el tipo leyendo $(DIR)/main.tex (el primer criterio que coincida):
+#   BeamerThemeSotm               → PresentacionSotm
+#   \documentclass{isprs}         → IsprsDoc
+#   \documentclass{beamer}        → Presentacion
+#   TamanioHoja                   → Infografia
+#   "Documento Oficial Apimetro"  → apimetro-doc
+#   "Carta Oficial UNAM"          → _compile-carta-unam
+#   cualquier otro                → Document
+# COMPILADOR=<tipo> se salta la detección. Solo borra auxiliares de LaTeX
+# (las mismas extensiones que limpiar-dir): nunca .tex, .bib, .pdf ni figuras.
+# =============================================================================
+
+compilar-limpio:
+ifndef DIR
+	$(error Debes indicar la carpeta: make compilar-limpio DIR=<ruta> [COMPILADOR=Tipo] [COLOR=Tema])
+endif
+	@if [ ! -f "$(DIR)/main.tex" ]; then \
+	    echo "[ERROR] No existe $(DIR)/main.tex"; \
+	    exit 1; \
+	fi
+	@C="$(COMPILADOR)"; M="$(DIR)/main.tex"; \
+	if [ -z "$$C" ]; then \
+	    if   grep -q 'BeamerThemeSotm' "$$M"; then C=PresentacionSotm; \
+	    elif grep -Eq '\\documentclass(\[[^]]*\])?\{isprs\}' "$$M"; then C=IsprsDoc; \
+	    elif grep -Eq '\\documentclass(\[[^]]*\])?\{beamer\}' "$$M"; then C=Presentacion; \
+	    elif grep -q 'TamanioHoja' "$$M"; then C=Infografia; \
+	    elif grep -q 'Documento Oficial Apimetro' "$$M"; then C=apimetro-doc; \
+	    elif grep -q 'Carta Oficial UNAM' "$$M"; then C=_compile-carta-unam; \
+	    else C=Document; fi; \
+	    echo "--- [compilar-limpio] Detectado: $$C ---"; \
+	else \
+	    echo "--- [compilar-limpio] Forzado: $$C ---"; \
+	fi; \
+	case "$$C" in \
+	    Document|Presentacion|PresentacionSotm|IsprsDoc|Infografia|apimetro-doc|_compile-carta-unam) ;; \
+	    *) echo "[ERROR] COMPILADOR no válido: $$C"; \
+	       echo "        Usa: Document | Presentacion | PresentacionSotm | IsprsDoc | Infografia | apimetro-doc | _compile-carta-unam"; \
+	       exit 1 ;; \
+	esac; \
+	$(MAKE) --no-print-directory limpiar-dir DIR="$(DIR)" && \
+	$(MAKE) --no-print-directory $$C DIR="$(DIR)" COLOR="$(COLOR)" TAMANIO="$(TAMANIO)"
+
+# =============================================================================
+# AYUDA — imprime la cabecera de este Makefile (única fuente de documentación)
+# =============================================================================
+
+help: ayuda
+
+ayuda:
+	@echo ""
+	@echo "  Trabajos Maestría Urbanismo — UNAM FES Acatlán · Comandos disponibles"
+	@echo "  ──────────────────────────────────────────────────────────────────────"
+	@awk 'NR == 1 { next } /^# =+$$/ { exit } { sub(/^# ?/, "  "); print }' $(firstword $(MAKEFILE_LIST))
+	@echo ""
+	@echo "  Temas (COLOR): Institucional | Teal | VerdeOlivo | Purpura | Rojo | VerdeEsmeralda"
+	@echo ""
+	@echo "  Flujos comunes:"
+	@echo "    make nueva-presentacion-sotm DIR=<ruta> && make PresentacionSotm DIR=<ruta>"
+	@echo "                                        — crear y compilar una presentación SOTM"
+	@echo "    make compilar-limpio DIR=<ruta>     — errores tras borrar o renombrar archivos"
+	@echo "                                          (referencias viejas en .aux / .nav / .toc)"
+	@echo "    make limpiar                        — antes de un commit, quitar auxiliares"
+	@echo ""

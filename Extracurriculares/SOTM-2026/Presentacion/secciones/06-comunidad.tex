@@ -1,0 +1,67 @@
+\section{Invitación a la comunidad}
+% ── Frame: Tres frentes ──────────────────────────────────────────────────────
+\begin{frame}{Súmate: tres frentes}
+  \begin{columns}[T]
+    \begin{column}{0.31\textwidth}
+      % EDITAR
+      \begin{exampleblock}{\footnotesize 1.\enspace Mapear lo que falta}
+        \scriptsize El transporte periférico del Estado de México todavía tiene
+        huecos en OSM: cada ruta que se mapea puede entrar a la red.
+      \end{exampleblock}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      % EDITAR
+      \begin{block}{\footnotesize 2.\enspace Reportar y corregir}
+        \scriptsize ¿Un trazo con errores o un sistema que falta? Se reporta en
+        GitHub \textit{Discussions} para corregirlo o integrarlo.
+      \end{block}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      % EDITAR
+      \begin{alertblock}{\footnotesize 3.\enspace Replicar en tu ciudad}
+        \scriptsize Datos abiertos + OSM $\rightarrow$ API REST funciona donde haya
+        GTFS y OSM: Bogotá, São Paulo, Buenos Aires…
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.5cm}
+  \centering
+  % EDITAR: eco de la "Capa N" del bloque 5
+  {\small\bfseries\color{SotmVerde} Y la Capa N: construye tu propio proyecto sobre la API.}
+\end{frame}
+
+% ── Frame: Ecosistema y enlaces ──────────────────────────────────────────────
+\begin{frame}{Dónde encontrarnos}
+  \begin{columns}[c]
+    \begin{column}{0.56\textwidth}
+      \centering
+      \resizebox{\linewidth}{!}{\input{Diagramas-TiKz/apimetro-ecosistema}}\par
+      \fuentefigura{Elaboración propia, 2026.}
+    \end{column}
+    \begin{column}{0.40\textwidth}
+      \small
+      % QR generados con el paquete qrcode desde la URL (sin imágenes externas);
+      % fondo blanco con margen (zona de silencio) para que el lector los reconozca
+      {\setlength{\fboxsep}{4pt}%
+      \begin{block}{\footnotesize Apimetro}
+        \begin{minipage}[c]{2.2cm}
+          \colorbox{white}{\qrcode[height=1.75cm]{https://apimetro.dev}}
+        \end{minipage}\hfill
+        \begin{minipage}[c]{\dimexpr\linewidth-2.5cm}
+          \raggedright\scriptsize Documentación, Swagger y API\\[2pt]
+          \texttt{apimetro.dev}
+        \end{minipage}
+      \end{block}
+      \begin{block}{\footnotesize VFTModel}
+        \begin{minipage}[c]{2.2cm}
+          \colorbox{white}{\qrcode[height=1.75cm]{https://github.com/galigaribaldi/VFTModel}}
+        \end{minipage}\hfill
+        \begin{minipage}[c]{\dimexpr\linewidth-2.5cm}
+          \raggedright\scriptsize Repositorio (aún sin versión estable)\\[2pt]
+          \texttt{github.com/}\\\texttt{galigaribaldi/VFTModel}
+        \end{minipage}
+      \end{block}}
+    \end{column}
+  \end{columns}
+\end{frame}

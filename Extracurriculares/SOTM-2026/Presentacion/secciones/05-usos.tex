@@ -1,0 +1,62 @@
+\section{Usos}
+% Cifras: tesis, cap. 5 (fuente de verdad; corrida 2026-10-04). Ver NOTAS_CORRECCION_ARTICULO.md
+% ── Frame: Tres capas ────────────────────────────────────────────────────────
+\begin{frame}{Apimetro como motor: analizar, crear, hacer}
+  \centering
+  \resizebox{!}{0.66\textheight}{\input{Diagramas-TiKz/macro-arquitectura-stack}}\par
+  \fuentefigura{Elaboración propia, 2026.}
+
+  \vspace{0.15cm}
+  % EDITAR: frase puente al bloque 6
+  {\small\itshape\color{SotmVerde} VFTModel es solo un ejemplo: la Capa N puede ser la tuya.}
+\end{frame}
+
+% ── Frame: Cobertura (mapa QGIS) ─────────────────────────────────────────────
+\begin{frame}{Cobertura: ¿quién tiene transporte a 800 m?}
+  \begin{columns}[c]
+    \begin{column}{0.66\textwidth}
+      \centering
+      \includegraphics[width=\linewidth,height=0.72\textheight,keepaspectratio]{Mapa_Cobertura_Mapa_Calor}\par
+      \fuentefigura{Elaboración propia en QGIS con VFTModel \citep{cabrera2026VFTModel}.}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      {\small Milpa Alta\par}
+      {\fontsize{28}{32}\selectfont\bfseries\color{SotmTerracota} 11.75\,\%\par}
+      {\scriptsize de su superficie está a 800 m o menos de una estación\par}
+      \vspace{0.3cm}
+      {\small Alcaldías centrales: más del\par}
+      {\fontsize{28}{32}\selectfont\bfseries\color{SotmVerde} 90\,\%\par}
+      \vspace{0.3cm}
+      % EDITAR
+      {\footnotesize\itshape La desigualdad no es un accidente: es estructural.\par}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Frame: Factor de desviación y fuerza capilar (tablero Tableau) ──────────
+\begin{frame}{El costo de una red radial}
+  \begin{columns}[c]
+    \begin{column}{0.60\textwidth}
+      \centering
+      \includegraphics[width=\linewidth,height=0.72\textheight,keepaspectratio]{Dashboard_VFTModel_2026_Factor_desviacion}\par
+      \fuentefigura{Elaboración propia en Tableau con VFTModel \citep{cabrera2026VFTModel}.}
+    \end{column}
+    \begin{column}{0.38\textwidth}
+      \vspace*{-0.2cm}
+      % EDITAR: lectura de las cifras
+      \begin{exampleblock}{\footnotesize Factor de desviación (DI)}
+        \scriptsize Media de \textbf{1.701}: cada viaje recorre cerca de
+        \textbf{70\,\% más} que la línea recta (100 pares O-D).
+      \end{exampleblock}
+      \begin{block}{\footnotesize Caso extremo: DI = 2.99}
+        \scriptsize Milpa Alta → Santa Catarina Yecahuizotl: 14.8 km en línea
+        recta, \textbf{44.3 km} por la red.
+      \end{block}
+      \begin{alertblock}{\footnotesize Fuerza capilar: $FC_H = 130$}
+        \scriptsize Hospital Gea González, Acoxpa (111) y La Rosa (100), sobre la
+        Calzada de Tlalpan. Ningún gran CETRAM está entre los primeros.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}

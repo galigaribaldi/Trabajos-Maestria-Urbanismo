@@ -1,0 +1,68 @@
+% Diagrama: Macro-Arquitectura del Stack de Investigación (3 capas apiladas)
+% Usado en: 4-Capas-Codigo/4-1-Apimetro/4-1-0-Filosofia.tex  (fig:macro-arquitectura-stack)
+% Fix 2026-08-28: font=\small en estilo capa para que \hfill funcione; más espaciado vertical
+% Copia para la presentación SOTM (26 oct 2026) — no modifica la tesis:
+%   · Capa 1: ETL en Python + API en Go; Capa 3: QGIS + Tableau
+%   · Cifras del grafo en la Capa 2 (tesis 5.2)
+%   · Caja punteada "Capa N — tu proyecto" (puente al bloque 6)
+%   · Capas de 12 cm (en la tesis 11 cm) para que quepa el título de la Capa 1
+%   · Sin \gtfs{} ni \api{} (macros de la tesis, no definidos en el tema)
+\tikzsetnextfilename{macro-arquitectura-stack}
+\begin{tikzpicture}[
+    capa/.style = {
+        rectangle, draw=unamAzul!60,
+        text width=12cm, minimum height=2.0cm,
+        align=left, inner sep=14pt,
+        rounded corners=4pt, font=\small
+    },
+    propia/.style = {
+        rectangle, draw=SotmTerracota, dashed, line width=1pt,
+        fill=SotmTerracota!6, text width=4.2cm,
+        align=center, inner sep=12pt,
+        rounded corners=4pt, font=\small
+    },
+    flecha/.style = {Stealth-Stealth, thick, color=unamAzul!55},
+    etiq/.style   = {font=\scriptsize\itshape, color=gray!70,
+                     align=center, text width=2.2cm}
+]
+
+%% — Capas (base más oscura, tope más clara) —
+\node[capa, fill=unamAzul!28] (c1) {
+    \textbf{Capa 1 — Apimetro: el motor de datos} \hfill \texttt{Python · Go · PostGIS}\\[5pt]
+    ETL de datos abiertos + OSM · API REST · GeoJSON
+};
+\node[capa, fill=unamAzul!16, above=1.1cm of c1] (c2) {
+    \textbf{Capa 2 — VFTModel: analizar} \hfill \texttt{Python · NetworkX}\\[5pt]
+    Grafo de 11\,115 nodos y 45\,517 aristas · Indicadores topológicos
+};
+\node[capa, fill=unamAzul!7,  above=1.1cm of c2] (c3) {
+    \textbf{Capa 3 — Transport-gis-zmvm-mjg: crear} \hfill \texttt{QGIS · Tableau}\\[5pt]
+    Capas GeoPackage · Mapas · Tableros
+};
+
+%% — Flechas entre capas con etiquetas de intercambio —
+\draw[flecha]
+    ($(c1.north) + (0.9, 0)$) -- node[etiq, left=4pt] {GeoJSON}
+    ($(c2.south) + (0.9, 0)$);
+
+\draw[flecha]
+    ($(c2.north) + (0.9, 0)$) -- node[etiq, left=4pt] {grafo /\\ resultados}
+    ($(c3.south) + (0.9, 0)$);
+
+%% — Flecha lateral "FLUJO DE DATOS" —
+\draw[-Stealth, thick, color=unamAzul!50]
+    ($(c1.south east) + (0.55, 0)$) -- ($(c3.north east) + (0.55, 0)$)
+    node[midway, right=4pt,
+         font=\footnotesize\bfseries\color{unamAzul!65},
+         rotate=90, anchor=south] {FLUJO DE DATOS};
+
+%% — Capa abierta: cualquier proyecto puede consumir la Capa 1 —
+\node[propia, right=2.0cm of c2] (cn) {
+    \textbf{\color{SotmTerracota}Capa N — tu proyecto}\\[5pt]
+    Análisis, mapas, aplicaciones…\\ como tú quieras
+};
+\draw[-Stealth, thick, dashed, color=SotmTerracota]
+    (c1.east) -| node[pos=0.75, right, font=\scriptsize\itshape,
+                      color=SotmTerracota] {API REST} (cn.south);
+
+\end{tikzpicture}
