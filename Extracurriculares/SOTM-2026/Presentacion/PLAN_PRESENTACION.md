@@ -128,7 +128,7 @@ Diapositivas construidas:
 - ✅ Agregar coautor y su afiliación en el bloque `PERSONALIZACIÓN` de `main.tex` (`\Coautor`, `\AfiliacionCoautor`)
 - 🟡 Pasar referencias de `../ISPRSguidelines_authors.bib` a `referencias.bib` — copiadas las de los bloques 1–2; copiadas Barrington-Leigh y Neis (bloque 3); faltan las del bloque 5 (Fortin…)
 - 🟡 Repartir los bloques en archivos propios (`01-apertura`, `02-problema`, `03-osm-pieza-clave`, …); `main.tex` aún incluye las plantillas `s01_intro`, `s02_desarrollo`, `s03_conclusiones` — quitarlas al final
-- ✅ Compilar: `make PresentacionSotm DIR=Extracurriculares/Igisc-2026-isprs/Presentacion-Igisc`
+- ✅ Compilar: `make PresentacionSotm DIR=Extracurriculares/SOTM-2026/Presentacion`
 - ✅ Citas autor–año: `plainnat` + `natbib[round]` + corrección de `hyperref` en `Latex/BeamerThemeSotm.tex`
 - ✅ `\graphicspath` del tema incluye `pdf_apoyo/` (mapas y tableros copiados de la tesis; se versionan con `git add -f`)
 - 🔴 Decidir si se conserva el frame de Contenido (resta tiempo al bloque 1)
