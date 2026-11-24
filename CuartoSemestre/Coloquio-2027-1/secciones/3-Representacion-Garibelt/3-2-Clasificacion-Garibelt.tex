@@ -3,3 +3,37 @@
 % =============================================================================
 
 \subsection{Clasificación Garibelt}
+
+% ---
+\begin{frame}{Espectro MJG}
+  \begingroup
+    \centering
+    \includegraphics[width=\linewidth,height=0.60\textheight,keepaspectratio]
+    {Figures/Tableau/Dashboard_Espectro_Red_Actual.pdf}\par
+  \endgroup
+
+  \scriptsize
+  \begin{itemize}
+    \item Inspirado en \cite{kujala2018}, normaliza cada dimensión a una 
+          escala $[0.00, 1.00]$ dividida en cuatro intervalos de igual 
+          amplitud: Primer cuarto - $[0.00, 0.25)$, 
+          Segundo cuarto - $[0.25, 0.50)$, 
+          Tercer cuarto - $[0.50, 0.75)$ y 
+          Último cuarto - $[0.75, 1.00]$.
+  \end{itemize}
+\end{frame}
+
+% ---
+\begingroup
+\setbeamertemplate{navigation symbols}{}
+\begin{frame}{Dashboard comparativo (Espectro MJG)}
+  \centering
+  \includegraphics[
+    width=\linewidth,
+    height=0.80\textheight,
+    keepaspectratio,
+    trim=23bp 20bp 23bp 18bp,
+    clip
+  ]{Figures/Tableau/Dashboard_Clasificacion_Red_Actual.pdf}\par
+\end{frame}
+\endgroup

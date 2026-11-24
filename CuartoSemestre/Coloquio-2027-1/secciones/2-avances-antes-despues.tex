@@ -4,3 +4,76 @@
 % =============================================================================
 
 \section{Avances (Antes - Después)}
+
+% ── Tabla comparativa en tres diapositivas ────────────────────────────────────
+\begin{frame}{Estado de Avances Semestre 2026-2 -> 2027-1}
+  \begin{table}
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabularx}{\linewidth}{@{} >{\raggedright\arraybackslash}p{0.18\linewidth} *{3}{>{\raggedright\arraybackslash}X} @{}}
+      \toprule
+      \textbf{Eje de Analisis}   & \textbf{Sem 2026-2} & \textbf{Sem 2027-1} & \textbf{Estado Final} \\
+      \midrule
+      Stack de Software             & \termino{Apimetro} en producción,
+                                      \termino{VFTModel} en desarrollo de fases 2 y 3 sin terminar.
+                                    & Capas de Software operables.
+                                    & Terminado para la tésis, liberado para la comunidad. \\
+
+      Grafo Multimodal              & En proceso de integración sobre rutas principales
+                                    & Grafo Consolidado con \textbf{11, 115 Nodos} y
+                                    \textbf{45, 517 aristas}
+                                    con 12 sistemas de transporte
+                                    (MB, Metro, Trolebús, Cbb, CC, RTP, Pumabús, etc.)
+                                    & Suficiente para la tésis, pero valdría la pena revisar \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Estado de Avances Semestre 2026-2 -> 2027-1}
+  \begin{table}
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabularx}{\linewidth}{@{} >{\raggedright\arraybackslash}p{0.18\linewidth} *{3}{>{\raggedright\arraybackslash}X} @{}}
+      \toprule
+      \textbf{Eje de Analisis}   & \textbf{Sem 2026-2} & \textbf{Sem 2027-1} & \textbf{Estado Final} \\
+      \midrule
+      Impedancia y Tiempo           & Suposición Teórica inicial con 85 m de tolerancia de traslado.
+                                    & Se ejecutó el algoritmo \termino{Dijkstra} con fricción Vial
+                                    $T_b$): $T = 113.91$ min reales en la red base
+                                    & Suficiente para la tésis. Valdría la pena ejecutar
+                                    otros algoritmos de traslado para otro estudio. \\
+
+      Simulación del Anillo         & Propuesta exploratoria.
+                                    & Simulación en los 4 cuadrantes (N-S-E-O).
+                                    Se creó Caso 1: Periférico Víal real.
+                                    Caso 2: Perfiérico con transporte Masivo tipo Metrobús.
+                                    Caso 3: Periférico con transporte Masivo tipo Metro.
+                                    & Excedente para la tésis, se creó 2 casos independientes.
+                                    Para mejores estudios se pueden simular más casos. \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Estado de Avances Semestre 2026-2 -> 2027-1}
+  \begin{table}
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabularx}{\linewidth}{@{} >{\raggedright\arraybackslash}p{0.18\linewidth} *{3}{>{\raggedright\arraybackslash}X} @{}}
+      \toprule
+      \textbf{Eje de Analisis}   & \textbf{Sem 2026-2} & \textbf{Sem 2027-1} & \textbf{Estado Final} \\
+      \midrule
+      Síntesis                      & Formulación concpetual de Indicadores Aislados.
+                                    & Se crea el Espectro MJG para simplificar el diagnóstico
+                                    por bandas de escala; dando como resultado la clasificación Garibelt.
+                                    & Excedente para la tésis pero necesario. Valdría la pena demostrar
+                                    teóricamente y matemáticamente si la clasificación puede pasar
+                                    a un indicador universal. \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+\end{frame}
