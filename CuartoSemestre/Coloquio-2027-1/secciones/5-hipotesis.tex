@@ -1,6 +1,84 @@
 % =============================================================================
-%  
-%  
+%  5-hipotesis.tex — Balance de la hipótesis
 % =============================================================================
 
-\section{Confirmación Parcial de Hipótesis}
+\section{Confirmación Parcial de la Hipótesis}
+
+\begin{frame}{Balance de la hipótesis}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Se confirma}
+        \begin{itemize}
+          \item La red radial-concéntrica concentra los caminos más cortos en
+                pocos nodos centrales.
+          \item Con el Anillo Metro (Caso~3), el tiempo medio de viaje modelado
+                ($T$) baja de $113.91$ a $101.92$~min.
+          \item La intermediación de Tacubaya cae
+                $29.7\,\text{\%}$ frente a la red base.
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{alertblock}{Se matiza}
+        \begin{itemize}
+          \item La cobertura metropolitana ($C$) pasa de
+                $13.29\,\text{\%}$ a $13.43\,\text{\%}$.
+                Aún quedan 41 municipios sin estación a distancia caminable.
+          \item El Gini de intermediación sube de $0.8007$ a $0.8134$.
+                La concentración se desplaza hacia nodos del anillo.
+        \end{itemize}
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+
+  \medskip
+  {\footnotesize\itshape Fuente: resultados de la tesis, caps.~6 y~7.\par}
+\end{frame}
+
+\begin{frame}{Fortalezas y hallazgos}
+  \begin{enumerate}
+    \item \textbf{Soberanía tecnológica.}
+          Apímetro integra los datos, VFTModel calcula los indicadores y
+          Transport-gis permite visualizarlos. El cálculo puede reproducirse
+          sin licencias comerciales.
+
+    \item \textbf{Programa Maestro del Metro de 1985.}
+          El programa descartó los dos corredores del Periférico por su baja
+          captación de demanda. Entre los criterios figuraba la captación por
+          kilómetro. El modelo actual muestra cómo el Anillo Metro reorganiza
+          la conectividad metropolitana.
+
+    \item \textbf{CETRAM de nueva generación.}
+          Seis estaciones del Anillo Metro alcanzan una intermediación
+          $B(v)$ de $0.12$ a $0.16$ con 6 a 12 conexiones físicas.
+          Conviene planearlas como nodos intermodales, con rutas alimentadoras
+          y accesos de última milla.
+  \end{enumerate}
+
+  \medskip
+  {\footnotesize\itshape Fuentes: Programa Maestro del Metro (DDF/COVITUR, 1985)
+    y resultados de la tesis, caps.~6 y~7.\par}
+\end{frame}
+
+\begin{frame}{Limitaciones del modelo}
+  \begin{alertblock}{Alcance de los resultados}
+    \begin{itemize}
+      \item \textbf{Enfoque topológico.}
+            El modelo estima recorridos y tiempos de viaje. Quedan fuera las
+            matrices origen--destino, la afluencia y la densidad poblacional.
+
+      \item \textbf{Factor de desviación ($DI$).}
+            La red base tiene una mediana de $1.52$. La comparación con los
+            Casos~2 y~3 quedó pendiente porque las muestras de pares
+            origen--destino eran distintas.
+
+      \item \textbf{Vulnerabilidad estructural ($\Delta E$).}
+            Se exploró retirando, uno por uno, cinco nodos críticos del grafo
+            base. El cálculo quedó pendiente en la capa final del SIG.
+    \end{itemize}
+  \end{alertblock}
+
+  \medskip
+  {\footnotesize\itshape Fuente: metodología y resultados de la tesis,
+    caps.~5 a~7.\par}
+\end{frame}

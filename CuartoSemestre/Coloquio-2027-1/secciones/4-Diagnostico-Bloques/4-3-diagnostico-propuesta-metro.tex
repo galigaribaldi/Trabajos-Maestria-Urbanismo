@@ -2,4 +2,47 @@
 %  4.3 Diagnóstico — propuesta Metro
 % =============================================================================
 
-\subsection{Propuesta Metro}
+\subsection{Propuesta Metro (36 km/h)}
+
+% ---
+\begin{frame}{Propuesta Metro (36 km/h): Fluidez ($T$)}
+  \begingroup
+    \centering
+    \includegraphics[width=\linewidth,height=0.63\textheight,keepaspectratio]
+    {Figures/Tableau/Dashboard_Espectro_Metro.pdf}\par
+  \endgroup
+
+  \footnotesize
+  \begin{itemize}
+    \item El tiempo medio se reduce a $101.92$~min ($-10.1\,\text{\%}$ en nodos comunes).
+          Es la única dimensión que salta a la banda Idónea ($0.822 \ge 0.75$) en el Espectro MJG.
+  \end{itemize}
+\end{frame}
+
+% ---
+\begin{frame}{Propuesta Metro (36 km/h): Descentralización Nodal}
+  \begingroup
+    \centering
+    \includegraphics[width=\linewidth,height=0.63\textheight,keepaspectratio]
+    {Figures/Qgis/Clasificacion_Garibelt_Betweenness_Centrality_Metro.pdf}\par
+  \endgroup
+
+  \footnotesize
+  \begin{itemize}
+    \item 9 de los 10 nodos con mayor $B(v)$ de toda la metrópoli se trasladan a estaciones del anillo (como Periférico Oriente, Rómulo O'Farrill y Constitución de 1917).
+  \end{itemize}
+\end{frame}
+
+% ---
+\begin{frame}{Propuesta Metro (36 km/h): Descentralización Nodal}
+  \begingroup
+    \centering
+    \includegraphics[width=\linewidth,height=0.68\textheight,keepaspectratio]
+    {Figures/Tableau/Dashboard_Betweenness_Metro.pdf}\par
+  \endgroup
+
+  \footnotesize
+  \begin{itemize}
+    \item La intermediación de Tacubaya baja $29.7\,\text{\%}$ ($B(v)=0.1569$).
+  \end{itemize}
+\end{frame}

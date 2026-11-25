@@ -2,4 +2,81 @@
 %  4.1 Diagnóstico — red actual
 % =============================================================================
 
-\subsection{Red actual}
+\subsection{Diagnóstico Red actual: 2025}
+% ---
+\begin{frame}{Red Actual}
+  \begingroup
+    \centering
+    \includegraphics[width=\linewidth,height=0.68\textheight,keepaspectratio]
+    {Figures/Tableau/Dashboard_Apimetro_2026.pdf}\par
+  \endgroup
+
+  \footnotesize
+  \begin{itemize}
+    \item Red Actual por jerarquía de Transporte y afluencia del Metro.
+  \end{itemize}
+\end{frame}
+
+% ---
+\begin{frame}{Fluidez Global ($T$)}
+  \begingroup
+    \centering
+    \includegraphics[width=\linewidth,height=0.63\textheight,keepaspectratio]
+    {Figures/Qgis/Mapa_DF.pdf}\par
+  \endgroup
+
+  \footnotesize
+  \begin{itemize}
+    \item Tiempo medio de $113.91$~min en la componente gigante,
+          29~min por encima de la referencia de 85~min.
+          \textbf{Valor normalizado: $0.696$ (banda aceptable $[0.50, 0.75)$).}
+  \end{itemize}
+\end{frame}
+
+% ---
+\begin{frame}{Accesibilidad ($C$)}
+  \begingroup
+    \centering
+    \includegraphics[width=\linewidth,height=0.63\textheight,keepaspectratio]
+    {Figures/Qgis/Mapa_Cobertura_Mapa_Calor.pdf}\par
+  \endgroup
+
+  \footnotesize
+  \begin{itemize}
+    \item $13.29\,\text{\%}$ en las 76 demarcaciones metropolitanas y
+          $4.4\,\text{\%}$ en el ponderado territorial de las 141 demarcaciones.
+          Valor normalizado: $0.166$ (banda crítica $[0.00, 0.25)$).
+  \end{itemize}
+\end{frame}
+
+% ---
+\begin{frame}{Centralidad Crítica ($B(v)$)}
+  \begingroup
+    \centering
+    \includegraphics[width=\linewidth,height=0.58\textheight,keepaspectratio]
+    {Figures/Qgis/Mapa_Betweenness.pdf}\par
+  \endgroup
+
+  \footnotesize
+  \begin{itemize}
+    \item Gini de intermediación de $0.8007$ (valor normalizado de $0.199$,
+          banda crítica). \textbf{Tacubaya concentra el $22.32\,\text{\%}$}
+          de los caminos mínimos ($B(v)=0.2232$), seguida por estaciones
+          del Metro del eje centro-poniente.
+  \end{itemize}
+\end{frame}
+
+% ---
+\begin{frame}{Eficiencia de Ruta ($DI$)}
+  \begingroup
+    \centering
+    \includegraphics[width=\linewidth,height=0.63\textheight,keepaspectratio]
+    {Figures/Tableau/Dashboard_VFTModel_2026_Factor_desviacion.pdf}\par
+  \endgroup
+
+  \footnotesize
+  \begin{itemize}
+    \item Mediana del factor de desviación de $1.52$ (recorrido $52\,\text{\%}$ más largo que la línea recta),
+          alcanzando distorsiones extremas de $DI = 4.42$ en viajes periféricos interurbanos.
+  \end{itemize}
+\end{frame}

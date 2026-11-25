@@ -2,4 +2,52 @@
 %  4.4 Diagnóstico comparativo
 % =============================================================================
 
-\subsection{Comparativo}
+\subsection{Diagnóstico Comparativo}
+
+% ---
+\begin{frame}{Modo + Velocidad = Cambio}
+  \begingroup
+    \centering
+    \includegraphics[width=\linewidth,height=0.63\textheight,keepaspectratio]
+    {Figures/Qgis/Comparativo_Garibelt_Cambio_Banda.pdf}\par
+  \endgroup
+
+  \footnotesize
+  \begin{itemize}
+    \item El Caso 3 (Metro a 36~km/h) es superior al Caso 2 (BRT a 14.2~km/h)
+          porque su velocidad le permite competir con las líneas radiales del
+          centro y reestructurar la jerarquía de la red.
+  \end{itemize}
+\end{frame}
+
+% ---
+\begingroup
+\setbeamertemplate{navigation symbols}{}
+\begin{frame}{Acercar no es conectar}
+  \centering
+  \includegraphics[
+    width=\linewidth,
+    height=0.80\textheight,
+    keepaspectratio,
+    trim=23bp 20bp 23bp 18bp,
+    clip
+  ]{Figures/Tableau/Dashboard_Comparativo_KPI.pdf}\par
+\end{frame}
+\endgroup
+
+
+% ---
+\begin{frame}{Acercar no es conectar}
+  \begingroup
+    \centering
+    \includegraphics[width=\linewidth,height=0.63\textheight,keepaspectratio]
+    {Figures/Qgis/Comparativo_Garibelt_Betweenness.pdf}\par
+  \endgroup
+
+  \footnotesize
+  \begin{itemize}
+    \item El anillo mejora la fluidez global ($T$). La cobertura ($C$) cambia
+          poco, la intermediación ($B(v)$) sigue concentrada y persiste el
+          déficit de infraestructura en la periferia lejana.
+  \end{itemize}
+\end{frame}

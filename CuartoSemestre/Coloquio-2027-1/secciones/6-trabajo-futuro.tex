@@ -1,6 +1,81 @@
 % =============================================================================
-%  
-%  
+%  6-trabajo-futuro.tex — Importancia de la investigación y proyección doctoral
 % =============================================================================
 
-\section{Trabajo Futuro}
+\section{Importancia de la Investigación y Proyección Doctoral}
+
+\begin{frame}{Importancia de la investigación}
+  \begin{enumerate}
+    \item \textbf{Política pública.}
+          La CDMX y el Estado de México cuentan con un marco cuantitativo para
+          evaluar y planear conjuntamente el Anillo Periférico como eje de
+          transporte masivo.
+
+    \item \textbf{Metodología urbana.}
+          La Clasificación Garibelt y el Espectro MJG ofrecen un diagnóstico
+          multidimensional no compensable. Un mejor tiempo de viaje y un
+          déficit de cobertura quedan visibles por separado.
+
+    \item \textbf{Soberanía de datos.}
+          El código auditable y las imágenes Docker permiten procesar datos GTFS
+          y reproducir los indicadores sin licencias comerciales de software
+          para el cálculo.
+  \end{enumerate}
+
+  \medskip
+  {\footnotesize\itshape Fuente: conclusiones de la tesis, cap.~7.\par}
+\end{frame}
+
+\begin{frame}{Agenda doctoral: calibración y demanda}
+  \begin{block}{Análisis de sensibilidad de la escala Garibelt}
+    Evaluar cómo cambian las bandas de diagnóstico al variar los umbrales
+    ($0.25$, $0.50$ y $0.75$), las cotas de tiempo (85--180~min) y los
+    coeficientes de fricción vial ($CF_h$).
+  \end{block}
+
+  \begin{block}{Integración de topología y demanda}
+    Acoplar el grafo ponderado con las matrices de la Encuesta
+    Origen--Destino del INEGI y con volúmenes observados de pasajeros para
+    evaluar los escenarios a partir de los desplazamientos y la afluencia.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Agenda doctoral: vulnerabilidad y aplicación territorial}
+  \begin{block}{Cálculo formal de la vulnerabilidad ($\Delta E$)}
+    Simular la remoción de Macro-Hubs completos y medir la caída de eficiencia
+    global para comparar la resistencia de la red base y de los escenarios
+    anillares ante fallas.
+  \end{block}
+
+  \begin{block}{Replicabilidad internacional y Anillo Periférico Exterior}
+    Probar el método en otras metrópolis latinoamericanas con datos GTFS,
+    como Bogotá y Santiago. Modelar un anillo exterior para estimar qué
+    cobertura y conectividad podría aportar al cuarto contorno metropolitano.
+  \end{block}
+\end{frame}
+
+% ── Bibliografía ─────────────────────────────────────────────────────────────
+\section*{Referencias}
+\begin{frame}[allowframebreaks]{Referencias}
+  \bibliographystyle{apalike}
+  \bibliography{referencias}
+\end{frame}
+
+% ── Cierre institucional ─────────────────────────────────────────────────────
+\begin{frame}[plain]
+  \begin{center}
+    {\color{ColorAcento}\rule{0.6\textwidth}{1.5pt}}\par\medskip
+    {\Large\bfseries\color{ColorPrincipal} Gracias\par}
+    \medskip
+    \begin{minipage}{0.73\textwidth}
+      \centering
+      \itshape La tinta escribrá las palabras que nuestras voces no fueron capaces de hablar.
+    \end{minipage}\par
+    \medskip
+    {\normalsize \Autor\par}
+    {\small \MateriaCorta\par}
+    {\small \Semestre\par}
+    \medskip
+    {\color{ColorAcento}\rule{0.6\textwidth}{1.5pt}}\par
+  \end{center}
+\end{frame}

@@ -2,4 +2,66 @@
 %  4.2 Diagnóstico — propuesta Metrobús
 % =============================================================================
 
-\subsection{Propuesta MB}
+\subsection{Propuesta MB (14.2 km/h)}
+
+% ---
+\begin{frame}{Propuesta MB Extendido}
+  \begingroup
+    \centering
+    \includegraphics[width=\linewidth,height=0.63\textheight,keepaspectratio]
+    {Figures/Qgis/Propuesta_Anillar_Extendido_MB.pdf}\par
+  \endgroup
+
+  \footnotesize
+  \begin{itemize}
+    \item Las tres capas de software simulan el corredor del Periférico con
+          parámetros del Metrobús. El mapa muestra el trazo en cuatro secciones.
+  \end{itemize}
+\end{frame}
+
+% ---
+\begin{frame}{Propuesta MB (14.2 km/h): Cobertura ($C$)}
+  \begingroup
+    \centering
+    \includegraphics[width=\linewidth,height=0.63\textheight,keepaspectratio]
+    {Figures/Qgis/Clasificacion_Garibelt_Mapa_Cobertura_MB.pdf}\par
+  \endgroup
+
+  \footnotesize
+  \begin{itemize}
+    \item La cobertura sube a $13.43\,\text{\%}$ (11~$\text{km}^2$ más).
+          El Anillo Periférico recorre suelo previamente urbanizado.
+  \end{itemize}
+\end{frame}
+
+% ---
+\begin{frame}{Propuesta MB (14.2 km/h): Fluidez ($T$)}
+  \begingroup
+    \centering
+    \includegraphics[width=\linewidth,height=0.63\textheight,keepaspectratio]
+    {Figures/Tableau/Dashboard_Clasificacion_MB.pdf}\par
+  \endgroup
+
+  \footnotesize
+  \begin{itemize}
+    \item El tiempo medio baja a $108.99$~min ($-4.1\,\text{\%}$ en nodos comunes).
+          El mayor beneficio se concentra en el oriente: Nezahualcóyotl
+          ($-44$~min), Chimalhuacán ($-32$~min) y Ecatepec ($-31$~min).
+  \end{itemize}
+\end{frame}
+
+% ---
+\begin{frame}{Propuesta MB (14.2 km/h): Intermediación ($B(v)$)}
+  \begingroup
+    \centering
+    \includegraphics[width=\linewidth,height=0.63\textheight,keepaspectratio]
+    {Figures/Qgis/Clasificacion_Garibelt_Betweenness_Centrality_MB.pdf}\par
+  \endgroup
+
+  \footnotesize
+  \begin{itemize}
+    \item Gini de $0.8012$ (valor normalizado de $0.199$). La intermediación
+          sigue concentrada en el centro. En Tacubaya baja
+          $3.1\,\text{\%}$ ($B(v)=0.2163$).
+  \end{itemize}
+\end{frame}
